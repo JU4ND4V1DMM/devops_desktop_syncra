@@ -1,0 +1,8 @@
+pyspark
+findspark
+psutil
+PyQt6
+pandas
+openpyxl
+selenium
+webdriver-manager
