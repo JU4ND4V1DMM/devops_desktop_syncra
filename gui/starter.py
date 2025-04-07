@@ -679,14 +679,34 @@ class Init_APP():
         Mbox_In_Process.setText("Codigos exportados en el directorio de Descargas.")
         Mbox_In_Process.exec()
 
-    def copy_lines_corp(self, output_directory):
+    def copy_lines_corp(self):
+        output_directory = self.folder_path  # Ensure output_directory is set to a valid path
+
+        if not output_directory:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar un directorio válido para copiar las líneas corporativas.")
+            Mbox_File_Error.exec()
+            return
 
         Root_API = self.root_API 
-
         lines = f"{Root_API}/cpd/vba/Lineas_Corporativas.txt"
 
-        shutil.copy(lines, output_directory)
-    
+        try:
+            shutil.copy(lines, output_directory)
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Líneas corporativas copiadas exitosamente en el directorio seleccionado.")
+            Mbox_In_Process.exec()
+        except Exception as e:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText(f"Error al copiar las líneas corporativas: {e}")
+            Mbox_File_Error.exec()
+
     def copy_folders_root(self, output_directory):
 
         year = datetime.now().year
