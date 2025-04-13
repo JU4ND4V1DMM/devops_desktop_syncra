@@ -259,7 +259,7 @@ class Init_APP():
                 Mbox_File_Error.exec()
             
             else:
-                self.row_count_RPA = self.count_csv_rows(self.row_count_RPA)
+                self.row_count_RPA = count_csv_rows(self.row_count_RPA)
                 if self.row_count_RPA is not None:
                     self.row_count_RPA = "{:,}".format(self.row_count_RPA)
                     self.process_data.label_Total_Registers_7.setText(f"{self.row_count_RPA}")
