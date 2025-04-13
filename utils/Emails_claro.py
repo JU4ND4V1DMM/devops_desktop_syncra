@@ -5,11 +5,9 @@ from datetime import datetime
 from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.types import StringType
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, expr, length, size, split, lower, when
+from web.pyspark import get_spark_session
 
-spark = SparkSession \
-    .builder.appName("Trial") \
-    .getOrCreate()
-spark.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs","false")
+spark = get_spark_session()
 
 sqlContext = SQLContext(spark)
 

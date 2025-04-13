@@ -1,11 +1,9 @@
 import os
-from pyspark.sql import SparkSession
+from web.pyspark import get_spark_session
 from pyspark.sql import DataFrame
 from datetime import datetime
 
-spark = SparkSession \
-    .builder.appName("Union Files") \
-    .getOrCreate()
+spark = get_spark_session()
 
 def read_file_with_delimiter(file_path: str) -> DataFrame:
     with open(file_path, 'r') as f:

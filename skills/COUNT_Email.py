@@ -3,13 +3,11 @@ from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.functions import col, when, expr, concat, lit, row_number, collect_list, concat_ws, trim, count, regexp_replace
 from pyspark.sql.window import Window
 from pyspark.sql.types import StringType
+from web.pyspark import get_spark_session
 
 def function_complete_EMAIL(input_folder, output_folder, partitions, Widget_Process):
     
-    spark = SparkSession \
-        .builder.appName("Trial") \
-        .getOrCreate()
-    spark.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs","false")
+    spark = get_spark_session()
 
     sqlContext = SQLContext(spark)
 

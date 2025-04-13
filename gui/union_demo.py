@@ -1,13 +1,10 @@
-from pyspark.sql import SparkSession
+from web.pyspark import get_spark_session
 from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, trim, format_number
 from datetime import datetime
 import os
 
-spark = SparkSession \
-    .builder.appName("Trial") \
-    .getOrCreate()
-spark.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs","false")
+spark = get_spark_session()
 
 sqlContext = SQLContext(spark)
 

@@ -1,10 +1,11 @@
 from pyspark.sql import SparkSession, SQLContext
+from web.pyspark import get_spark_session
 from pyspark.sql.functions import col, concat, lit, when
 from datetime import datetime
 import os
 
-spark = SparkSession.builder.appName("Trial").getOrCreate()
-spark.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs", "false")
+spark = get_spark_session()
+
 sqlContext = SQLContext(spark)
 
 def Union_Files_BOT(Path, Outpath, partitions):
