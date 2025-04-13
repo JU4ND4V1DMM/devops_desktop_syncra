@@ -1,5 +1,6 @@
 import os
 import utils.Active_Lines
+from web.pyspark import get_spark_session
 from datetime import datetime
 from PyQt6.QtCore import QDate
 from PyQt6 import QtWidgets, uic
@@ -92,15 +93,7 @@ class Charge_DB(QtWidgets.QMainWindow):
     
     def BD_Control_Next(self):
 
-        spark = SparkSession \
-            .builder.appName("BD_CN") \
-            .config("spark.local.dir", "C:/tmp/hive") \
-            .config("spark.driver.extraJavaOptions", "-Djava.security.manager=allow") \
-            .config("spark.executor.extraJavaOptions", "-Djava.security.manager=allow") \
-            .config("spark.driver.memory", '16g')\
-            .config("spark.executor.memory", '16g')\
-            .getOrCreate()
-        spark.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs","false")
+        spark = get_spark_session()
 
         sqlContext = SQLContext(spark)
         
@@ -257,15 +250,7 @@ class Charge_DB(QtWidgets.QMainWindow):
 
     def Function_Complete(self, path):
 
-        spark = SparkSession \
-            .builder.appName("Trial") \
-            .config("spark.local.dir", "C:/tmp/hive") \
-            .config("spark.driver.extraJavaOptions", "-Djava.security.manager=allow") \
-            .config("spark.executor.extraJavaOptions", "-Djava.security.manager=allow") \
-            .config("spark.driver.memory", '16g')\
-            .config("spark.executor.memory", '16g')\
-            .getOrCreate()
-        spark.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs","false")
+        spark = get_spark_session()
 
         sqlContext = SQLContext(spark)
 

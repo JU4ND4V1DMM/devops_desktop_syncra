@@ -4,12 +4,10 @@ from pyspark.sql import SparkSession
 from pyspark.sql import SQLContext
 from pyspark.sql.types import StringType
 from pyspark.sql.functions import col, regexp_replace, lit
+from web.pyspark import get_spark_session
 
 def Function_Exclusions(Path, Outpath, Partitions):
-    spark = SparkSession \
-        .builder.appName("FORMS_Exclusions") \
-        .getOrCreate()
-    spark.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs", "false")
+    spark = get_spark_session()
     sqlContext = SQLContext(spark)
 
     df = spark.read.option("header", "false").csv(Path)

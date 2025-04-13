@@ -4,13 +4,11 @@ from pyspark.sql import SparkSession
 from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.types import StringType
 from pyspark.sql.functions import col, lit
+from web.pyspark import get_spark_session
 
 def Function_Complete(Path, Outpath, Partitions):
 
-    spark = SparkSession \
-        .builder.appName("BD_MONTH") \
-        .getOrCreate()
-    spark.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs","false")
+    spark = get_spark_session()
 
     sqlContext = SQLContext(spark)
     now = datetime.now()

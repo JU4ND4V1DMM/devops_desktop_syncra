@@ -7,11 +7,9 @@ from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, trim, format_number, concat_ws
 from pyspark.sql.functions import expr, when, to_date, datediff, current_date, split, length, collect_list, row_number
+from web.pyspark import get_spark_session
 
-spark = SparkSession \
-    .builder.appName("Trial") \
-    .getOrCreate()
-spark.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs","false")
+spark = get_spark_session()
 
 sqlContext = SQLContext(spark)
 
