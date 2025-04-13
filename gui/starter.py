@@ -87,7 +87,7 @@ class Init_APP():
         self.folder_path = os.path.expanduser("~/Downloads/")
         script_path = os.path.abspath(__file__)
         Version_Pyspark = datetime.datetime(Path_Root, Compiles, Buffering).date()
-        self.root_API = os.path.dirname(os.path.dirname(os.path.dirname(script_path)))
+        self.root_API = os.path.dirname(os.path.dirname(script_path))
         
         self.partitions_FILES = None
         self.partitions_CAM = None
@@ -109,7 +109,7 @@ class Init_APP():
         
         if SessionSpark:
             
-            self.process_data = uic.loadUi(f"{Root_API}/cpd/gui/Project.ui")
+            self.process_data = uic.loadUi(f"{Root_API}/gui/Project.ui")
             self.process_data.show()
             
             var__count = 0
@@ -129,7 +129,7 @@ class Init_APP():
             
         else:
             
-            self.process_data = uic.loadUi(f"{Root_API}/cpd/gui/warnsparksession.ui")
+            self.process_data = uic.loadUi(f"{Root_API}/gui/warnsparksession.ui")
             self.process_data.label_Version_Control_Version.setText(f"{API} - {Version_Api}")
             self.process_data.label_Version_Detail.setText(f"{API} - {Version_Api}")
             
@@ -301,7 +301,7 @@ class Init_APP():
         
         Root_API = self.root_API 
         output_directory = self.folder_path
-        script = f"{Root_API}/cpd/files/dsh_bd/Plantilla_Sistema_IVR-TRANS.csv"
+        script = f"{Root_API}/files/dsh_bd/Plantilla_Sistema_IVR-TRANS.csv"
         
         output_file_path = f"{output_directory}/Plantilla_Sistema_IVR-TRANS.csv"
         
@@ -322,7 +322,7 @@ class Init_APP():
         
         Root_API = self.root_API 
         output_directory = self.folder_path
-        script = f"{Root_API}/cpd/files/dsh_bd/Plantlilla Descarga Reportes SAEM.csv"
+        script = f"{Root_API}/files/dsh_bd/Plantlilla Descarga Reportes SAEM.csv"
         
         output_file_path = f"{output_directory}/Plantlilla Descarga Reportes SAEM.csv"
         
@@ -691,7 +691,7 @@ class Init_APP():
             return
 
         Root_API = self.root_API 
-        lines = f"{Root_API}/cpd/vba/Lineas_Corporativas.txt"
+        lines = f"{Root_API}/vba/Lineas_Corporativas.txt"
 
         try:
             shutil.copy(lines, output_directory)
@@ -724,9 +724,9 @@ class Init_APP():
 
         Root_API = self.root_API 
 
-        code2 = f"{Root_API}/cpd/vba/Macro - Filtros Cam UNIF.txt"
-        code3 = f"{Root_API}/cpd/vba/PowerShell - Union Archivos.txt"
-        code4 = f"{Root_API}/cpd/vba/Plantilla CAM Unif Virgen.xlsx"
+        code2 = f"{Root_API}/vba/Macro - Filtros Cam UNIF.txt"
+        code3 = f"{Root_API}/vba/PowerShell - Union Archivos.txt"
+        code4 = f"{Root_API}/vba/Plantilla CAM Unif Virgen.xlsx"
 
         shutil.copy(code2, output_directory)
         shutil.copy(code3, output_directory)
@@ -737,7 +737,7 @@ class Init_APP():
         output_directory = self.folder_path
 
         Root_API = self.root_API 
-        folder_script = f"{Root_API}/cpd/vba/Estructuras Control Next"
+        folder_script = f"{Root_API}/vba/Estructuras Control Next"
 
         try:
             destination = os.path.join(output_directory, os.path.basename(folder_script))
@@ -1072,7 +1072,7 @@ class Init_APP():
     def run_bat_excel(self):
 
         Root_API = self.root_API 
-        bat_file_path = f"{Root_API}/cpd/files/bat/Excel_Finisher.bat"  
+        bat_file_path = f"{Root_API}/files/bat/Excel_Finisher.bat"  
         
         try:
             subprocess.run([bat_file_path])
@@ -1091,7 +1091,7 @@ class Init_APP():
 
     def run_replay_intercom(self):
         Root_API = self.root_API
-        bat_file_path = f"{Root_API}/cpd/files/bat/Replay IVR-TRANS.exe"
+        bat_file_path = f"{Root_API}/files/bat/Replay IVR-TRANS.exe"
 
         class WorkerThread(QThread):
             success_signal = pyqtSignal()
@@ -1113,7 +1113,7 @@ class Init_APP():
     def run_bat_temp(self):
 
         Root_API = self.root_API 
-        bat_file_path = f"{Root_API}/cpd/files/bat/Temp.bat"  
+        bat_file_path = f"{Root_API}/files/bat/Temp.bat"  
 
         try:
             subprocess.run([bat_file_path], check=True)
