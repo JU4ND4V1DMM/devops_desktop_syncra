@@ -59,7 +59,7 @@ def function_complete_SMS(input_folder, output_folder, partitions, Widget_Proces
         for i, file in enumerate(os.listdir(output_folder), start=1):
             if file.endswith(".csv"):
                 old_file_path = os.path.join(output_folder, file)
-                new_file_path = os.path.join(output_folder, f'Consolidado SMS - Part {partitions}.csv')
+                new_file_path = os.path.join(output_folder, f'Consolidado SMS - {partitions}.csv')
                 os.rename(old_file_path, new_file_path)
 
     else:
@@ -77,10 +77,12 @@ def Function_Modify(RDD):
     Data_Frame = Data_Frame.withColumn("Cuenta_Real", regexp_replace(col("Cuenta_Real"), "-", ""))
     Data_Frame = Data_Frame.withColumn("Cuenta_Sin_Punto", regexp_replace(col("Cuenta_Sin_Punto"), "-", ""))
 
-    count_df = Data_Frame.groupBy("Cuenta_Real").agg(count("*").alias("Cantidad"))
+    count_df = Data_Frame.groupBy("Cuenta_Sin_Punto").agg(count("*").alias("Cantidad"))
     
-    Data_Frame = Data_Frame.join(count_df, "Cuenta_Real", "left")
+    Data_Frame = Data_Frame.join(count_df, "Cuenta_Sin_Punto", "left")
     
-    Data_Frame = Data_Frame.dropDuplicates(["Cuenta_Real"])
+    Data_Frame = Data_Frame.dropDuplicates(["Cuenta_Sin_Punto"])
 
+    Data_Frame = Data_Frame.select(["Cuenta_Real", "Cuenta_Sin_Punto", "Marca", "Recurso", "Cantidad"])
+    
     return Data_Frame
