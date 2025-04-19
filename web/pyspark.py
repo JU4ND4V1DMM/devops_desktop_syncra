@@ -42,9 +42,9 @@ def get_spark_session():
                 .config("spark.driver.memory", '16g')\
                 .config("spark.executor.memory", '16g')\
                 .getOrCreate()
-        spark_2.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs","false")
+        spark_1.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs","false")
         print("Initializing Spark Session middle...")
-        spark_session = spark_2
+        spark_session = spark_1
         
     else:
         
