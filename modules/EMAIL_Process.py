@@ -98,6 +98,10 @@ def Renamed_Column(Data_Frame):
     Data_Frame = Data_Frame.withColumnRenamed("customer_type_id", "Segmento")
     Data_Frame = Data_Frame.withColumnRenamed("fecha_vencimiento", "FLP")
 
+    Data_Frame = Data_Frame.withColumn("FILTRO GENERAL", 
+        when((length(col("Nombre_Completo")) < 4) | (col("Canal") == "DELIMITAR") | (col("FILTRO_REFERENCIA") == "SIN REFERENCIA"), lit("Ajustar antes de envio"))
+        .otherwise(lit("Limpio para envio")))
+    
     return Data_Frame
 
 def Order_Columns(Data_Frame):
@@ -113,7 +117,7 @@ def Order_Columns(Data_Frame):
 
     Columns_Email = ["Canal", "Dato_Contacto", "descuento", \
                     "Edad_Mora", "CRM", "Form_Moneda", "Nombre_Completo", \
-                    "Referencia", "Cuenta", "marca2", "plan", "identificacion", "FILTRO_REFERENCIA", "Rango"]
+                    "Referencia", "Cuenta", "marca2", "plan", "identificacion", "FILTRO_REFERENCIA", "Rango", "FILTRO GENERAL"]
 
     Data_Frame = Data_Frame.select(Columns_Email)
 
