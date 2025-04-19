@@ -7,7 +7,7 @@ from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
 from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
-from pyspark.sql.functions import col, concat, lit, regexp_replace, when, date_format, current_date, to_date, date_format, split
+from pyspark.sql.functions import col, concat, lit, regexp_replace, when, date_format, current_date, to_date, date_format, split, length, upper
 
 class Charge_DB(QtWidgets.QMainWindow):
 
@@ -111,6 +111,39 @@ class Charge_DB(QtWidgets.QMainWindow):
         
         return Data_Root
     
+    def change_name_column (self, Data_, Column):
+
+        Data_ = Data_.withColumn(Column, upper(col(Column)))
+
+        character_list_N = ["\\ÃƒÂ‘", "\\Ã‚Â¦", "\\Ã‘", "Ñ", "ÃƒÂ‘", "Ã‚Â¦", "Ã‘"]
+        
+        for character in character_list_N:
+            Data_ = Data_.withColumn(Column, regexp_replace(col(Column), character, "NNNNN"))
+        
+        Data_ = Data_.withColumn(Column, regexp_replace(col(Column), "NNNNN", "N"))
+        Data_ = Data_.withColumn(Column, regexp_replace(col(Column), "Ã‡", "A"))
+        Data_ = Data_.withColumn(Column, regexp_replace(col(Column), "ÃƒÂ", "I"))
+
+
+        character_list = ["SR/SRA", "SR./SRA.", "SR/SRA.","SR.", "SRA.", "SR(A).","SR ", "SRA ", "SR(A)",\
+                        "\\.",'#', '$', '/','<', '>', "\\*", "SEÑORES ","SEÑOR(A) ","SEÑOR ","SEÑORA ", "SENORES ",\
+                        "SENOR(A) ","SENOR ","SENORA ", "¡", "!", "\\?" "¿", "_", "-", "}", "\\{", "\\+", "0 ", "1 ", "2 ", "3 ",\
+                        "4 ", "5 ", "6 ", "7 ","8 ", "9 ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "  "]
+
+        for character in character_list:
+            Data_ = Data_.withColumn(Column, regexp_replace(col(Column), character, ""))
+        
+        Data_ = Data_.withColumn(Column, regexp_replace(Column, "[^A-Z& ]", ""))
+
+        character_list = ["SEORES ","SEORA ","SEOR ","SEORA "]
+
+        for character in character_list:
+            Data_ = Data_.withColumn(Column, regexp_replace(col(Column), character, ""))
+
+        Data_ = Data_.withColumn(Column,regexp_replace(col(Column), r'^(A\s+| )+', ''))
+            
+        return Data_
+
     def BD_Control_Next(self):
 
         spark = get_spark_session()
@@ -157,6 +190,12 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.dropDuplicates(["2_"])
         Data_Root = Data_Root.orderBy(col("3_"))
 
+        Data_Root = Data_Root.withColumn("24_2", col("24_"))
+        Data_Root = self.change_name_column(Data_Root, "24_2")
+        Data_Root = Data_Root.withColumn("24_", when(length(col("24_2")) < 7, col("24_")).otherwise(col("24_2")))
+        
+        Data_Root = Data_Root.select(columns_to_list)
+        
         Data_Root = Data_Root.withColumnRenamed("1_", "Numero de Cliente")
         Data_Root = Data_Root.withColumnRenamed("2_", "[AccountAccountCode?]")
         Data_Root = Data_Root.withColumnRenamed("3_", "CRM Origen")
