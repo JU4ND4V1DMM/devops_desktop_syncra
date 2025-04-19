@@ -7,7 +7,7 @@ from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
 from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
-from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, trim, format_number, expr, when, coalesce, date_format, current_date
+from pyspark.sql.functions import col, concat, lit, regexp_replace, when, date_format, current_date, to_date, date_format, split
 
 class Charge_DB(QtWidgets.QMainWindow):
 
@@ -90,6 +90,26 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
         Mbox_In_Process.setText("Proceso de valdiación de líneas ejecutado exitosamente.")
         Mbox_In_Process.exec()
+    
+    def Update_BD_ControlNext(self, Data_Root):
+        
+        Data_Root = Data_Root.withColumn("[AccountAccountCode?]", regexp_replace(col("[AccountAccountCode?]"), "-", ""))
+        Data_Root = Data_Root.withColumn("[AccountAccountCode2?]", col("[AccountAccountCode?]"))
+        
+        Data_Root = Data_Root.withColumn("Numero de Cliente", regexp_replace("Numero de Cliente", "[^0-9]", ""))
+        Data_Root = Data_Root.withColumn("Numero de Cliente", when(col("Numero de Cliente").isNull(), lit("0")).otherwise(col("Numero de Cliente")))
+        Data_Root = Data_Root.withColumn("Numero de Cliente", col("Numero de Cliente").cast("int"))
+        Data_Root = Data_Root.withColumn("[Documento?]", col("Numero de Cliente"))
+        
+        Data_Root = Data_Root.withColumn("Precio Subscripcion", lit(""))
+        
+        Data_Root = Data_Root.withColumn("Fecha de Aceleracion", date_format(to_date(col("Fecha de Aceleracion"), "d/MM/yyyy"), "yyyy-MM-dd"))
+        Data_Root = Data_Root.withColumn("Fecha de Vencimiento", date_format(to_date(col("Fecha de Vencimiento"), "d/MM/yyyy"), "yyyy-MM-dd"))
+
+        Data_Root = Data_Root.withColumn("Fecha Final ", date_format(to_date(split(col("Fecha Final "), " ")[0], "d/M/yyyy"), "yyyy-MM-dd"))
+        Data_Root = Data_Root.withColumn("Fecha de Asignacion", date_format(to_date(split(col("Fecha de Asignacion"), " ")[0], "d/M/yyyy"), "yyyy-MM-dd"))
+        
+        return Data_Root
     
     def BD_Control_Next(self):
 
@@ -195,6 +215,11 @@ class Charge_DB(QtWidgets.QMainWindow):
         name = "Multimarca_Cargue"
         origin = "Multiorigen"
         self.Save_File(Data_Brands, root, partitions, name, origin, Time_File)
+        
+        Data_Brands_Update = self.Update_BD_ControlNext(Data_Brands)
+        name = "Multimarca_Cargue_Actualizacion"
+        origin = "Multiorigen"
+        self.Save_File(Data_Brands_Update, root, partitions, name, origin, Time_File)
 
         Data_Error = Data_Error.filter((col("[CustomerTypeId?]").isNull()) & (col("[CustomerTypeId?]").cast("double").isNull()))
         name = "Errores"
@@ -318,7 +343,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.orderBy(col("3_"))
         
         return Data_Root
-
+        
     def Save_File(self, Data_Frame, Directory_to_Save, Partitions, Brand_Filter, Origin_Filter, Time_File):
 
         if Brand_Filter == "castigo":
@@ -326,7 +351,7 @@ class Charge_DB(QtWidgets.QMainWindow):
             extension = "0csv"
             Name_File = "Castigo"
         
-        elif Brand_Filter == "Cargue" or Brand_Filter == "Errores" or Brand_Filter == "Multimarca_Cargue":
+        elif Brand_Filter == "Cargue" or Brand_Filter == "Errores" or Brand_Filter == "Multimarca_Cargue" or Brand_Filter == "Multimarca_Cargue_Actualizacion":
             Type_File = f"Base_de_CARGUE_{Time_File}"
             extension = "csv"
 
@@ -338,6 +363,10 @@ class Charge_DB(QtWidgets.QMainWindow):
             elif Brand_Filter == "Multimarca_Cargue":
                 Type_File = f"Base_de_CARGUE_{Time_File}/Cargue sin Castigo"
                 Name_File = "UNIF sin Castigo"
+            
+            elif Brand_Filter == "Multimarca_Cargue_Actualizacion":
+                Type_File = f"Base_de_CARGUE_{Time_File}/Cargue sin Castigo Actualizacion"
+                Name_File = "UNIF sin Castigo Actualizacion"
 
             else:
                 Name_File = "Cargue UNIF"
