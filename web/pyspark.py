@@ -4,10 +4,8 @@ import shutil
 import string
 
 def get_disk_with_most_free_space():
-    
     best_drive = None
     max_free = 0
-    
     for drive_letter in string.ascii_uppercase:
         drive = f"{drive_letter}:/"
         if os.path.exists(drive):
@@ -18,55 +16,49 @@ def get_disk_with_most_free_space():
                     best_drive = drive
             except PermissionError:
                 continue
-            
     return best_drive
 
-def get_spark_session():
-    
-    System_spark = "2"
-
-    if System_spark == "0":
-        spark = SparkSession.builder \
-            .appName("GlobalSparkApp") \
-            .config("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false") \
-            .getOrCreate()
-        print("Initializing Spark Session basic...")
-        spark_session = spark
-        
-    elif System_spark == "1":
-        spark_1 = SparkSession \
-                .builder.appName("GlobalSparkApp") \
+def try_create_spark_session(config_level):
+    try:
+        if config_level == "advanced":
+            spark = SparkSession.builder \
+                .appName("GlobalSparkApp") \
                 .config("spark.local.dir", "C:/tmp/hive") \
                 .config("spark.driver.extraJavaOptions", "-Djava.security.manager=allow") \
                 .config("spark.executor.extraJavaOptions", "-Djava.security.manager=allow") \
-                .config("spark.driver.memory", '16g')\
-                .config("spark.executor.memory", '16g')\
+                .config("spark.driver.memory", '16g') \
+                .config("spark.executor.memory", '16g') \
                 .getOrCreate()
-        spark_1.conf.set("mapreduce.fileoutputcomitter.marksuccessfuljobs","false")
-        print("Initializing Spark Session middle...")
-        spark_session = spark_1
-        
-    else:
-        
-        best_disk = get_disk_with_most_free_space()
-        temp_dir = os.path.join(best_disk, "SparkTemp")
-        
-        if os.path.exists(temp_dir):
-            shutil.rmtree(temp_dir)
-        os.makedirs(temp_dir, exist_ok=True)
+            spark.conf.set("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false")
+            print("✔ Spark avanzado inicializado correctamente.")
+            return spark
 
-        spark_2 = SparkSession \
-                .builder.appName("GlobalSparkApp_Config") \
-                .config("spark.local.dir", temp_dir) \
-                .config("spark.driver.memory", "16g") \
-                .config("spark.executor.memory", "16g") \
-                .config("spark.driver.maxResultSize", "4g") \
-                .config("spark.sql.shuffle.partitions", "50") \
-                .config("spark.driver.extraJavaOptions", "-XX:+UseG1GC -Djava.security.manager=allow") \
-                .config("spark.executor.extraJavaOptions", "-XX:+UseG1GC -Djava.security.manager=allow") \
+        elif config_level == "medium":
+            spark = SparkSession.builder \
+                .appName("GlobalSparkApp") \
+                .config("spark.driver.memory", '8g') \
+                .config("spark.executor.memory", '8g') \
+                .getOrCreate()
+            spark.conf.set("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false")
+            print("✔ Spark medio inicializado correctamente.")
+            return spark
+
+        elif config_level == "basic":
+            spark = SparkSession.builder \
+                .appName("GlobalSparkApp") \
                 .config("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false") \
                 .getOrCreate()
-        print("Initializing Spark Session advanced...")
-        spark_session = spark_2
-        
-    return spark_session
+            print("✔ Spark básico inicializado correctamente.")
+            return spark
+
+    except Exception as e:
+        print(f"⚠ Falló configuración {config_level}: {e}")
+        return None
+
+def get_spark_session():
+    configs = ["advanced", "medium", "basic"]
+    for config in configs:
+        spark = try_create_spark_session(config)
+        if spark is not None:
+            return spark
+    raise RuntimeError("❌ No fue posible inicializar ninguna sesión de Spark.")
