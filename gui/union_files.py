@@ -2,6 +2,7 @@ import os
 from web.pyspark import get_spark_session
 from pyspark.sql import DataFrame
 from datetime import datetime
+from web.save_files import save_to_csv
 
 spark = get_spark_session()
 
@@ -38,28 +39,16 @@ def merge_files(input_directory: str, output_directory: str):
             merged_df = merged_df.unionByName(df, allowMissingColumns=True)
 
     if merged_df is not None:
-        now = datetime.now()
-        file_date = now.strftime("%d-%m-%Y %H-%M")
-        output_path = os.path.join(output_directory, f"Union Archivos Carpeta {file_date}")
         
-        if not os.path.exists(output_path):
-            os.makedirs(output_path)
-
         merged_df = merged_df.dropDuplicates()
         
-        merged_df.repartition(1).write.mode("overwrite").option("header", "true").option("delimiter",";").csv(output_path)
-
-        for root, dirs, files in os.walk(output_path):
-            for file in files:
-                if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                    os.remove(os.path.join(root, file))
-
-        for i, file in enumerate(os.listdir(output_path), start=1):
-            if file.endswith(".csv"):
-                old_file_path = os.path.join(output_path, file)
-                new_file_path = os.path.join(output_path, f'Union Archivos {file_date}.csv')
-                os.rename(old_file_path, new_file_path)
+        delimiter = ";"
+        Type_Proccess = "Union Archivos"
         
-        print(f"Files combined and saved in {output_path} with delimiter '{found_delimiter}'")
+        Partitions = 1
+        
+        save_to_csv(merged_df, output_directory, Type_Proccess, Partitions, delimiter)
+        
+        print(f"Files combined and saved in {output_directory} with delimiter '{found_delimiter}'")
     else:
         print("No files were combined.")

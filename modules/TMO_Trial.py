@@ -5,6 +5,7 @@ from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.types import StringType
 from pyspark.sql.functions import col, lit
 from web.pyspark import get_spark_session
+from web.save_files import save_to_csv
 
 def Function_Complete(Path, Outpath, Partitions):
 
@@ -43,20 +44,9 @@ def Function_Complete(Path, Outpath, Partitions):
 
     df = df.withColumn("Fecha", lit(f"{Yesterday_Date}"))
 
-    Time_File = yesterday.strftime("%d-%m-%Y")
-    Outpath = f"{Outpath}TMO Conversion {Time_File}"
-
-    df.repartition(Partitions).write.mode("overwrite").option("header", "true").option("delimiter",";").csv(Outpath)
-
-    for root, dirs, files in os.walk(Outpath):
-        for file in files:
-            if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                os.remove(os.path.join(root, file))
+    Type_Proccess = f"TMO Conversion"
+    delimiter = ","
     
-    for i, file in enumerate(os.listdir(Outpath), start=1):
-        if file.endswith(".csv"):
-            old_file_path = os.path.join(Outpath, file)
-            new_file_path = os.path.join(Outpath, f'AGENT_TIME {Time_File}.csv')
-            os.rename(old_file_path, new_file_path)
+    save_to_csv(df, Outpath, Type_Proccess, Partitions, delimiter)
 
     return df

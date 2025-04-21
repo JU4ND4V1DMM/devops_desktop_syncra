@@ -8,6 +8,7 @@ from pyspark.sql.types import IntegerType, StringType, StructField, StructType
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, concat_ws
 from pyspark.sql.functions import expr, when, row_number, collect_list, sum, length
 from web.pyspark import get_spark_session
+from web.save_files import save_to_xlsx
 
 spark = get_spark_session()
 
@@ -78,25 +79,10 @@ def Renamed_Column(Data_Frame):
 ### Proceso de guardado del RDD
 def Save_Data_Frame (Data_Frame, Directory_to_Save, Partitions):
 
-    now = datetime.now()
-    Time_File = now.strftime("%Y%m%d_%H%M")
-    File_Date = now.strftime("%Y%m%d")
-    Type_File = f"REORDENACION_Numeros_Contacto_"
-
-    output_path = f'{Directory_to_Save}{Type_File}{Time_File}'
-    Data_Frame.repartition(Partitions).write.mode("overwrite").option("header", "true").csv(output_path)
-    print(f"DataFrame guardado en: {output_path}")
-
-    for root, dirs, files in os.walk(output_path):
-        for file in files:
-            if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                os.remove(os.path.join(root, file))
+    Type_File = f"Reordenacion Demograficos Claro"
+    delimiter = ";"
     
-    for i, file in enumerate(os.listdir(output_path), start=1):
-        if file.endswith(".csv"):
-            old_file_path = os.path.join(output_path, file)
-            new_file_path = os.path.join(output_path, f'Reordenacion MINS {File_Date} Part- {i}.csv')
-            os.rename(old_file_path, new_file_path)
+    save_to_xlsx(Data_Frame, Directory_to_Save, Type_File, Partitions)
 
     return Data_Frame
 

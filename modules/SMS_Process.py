@@ -7,6 +7,7 @@ from pyspark.sql.types import IntegerType, StringType, StructField, StructType
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, length, split, to_date
 from pyspark.sql.functions import trim, format_number, expr, when, coalesce, datediff, current_date
 from web.pyspark import get_spark_session
+from web.save_files import save_to_csv
 
 spark = get_spark_session()
 
@@ -107,43 +108,20 @@ def union_corp_data(Data_Frame):
 
 ### Proceso de guardado del RDD
 def Save_Data_Frame (Data_Frame, Directory_to_Save, Partitions, Wallet_Brand, widget_filter):
-
-    #Data_Frame = union_corp_data(Data_Frame)
-
-    #Data_Frame.coalesce(1).write.format('json').save(f'{Directory_to_Save}/Prueba')
-
-    if widget_filter != "Tables":
         
-        list_key = ["SMS", "TEXTO"]
+    list_key = ["BD Claro SMS", "BD Claro SMS_TEXTO"]
 
-        for i in list_key:
+    for i in list_key:
 
-            if i == "TEXTO":
-                Data_Frame = Letters_SMS.generate_sms_message_column(Data_Frame)
-            else:
-                Data_Frame = Data_Frame
+        if i == "BD Claro SMS_TEXTO":
+            Data_Frame = Letters_SMS.generate_sms_message_column(Data_Frame)
+        else:
+            Data_Frame = Data_Frame
 
-            now = datetime.now()
-            Time_File = now.strftime("%Y%m%d_%H%M")
-            File_Date = now.strftime("%Y%m%d")
-            Type_File = f"{i}_MULTIMARCA_"
-
-            output_path = f'{Directory_to_Save}{Type_File}{Time_File}'
-            Data_Frame.repartition(Partitions).write.mode("overwrite").option("header", "true").option("delimiter",";").csv(output_path)
-            
-            for root, dirs, files in os.walk(output_path):
-                for file in files:
-                    if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                        os.remove(os.path.join(root, file))
-            
-            for i, file in enumerate(os.listdir(output_path), start=1):
-                if file.endswith(".csv"):
-                    old_file_path = os.path.join(output_path, file)
-                    new_file_path = os.path.join(output_path, f'SMS {File_Date} Part- {i}.csv')
-                    os.rename(old_file_path, new_file_path)
-
-    else:
-        Data_Frame = Data_Frame
+        Type_File = f"{i}"
+        delimiter = ";"
+        
+        save_to_csv(Data_Frame, Directory_to_Save, Type_File, Partitions, delimiter)
         
     return Data_Frame
 

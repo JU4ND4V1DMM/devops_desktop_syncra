@@ -8,6 +8,7 @@ from pyspark.sql.types import IntegerType, StringType, StructField, StructType
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, trim, format_number, concat_ws
 from pyspark.sql.functions import expr, when, to_date, datediff, current_date, split, length, collect_list, row_number
 from web.pyspark import get_spark_session
+from web.save_files import save_to_csv
 
 spark = get_spark_session()
 
@@ -56,23 +57,10 @@ def Renamed_Column(Data_Frame):
 ### Proceso de guardado del RDD
 def Save_Data_Frame (Data_Frame, Directory_to_Save, partitions):
 
-    now = datetime.now()
-    Time_File = now.strftime("%Y%m%d_%H%M")
-    Type_File = "PREDICTIVO_"
+    Type_File = "Predictivo"
+    delimiter = ";"
     
-    output_path = f'{Directory_to_Save}{Type_File}{Time_File}'
-    Data_Frame.repartition(partitions).write.mode("overwrite").option("header", "true").option("delimiter",";").csv(output_path)
-
-    for root, dirs, files in os.walk(output_path):
-        for file in files:
-            if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                os.remove(os.path.join(root, file))
-    
-    for i, file in enumerate(os.listdir(output_path), start=1):
-        if file.endswith(".csv"):
-            old_file_path = os.path.join(output_path, file)
-            new_file_path = os.path.join(output_path, f'Predictivo Part- {i}.csv')
-            os.rename(old_file_path, new_file_path)
+    save_to_csv(Data_Frame, Directory_to_Save, Type_File, partitions, delimiter)
         
     return Data_Frame
 

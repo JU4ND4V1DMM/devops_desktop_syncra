@@ -6,6 +6,7 @@ from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.functions import col, when, expr, concat, lit, row_number, collect_list, concat_ws, trim
 from pyspark.sql.window import Window
 from pyspark.sql.types import StringType
+from web.save_files import save_to_csv
 
 spark = get_spark_session()
 
@@ -151,26 +152,12 @@ def function_complete_IVR(input_folder, output_folder, Partitions, Widget_Proces
             .otherwise("Fijo")
         )
 
-        now = datetime.now()
-        Time_File = now.strftime("%Y%m%d_%H%M")
-        Time_File_csv = now.strftime("%Y%m%d %H%M")
-        output_folder_ = f"{output_folder}/Consolidado_IVR_{Time_File}"
-
         consolidated_df = Function_ADD(consolidated_df)
         
-        Partitions = int(Partitions)
-        consolidated_df.repartition(Partitions).write.mode("overwrite").option("header", "true").option("delimiter",";").csv(output_folder_)
-            
-        for root, dirs, files in os.walk(output_folder_):
-            for file in files:
-                if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                    os.remove(os.path.join(root, file))
+        delimiter = ";"
+        Type_Proccess = "Resultado IVR Consolidado"
         
-        for i, file in enumerate(os.listdir(output_folder_), start=1):
-            if file.endswith(".csv"):
-                old_file_path = os.path.join(output_folder_, file)
-                new_file_path = os.path.join(output_folder_, f'Resultado IVR {Time_File_csv} Part- {i}.csv')
-                os.rename(old_file_path, new_file_path)
+        save_to_csv(consolidated_df, output_folder, Type_Proccess, Partitions, delimiter)
 
     else:
         pass
