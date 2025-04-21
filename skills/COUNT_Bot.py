@@ -4,6 +4,7 @@ from pyspark.sql.functions import col, when, expr, concat, lit, row_number, coll
 from pyspark.sql.window import Window
 from pyspark.sql.types import StringType
 from web.pyspark import get_spark_session
+from web.save_files import save_to_csv
 
 def function_complete_BOT(input_folder, output_folder, partitions, Widget_Process):
     
@@ -66,22 +67,11 @@ def function_complete_BOT(input_folder, output_folder, partitions, Widget_Proces
             .otherwise(col("CUENTA"))
         )
 
-        partitions = int(partitions)
-        output_folder = f"{output_folder}_Consolidado_BOT"
-
         consolidated_df = Function_Modify(consolidated_df)
-        consolidated_df.repartition(partitions).write.mode('overwrite').csv(output_folder, header=True)
-
-        for root, dirs, files in os.walk(output_folder):
-            for file in files:
-                if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                    os.remove(os.path.join(root, file))
+        delimiter = ";"
+        Type_Proccess = "Consolidado BOT"
         
-        for i, file in enumerate(os.listdir(output_folder), start=1):
-            if file.endswith(".csv"):
-                old_file_path = os.path.join(output_folder, file)
-                new_file_path = os.path.join(output_folder, f'Consolidado BOT - {partitions}.csv')
-                os.rename(old_file_path, new_file_path)
+        save_to_csv(consolidated_df, output_folder, Type_Proccess, partitions, delimiter)
 
     else:
         spark.stop()

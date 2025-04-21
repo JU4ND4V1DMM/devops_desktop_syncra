@@ -5,6 +5,7 @@ from pyspark.sql import SQLContext
 from pyspark.sql.types import StringType
 from pyspark.sql.functions import col, regexp_replace, lit
 from web.pyspark import get_spark_session
+from web.save_files import save_to_csv
 
 def Function_Exclusions(Path, Outpath, Partitions):
     spark = get_spark_session()
@@ -39,21 +40,10 @@ def Function_Exclusions(Path, Outpath, Partitions):
     return df
 
 def Save_File_Form(df, Outpath, Partitions):
-    now = datetime.now()
-    Time_File = now.strftime("%Y%m%d_%H%M")
-    Outpath = f"{Outpath}Reclamaciones Reporte Gestion {Time_File}"
 
-    df.repartition(Partitions).write.mode("overwrite").option("header", "true").option("delimiter", ";").csv(Outpath)
+    Type_File = "No Gestion Perfiles"
+    delimiter = ";"
 
-    for root, dirs, files in os.walk(Outpath):
-        for file in files:
-            if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                os.remove(os.path.join(root, file))
-
-    for i, file in enumerate(os.listdir(Outpath), start=1):
-        if file.endswith(".csv"):
-            old_file_path = os.path.join(Outpath, file)
-            new_file_path = os.path.join(Outpath, f'No Gestion Perfiles_{now.strftime("%Y-%m-%d")} {i}.csv')
-            os.rename(old_file_path, new_file_path)
+    save_to_csv(df, Outpath, Type_File, Partitions, delimiter)
 
     return df

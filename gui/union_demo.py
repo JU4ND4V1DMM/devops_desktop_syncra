@@ -3,6 +3,7 @@ from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, trim, format_number
 from datetime import datetime
 import os
+from web.save_files import save_to_csv
 
 spark = get_spark_session()
 
@@ -24,23 +25,10 @@ def Union_Files_Demo(Path, Outpath, partitions):
     Data_Frame = Data_Frame.select("identificacion","cuenta","ciudad","depto","dato","tipodato","Marca")
     #Data_Frame = Data_Frame.filter(col("tipodato") == "telefono")
     #Data_Frame = Data_Frame.filter(col("tipodato") == "email")
-    now = datetime.now()
-    Time_File = now.strftime("%Y%m%d_%H%M")
-    Date_File = now.strftime("%Y%m%d")
-    Type_File = "Demograficos_Consolidados_"
-
-    output_path = f'{Outpath}/{Type_File}{Time_File}'
-    Data_Frame.repartition(int(partitions)).write.mode("overwrite").option("header", "true").option("delimiter",";").csv(output_path)
-
-    for root, dirs, files in os.walk(output_path):
-        for file in files:
-            if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                os.remove(os.path.join(root, file))
-
-    for i, file in enumerate(os.listdir(output_path), start=1):
-        if file.endswith(".csv"):
-            old_file_path = os.path.join(output_path, file)
-            new_file_path = os.path.join(output_path, f'Union Demo Reparto {Date_File} {i}.csv')
-            os.rename(old_file_path, new_file_path)
+    
+    delimiter = ";"
+    Type_Proccess = "Demograficos Consolidados"
+    
+    save_to_csv(Data_Frame, Outpath, Type_Proccess, partitions, delimiter)
     
     return Data_Frame

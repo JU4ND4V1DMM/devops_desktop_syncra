@@ -6,6 +6,7 @@ from pyspark.sql.types import IntegerType, StringType, StructField, StructType
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, concat_ws
 from pyspark.sql.functions import expr, when, row_number, collect_list, sum, length
 from web.pyspark import get_spark_session
+from web.save_files import save_to_csv
 
 spark = get_spark_session()
 
@@ -51,11 +52,10 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, Partitions):
 
     now = datetime.now()
     Time_File = now.strftime("%Y%m%d_%H%M")
-    Type_File = f"REORDENACION_Cuentas_"
-
-    output_path = f'{Directory_to_Save}{Type_File}{Time_File}'
-    Data_Frame.repartition(Partitions).write.mode("overwrite").option("header", "true").csv(output_path)
-    print(f"DataFrame guardado en: {output_path}")
+    Type_File = f"Reordenacion Cuentas Claro"
+    delimiter = ";"
+    
+    save_to_csv(Data_Frame, Directory_to_Save, Type_File, Partitions, delimiter)
 
     return Data_Frame
 

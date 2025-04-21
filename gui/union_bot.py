@@ -3,6 +3,7 @@ from web.pyspark import get_spark_session
 from pyspark.sql.functions import col, concat, lit, when
 from datetime import datetime
 import os
+from web.save_files import save_to_csv
 
 spark = get_spark_session()
 
@@ -101,26 +102,9 @@ def Union_Files_BOT(Path, Outpath, partitions):
             else:
                 consolidated_df = consolidated_df.union(df)
 
-    # Write the consolidated DataFrame to output
-    now = datetime.now()
-    Time_File = now.strftime("%Y%m%d_%H%M")
-    Date_File = now.strftime("%Y%m%d %H%M")
-    Type_File = f"Resultado_Bot_IPcom_{Time_File}"
-    output_path = f'{Outpath}{Type_File}'
+    delimiter = ";"
+    Type_Proccess = "Resultado BOT IPCom"
     
-    consolidated_df.repartition(int(partitions)).write.mode("overwrite").option("header", "true").option("delimiter", ";").csv(output_path)
-
-    # Clean up output directory
-    for root, dirs, files in os.walk(output_path):
-        for file in files:
-            if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                os.remove(os.path.join(root, file))
-    
-    # Rename output files
-    for i, file in enumerate(os.listdir(output_path), start=1):
-        if file.endswith(".csv"):
-            old_file_path = os.path.join(output_path, file)
-            new_file_path = os.path.join(output_path, f'Resultado BOT {Date_File} {i}.csv')
-            os.rename(old_file_path, new_file_path)
+    save_to_csv(consolidated_df, Outpath, Type_Proccess, partitions, delimiter)
 
     return consolidated_df
