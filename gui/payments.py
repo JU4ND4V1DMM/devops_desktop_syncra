@@ -168,6 +168,7 @@ def unify_payments(input_folder, output_folder):
                          (final_df['fecha'].dt.month >= current_month))]
         
         # Save the final DataFrame to a CSV file
+        output_folder = f"{output_folder}---- Bases para CARGUE ----/"
         filtered_df[['obligacion', 'identificacion', 'fecha', 'valor', 'asesor']].to_csv(output_path, index=False, sep=';')
         print(f"\nData saved to {output_path} with {len(final_df)} records.")
         

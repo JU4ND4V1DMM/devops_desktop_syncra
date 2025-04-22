@@ -389,23 +389,23 @@ class Charge_DB(QtWidgets.QMainWindow):
         if Brand_Filter == "castigo":
             Type_File = f"---- Bases para CRUCE ----"
             extension = "0csv"
-            Name_File = f"Castigo {Origin_Filter}"
+            Name_File = f"Cruce Castigo {Origin_Filter}"
         
         elif Brand_Filter == "Cargue" or Brand_Filter == "Errores" or Brand_Filter == "Multimarca_Cargue" or Brand_Filter == "Multimarca_Cargue_Actualizacion":
             Type_File = f"---- Bases para CARGUE ----"
             extension = "csv"
 
             if Brand_Filter == "Errores":
-                Type_File = f"Base_de_CARGUE_{Time_File}/Errores"
+                Type_File = f"---- Bases para CARGUE ----"
                 Name_File = "de Errores (NO RELACIONADA EN CARGUE)"
                 extension = "0csv"
 
             elif Brand_Filter == "Multimarca_Cargue":
-                Type_File = f"Base_de_CARGUE_{Time_File}/Cargue sin Castigo"
+                Type_File = f"---- Bases para CARGUE ----"
                 Name_File = "Cargue UNIF sin Castigo"
             
             elif Brand_Filter == "Multimarca_Cargue_Actualizacion":
-                Type_File = f"Base_de_CARGUE_{Time_File}/Cargue sin Castigo Actualizacion"
+                Type_File = f"---- Bases para CARGUE ----"
                 Name_File = "Cargue UNIF Actualizacion sin Castigo"
 
             else:
@@ -414,11 +414,11 @@ class Charge_DB(QtWidgets.QMainWindow):
         else: 
             Type_File = f"---- Bases para CRUCE ----"
             extension = "0csv"
-            Name_File = "Multimarca"
+            Name_File = "Cruce Multimarca"
             
         delimiter = ";"
         output_path = f'{Directory_to_Save}{Type_File}'
-        Name_File = f'BD Cruce {Name_File}'
+        Name_File = f'BD {Name_File}'
         
         if extension == "csv":
             save_to_csv(Data_Frame, output_path, Name_File, Partitions, delimiter)

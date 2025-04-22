@@ -74,34 +74,15 @@ def Renamed_Column(Data_Frame):
 def Save_Data_Frame (Data_Frame, Directory_to_Save, partitions, Type):
 
     now = datetime.now()
-    Time_File = now.strftime("%Y%m%d_%H%M")
     Time_File_File = now.strftime("%Y%m%d")
     Type_File = "---- Bases para CARGUE ----"
-    Type_File = f"Demograficos - Cargue_{Type}_"
+    Directory_to_Save = os.path.join(Directory_to_Save, Type_File)
+
+    Name_File = f"Demograficos {Type}"
     
-    output_path = f'{Directory_to_Save}{Type_File}{Time_File}'
-    partitions = int(partitions)
-
-    Data_Frame = Data_Frame.withColumn("cruice", concat(col("cuenta"), col("dato")))
-    Data_Frame = Data_Frame.dropDuplicates(["cruice"])
-
-    #Data_Frame = Data_Frame.select("identificacion", "cuenta", "ciudad", "depto", "dato", "tipodato")
-    Data_Frame = Data_Frame.select("identificacion", "cuenta", "ciudad", "depto", "dato", "tipodato", "Marca")
-
-    Data_Frame = Data_Frame.orderBy(col("dato"))
-
-    Data_Frame.repartition(partitions).write.mode("overwrite").option("header", "true").option("delimiter",";").csv(output_path)
-
-    for root, dirs, files in os.walk(output_path):
-            for file in files:
-                if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                    os.remove(os.path.join(root, file))
-        
-    for i, file in enumerate(os.listdir(output_path), start=1):
-        if file.endswith(".csv"):
-            old_file_path = os.path.join(output_path, file)
-            new_file_path = os.path.join(output_path, f'Demograficos {Type} {Time_File_File} {i}.csv')
-            os.rename(old_file_path, new_file_path)
+    delimiter = ";"
+    
+    save_to_csv(Data_Frame, Directory_to_Save, Name_File, partitions, delimiter)
 
     return Data_Frame
 
