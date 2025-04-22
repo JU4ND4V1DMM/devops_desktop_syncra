@@ -8,6 +8,7 @@ from PyQt6.QtWidgets import QMessageBox
 from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
 from pyspark.sql.functions import col, concat, lit, regexp_replace, when, date_format, current_date, to_date, date_format, split, length, upper
+from web.save_files import save_to_0csv, save_to_csv
 
 class Charge_DB(QtWidgets.QMainWindow):
 
@@ -386,12 +387,12 @@ class Charge_DB(QtWidgets.QMainWindow):
     def Save_File(self, Data_Frame, Directory_to_Save, Partitions, Brand_Filter, Origin_Filter, Time_File):
 
         if Brand_Filter == "castigo":
-            Type_File = f"BD_Castigo_{Time_File}/BD_Castigo_({Origin_Filter})"
+            Type_File = f"---- Bases para CRUCE ----"
             extension = "0csv"
-            Name_File = "Castigo"
+            Name_File = f"Castigo {Origin_Filter}"
         
         elif Brand_Filter == "Cargue" or Brand_Filter == "Errores" or Brand_Filter == "Multimarca_Cargue" or Brand_Filter == "Multimarca_Cargue_Actualizacion":
-            Type_File = f"Base_de_CARGUE_{Time_File}"
+            Type_File = f"---- Bases para CARGUE ----"
             extension = "csv"
 
             if Brand_Filter == "Errores":
@@ -401,33 +402,28 @@ class Charge_DB(QtWidgets.QMainWindow):
 
             elif Brand_Filter == "Multimarca_Cargue":
                 Type_File = f"Base_de_CARGUE_{Time_File}/Cargue sin Castigo"
-                Name_File = "UNIF sin Castigo"
+                Name_File = "Cargue UNIF sin Castigo"
             
             elif Brand_Filter == "Multimarca_Cargue_Actualizacion":
                 Type_File = f"Base_de_CARGUE_{Time_File}/Cargue sin Castigo Actualizacion"
-                Name_File = "UNIF sin Castigo Actualizacion"
+                Name_File = "Cargue UNIF Actualizacion sin Castigo"
 
             else:
                 Name_File = "Cargue UNIF"
 
         else: 
-            Type_File = f"BD_Multimarca_{Time_File}"
+            Type_File = f"---- Bases para CRUCE ----"
             extension = "0csv"
             Name_File = "Multimarca"
-        
+            
+        delimiter = ";"
         output_path = f'{Directory_to_Save}{Type_File}'
-        Data_Frame.repartition(Partitions).write.mode("overwrite").option("header", "true").option("delimiter",";").csv(output_path)
+        Name_File = f'BD Cruce {Name_File}'
         
-        for root, dirs, files in os.walk(output_path):
-            for file in files:
-                if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                    os.remove(os.path.join(root, file))
-        
-        for i, file in enumerate(os.listdir(output_path), start=1):
-            if file.endswith(".csv"):
-                old_file_path = os.path.join(output_path, file)
-                new_file_path = os.path.join(output_path, f'BASE {Name_File} Part- {i}.{extension}')
-                os.rename(old_file_path, new_file_path)
+        if extension == "csv":
+            save_to_csv(Data_Frame, output_path, Name_File, Partitions, delimiter)
+        else:
+            save_to_0csv(Data_Frame, output_path, Name_File, Partitions, delimiter)
 
     def Renamed_column(self, Data_Root):
 
