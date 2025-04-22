@@ -7,6 +7,7 @@ from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.types import StringType
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, expr, length, size, split, lower, when
 from web.pyspark import get_spark_session
+from web.save_files import save_to_0csv, save_to_csv
 
 spark = get_spark_session()
 
@@ -75,6 +76,7 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, partitions, Type):
     now = datetime.now()
     Time_File = now.strftime("%Y%m%d_%H%M")
     Time_File_File = now.strftime("%Y%m%d")
+    Type_File = "---- Bases para CARGUE ----"
     Type_File = f"Demograficos - Cargue_{Type}_"
     
     output_path = f'{Directory_to_Save}{Type_File}{Time_File}'

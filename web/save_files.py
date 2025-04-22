@@ -45,6 +45,47 @@ def save_to_csv(data_frame, output_path, filename, partitions, delimiter=","):
 
     print(f"✔️ CSV files successfully moved to: {output_path}")
 
+def save_to_0csv(data_frame, output_path, filename, partitions, delimiter=","):
+    partitions = int(partitions)
+    
+    now = datetime.now()
+    time_file = now.strftime("%Y%m%d_%H%M")
+    file_date = now.strftime("%Y%m%d")
+    
+    # Create a temporary folder to store initial files
+    temp_folder_name = f"{filename}_{time_file}"
+    temp_output_path = os.path.join(output_path, temp_folder_name)
+
+    # Save the DataFrame into the temporary folder
+    (data_frame
+        .repartition(partitions)
+        .write
+        .mode("overwrite")
+        .option("header", "true")
+        .option("delimiter", delimiter)
+        .csv(temp_output_path)
+    )
+
+    # Remove unnecessary files
+    for root, dirs, files in os.walk(temp_output_path):
+        for file in files:
+            if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
+                os.remove(os.path.join(root, file))
+
+    # Move the CSV files from the temporary folder to the main output path
+    for i, file in enumerate(os.listdir(temp_output_path), start=1):
+        if file.endswith(".csv"):
+            old_file_path = os.path.join(temp_output_path, file)
+            new_file_path = os.path.join(output_path, f"{filename} {file_date} {i}.0csv")
+            os.rename(old_file_path, new_file_path)
+
+    # Delete the temporary folder
+    if os.path.exists(temp_output_path):
+        shutil.rmtree(temp_output_path)
+        print(f"🗑️ Temporary folder deleted: {temp_output_path}")
+
+    print(f"✔️ CSV files successfully moved to: {output_path}")
+    
 def format_excel_file(filepath):
     wb = load_workbook(filepath)
     ws = wb.active
