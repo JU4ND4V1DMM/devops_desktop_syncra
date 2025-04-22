@@ -24,6 +24,8 @@ def process_xlsx_file(input_file, output_path):
     
     Time_Value = datetime.now().strftime("%Y-%m-%d")
     
+    output_path = f"{output_path}---- Bases para CARGUE ----"
+    
     DataFrame2[['DOCUMENTO']].drop_duplicates().to_csv(f"{output_path}/Exclusion Documentos {Time_Value}.csv", index=False, header=True)
     DataFrame3[['CUENTA']].drop_duplicates().to_csv(f"{output_path}/Exclusion Cuentas {Time_Value}.csv", index=False, header=True)
     DataFrame1[['MINS']].drop_duplicates().to_csv(f"{output_path}/Exclusion Numeros {Time_Value}.csv", index=False, header=True)

@@ -8,7 +8,7 @@ from pyspark.sql.types import IntegerType, StringType, StructField, StructType
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, concat_ws
 from pyspark.sql.functions import expr, when, row_number, collect_list, sum, length
 from web.pyspark import get_spark_session
-from web.save_files import save_to_xlsx
+from web.save_files import save_to_csv
 
 spark = get_spark_session()
 
@@ -26,8 +26,8 @@ def First_Changes_DataFrame(Root_Path):
     
     Data_Root = spark.read.csv(Root_Path, header= True, sep=";")
     DF = Data_Root.select([col(c).cast(StringType()).alias(c) for c in Data_Root.columns])
-    DF = change_character_account(DF, "cuenta")
-    DF = change_character_account(DF, "cuenta2")
+    #DF = change_character_account(DF, "cuenta")
+    #DF = change_character_account(DF, "cuenta2")
     DF = change_name_column(DF, "nombrecompleto")
 
     return DF
@@ -82,7 +82,7 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, Partitions):
     Type_File = f"Reordenacion Demograficos Claro"
     delimiter = ";"
     
-    save_to_xlsx(Data_Frame, Directory_to_Save, Type_File, Partitions)
+    save_to_csv(Data_Frame, Directory_to_Save, Type_File, Partitions)
 
     return Data_Frame
 

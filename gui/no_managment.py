@@ -53,6 +53,7 @@ def transform_no_management(input_folder, output_folder):
         if not combined_df.empty:
             combined_df['FECHA'] = datetime.now().strftime('%Y-%m-%d')  # Add current date
             output_file = f'No Gestion {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
+            output_folder = f"{output_folder}---- Bases para CARGUE ----/"
             output_path = os.path.join(output_folder, output_file)
             combined_df.to_csv(output_path, index=False, header=True, sep=';')
             print(f"\nData saved to {output_path} with {len(combined_df)} records.")
