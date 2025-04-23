@@ -38,6 +38,17 @@ def Function_Complete(Data_):
         when(col("ciudad") == "ASIGNACION_MANUAL_APPLE", lit("Apple Manual"))
         .otherwise(col("marca")))
 
+    #### Change value of RANKING STATUS
+    Data_ = Data_.withColumn(
+        "estado_ranking", 
+        when(((col("estado_ranking").isNull()) | (col("estado_ranking") == "")), lit("NO APLICA FILTRO RANKING"))
+        .otherwise(col("estado_ranking")))
+    
+    #### Filter for Colas and Ranking´s
+    Data_ = Data_.filter((col("colas").isNull()) | (col("colas") == ""))
+    filter_ranking = ["GESTION RECAUDO", "GESTIONAR", "NO RECUPERADA", "NO APLICA FILTRO RANKING"]
+    Data_ = Data_.filter((col("estado_ranking").isin(filter_ranking)) | (col("estado_ranking").isNull()) | (col("estado_ranking") == ""))
+    
     return Data_
 
 def change_name_column (Data_, Column):

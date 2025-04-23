@@ -98,7 +98,9 @@ def Renamed_Column(Data_Frame):
     Data_Frame = Data_Frame.withColumnRenamed("Fecha_Hoy", "Fecha_Envio")
     Data_Frame = Data_Frame.withColumnRenamed("customer_type_id", "Segmento")
     Data_Frame = Data_Frame.withColumnRenamed("fecha_vencimiento", "FLP")
-
+    Data_Frame = Data_Frame.withColumnRenamed("estado_ranking", "RANKING STATUS")
+    Data_Frame = Data_Frame.withColumnRenamed("cant_servicios", "CANTIDAD SERVICIOS")
+    
     Data_Frame = Data_Frame.withColumn("FILTRO GENERAL", 
         when((length(col("Nombre_Completo")) < 4) | (col("Canal") == "DELIMITAR") | (col("FILTRO_REFERENCIA") == "SIN REFERENCIA"), lit("Ajustar antes de envio"))
         .otherwise(lit("Limpio para envio")))
@@ -118,7 +120,7 @@ def Order_Columns(Data_Frame):
 
     Columns_Email = ["Canal", "Dato_Contacto", "descuento", \
                     "Edad_Mora", "CRM", "Form_Moneda", "Nombre_Completo", \
-                    "Referencia", "Cuenta", "marca2", "plan", "identificacion", "FILTRO_REFERENCIA", "Rango", "FILTRO GENERAL"]
+                    "Referencia", "Cuenta", "marca2", "plan", "identificacion", "FILTRO_REFERENCIA", "Rango", "RANKING STATUS", "CANTIDAD SERVICIOS","FILTRO GENERAL"]
 
     Data_Frame = Data_Frame.select(Columns_Email)
 
@@ -225,7 +227,7 @@ def EMAIL_Proccess (Data_, Wallet_Brand, Directory_to_Save, partitions, Origins_
     Data_ = Data_.select("identificacion", "cuenta", "cuenta2", "fecha_asignacion", "marca", \
                          "origen", f"{Price_Col}", "customer_type_id", "Form_Moneda", "nombrecompleto", \
                         "Rango", "referencia", "min", "Dato_Contacto", "Canal", "Hora_Envio", "Hora_Real", \
-                        "Fecha_Hoy", "marca2", "descuento", "DEUDA_REAL", "fecha_vencimiento", "plan")
+                        "Fecha_Hoy", "marca2", "descuento", "DEUDA_REAL", "fecha_vencimiento", "plan", "cant_servicios", "estado_ranking")
 
     Data_ = change_email(Data_)
     Data_ = Data_.filter(col("Dato_Contacto") != "0")

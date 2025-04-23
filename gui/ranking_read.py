@@ -97,7 +97,7 @@ def process_ranking_files(input_folder, output_file):
         output_directory = os.path.join(output_file, folder)
         os.makedirs(output_directory, exist_ok=True)  # Ensure the directory exists
 
-        output_file = os.path.join(output_directory, f"Rankings Recupera {datetime.now().strftime('%Y-%m-%d')}.csv")
+        output_file = os.path.join(output_directory, f"Rankings Claro {datetime.now().strftime('%Y-%m-%d')}.csv")
 
         final_df = pd.concat(all_data, ignore_index=True)
         final_df.to_csv(output_file, sep=";", index=False, encoding="utf-8")

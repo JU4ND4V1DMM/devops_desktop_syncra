@@ -68,41 +68,14 @@ def Renamed_Column(Data_Frame):
     Data_Frame = Data_Frame.withColumnRenamed("fecha_vencimiento", "FLP")
     Data_Frame = Data_Frame.withColumnRenamed("mejorperfil_mes", "MEJOR PERFIL")
     Data_Frame = Data_Frame.withColumnRenamed("dias_transcurridos", "DIAS DE MORA")
+    Data_Frame = Data_Frame.withColumnRenamed("estado_ranking", "RANKING STATUS")
+    Data_Frame = Data_Frame.withColumnRenamed("cant_servicios", "CANTIDAD SERVICIOS")
 
     Data_Frame = Data_Frame.select("Identificacion", "Cuenta_Next", "Cuenta", "Fecha_Asignacion", "Edad_Mora", \
                                    "CRM", "Saldo_Asignado", "Segmento",	"Form_Moneda", "Nombre_Completo", "Rango", \
                                     "Referencia", "Dato_Contacto", "Hora_Envio", "Hora_Real", \
                                     "Fecha_Envio", "marca2", "DCTO", "DEUDA_REAL", "FLP", "PRODUCTO", "fechapromesa", \
-                                    "TIPO_PAGO", "MEJOR PERFIL", "DIAS DE MORA", "NOMBRE CORTO")
-
-    return Data_Frame
-
-##### Union data of corporative
-def union_corp_data(Data_Frame):
-
-    mins_corp = ["3212401799", "3212401799", "3142502303", "3142502303", "3232285419",
-                "3118185075", "3155568194", "3009964685", "3224436427"]
-
-    datacorp = [("10000000000", "123456789", "1.23456789", "2000-04-30", "Corp", "BSCS", "0", "CORPORATIVO", "$ 99.999", "COLABORADOR DE RECUPERA", "0", "1234567", "0", 3212401799,"SMS", "0", "0", "0", "50","0", "0", "Postpago", "0", "Pago Parcial", "Validado", "1000", "COLABORADOR"),
-                ("10000000000", "123456789", "1.23456789", "2000-04-30", "Corp", "BSCS", "0", "CORPORATIVO", "$ 99.999", "COLABORADOR DE RECUPERA", "0", "1234567", "0", 3212401799,"SMS", "0", "0", "0", "50","0", "0", "Postpago", "0", "Pago Parcial", "Validado", "1000", "COLABORADOR"),
-                ("10000000000", "123456789", "1.23456789", "2000-04-30", "Corp", "BSCS", "0", "CORPORATIVO", "$ 99.999", "COLABORADOR DE RECUPERA", "0", "1234567", "0", 3142502303,"SMS", "0", "0", "0", "50","0", "0", "Postpago", "0", "Pago Parcial", "Validado", "1000", "COLABORADOR"),
-                ("10000000000", "123456789", "1.23456789", "2000-04-30", "Corp", "BSCS", "0", "CORPORATIVO", "$ 99.999", "COLABORADOR DE RECUPERA", "0", "1234567", "0", 3142502303,"SMS", "0", "0", "0", "50","0", "0", "Postpago", "0", "Pago Parcial", "Validado", "1000", "COLABORADOR"),
-                ("10000000000", "123456789", "1.23456789", "2000-04-30", "Corp", "BSCS", "0", "CORPORATIVO", "$ 99.999", "COLABORADOR DE RECUPERA", "0", "1234567", "0", 3232285419,"SMS", "0", "0", "0", "50","0", "0", "Postpago", "0", "Pago Parcial", "Validado", "1000", "COLABORADOR"),
-                ("10000000000", "123456789", "1.23456789", "2000-04-30", "Corp", "BSCS", "0", "CORPORATIVO", "$ 99.999", "COLABORADOR DE RECUPERA", "0", "1234567", "0", 3118185075,"SMS", "0", "0", "0", "50","0", "0", "Postpago", "0", "Pago Parcial", "Validado", "1000", "COLABORADOR"),
-                ("10000000000", "123456789", "1.23456789", "2000-04-30", "Corp", "BSCS", "0", "CORPORATIVO", "$ 99.999", "COLABORADOR DE RECUPERA", "0", "1234567", "0", 3155568194,"SMS", "0", "0", "0", "50","0", "0", "Postpago", "0", "Pago Parcial", "Validado", "1000", "COLABORADOR"),
-                ("10000000000", "123456789", "1.23456789", "2000-04-30", "Corp", "BSCS", "0", "CORPORATIVO", "$ 99.999", "COLABORADOR DE RECUPERA", "0", "1234567", "0", 3009964685,"SMS", "0", "0", "0", "50","0", "0", "Postpago", "0", "Pago Parcial", "Validado", "1000", "COLABORADOR"),
-                ("10000000000", "123456789", "1.23456789", "2000-04-30", "Corp", "BSCS", "0", "CORPORATIVO", "$ 99.999", "COLABORADOR DE RECUPERA", "0", "1234567", "0", 3224436427,"SMS", "0", "0", "0", "50","0", "0", "Postpago", "0", "Pago Parcial", "Validado", "1000", "COLABORADOR")]
-    
-    columnscorp = ["Identificacion", "Cuenta_Next", "Cuenta", "Fecha_Asignlacion", "Edad_Mora", \
-                    "CRM", "Saldo_Asignado", "Segmento", "Form_Moneda", "Nombre_Completo", "Rango", \
-                    "Referencia", "Min", "Dato_Contacto", "Canal", "Hora_Envio", "Hora_Real", \
-                    "Fecha_Envio", "DCTO", "DEUDA_REAL", "FLP", "PRODUCTO", "fechapromesa", \
-                    "TIPO_PAGO", "MEJOR PERFIL", "DIAS DE MORA", "NOMBRE CORTO", "FILTRO_REFERENCIA"]
-    
-    #Data_Corp = spark.createDataFrame(datacorp, columnscorp)
-    #Data_Frame.printSchema()
-    #Data_Corp.printSchema()
-    #Data_Frame = Data_Frame.union(Data_Corp)
+                                    "TIPO_PAGO", "MEJOR PERFIL", "DIAS DE MORA", "RANKING STATUS", "CANTIDAD SERVICIOS", "NOMBRE CORTO")
 
     return Data_Frame
 
@@ -111,6 +84,8 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, Partitions, Wallet_Brand, wi
         
     list_key = ["BD Claro SMS", "BD Claro SMS_TEXTO"]
 
+    Directory_to_Save = f"{Directory_to_Save}---- Bases para TELEMATICA ----"
+    
     for i in list_key:
 
         if i == "BD Claro SMS_TEXTO":
@@ -120,8 +95,6 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, Partitions, Wallet_Brand, wi
 
         Type_File = f"{i}"
         delimiter = ";"
-        
-        Directory_to_Save = f"{Directory_to_Save}---- Bases para TELEMATICA ----"
         
         save_to_csv(Data_Frame, Directory_to_Save, Type_File, Partitions, delimiter)
         
@@ -219,7 +192,7 @@ def SMS_Proccess (Data_Frame, Wallet_Brand, output_directory, Type_Proccess, Par
                          "origen", f"{Price_Col}", "customer_type_id", "Form_Moneda", "nombrecompleto", \
                         "Rango", "referencia", "Dato_Contacto", "Hora_Envio", "Hora_Real", \
                         "Fecha_Hoy", "marca2", "descuento", "DEUDA_REAL", "fecha_vencimiento", "PRODUCTO", \
-                        "fechapromesa", "tipo_pago", "mejorperfil_mes")
+                        "fechapromesa", "tipo_pago", "mejorperfil_mes", "cant_servicios", "estado_ranking")
     
     Data_ = Data_.withColumn("now", current_date())
     Data_ = Data_.withColumn("dias_transcurridos", datediff(col("now"), col("fecha_vencimiento")))
