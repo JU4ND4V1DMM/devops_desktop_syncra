@@ -169,7 +169,7 @@ def unify_payments(input_folder, output_folder):
         
         # Save the final DataFrame to a CSV file
         output_folder = f"{output_folder}---- Bases para CARGUE ----/"
-        filtered_df[['obligacion', 'identificacion', 'fecha', 'valor', 'asesor']].to_csv(output_path, index=False, sep=';')
+        filtered_df[['obligacion', 'identificacion', 'fecha', 'valor', 'asesor']].to_csv(output_folder, index=False, sep=';')
         print(f"\nData saved to {output_path} with {len(final_df)} records.")
         
     except Exception as e:

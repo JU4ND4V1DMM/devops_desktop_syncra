@@ -1,4 +1,5 @@
 import os
+from PyQt6.QtWidgets import QMessageBox
 from datetime import datetime
 import pandas as pd
 
@@ -11,11 +12,12 @@ def process_ranking_files(input_folder, output_file):
         output_file (str): Path to save the resulting CSV file.
     """
     all_data = []
-
+    unprocessed_files = []  # List to track files with 0 records
+    
     # Define possible column names for dynamic handling
     cuenta_columns = ["raiz", "cuenta"]
     estado_columns = ["gestion", "recuperada"]
-    filter_columns = ["aliado", "casa", "casacobro"]
+    filter_columns = ["aliado", "casa", "casacobro", "agencia"]
     servicios_column = "nservicios"
 
     # Iterate through all files in the input folder
@@ -89,18 +91,33 @@ def process_ranking_files(input_folder, output_file):
                 df = df.drop_duplicates()
 
                 # Append to the list of all data
-                all_data.append(df)
-
+                if len(df)>0:
+                    all_data.append(df)
+                else:
+                    unprocessed_files.append(file)
+        else:
+             unprocessed_files.append(file)
+               
     # Concatenate all data and save to CSV
     if all_data:
         folder = f"---- Bases para CARGUE ----"
         output_directory = os.path.join(output_file, folder)
         os.makedirs(output_directory, exist_ok=True)  # Ensure the directory exists
 
-        output_file = os.path.join(output_directory, f"Rankings Claro {datetime.now().strftime('%Y-%m-%d')}.csv")
+        output_file_ranking = os.path.join(output_directory, f"Rankings Claro {datetime.now().strftime('%Y-%m-%d')}.csv")
 
         final_df = pd.concat(all_data, ignore_index=True)
-        final_df.to_csv(output_file, sep=";", index=False, encoding="utf-8")
-        print(f"Processing complete. Results saved to: {output_file}")
+        final_df.to_csv(output_file_ranking, sep=";", index=False, encoding="utf-8")
+        print(f"Processing complete. Results saved to: {output_file_ranking}")
     else:
         print("No data found to process.")
+        
+    # Log unprocessed files
+    if unprocessed_files:
+        unprocessed_files_str = "\n".join(unprocessed_files)
+        Mbox_In_Process = QMessageBox()
+        Mbox_In_Process.setWindowTitle("Archivos no procesados")
+        Mbox_In_Process.setIcon(QMessageBox.Icon.Warning)
+        Mbox_In_Process.setText("Proceso finalizado. Los siguientes archivos no se pudieron procesar:\n\n" + unprocessed_files_str)
+        Mbox_In_Process.setStandardButtons(QMessageBox.StandardButton.Ok)
+        Mbox_In_Process.exec()
