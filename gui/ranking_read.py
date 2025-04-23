@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 import pandas as pd
 
 def process_ranking_files(input_folder, output_file):
@@ -11,6 +12,12 @@ def process_ranking_files(input_folder, output_file):
     """
     all_data = []
 
+    # Define possible column names for dynamic handling
+    cuenta_columns = ["raiz", "cuenta"]
+    estado_columns = ["gestion", "recuperada"]
+    filter_columns = ["aliado", "casa", "casacobro"]
+    servicios_column = "nservicios"
+
     # Iterate through all files in the input folder
     for file in os.listdir(input_folder):
         if file.endswith(".xlsx") or file.endswith(".xls"):
@@ -21,37 +28,62 @@ def process_ranking_files(input_folder, output_file):
             for sheet_name in excel_data.sheet_names:
                 df = excel_data.parse(sheet_name)
 
-                # Standardize column names
-                df.columns = df.columns.str.strip().str.lower()
+                # Normalize column names: strip spaces, convert to lowercase, and replace special characters
+                df.columns = (
+                    df.columns.str.strip()
+                    .str.lower()
+                    .str.replace(" ", "")
+                    .str.replace(r"[^\w\s]", "", regex=True)
+                )
 
-                # Filter rows where "aliado", "casa", or "casa cobro" contains "recupera"
-                if "aliado" in df.columns:
-                    df = df[df["aliado"].str.contains("recupera", case=False, na=False)]
-                elif "casa" in df.columns:
-                    df = df[df["casa"].str.contains("recupera", case=False, na=False)]
-                elif "casa cobro" in df.columns:
-                    df = df[df["casa cobro"].str.contains("recupera", case=False, na=False)]
-
-                # Handle "raiz" or "cuenta" columns
-                if "raiz" in df.columns:
-                    df["cuenta"] = df["raiz"].astype(str).str.replace(".", "", regex=False)
-                elif "cuenta" in df.columns:
-                    df["cuenta"] = df["cuenta"].astype(str).str.replace(".", "", regex=False)
-
-                # Count occurrences of each "cuenta" and add a "servicios" column
-                if "n servicios" in df.columns:
-                    df["servicios"] = df["n servicios"]
+                # Filter rows dynamically based on filter_columns
+                filter_column = next((col for col in filter_columns if col in df.columns), None)
+                if filter_column:
+                    df = df[df[filter_column].str.contains("RECUPERA", case=False, na=False)]
                 else:
-                    df["servicios"] = df.groupby("cuenta")["cuenta"].transform("count")
+                    print(f"No filter column found in sheet: {sheet_name}")
+                    continue
 
-                # Add "estado" column based on "concepto" or "recuperada"
-                if "concepto" in df.columns:
-                    df["estado"] = df["concepto"]
-                elif "recuperada" in df.columns:
-                    df["estado"] = df["recuperada"]
+                # Handle "cuenta" columns dynamically
+                cuenta_column = next((col for col in cuenta_columns if col in df.columns), None)
+                if cuenta_column:
+                    df["cuenta"] = df[cuenta_column].astype(str).str.replace(".", "", regex=False)
 
-                # Select relevant columns
-                df = df[["cuenta", "servicios", "estado"]]
+                    # Count occurrences of each "cuenta" and add a "servicios" column
+                    if servicios_column in df.columns:
+                        df["servicios"] = df[servicios_column]
+                        df["tipo"] = "fija"
+                    else:
+                        df["servicios"] = df.groupby("cuenta")["cuenta"].transform("count")
+                        df["tipo"] = "movil"
+                else:
+                    print(f"No 'cuenta' column found in sheet: {sheet_name}")
+                    continue
+
+                # Add "estado" column dynamically
+                estado_column = next((col for col in estado_columns if col in df.columns), None)
+                if estado_column:
+                    df["estado"] = df[estado_column]
+                else:
+                    df["estado"] = "desconocido"  # Default value if no estado column is found
+
+                # Create a new column "llave" based on "estado" and "tipo"
+                df["llave"] = (df["estado"].astype(str) + df["tipo"].astype(str)).str.upper()
+
+                # Update "estado" based on "llave"
+                df["estado"] = df["llave"].apply(
+                    lambda x: "NO RECUPERADA" if x == "NOFIJA" else
+                              "RECUPERADA" if x == "SIFIJA" else
+                              "NO GESTIONAR" if x == "NOMOVIL" else
+                              "GESTIONAR" if x == "SIMOVIL" else
+                              "GESTION RECAUDO" if "GESTION RECAUDO" in x else
+                              x
+                )
+
+                # Select relevant columns if they exist
+                df.columns = df.columns.str.upper()
+                required_columns = ["CUENTA", "SERVICIOS", "ESTADO"]
+                df = df[[col for col in required_columns if col in df.columns]]
 
                 # Remove duplicates
                 df = df.drop_duplicates()
@@ -61,13 +93,14 @@ def process_ranking_files(input_folder, output_file):
 
     # Concatenate all data and save to CSV
     if all_data:
+        folder = f"---- Bases para CARGUE ----"
+        output_directory = os.path.join(output_file, folder)
+        os.makedirs(output_directory, exist_ok=True)  # Ensure the directory exists
+
+        output_file = os.path.join(output_directory, f"Rankings Recupera {datetime.now().strftime('%Y-%m-%d')}.csv")
+
         final_df = pd.concat(all_data, ignore_index=True)
         final_df.to_csv(output_file, sep=";", index=False, encoding="utf-8")
         print(f"Processing complete. Results saved to: {output_file}")
     else:
-        print("No valid data found in the provided folder.")
-
-# Example usage
-input_folder = r"C:\Users\C.operativo\Downloads\RANKING"
-output_file = r"C:\Users\C.operativo\Downloads\Lectura Ranking.csv"
-process_ranking_files(input_folder, output_file)
+        print("No data found to process.")
