@@ -2584,7 +2584,7 @@ QPushButton:pressed
 </string>
         </property>
         <property name="text">
-         <string>No Oprimir</string>
+         <string>Transformación de Ranking´s</string>
         </property>
         <property name="default">
          <bool>false</bool>

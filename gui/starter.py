@@ -3,6 +3,7 @@ import webbrowser
 import pandas as pd
 import shutil
 import gui.payments
+import gui.ranking_read
 import web.download_saem_reports
 import gui.payments_not_applied
 import gui.no_managment
@@ -68,7 +69,7 @@ def count_xlsx_data(file_path):
     return total_count
 
 Version_Winutils = datetime.datetime.now().date()
-Buffering, Compiles, Path_Root = random.randint(11, 24), int(cache_winutils), int((980 + Version_Pyspark))
+Buffering, Compiles, Path_Root = random.randint(11, 14), int(cache_winutils), int((980 + Version_Pyspark))
 
 class Init_APP():
 
@@ -167,6 +168,7 @@ class Init_APP():
         self.process_data.pushButton_Partitions_BD_11.clicked.connect(self.copy_template_reports_saem)
         self.process_data.pushButton_Partitions_BD_30.clicked.connect(self.copy_folder_scripts)
         self.process_data.pushButton_Partitions_BD_9.clicked.connect(self.ivr_folder_read)
+        self.process_data.pushButton_Partitions_BD_31.clicked.connect(self.ranking_read)
         self.process_data.pushButton_Partitions_BD_3.clicked.connect(self.task_web_folder)
         self.process_data.pushButton_Partitions_BD_42.clicked.connect(self.folder_webscrapping)
         self.process_data.pushButton_Partitions_BD_5.clicked.connect(self.folder_demographic)
@@ -982,6 +984,36 @@ class Init_APP():
             Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a consolidar.")
             Mbox_File_Error.exec()
 
+    def ranking_read(self):
+
+        type_process = "folder"   
+             
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+
+        if self.partitions_FOLDER != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa la carpeta.")
+            Mbox_In_Process.exec()
+            
+            self.Base = gui.ranking_read.process_ranking_files(self.folder_path_IVR, self.folder_path)
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Consolidado de Rankings ejecutado exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos de RANKING a consolidar.")
+            Mbox_File_Error.exec()
+            
     def show_developers_window(self):
         
         dialog = QDialog()
