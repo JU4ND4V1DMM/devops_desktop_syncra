@@ -28,6 +28,7 @@ def try_create_spark_session(config_level):
                 .config("spark.executor.extraJavaOptions", "-Djava.security.manager=allow") \
                 .config("spark.driver.memory", '16g') \
                 .config("spark.executor.memory", '16g') \
+                .config("spark.jars.packages", "com.crealytics:spark-excel_2.12:0.13.5") \
                 .getOrCreate()
             spark.conf.set("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false")
             print("✔ Spark avanzado inicializado correctamente.")
@@ -38,6 +39,7 @@ def try_create_spark_session(config_level):
                 .appName("GlobalSparkApp") \
                 .config("spark.driver.memory", '8g') \
                 .config("spark.executor.memory", '8g') \
+                .config("spark.jars.packages", "com.crealytics:spark-excel_2.12:0.13.5") \
                 .getOrCreate()
             spark.conf.set("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false")
             print("✔ Spark medio inicializado correctamente.")

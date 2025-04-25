@@ -24,11 +24,11 @@ def Union_Files_Demo(Path, Outpath, partitions):
         
     Data_Frame = Data_Frame.select("identificacion","cuenta","ciudad","depto","dato","tipodato","Marca")
     
-    Data_Frame = Data_Frame.filter(col("tipodato") == "telefono")
-    Data_Frame = Data_Frame.filter(col("dato") <= 3599999999)
-    Data_Frame = Data_Frame.filter(col("dato") >= 3000000009)
-    Data_Frame = Data_Frame.select("dato")
-    Data_Frame = Data_Frame.dropDuplicates(["dato"])
+    # Data_Frame = Data_Frame.filter(col("tipodato") == "telefono")
+    # Data_Frame = Data_Frame.filter(col("dato") <= 3599999999)
+    # Data_Frame = Data_Frame.filter(col("dato") >= 3000000009)
+    # Data_Frame = Data_Frame.select("dato")
+    # Data_Frame = Data_Frame.dropDuplicates(["dato"])
 
     delimiter = ";"
     Type_Proccess = "Demograficos Consolidados"

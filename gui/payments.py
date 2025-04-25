@@ -147,7 +147,23 @@ def unify_payments(input_folder, output_folder):
         
         # Generate output file name and path
         output_file = f'Pagos {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
-        output_path = os.path.join(output_folder, output_file)
+        
+        # Construct the full path for the output folder
+        output_folder_ = "---- Bases para CARGUE ----/" 
+        output_path_folder = os.path.join(output_folder, output_folder_)
+        
+        # Ensure the output folder exists
+        if not os.path.exists(output_path_folder):
+            os.makedirs(output_path_folder)
+        
+        # Construct the full path for the output file
+        output_path = os.path.join(output_path_folder, output_file)
+        
+        # Now you can use output_path for your output file
+        print(f"Output file path: {output_path}")
+        
+        # Create the output file path
+        output_path = os.path.join(output_path_folder, output_file)
         
         # Convert 'valor' to numeric, fill NaNs, and filter out non-positive values
         final_df['valor'] = pd.to_numeric(final_df['valor'], errors='coerce')
@@ -168,8 +184,7 @@ def unify_payments(input_folder, output_folder):
                          (final_df['fecha'].dt.month >= current_month))]
         
         # Save the final DataFrame to a CSV file
-        output_folder = f"{output_folder}---- Bases para CARGUE ----/"
-        filtered_df[['obligacion', 'identificacion', 'fecha', 'valor', 'asesor']].to_csv(output_folder, index=False, sep=';')
+        filtered_df[['obligacion', 'identificacion', 'fecha', 'valor', 'asesor']].to_csv(output_path, index=False, sep=';')
         print(f"\nData saved to {output_path} with {len(final_df)} records.")
         
     except Exception as e:

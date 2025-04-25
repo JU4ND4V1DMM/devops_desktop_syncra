@@ -55,6 +55,7 @@ def Renamed_Column(Data_Frame, Type_Proccess):
     Data_Frame = Data_Frame.withColumnRenamed("cuenta2", "CUENTA_NEXT")
     Data_Frame = Data_Frame.withColumnRenamed("mejorperfil_mes", "Mejor Gestion")
 
+    print(f"Tipo base: {Type_Proccess}")
     if Type_Proccess == "ServiceBots":
 
         Data_Frame = Data_Frame.withColumn(
@@ -89,7 +90,7 @@ def Renamed_Column(Data_Frame, Type_Proccess):
         Data_Frame = Data_Frame.withColumnRenamed("origen", "origin")
         Data_Frame = Data_Frame.withColumnRenamed("fecha_vencimiento", "FLP")
 
-    else:
+    elif Type_Proccess == "WiseBot":
         
         Data_Frame = Data_Frame.withColumn(
             "MARCA",
@@ -109,7 +110,10 @@ def Renamed_Column(Data_Frame, Type_Proccess):
         Data_Frame = Data_Frame.withColumnRenamed("referencia", "Referencia_")
         Data_Frame = Data_Frame.withColumnRenamed("descuento", "DESCUENTO")
         Data_Frame = Data_Frame.withColumnRenamed("fecha_vencimiento", "FLP")
-        
+    
+    else:
+        pass
+    
     return Data_Frame
 
 ### Proceso de guardado del RDD
@@ -291,14 +295,14 @@ def BOT_Process (Data_, Wallet_Brand, Origins_Filter, Directory_to_Save, Partiti
     Data_ = Data_.withColumn("Filtro", row_number().over(windowSpec))    
 
     if Type_Proccess == "IPCom":
-        Type_Proccess = f"BD Claro BOT {Type_Proccess}"
         delimiter = ","
         Data_ = IPCom(Data_, Type_Proccess)
 
     else:
-        Type_Proccess = f"BD Claro BOT {Type_Proccess}"
         delimiter = ";"
         Data_ = WiseBot(Data_, Type_Proccess)
+    
+    Type_Proccess = f"BD Claro BOT {Type_Proccess}"
     
     Save_Data_Frame(Data_, Directory_to_Save, Type_Proccess, Partitions, delimiter)
     
