@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 import pandas as pd
 
@@ -25,6 +26,9 @@ def process_xlsx_file(input_file, output_path):
     Time_Value = datetime.now().strftime("%Y-%m-%d")
     
     output_path = f"{output_path}---- Bases para CARGUE ----"
+    
+    if output_path not in os.listdir():
+        os.makedirs(output_path, exist_ok=True)  # Ensure the directory exists
     
     DataFrame2[['DOCUMENTO']].drop_duplicates().to_csv(f"{output_path}/Exclusion Documentos {Time_Value}.csv", index=False, header=True)
     DataFrame3[['CUENTA']].drop_duplicates().to_csv(f"{output_path}/Exclusion Cuentas {Time_Value}.csv", index=False, header=True)

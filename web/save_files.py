@@ -125,7 +125,7 @@ def save_to_xlsx(data_frame, output_path, filename, partitions):
 
     full_output_path = os.path.join(output_path, folder_name)
     
-    # Remove temporary or unnecessary files
+    #Remove temporary or unnecessary files
     for root, dirs, files in os.walk(full_output_path):
         for file in files:
             if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
