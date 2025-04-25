@@ -2,11 +2,13 @@ from datetime import datetime
 from PyQt6.QtCore import QDate
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
+import modules.fragment_dataBase
 import web.download_saem_reports
 import modules.BOT_Process
 import modules.EMAIL_Process
 import modules.IVR_Process
 import modules.Phone_Order
+import modules.fragment_dataBase
 import modules.TMO_Trial
 import modules.Report_Exclusions
 import modules.Exclusions
@@ -54,6 +56,7 @@ class Process_Data(QtWidgets.QMainWindow):
         #self.process_data.pushButton_Process_3.clicked.connect(self.compilation_process_pash)
         self.process_data.pushButton_Partitions_BD_35.clicked.connect(self.compilation_process_direction)
         self.process_data.pushButton_Partitions_BD_34.clicked.connect(self.reorder_phones)
+        self.process_data.pushButton_Partitions_BD_36.clicked.connect(self.payments_bd_filter)
         self.process_data.pushButton_Partitions_BD_38.clicked.connect(self.file_exclusions)
         self.process_data.pushButton_Partitions_BD_39.clicked.connect(self.bd_exclusions)
         self.process_data.pushButton_Partitions_BD_43.clicked.connect(self.tmo_converter)
@@ -135,6 +138,32 @@ class Process_Data(QtWidgets.QMainWindow):
             Mbox_In_Process.setWindowTitle("")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
             Mbox_In_Process.setText("Proceso de reordenacion de numeros ejecutado exitosamente.")
+            Mbox_In_Process.exec()
+        else:
+            pass
+    
+    def payments_bd_filter(self):
+
+        list_data = [self.file_path, self.folder_path]
+        lenght_list = len(list_data)
+
+        file = list_data[0]
+        root = list_data[1]
+
+        if lenght_list >= 2:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+            Mbox_In_Process.exec()
+
+            modules.fragment_dataBase.process_csv_file(file, root)
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Proceso de filtro de pagos ejecutado exitosamente.")
             Mbox_In_Process.exec()
         else:
             pass

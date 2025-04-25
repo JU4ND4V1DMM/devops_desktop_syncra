@@ -3179,7 +3179,7 @@ class Ui_Process_Data(object):
         self.Group_Selection_Starter_17.setTitle(_translate("Process_Data", "Procesos Líderes"))
         self.pushButton_Partitions_BD_34.setText(_translate("Process_Data", "Reordenación de Números"))
         self.pushButton_Partitions_BD_35.setText(_translate("Process_Data", "Exportar Predictivo"))
-        self.pushButton_Partitions_BD_36.setText(_translate("Process_Data", "Exportar Base con Filtros"))
+        self.pushButton_Partitions_BD_36.setText(_translate("Process_Data", "Exportar Bases de Pagos Filtrada"))
         self.pushButton_Partitions_BD_43.setText(_translate("Process_Data", "Convertir TMO Claro (Día anterior)"))
         self.pushButton_Partitions_BD_38.setText(_translate("Process_Data", "Reclamaciones Reporte Gestión"))
         self.Group_Selection_Starter_18.setTitle(_translate("Process_Data", "Procesos Líderes"))

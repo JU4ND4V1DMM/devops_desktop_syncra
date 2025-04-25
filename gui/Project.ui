@@ -5251,7 +5251,7 @@ QPushButton:pressed
 </string>
          </property>
          <property name="text">
-          <string>Exportar Base con Filtros</string>
+          <string>Exportar Bases de Pagos Filtrada</string>
          </property>
          <property name="default">
           <bool>false</bool>
