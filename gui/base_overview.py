@@ -74,6 +74,7 @@ class Charge_DB(QtWidgets.QMainWindow):
 
     def mins_from_bd(self):
 
+        self.digit_partitions()
         path =  self.file_path
         output_directory = self.folder_path
         partitions = self.partitions
@@ -150,6 +151,8 @@ class Charge_DB(QtWidgets.QMainWindow):
         spark = get_spark_session()
 
         sqlContext = SQLContext(spark)
+        
+        self.digit_partitions()
         
         list_data = [self.file_path, self.folder_path, self.partitions]
 
@@ -490,6 +493,7 @@ class Charge_DB(QtWidgets.QMainWindow):
     
     def partition_DATA(self):
 
+        self.digit_partitions()
         list_data = [self.file_path, self.folder_path, self.partitions]
 
         file = list_data[0]

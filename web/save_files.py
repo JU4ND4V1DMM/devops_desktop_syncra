@@ -6,6 +6,9 @@ from openpyxl.styles import Font, Alignment
 
 def save_to_csv(data_frame, output_path, filename, partitions, delimiter=","):
     partitions = int(partitions)
+    if output_path and not os.path.exists(output_path):
+        os.makedirs(output_path)
+        print(f"✔️ Created output directory: {output_path}")
     
     now = datetime.now()
     time_file = now.strftime("%Y%m%d_%H%M")
@@ -47,7 +50,10 @@ def save_to_csv(data_frame, output_path, filename, partitions, delimiter=","):
 
 def save_to_0csv(data_frame, output_path, filename, partitions, delimiter=","):
     partitions = int(partitions)
-    
+    if output_path and not os.path.exists(output_path):
+        os.makedirs(output_path)
+        print(f"✔️ Created output directory: {output_path}")
+        
     now = datetime.now()
     time_file = now.strftime("%Y%m%d_%H%M")
     file_date = now.strftime("%Y%m%d")

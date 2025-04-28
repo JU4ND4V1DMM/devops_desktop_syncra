@@ -68,6 +68,10 @@ def Transform_Payments_without_Applied(input_folder, output_folder):
             combined_df['FECHA'] = datetime.now().strftime('%Y-%m-%d')
             output_file = f'Pagos sin Aplicar {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
             output_folder = f"{output_folder}---- Bases para CARGUE ----/"
+            
+            if output_folder and not os.path.exists(output_folder):
+                os.makedirs(output_folder)
+            
             output_path = os.path.join(output_folder, output_file)
             combined_df[['CUENTA', 'FECHA']].to_csv(output_path, index=False, header=True, sep=';')
             print(f"\nData PSA saved to {output_path} with {len(combined_df)} records.")
