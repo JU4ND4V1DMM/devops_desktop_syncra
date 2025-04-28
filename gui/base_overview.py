@@ -492,7 +492,6 @@ class Charge_DB(QtWidgets.QMainWindow):
         return Data_Root
     
     def partition_DATA(self):
-
         self.digit_partitions()
         list_data = [self.file_path, self.folder_path, self.partitions]
 
@@ -500,33 +499,67 @@ class Charge_DB(QtWidgets.QMainWindow):
         root = list_data[1]
         partitions = int(list_data[2])
 
+        # Create the folder for partitions
+        partition_folder = os.path.join(root, "--- PARTITIONS ----")
+        os.makedirs(partition_folder, exist_ok=True)
+
+        # Detect delimiter and encoding
+        delimiter = None
+        encoding_detected = None
+
         try:
-            with open(file, 'r', encoding='utf-8') as origin_file:
+            # Try reading the file with different encodings
+            for encoding in ['utf-8', 'latin-1', 'ISO-8859-1']:
+                try:
+                    with open(file, 'r', encoding=encoding) as f:
+                        first_line = f.readline()
+                        if ',' in first_line:
+                            delimiter = ','
+                        elif ';' in first_line:
+                            delimiter = ';'
+                        elif '\t' in first_line:
+                            delimiter = '\t'
+                        else:
+                            raise ValueError("Could not detect the delimiter.")
+                        encoding_detected = encoding
+                        break
+                except UnicodeDecodeError:
+                    continue
+
+            if not encoding_detected:
+                raise ValueError("Could not determine the file encoding.")
+
+            print(f"Detected delimiter: {delimiter}")
+            print(f"Detected encoding: {encoding_detected}")
+
+            # Read the entire file with the detected encoding and delimiter
+            with open(file, 'r', encoding=encoding_detected) as origin_file:
                 rows = origin_file.readlines()
 
-                rows_por_particion = len(rows) // partitions
+                # Separate the header from the rest of the rows
+                header = rows[0]  # First line as the header
+                data_rows = rows[1:]  # Remaining rows
+
+                rows_per_partition = len(data_rows) // partitions
 
                 for i in range(partitions):
-                    begining = i * rows_por_particion
-                    end = (i + 1) * rows_por_particion if i < partitions - 1 else len(rows)
+                    start = i * rows_per_partition
+                    end = (i + 1) * rows_per_partition if i < partitions - 1 else len(data_rows)
 
-                    if i > 0:
-                        extension_file = "0csv"
-                    else:
-                        extension_file = "csv"
+                    # Partition file name with leading zero for numbers less than 10
+                    partition_name = os.path.join(partition_folder, f"Partition_{i+1:02}.csv")
 
-                    nombre_particion = os.path.join(root, f"Particion {i+1}.{extension_file}")
+                    # Write header and data rows to the partition file
+                    with open(partition_name, 'w', encoding='utf-8') as file_output:
+                        file_output.write(header)  # Write the header
+                        file_output.writelines(data_rows[start:end])  # Write the data rows
 
-                    with open(nombre_particion, 'w', encoding='utf-8') as file_output:
-                        file_output.writelines(rows[begining:end])
+                # If there are additional rows, create an extra partition
+                if end < len(data_rows):
+                    partition_name = os.path.join(partition_folder, f"Partition_{partitions+1:02}.csv")
+                    with open(partition_name, 'w', encoding='utf-8') as file_output:
+                        file_output.write(header)  # Write the header
+                        file_output.writelines(data_rows[end:])  # Write the remaining rows
 
-                if end < len(rows):
-                    nombre_particion = os.path.join(root, f"File_Part_{partitions+1}.csv")
-                    with open(nombre_particion, 'w', encoding='utf-8') as file_output:
-                        file_output.writelines(rows[end:])
-
-        except:
-            pass
-
-    
-    
+        except Exception as e:
+            print(f"Error during partitioning: {e}")
