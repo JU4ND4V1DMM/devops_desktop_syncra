@@ -43,8 +43,16 @@ End Sub
 Sub Titles()
 
     Dim specificValue As String
+    Dim specificValue2 As String
     specificValue = "Hola"
+    specificValue2 = "CRM Origen"
     
+    ' Si el valor de A1 es igual a specificValue2, eliminamos la fila 1
+    If Range("C1").Value = specificValue2 Then
+        Rows("1:1").Delete
+    End If
+    
+    ' Si el valor de A1 no es specificValue, insertamos la fila y colocamos los títulos
     If Range("A1").Value <> specificValue Then
     
         Rows("1:1").Select
@@ -491,4 +499,3 @@ Sub DatesDelete()
         
     Loop
 End Sub
-

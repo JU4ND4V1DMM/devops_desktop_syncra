@@ -43,12 +43,15 @@ def merge_files(input_directory: str, output_directory: str):
         merged_df = merged_df.dropDuplicates()
         
         delimiter = ";"
-        Type_Proccess = "Union Archivos"
-        
+
+        # Validate if the DataFrame contains the expected columns
+        columns = merged_df.columns
+        if "2_" in columns and "3_" in columns:
+            Type_Proccess = "Conversion"
+            
+        else:
+            Type_Proccess = "Union Archivos"
+
         Partitions = 1
-        
+
         save_to_csv(merged_df, output_directory, Type_Proccess, Partitions, delimiter)
-        
-        print(f"Files combined and saved in {output_directory} with delimiter '{found_delimiter}'")
-    else:
-        print("No files were combined.")
