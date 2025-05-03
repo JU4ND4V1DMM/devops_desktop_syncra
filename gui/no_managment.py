@@ -38,17 +38,29 @@ def transform_no_management(input_folder, output_folder):
                 else:
                     df = process_file(file_path, delimiter=' ')  # Process space-delimited TXT
             
+            # Get the last modification date of the file
+            file_modification_date = datetime.fromtimestamp(os.path.getmtime(file_path)).strftime('%Y-%m-%d')
+
             if df is not None:
+                df['FECHA_ARCHIVO'] = file_modification_date  # Add the modification date as a new column
                 df_list.append(df)
                 print(len(df))  # Print the number of records processed for the current file
             
         if not df_list:
             raise ValueError("No DataFrames were processed. Ensure files contain data.")
         
-        # Combine all DataFrames and drop duplicates
-        combined_df = pd.concat(df_list, ignore_index=True).drop_duplicates()
+        # Combine all DataFrames
+        combined_df = pd.concat(df_list, ignore_index=True)
+
+        # Drop duplicates based on 'CUENTA' and 'FECHA_ARCHIVO' while keeping the count
+        combined_df = combined_df.drop_duplicates(subset=['CUENTA', 'FECHA_ARCHIVO'])
+        
+        # Clean and filter the 'CUENTA' column
         combined_df['CUENTA'] = combined_df['CUENTA'].str.replace('.', '', regex=False)
         combined_df = combined_df[combined_df['CUENTA'].str.isnumeric()]
+        
+        # Count occurrences of each value in the 'CUENTA' column
+        combined_df['RECUENTO'] = combined_df.groupby('CUENTA')['CUENTA'].transform('count')
 
         if not combined_df.empty:
             combined_df['FECHA'] = datetime.now().strftime('%Y-%m-%d')  # Add current date
@@ -59,6 +71,10 @@ def transform_no_management(input_folder, output_folder):
                 os.makedirs(output_folder)
             
             output_path = os.path.join(output_folder, output_file)
+            
+            # Select only the 'CUENTA' and 'RECUENTO' columns
+            combined_df = combined_df[['CUENTA', 'FECHA']]
+            
             combined_df.to_csv(output_path, index=False, header=True, sep=';')
             print(f"\nData saved to {output_path} with {len(combined_df)} records.")
         else:

@@ -56,14 +56,30 @@ def Transform_Payments_without_Applied(input_folder, output_folder):
             print(f"Payments not Applied Processing: {file_name} - Registers: ", end='')  # Changed line
             
             df = process_file(file_path)
+            
+            # Get the last modification date of the file
+            file_modification_date = datetime.fromtimestamp(os.path.getmtime(file_path)).strftime('%Y-%m-%d')
+
             if df is not None:
+                df['FECHA_ARCHIVO'] = file_modification_date  # Add the modification date as a new column
                 df_list.append(df)
                 print(len(df))  # Print the number of records processed for the current file
         
         if not df_list:
             raise ValueError("No DataFrames were processed. Ensure Excel files contain the specified sheets.")
         
-        combined_df = pd.concat(df_list, ignore_index=True).drop_duplicates()
+        # Combine all DataFrames
+        combined_df = pd.concat(df_list, ignore_index=True)
+
+        # Drop duplicates based on 'CUENTA' and 'FECHA_ARCHIVO'
+        combined_df = combined_df.drop_duplicates(subset=['CUENTA', 'FECHA_ARCHIVO'])
+        
+        # Count occurrences of each value in the 'CUENTA' column
+        combined_df['RECUENTO'] = combined_df.groupby('CUENTA')['CUENTA'].transform('count')
+
+        # Select only 'CUENTA' and 'RECUENTO'
+        combined_df = combined_df[['CUENTA', 'RECUENTO']]
+
         if len(combined_df) > 5:
             combined_df['FECHA'] = datetime.now().strftime('%Y-%m-%d')
             output_file = f'Pagos sin Aplicar {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
@@ -73,7 +89,11 @@ def Transform_Payments_without_Applied(input_folder, output_folder):
                 os.makedirs(output_folder)
             
             output_path = os.path.join(output_folder, output_file)
-            combined_df[['CUENTA', 'FECHA']].to_csv(output_path, index=False, header=True, sep=';')
+            
+            # Select only the 'CUENTA' and 'RECUENTO' columns
+            combined_df = combined_df[['CUENTA', 'RECUENTO']]
+            
+            combined_df.to_csv(output_path, index=False, header=True, sep=';')
             print(f"\nData PSA saved to {output_path} with {len(combined_df)} records.")
         else:
             print("\nThe combined DataFrame does not have more than 5 records. No action taken.")
