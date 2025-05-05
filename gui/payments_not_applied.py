@@ -91,7 +91,7 @@ def Transform_Payments_without_Applied(input_folder, output_folder):
             output_path = os.path.join(output_folder, output_file)
             
             # Select only the 'CUENTA' and 'RECUENTO' columns
-            combined_df = combined_df[['CUENTA', 'RECUENTO']]
+            combined_df = combined_df[['CUENTA', 'FECHA']]
             
             combined_df.to_csv(output_path, index=False, header=True, sep=';')
             print(f"\nData PSA saved to {output_path} with {len(combined_df)} records.")
