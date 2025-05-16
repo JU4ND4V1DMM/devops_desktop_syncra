@@ -20,7 +20,7 @@ def save_to_csv(data_frame, output_path, filename, partitions, delimiter=","):
 
     # Save the DataFrame into the temporary folder
     (data_frame
-        .repartition(partitions)
+        .repartition(partitions) 
         .write
         .mode("overwrite")
         .option("header", "true")

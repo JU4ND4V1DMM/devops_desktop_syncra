@@ -112,6 +112,21 @@ def process_excel(file_path):
         print(f"Error processing Excel {file_path}: {e}")
         return None
 
+def process_xls_password(file_path):
+    """Process an Excel file with password and clean its data."""
+    try:
+        xls = pd.ExcelFile(file_path, password='RECUPERA-9996')  # Load the Excel file with password
+        
+        df = pd.read_excel(xls, sheet_name='PAGOS', dtype=str)  # Read the 'PAGOS' sheet into a DataFrame
+        df = df.rename(columns={'NUMERO_CREDITO': 'obligacion', 'FECHA': 'fecha', 'MONTO_PAGO': 'valor'})
+        df['valor'] = df['valor'].str.split(',').str[0]  # Quítale lo que va después de la coma
+        
+        return df[['obligacion', 'fecha', 'valor']]  # Return only the relevant columns
+    
+    except Exception as e:
+        print(f"Error processing Excel with password {file_path}: {e}")
+        return None
+    
 def unify_payments(input_folder, output_folder):
     """Unify payment data from various files into a single CSV file."""
     try:
@@ -127,10 +142,18 @@ def unify_payments(input_folder, output_folder):
             # Process files based on their extension
             if file_name.endswith('.txt'):
                 df = process_txt(file_path)
+                
             elif file_name.endswith(('.xlsx', '.xls', 'XLSX')):
-                df = process_excel(file_path)
+                
+                try:
+                    df = process_excel(file_path)
+                except Exception as e:  
+                    print(f"Error: {e}")
+                    df = process_xls_password(file_path)
+                    
             elif file_name.endswith('.csv'):
                 df = process_csv(file_path)
+                
             else:
                 continue
             if df is not None:

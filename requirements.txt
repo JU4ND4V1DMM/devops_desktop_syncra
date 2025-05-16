@@ -1,3 +1,4 @@
+xlrd
 pyspark
 findspark
 psutil

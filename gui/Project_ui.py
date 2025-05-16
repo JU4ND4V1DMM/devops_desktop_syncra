@@ -3002,7 +3002,7 @@ class Ui_Process_Data(object):
         self.label_Total_Registers_6.setText(_translate("Process_Data", "trial"))
         self.pushButton_Partitions_BD_27.setText(_translate("Process_Data", "Transformar PSA-NG-PAGOS"))
         self.pushButton_Partitions_BD_28.setText(_translate("Process_Data", "Consolidar Archivos de Carpeta"))
-        self.pushButton_Partitions_BD_29.setText(_translate("Process_Data", "Leer Resumen Telemática"))
+        self.pushButton_Partitions_BD_29.setText(_translate("Process_Data", "Leer Insignias"))
         self.Group_Selection_Starter_7.setTitle(_translate("Process_Data", "Selección de Recurso"))
         self.label_Benefits_4.setText(_translate("Process_Data", "Solo para carpetas segmentadas"))
         self.comboBox_Benefits_4.setItemText(0, _translate("Process_Data", "--- Seleccione opción"))

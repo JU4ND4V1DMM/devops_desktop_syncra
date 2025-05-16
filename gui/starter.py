@@ -2,6 +2,7 @@ import random
 import webbrowser
 import pandas as pd
 import shutil
+import gui.insignias
 import gui.payments
 import gui.ranking_read
 import web.download_saem_reports
@@ -176,7 +177,7 @@ class Init_APP():
         self.process_data.pushButton_Partitions_BD_2.clicked.connect(self.folder_validation)
         self.process_data.pushButton_Partitions_BD_27.clicked.connect(self.folder_files_process)
         self.process_data.pushButton_Partitions_BD_28.clicked.connect(self.folder_union_excel)
-        self.process_data.pushButton_Partitions_BD_29.clicked.connect(self.folder_union_excel)
+        self.process_data.pushButton_Partitions_BD_29.clicked.connect(self.folder_union_insignias)
         self.process_data.pushButton_Partitions_BD_10.clicked.connect(self.read_folder_resources)
         
         self.process_data.action_Developers.triggered.connect(self.show_developers_window)
@@ -846,6 +847,36 @@ class Init_APP():
             Mbox_In_Process.setWindowTitle("")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
             Mbox_In_Process.setText("Unión generada exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a consolidar.")
+            Mbox_File_Error.exec()
+            
+    def folder_union_insignias(self):
+
+        type_process = "folder"
+        
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+
+        if self.partitions_FOLDER != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa la carpeta.")
+            Mbox_In_Process.exec()
+            
+            gui.insignias.read_files_insignias(self.folder_path_IVR, self.folder_path)
+
+            Mbox_In_Process = QMessageBox() 
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Insignias generadas exitosamente.")
             Mbox_In_Process.exec()
         
         else:
