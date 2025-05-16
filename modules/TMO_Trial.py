@@ -45,7 +45,7 @@ def Function_Complete(Path, Outpath, Partitions):
     df = df.withColumn("Fecha", lit(f"{Yesterday_Date}"))
 
     Type_Proccess = f"TMO Conversion"
-    delimiter = ","
+    delimiter = ";"
     
     save_to_csv(df, Outpath, Type_Proccess, Partitions, delimiter)
 

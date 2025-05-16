@@ -20,7 +20,7 @@ def get_disk_with_most_free_space():
 
 def try_create_spark_session(config_level):
     try:
-        if config_level == "advanced":
+        if config_level == "advanced": 
             spark = SparkSession.builder \
                 .appName("GlobalSparkApp") \
                 .config("spark.local.dir", "C:/tmp/hive") \

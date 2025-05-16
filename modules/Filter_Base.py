@@ -44,6 +44,17 @@ def Function_Complete(Data_):
         when(((col("estado_ranking").isNull()) | (col("estado_ranking") == "")), lit("NO APLICA FILTRO RANKING"))
         .otherwise(col("estado_ranking")))
     
+    special_filters = ((col("marca") == "Prepotencial Especial") | 
+                       (col("marca") == "churn") | 
+                       (col("marca") == "prechurn") | 
+                       (col("marca") == "prepotencial") | 
+                       (col("marca") == "potencial"))
+    
+    Data_ = Data_.withColumn(
+        "estado_ranking", 
+        when((col("estado_ranking") == "NO APLICA FILTRO RANKING") & special_filters, lit("RETIRAR"))
+        .otherwise(col("estado_ranking")))
+    
     #### Filter for Colas and Ranking´s
     #Data_ = Data_.filter((col("colas").isNull()) | (col("colas") == ""))
     filter_ranking = ["GESTION RECAUDO", "GESTIONAR", "NO RECUPERADA", "NO APLICA FILTRO RANKING"]

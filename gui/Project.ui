@@ -2410,7 +2410,7 @@ QPushButton:pressed
 </string>
         </property>
         <property name="text">
-         <string>Leer Resumen Telemática</string>
+         <string>Leer Insignias</string>
         </property>
         <property name="default">
          <bool>false</bool>
