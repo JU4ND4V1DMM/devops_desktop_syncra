@@ -100,12 +100,19 @@ def process_excel(file_path):
                 if 'CUSTCODE' in df.columns:
                     df['CUSTCODE'] = df['CUSTCODE'].str.replace('.', '', regex=False)
                     df = df.rename(columns={'CUSTCODE': 'obligacion'})
+                if 'NUMERO_CREDITO' in df.columns:
+                    df['NUMERO_CREDITO'] = df['NUMERO_CREDITO'].str.replace('.', '', regex=False)
+                    df = df.rename(columns={'NUMERO_CREDITO': 'obligacion'})
                 if 'FECHA' in df.columns:
                     df['FECHA'] = df['FECHA'].apply(clean_date)
                     df = df.rename(columns={'FECHA': 'fecha'})
                 if 'CACHKAMT' in df.columns:
                     df['CACHKAMT'] = df['CACHKAMT'].apply(clean_numeric_amount)
-                    df = df.rename(columns={'CACHKAMT': 'valor'})
+                    df = df.rename(columns={'CACHKAMT': 'valor'})                
+                if 'MONTO_PAGO' in df.columns:
+                    df['MONTO_PAGO'] = df['MONTO_PAGO'].apply(clean_numeric_amount)
+                    df = df.rename(columns={'MONTO_PAGO': 'valor'})
+                    
                 df_list.append(df)  # Add the cleaned DataFrame to the list
         return pd.concat(df_list, ignore_index=True)  # Concatenate all DataFrames into one
     except Exception as e:
