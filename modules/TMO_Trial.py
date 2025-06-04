@@ -6,6 +6,7 @@ from pyspark.sql.types import StringType
 from pyspark.sql.functions import col, lit
 from web.pyspark import get_spark_session
 from web.save_files import save_to_csv
+import pandas as pd
 
 def Function_Complete(Path, Outpath, Partitions):
 
@@ -14,11 +15,11 @@ def Function_Complete(Path, Outpath, Partitions):
     sqlContext = SQLContext(spark)
     now = datetime.now()
 
-    df_temp = spark.read.option("header", "false").csv(Path)
-    df_temp = df_temp.rdd.zipWithIndex().filter(lambda row_index: row_index[1] >= 3).map(lambda row_index: row_index[0])
-    df = spark.createDataFrame(df_temp, df_temp.first().__fields__)
-    
-    df = spark.read.csv(Path, header=True, sep=",")
+    temp_path = Path.replace('.csv', '_clean.csv')
+    df_pd = pd.read_csv(Path, skiprows=3)
+    df_pd.to_csv(temp_path, index=False)
+
+    df = spark.read.csv(temp_path, header=True, sep=",")
     df = df.select([col(c).cast(StringType()).alias(c) for c in df.columns])
 
     dfcolumns = ["Usuario","identificación","LLAMADAS","HORA","tiempo de inicio de sesión",
