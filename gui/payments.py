@@ -115,8 +115,17 @@ def process_excel(file_path):
                     
                 df_list.append(df)  # Add the cleaned DataFrame to the list
         return pd.concat(df_list, ignore_index=True)  # Concatenate all DataFrames into one
+    
     except Exception as e:
-        print(f"Error processing Excel {file_path}: {e}")
+        try:
+            for sheet in xls.sheet_names:
+                df = pd.read_excel(xls, sheet_name=sheet, dtype=str)  # Read the 'PAGOS' sheet into a DataFrame
+                df = df.rename(columns={'NUMERO_CREDITO': 'obligacion', 'FECHA': 'fecha', 'MONTO_PAGO': 'valor'})
+                df['valor'] = df['valor'].str.split(',').str[0]  # Quítale lo que va después de la coma
+            
+            return df[['obligacion', 'fecha', 'valor']]  # Return only the relevant columns
+        
+        except Exception as e2:print(f"Error processing Excel {file_path}: {e}")
         return None
 
 def process_xls_password(file_path):
@@ -214,6 +223,7 @@ def unify_payments(input_folder, output_folder):
                          (final_df['fecha'].dt.month >= current_month))]
         
         # Save the final DataFrame to a CSV file
+        filtered_df = filtered_df.drop_duplicates(subset=['obligacion', 'identificacion', 'fecha', 'valor', 'asesor'])
         filtered_df[['obligacion', 'identificacion', 'fecha', 'valor', 'asesor']].to_csv(output_path, index=False, sep=';')
         print(f"\nData saved to {output_path} with {len(final_df)} records.")
         
