@@ -26,20 +26,31 @@ def start_driver():
     wait = WebDriverWait(driver, 20)
     return driver, wait
 
-def login():
-    """ Logs into SAEM """
-    driver, wait = start_driver()
+def login(driver, wait):
+    """ Logs into SAEM using an existing driver """
     driver.get(login_url)
     wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="username"]')))
     driver.find_element(By.XPATH, '//*[@id="username"]').send_keys("recupera")
     driver.find_element(By.XPATH, '//*[@id="password"]').send_keys("Recupera2025#")
     print("Login successful. Waiting 15 seconds...")
     time.sleep(15)
-    driver.quit()
 
-def process_ivr(camp_id, wait_time):
+def wait_for_single_tab(driver, timeout=10):
+    """Cierra pestañas hasta dejar máximo 5 abiertas y selecciona la principal."""
+    start = time.time()
+    while len(driver.window_handles) > 5:
+        # Cierra las pestañas adicionales (deja las primeras 5)
+        for handle in driver.window_handles[5:]:
+            driver.switch_to.window(handle)
+            driver.close()
+        driver.switch_to.window(driver.window_handles[0])
+        if time.time() - start > timeout:
+            print("Advertencia: No se pudieron cerrar todas las pestañas en el tiempo esperado.")
+            break
+        time.sleep(40)
+
+def process_ivr(driver, wait, camp_id, wait_time):
     """ Processes IVR for a specific campaign """
-    driver, wait = start_driver()
     url = ivr_url.format(camp_id, first_day, last_day)
     driver.get(url)
     print(f"Loading IVR {camp_id}...")
@@ -47,21 +58,15 @@ def process_ivr(camp_id, wait_time):
     try:
         wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/main/div/div[2]/div/div[4]/div[2]/a")))
         driver.find_element(By.XPATH, "/html/body/div[1]/main/div/div[2]/div/div[4]/div[2]/a").click()
+        wait_for_single_tab(driver)
         print(f"IVR downloaded for ID {camp_id}")
     except:
         print(f"No download button found for ID {camp_id}")
 
     time.sleep(wait_time)
-    driver.quit()
 
-def wait_for_single_tab(driver):
-    """ Wait until only one tab is open. """
-    while len(driver.window_handles) > 1:
-        time.sleep(2)
-
-def process_sms(sms_id, executed, loaded, wait_time):
+def process_sms(driver, wait, sms_id, executed, loaded, wait_time):
     """ Processes SMS for a specific campaign """
-    driver, wait = start_driver()
     executed = executed if pd.notna(executed) else ""  
     url = sms_url.format(sms_id, executed, loaded, first_day, last_day)
     driver.get(url)
@@ -76,23 +81,24 @@ def process_sms(sms_id, executed, loaded, wait_time):
         print(f"No download button found for ID {sms_id}")
 
     time.sleep(wait_time)
-    driver.quit()
 
 def read_csv_lists_saem(csv_path):
     """ Reads a CSV and processes each row """
     df = pd.read_csv(csv_path, dtype=str, sep=';')
     wait_time = 10  
 
-    login()  # Log in before processing
+    driver, wait = start_driver()
+    login(driver, wait)  # Log in once
 
     for _, row in df.iterrows():
         resource = row.get("RECURSO", "").strip().upper()
 
         if resource == "IVR":
-            process_ivr(row["ID"], wait_time)
+            process_ivr(driver, wait, row["ID"], wait_time)
         elif resource == "SMS":
-            process_sms(row["ID"], row["EJECUTADOS"], row["CARGADOS"], wait_time)
+            process_sms(driver, wait, row["ID"], row["EJECUTADOS"], row["CARGADOS"], wait_time)
         else:
             print(f"Invalid resource for ID {row['ID']}: {resource}")
 
     print("Process completed.")
+    driver.quit()

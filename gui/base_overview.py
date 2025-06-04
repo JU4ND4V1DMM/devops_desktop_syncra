@@ -96,6 +96,7 @@ class Charge_DB(QtWidgets.QMainWindow):
     def Update_BD_ControlNext(self, Data_Root):
         
         Data_Root = Data_Root.withColumn("[AccountAccountCode?]", regexp_replace(col("[AccountAccountCode?]"), "-", ""))
+        Data_Root = Data_Root.withColumn("[AccountAccountCode?]", regexp_replace(col("[AccountAccountCode?]"), ".", ""))
         Data_Root = Data_Root.withColumn("[AccountAccountCode2?]", col("[AccountAccountCode?]"))
         
         Data_Root = Data_Root.withColumn("Numero de Cliente", regexp_replace("Numero de Cliente", "[^0-9]", ""))

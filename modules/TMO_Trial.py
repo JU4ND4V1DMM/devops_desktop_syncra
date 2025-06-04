@@ -14,8 +14,11 @@ def Function_Complete(Path, Outpath, Partitions):
     sqlContext = SQLContext(spark)
     now = datetime.now()
 
-    df = spark.read.option("header", "false").csv(Path)
-    df = spark.read.csv(Path, header= True, sep=",")
+    df_temp = spark.read.option("header", "false").csv(Path)
+    df_temp = df_temp.rdd.zipWithIndex().filter(lambda row_index: row_index[1] >= 3).map(lambda row_index: row_index[0])
+    df = spark.createDataFrame(df_temp, df_temp.first().__fields__)
+    
+    df = spark.read.csv(Path, header=True, sep=",")
     df = df.select([col(c).cast(StringType()).alias(c) for c in df.columns])
 
     dfcolumns = ["Usuario","identificación","LLAMADAS","HORA","tiempo de inicio de sesión",
