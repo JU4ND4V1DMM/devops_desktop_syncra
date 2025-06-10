@@ -46,6 +46,7 @@ def clean_and_rename_columns(df):
 
 
 def function_complete_IVR(input_folder, output_folder, partitions, Widget_Process):  
+    
     files = []
 
     # Collect all CSV and TXT files
@@ -57,7 +58,7 @@ def function_complete_IVR(input_folder, output_folder, partitions, Widget_Proces
     consolidated_df = None
     for file in files:
         if file.endswith('.csv'):
-            df_csv = spark.read.csv(file, header=True, sep=";", inferSchema=True)
+            df_csv = spark.read.csv(file, header=True, sep=",", inferSchema=True)
             df = clean_and_rename_columns(df_csv)
         elif file.endswith('.txt'):
             df = spark.read.option("delimiter", "\t").csv(file, header=True, inferSchema=True)
@@ -70,6 +71,10 @@ def function_complete_IVR(input_folder, output_folder, partitions, Widget_Proces
             "phone_number", "title", "first_name", "last_name"
         ]
         
+        for col_df in required_columns:
+            if col_df not in df.columns:
+                df = df.withColumn(col_df, lit(None).cast(StringType()))
+        
         df = df.select(*[col for col in required_columns if col in df.columns])
 
         # Consolidate DataFrames
@@ -79,6 +84,7 @@ def function_complete_IVR(input_folder, output_folder, partitions, Widget_Proces
             consolidated_df = consolidated_df.unionByName(df, allowMissingColumns=True)
 
     if consolidated_df is not None:
+        print(consolidated_df.columns)
         # Continue with the existing transformations
         consolidated_df = consolidated_df.withColumn(
             "status",
@@ -100,7 +106,8 @@ def function_complete_IVR(input_folder, output_folder, partitions, Widget_Proces
         list_efecty = [
             "Buzon de voz lleno", "Se inicia mensaje y cuelga", "Maquina contestadora",
             "Cuelga llamada", "Llamada transferida al agente", "Se reprodujo mensaje completo",
-            "Cuelga durante una transferencia", "EFECTIVO", "MARCADO", "NO EFECTIVO", "PARA REMARCAR"
+            "Cuelga durante una transferencia", "EFECTIVO", "MARCADO", "NO EFECTIVO", "PARA REMARCAR",
+            "ANSWERED", "BUSY", "NO ANSWER",
         ]
 
         consolidated_df = consolidated_df.filter(col("status").isin(list_efecty))

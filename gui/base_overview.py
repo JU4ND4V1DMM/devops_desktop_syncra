@@ -96,12 +96,15 @@ class Charge_DB(QtWidgets.QMainWindow):
     def Update_BD_ControlNext(self, Data_Root):
         
         Data_Root = Data_Root.withColumn("[AccountAccountCode?]", regexp_replace(col("[AccountAccountCode?]"), "-", ""))
-        Data_Root = Data_Root.withColumn("[AccountAccountCode?]", regexp_replace(col("[AccountAccountCode?]"), ".", ""))
+        Data_Root = Data_Root.withColumn("[AccountAccountCode?]", regexp_replace(col("[AccountAccountCode?]"), r"\.", ""))
         Data_Root = Data_Root.withColumn("[AccountAccountCode2?]", col("[AccountAccountCode?]"))
         
         Data_Root = Data_Root.withColumn("Numero de Cliente", regexp_replace("Numero de Cliente", "[^0-9]", ""))
         Data_Root = Data_Root.withColumn("Numero de Cliente", when(col("Numero de Cliente").isNull(), lit("0")).otherwise(col("Numero de Cliente")))
         Data_Root = Data_Root.withColumn("Numero de Cliente", col("Numero de Cliente").cast("int"))
+        Data_Root = Data_Root.withColumn("Numero de Cliente", when(len(col("Numero de Cliente")) < 2, 
+                                                                   col("[AccountAccountCode?]").otherwise(col("Numero de Cliente"))))
+        
         Data_Root = Data_Root.withColumn("[Documento?]", col("Numero de Cliente"))
         
         Data_Root = Data_Root.withColumn("Precio Subscripcion", lit(""))
@@ -184,6 +187,11 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumn("Valor Scoring", lit(""))
         Data_Root = Data_Root.withColumn("[AccountAccountCode2?]", col("2_"))
         Data_Root = Data_Root.withColumn("44_", lit(""))
+        
+        correction_nnny = ((col("5_") == "Y") | (col("6_") == "Y") | (col("7_") == "Y")) & (col("43_") == "Y")
+
+        Data_Root = Data_Root.withColumn("43_", when(correction_nnny, lit(""))\
+                                            .otherwise(col("43_")))
 
         columns_to_list = ["1_", "2_", "3_", "4_", "5_", "6_", "7_", "8_", "9_", "10_", "11_", "12_", \
                            "13_", "14_", "15_", "16_", "17_", "18_", "51_", "Telefono 1", "Telefono 2", "Telefono 3", \
