@@ -44,17 +44,46 @@ def Function_Complete(Data_):
         when(((col("estado_ranking").isNull()) | (col("estado_ranking") == "")), lit("NO APLICA FILTRO RANKING"))
         .otherwise(col("estado_ranking")))
     
-    special_filters = ((col("marca") == "Prepotencial Especial") | 
-                       (col("marca") == "churn") | 
-                       (col("marca") == "prechurn") | 
-                       (col("marca") == "prepotencial") | 
-                       (col("marca") == "potencial"))
+    special_marcas = [
+        "Prepotencial Especial", "churn", "prechurn", "prepotencial", "potencial"
+    ]
     
-    Data_ = Data_.withColumn(
-        "estado_ranking", 
-        when((col("estado_ranking") == "NO APLICA FILTRO RANKING") & special_filters, lit("RETIRAR"))
-        .otherwise(col("estado_ranking")))
+    # special_filters = ((col("marca") == "Prepotencial Especial") | 
+    #                    (col("marca") == "churn") | 
+    #                    (col("marca") == "prechurn") | 
+    #                    (col("marca") == "prepotencial") | 
+    #                    (col("marca") == "potencial"))
     
+    # Data_ = Data_.withColumn(
+    #     "estado_ranking", 
+    #     when((col("estado_ranking") == "NO APLICA FILTRO RANKING") & special_filters, lit("RETIRAR"))
+    #     .otherwise(col("estado_ranking")))
+    
+    for marca in special_marcas:
+        
+        marca_df = Data_.filter(col("marca") == marca)
+        status = [row["estado_ranking"] for row in marca_df.select("estado_ranking").distinct().collect()]
+        print(status)
+        
+        # if there is any "NO APLICA FILTRO RANKING"
+        if any(e != "NO APLICA FILTRO RANKING" for e in status):
+            print("There is 'NO APLICA FILTRO RANKING' for this marca:", marca)
+            
+            # change "NO APLICA FILTRO RANKING" to "RETIRAR"
+            Data_ = Data_.withColumn(
+                "estado_ranking",
+                when(
+                    (col("marca") == marca) & (col("estado_ranking") == "NO APLICA FILTRO RANKING"),
+                    lit("RETIRAR")
+                ).otherwise(col("estado_ranking"))
+            )
+            
+        else:
+            print("There is no 'NO APLICA FILTRO RANKING' for this marca:", marca)
+            
+            # if there is no "NO APLICA FILTRO RANKING", change "NO APLICA FILTRO RANKING" to "NO APLICA FILTRO RANKING"
+            pass
+        
     #### Filter for Colas and Ranking´s
     #Data_ = Data_.filter((col("colas").isNull()) | (col("colas") == ""))
     filter_ranking = ["GESTION RECAUDO", "GESTIONAR", "NO RECUPERADA", "NO APLICA FILTRO RANKING"]

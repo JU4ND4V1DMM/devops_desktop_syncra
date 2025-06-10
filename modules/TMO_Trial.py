@@ -53,4 +53,12 @@ def Function_Complete(Path, Outpath, Partitions):
     
     save_to_csv(df, Outpath, Type_Proccess, Partitions, delimiter)
 
+    try:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+        if os.path.exists(Path):
+            os.remove(Path)
+    except Exception as e:
+        print(f"Error eliminando archivos: {e}")
+        
     return df
