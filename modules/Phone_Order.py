@@ -31,7 +31,7 @@ def First_Changes_DataFrame(Root_Path):
     
     DF = DF.withColumn(
         "TIPO_BASE", 
-        when(((col("nombre_campana") == "FLP 02") | (col("nombre_campana") == "FLP 01") | (col("nombre_campana") == "FLP 03")), concat(lit("CLIENTES"), col("nombre_campana")))
+        when(((col("nombre_campana") == "FLP 02") | (col("nombre_campana") == "FLP 01") | (col("nombre_campana") == "FLP 03")), concat(lit("CLIENTES "), col("nombre_campana")))
         .when(col("nombre_campana") == "Clientes Corporativos", lit("CLIENTES CORPORATIVOS"))
         .otherwise(lit("CLIENTES INVENTARIO")))
     
