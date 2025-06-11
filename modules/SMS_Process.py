@@ -70,12 +70,14 @@ def Renamed_Column(Data_Frame):
     Data_Frame = Data_Frame.withColumnRenamed("dias_transcurridos", "DIAS DE MORA")
     Data_Frame = Data_Frame.withColumnRenamed("estado_ranking", "RANKING STATUS")
     Data_Frame = Data_Frame.withColumnRenamed("cant_servicios", "CANTIDAD SERVICIOS")
+    Data_Frame = Data_Frame.withColumnRenamed("Tipo Base", "TIPO BASE")
 
     Data_Frame = Data_Frame.select("Identificacion", "Cuenta_Next", "Cuenta", "Fecha_Asignacion", "Edad_Mora", \
                                    "CRM", "Saldo_Asignado", "Segmento",	"Form_Moneda", "Nombre_Completo", "Rango", \
                                     "Referencia", "Dato_Contacto", "Hora_Envio", "Hora_Real", \
                                     "Fecha_Envio", "marca2", "DCTO", "DEUDA_REAL", "FLP", "PRODUCTO", "fechapromesa", \
-                                    "TIPO_PAGO", "MEJOR PERFIL", "DIAS DE MORA", "RANKING STATUS", "CANTIDAD SERVICIOS", "NOMBRE CORTO")
+                                    "TIPO_PAGO", "MEJOR PERFIL", "DIAS DE MORA", "RANKING STATUS", "CANTIDAD SERVICIOS", \
+                                    "NOMBRE CORTO", "TIPO BASE")
 
     return Data_Frame
 
@@ -192,7 +194,7 @@ def SMS_Proccess (Data_Frame, Wallet_Brand, output_directory, Type_Proccess, Par
                          "origen", f"{Price_Col}", "customer_type_id", "Form_Moneda", "nombrecompleto", \
                         "Rango", "referencia", "Dato_Contacto", "Hora_Envio", "Hora_Real", \
                         "Fecha_Hoy", "marca2", "descuento", "DEUDA_REAL", "fecha_vencimiento", "PRODUCTO", \
-                        "fechapromesa", "tipo_pago", "mejorperfil_mes", "cant_servicios", "estado_ranking")
+                        "fechapromesa", "tipo_pago", "mejorperfil_mes", "cant_servicios", "estado_ranking", "Tipo Base")
     
     Data_ = Data_.withColumn("now", current_date())
     Data_ = Data_.withColumn("dias_transcurridos", datediff(col("now"), col("fecha_vencimiento")))

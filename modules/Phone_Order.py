@@ -28,6 +28,13 @@ def First_Changes_DataFrame(Root_Path):
     DF = Data_Root.select([col(c).cast(StringType()).alias(c) for c in Data_Root.columns])
     #DF = change_character_account(DF, "cuenta")
     #DF = change_character_account(DF, "cuenta2")
+    
+    DF = DF.withColumn(
+        "TIPO_BASE", 
+        when(((col("nombre_campana") == "FLP 02") | (col("nombre_campana") == "FLP 01") | (col("nombre_campana") == "FLP 03")), concat(lit("CLIENTES"), col("nombre_campana")))
+        .when(col("nombre_campana") == "Clientes Corporativos", lit("CLIENTES CORPORATIVOS"))
+        .otherwise(lit("CLIENTES INVENTARIO")))
+    
     DF = change_name_column(DF, "nombrecompleto")
 
     return DF
@@ -119,7 +126,7 @@ def Phone_Data_Div(Data_Frame):
     pivoted_data = consolidated_data.select("cuenta", *[concat_ws(",", col(f"phone_list{i}")).alias(f"phone{i}") for i in range(1, 14)])
     
     Data_Frame = Data_Frame.select("identificacion","Cruce_Cuentas", "cuenta", "cuenta2", "marca", "marca2", "origen", "Mod_init_cta", \
-                                   "nombrecompleto", "referencia", "descuento", "Filtro")
+                                   "nombrecompleto", "referencia", "descuento", "Filtro", "TIPO_BASE")
 
     Data_Frame = Data_Frame.join(pivoted_data, "cuenta", "left")
     Data_Frame = Data_Frame.filter(col("Filtro") == 1)
@@ -172,7 +179,7 @@ def ORDER_Process(Data_, Directory_to_Save, Partitions):
 
     list_columns = ["identificacion", "cuenta", "cuenta2", "phone1", "phone2", "phone3", "phone4", "phone5", "phone6", \
                          "phone7", "phone8", "phone9", "phone10", "phone11", "phone12", "phone13", "marca", "marca2", "origen", \
-                         f"{Price_Col}", "nombrecompleto", "referencia", "descuento"]
+                         f"{Price_Col}", "nombrecompleto", "referencia", "descuento", "TIPO_BASE"]
     
     #############################
     Data_ = Data_.filter(col("marca") != "castigo")
