@@ -391,6 +391,15 @@ class Charge_DB(QtWidgets.QMainWindow):
                 .when((col("9_") <= 2000000), lit("9 Entre 1 a 2 millones")) \
                 .otherwise(lit("9.1 Mayor a 2 millones")))
         
+        flp_filter_databse = ((col("12_") == "FLP 01") | (col("12_") == "FLP 02") | (col("12_") == "FLP 03"))
+        
+        Data_Root = Data_Root.withColumn("Multiproducto", lit(""))
+        
+        Data_Root = Data_Root.withColumn("58_", \
+            when(flp_filter_databse), concat(lit("CLIENTES "), col("12_")) \
+                .when((col("12_") == "Clientes Corporativos"), lit("CLIENTES CORPORATIVAS")) \
+                .otherwise(lit("CLIENTES INVENTARIO")))
+        
         Data_Root = Data_Root.orderBy(col("3_"))
         
         return Data_Root
@@ -494,8 +503,16 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumnRenamed("54_", "Cuenta_Next")
         Data_Root = Data_Root.withColumnRenamed("55_", "Valor_Deuda")
         Data_Root = Data_Root.withColumnRenamed("57_", "Rango_Deuda")
-        Data_Root = Data_Root.withColumn("Multiproducto", lit(""))
+        Data_Root = Data_Root.withColumnRenamed("Multiproducto", "Multiproducto")
+        Data_Root = Data_Root.withColumnRenamed("58_", "Tipo_Base")
         Data_Root = Data_Root.withColumn("Fecha_Ingreso", date_format(current_date(), "dd/MM/yyyy"))
+        Data_Root = Data_Root.withColumn("Fecha_Salida", lit(""))
+        Data_Root = Data_Root.withColumn("Valor_Pago", lit(""))
+        Data_Root = Data_Root.withColumn("Valor_Pago_Real", lit(""))
+        Data_Root = Data_Root.withColumn("Fecha_Ult_Pago", lit(""))
+        Data_Root = Data_Root.withColumn("Descuento", lit(""))
+        Data_Root = Data_Root.withColumn("Excl_Descuento", lit(""))
+        Data_Root = Data_Root.withColumn("Liquidacion", lit("SI"))
 
         return Data_Root
     
