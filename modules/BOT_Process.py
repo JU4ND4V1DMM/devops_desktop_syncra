@@ -54,6 +54,7 @@ def Renamed_Column(Data_Frame, Type_Proccess):
 
     Data_Frame = Data_Frame.withColumnRenamed("cuenta2", "CUENTA_NEXT")
     Data_Frame = Data_Frame.withColumnRenamed("mejorperfil_mes", "Mejor Gestion")
+    Data_Frame = Data_Frame.withColumnRenamed("Tipo Base", "tipo base")
 
     print(f"Tipo base: {Type_Proccess}")
     if Type_Proccess == "ServiceBots":
@@ -155,7 +156,8 @@ def Phone_Data_Div(Data_Frame):
     pivoted_data = consolidated_data.select("cuenta", *[concat_ws(",", col(f"phone_list{i}")).alias(f"phone{i}") for i in range(1, 10)])
     
     Data_Frame = Data_Frame.select("identificacion","Cruce_Cuentas", "cuenta", "cuenta2", "marca", "origen", "Mod_init_cta", \
-                                   "nombrecompleto", "referencia", "descuento", "Filtro", "fecha_vencimiento", "mejorperfil_mes", "marca2")
+                                   "nombrecompleto", "referencia", "descuento", "Filtro", "fecha_vencimiento", "mejorperfil_mes", \
+                                    "marca2", "Tipo Base")
 
     Data_Frame = Data_Frame.join(pivoted_data, "cuenta", "left")
     Data_Frame = Data_Frame.filter(col("Filtro") == 1)
@@ -221,7 +223,7 @@ def WiseBot(RDD, Type_Proccess):
         )
 
     RDD = RDD.select("NOMBRE CAMPANA", "identificacion", "nombrecompleto", "APELLIDO COMPLETO", "Dato_Contacto", f"{Price_Col}", \
-                      "MARCA", "ESTADO", "DIAS MORA", "CAJA", "cuenta","cuenta2",  "descuento", "fecha_vencimiento", "origen", "mejorperfil_mes", "marca2")
+                      "MARCA", "ESTADO", "DIAS MORA", "CAJA", "cuenta","cuenta2",  "descuento", "fecha_vencimiento", "origen", "mejorperfil_mes", "marca2", "tipo_pago", "Referencia", "Tipo Base")
     
     RDD = RDD.sort(col("identificacion"), col("cuenta"))
 
@@ -262,7 +264,7 @@ def IPCom(RDD, Type_Proccess):
     RDD = RDD.withColumn("debtdays", datediff(col("fecharray"), col("fecha_vencimiento")))
 
     RDD = RDD.select("phone", "nombrecompleto", "company", f"{Price_Col}", "company2", "debtdays", "fecharray", \
-                      "botname", "currency", "identificacion", "cuenta", "Edad de Mora", "origen", "cuenta2", "mejorperfil_mes", "fecha_vencimiento")
+                      "botname", "currency", "identificacion", "cuenta", "Edad de Mora", "origen", "cuenta2", "mejorperfil_mes", "fecha_vencimiento", "Tipo Base")
     
     RDD = RDD.sort(col("identificacion"), col("cuenta"))
 

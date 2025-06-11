@@ -44,6 +44,12 @@ def Function_Complete(Data_):
         when(((col("estado_ranking").isNull()) | (col("estado_ranking") == "")), lit("NO APLICA FILTRO RANKING"))
         .otherwise(col("estado_ranking")))
     
+    Data_ = Data_.withColumn(
+        "Tipo Base", 
+        when(((col("nombre_campana") == "FLP 02") | (col("nombre_campana") == "FLP 01") | (col("nombre_campana") == "FLP 03")), concat(lit("CLIENTES"), col("nombre_campana")))
+        .when(col("nombre_campana") == "Clientes Corporativos", lit("CLIENTES CORPORATIVOS"))
+        .otherwise(lit("CLIENTES INVENTARIO")))
+    
     special_marcas = [
         "Prepotencial Especial", "churn", "prechurn", "prepotencial", "potencial"
     ]

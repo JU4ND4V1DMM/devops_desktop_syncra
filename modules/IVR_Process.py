@@ -54,10 +54,11 @@ def Renamed_Column(Data_Frame):
     Data_Frame = Data_Frame.withColumnRenamed("dias_transcurridos", "DIAS DE MORA")
     Data_Frame = Data_Frame.withColumnRenamed("estado_ranking", "RANKING STATUS")
     Data_Frame = Data_Frame.withColumnRenamed("cant_servicios", "CANTIDAD SERVICIOS")
+    Data_Frame = Data_Frame.withColumnRenamed("Tipo Base", "TIPO BASE")
 
     Data_Frame = Data_Frame.select("VENDOR LEAD CODE", "SOURCE ID", "PHONE NUMBER", "TITLE", "FIRST NAME", "**", "LAST NAME", \
                          "FECHA_ASIGNACION", "FECHA_CONTACTO", "MONTO_INICIAL", "marca2", "DESCUENTO", "tipo_pago","DIAS DE MORA", \
-                            "RANKING STATUS", "CANTIDAD SERVICIOS", "NOMBRE CORTO", "Tipo de Linea")
+                            "RANKING STATUS", "CANTIDAD SERVICIOS", "NOMBRE CORTO", "Tipo de Linea", "TIPO BASE")
 
     return Data_Frame
 
@@ -151,7 +152,7 @@ def IVR_Process (Data_, Directory_to_Save, partitions, filter_brands, filter_ori
 
     Data_ = Data_.select("Dato_Contacto", "Telefono 2", "Telefono 3", "**", "identificacion", "origen", "**2", "cuenta", \
                          "marca", "fecha_vencimiento", "fecha_asignacion", "fechagestion_contactodirecto", "Mod_init_cta", \
-                         "marca2", "descuento", "tipo_pago", "nombrecompleto", "estado_ranking", "cant_servicios")
+                         "marca2", "descuento", "tipo_pago", "nombrecompleto", "estado_ranking", "cant_servicios", "Tipo Base")
     
     Data_ = Data_.withColumn("Cruce_Cuentas", concat(col("cuenta"), lit("-"), col("Dato_Contacto")))
     Data_ = Data_.dropDuplicates(["Cruce_Cuentas"])
@@ -202,7 +203,7 @@ def IVR_Saem(DataFrame, Directory_to_Save, partitions):
 
     DataFrame = DataFrame.select("email", "identificacion", "nombre", "telefono", "cuenta", "saldo",
                          "CRM", "MARCA", "FLP", "FECHA_ASIGNACION", "FECHA_CONTACTO", "MARCA 2", "DESCUENTO", "tipo_pago", 
-                         "DIAS DE MORA", "Tipo de Linea", "RANKING STATUS", "CANTIDAD SERVICIOS")
+                         "DIAS DE MORA", "Tipo de Linea", "RANKING STATUS", "CANTIDAD SERVICIOS", "TIPO BASE")
 
     return DataFrame
 
