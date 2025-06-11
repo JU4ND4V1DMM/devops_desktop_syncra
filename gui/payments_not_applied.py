@@ -12,13 +12,20 @@ def clean_and_process(df, archivo_label):
         df = df.rename(columns={'REFERENCIA DIVIDIDA': 'CUENTA'})
     if 'CUSTCODE' in df.columns:
         df = df.rename(columns={'CUSTCODE': 'CUENTA'})
+        
+    if 'MONTO' in df.columns:
+        df = df.rename(columns={'MONTO': 'VALOR'})
+    if 'PAGO' in df.columns:
+        df = df.rename(columns={'PAGO': 'VALOR'})
+    
     if 'CUENTA' in df.columns:
         df['CUENTA'] = df['CUENTA'].astype(str).str.replace('.', '', regex=False).str[-9:]
         df = df[df['CUENTA'].str.isnumeric()]
         df['ARCHIVO'] = archivo_label
+        df['VALOR'] = df['VALOR'].str.replace('.', ',', regex=False)
     else:
         print(f"No CUENTA column found in {archivo_label} sheet.")
-    return df[['CUENTA', 'ARCHIVO']] if not df.empty else None
+    return df[['CUENTA', 'ARCHIVO', 'VALOR']] if not df.empty else None
 
 def process_file(file_path):
     """Processes the Excel file and returns the cleaned DataFrame."""
@@ -73,6 +80,7 @@ def Transform_Payments_without_Applied(input_folder, output_folder):
 
         # Drop duplicates based on 'CUENTA' and 'FECHA_ARCHIVO'
         combined_df = combined_df.drop_duplicates(subset=['CUENTA', 'FECHA_ARCHIVO'])
+        payments_df = combined_df.drop_duplicates(subset=['CUENTA', 'VALOR'])
         
         # Count occurrences of each value in the 'CUENTA' column
         combined_df['RECUENTO'] = combined_df.groupby('CUENTA')['CUENTA'].transform('count')
@@ -83,17 +91,21 @@ def Transform_Payments_without_Applied(input_folder, output_folder):
         if len(combined_df) > 5:
             combined_df['FECHA'] = datetime.now().strftime('%Y-%m-%d')
             output_file = f'Pagos sin Aplicar {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
+            output_file_payments = f'Pagos Detalle {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
             output_folder = f"{output_folder}---- Bases para CARGUE ----/"
             
             if output_folder and not os.path.exists(output_folder):
                 os.makedirs(output_folder)
             
             output_path = os.path.join(output_folder, output_file)
+            output_path_payments = os.path.join(output_folder, output_file_payments)
             
             # Select only the 'CUENTA' and 'RECUENTO' columns
             combined_df = combined_df[['CUENTA', 'FECHA']]
+            payments_df = payments_df[['CUENTA', 'VALOR']]
             
             combined_df.to_csv(output_path, index=False, header=True, sep=';')
+            payments_df.to_csv(output_path_payments, index=False, header=True, sep=';')
             print(f"\nData PSA saved to {output_path} with {len(combined_df)} records.")
         else:
             print("\nThe combined DataFrame does not have more than 5 records. No action taken.")
