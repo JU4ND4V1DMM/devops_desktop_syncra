@@ -102,8 +102,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumn("Numero de Cliente", regexp_replace("Numero de Cliente", "[^0-9]", ""))
         Data_Root = Data_Root.withColumn("Numero de Cliente", when(col("Numero de Cliente").isNull(), lit("0")).otherwise(col("Numero de Cliente")))
         Data_Root = Data_Root.withColumn("Numero de Cliente", col("Numero de Cliente").cast("int"))
-        Data_Root = Data_Root.withColumn("Numero de Cliente", when(length(col("Numero de Cliente")) < 2, 
-                                                                   col("[AccountAccountCode?]").otherwise(col("Numero de Cliente"))))
+        Data_Root = Data_Root.withColumn("Numero de Cliente", when(length(col("Numero de Cliente")) < 2, col("[AccountAccountCode?]")).otherwise(col("Numero de Cliente")))
         
         Data_Root = Data_Root.withColumn("[Documento?]", col("Numero de Cliente"))
         
