@@ -395,8 +395,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         
         Data_Root = Data_Root.withColumn("Multiproducto", lit(""))
         
-        Data_Root = Data_Root.withColumn("58_", \
-            when(flp_filter_databse), concat(lit("CLIENTES "), col("12_")) \
+        Data_Root = Data_Root.withColumn("58_", when(flp_filter_databse, concat(lit("CLIENTES "), col("12_"))) \
                 .when((col("12_") == "Clientes Corporativos"), lit("CLIENTES CORPORATIVAS")) \
                 .otherwise(lit("CLIENTES INVENTARIO")))
         

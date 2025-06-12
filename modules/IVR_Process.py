@@ -43,20 +43,20 @@ def Renamed_Column(Data_Frame):
 
     Data_Frame = Data_Frame.withColumnRenamed("fechagestion_contactodirecto", "FECHA_CONTACTO")
     Data_Frame = Data_Frame.withColumnRenamed("fecha_asignacion", "FECHA_ASIGNACION")
-    Data_Frame = Data_Frame.withColumnRenamed("marca", "FIRST NAME")
-    Data_Frame = Data_Frame.withColumnRenamed("fecha_vencimiento", "LAST NAME")
+    Data_Frame = Data_Frame.withColumnRenamed("marca", "MARCA_ASIGNADA")
+    Data_Frame = Data_Frame.withColumnRenamed("fecha_vencimiento", "FLP")
     Data_Frame = Data_Frame.withColumnRenamed("Mod_init_cta", "MONTO_INICIAL")
     Data_Frame = Data_Frame.withColumnRenamed("descuento", "DESCUENTO")
-    Data_Frame = Data_Frame.withColumnRenamed("Dato_Contacto", "PHONE NUMBER")
-    Data_Frame = Data_Frame.withColumnRenamed("identificacion", "VENDOR LEAD CODE")
-    Data_Frame = Data_Frame.withColumnRenamed("origen", "TITLE")
-    Data_Frame = Data_Frame.withColumnRenamed("cuenta", "SOURCE ID")
+    Data_Frame = Data_Frame.withColumnRenamed("Dato_Contacto", "TELEFONO 1")
+    Data_Frame = Data_Frame.withColumnRenamed("identificacion", "DOCUMENTO")
+    Data_Frame = Data_Frame.withColumnRenamed("origen", "CRM_ORIGEN")
+    Data_Frame = Data_Frame.withColumnRenamed("cuenta", "IDENTI")
     Data_Frame = Data_Frame.withColumnRenamed("dias_transcurridos", "DIAS DE MORA")
     Data_Frame = Data_Frame.withColumnRenamed("estado_ranking", "RANKING STATUS")
     Data_Frame = Data_Frame.withColumnRenamed("cant_servicios", "CANTIDAD SERVICIOS")
     Data_Frame = Data_Frame.withColumnRenamed("Tipo Base", "TIPO BASE")
 
-    Data_Frame = Data_Frame.select("VENDOR LEAD CODE", "SOURCE ID", "PHONE NUMBER", "TITLE", "FIRST NAME", "**", "LAST NAME", \
+    Data_Frame = Data_Frame.select("IDENTI", "TELEFONO 1", "DOCUMENTO", "CRM_ORIGEN", "MARCA_ASIGNADA", "FLP", \
                          "FECHA_ASIGNACION", "FECHA_CONTACTO", "MONTO_INICIAL", "marca2", "DESCUENTO", "tipo_pago","DIAS DE MORA", \
                             "RANKING STATUS", "CANTIDAD SERVICIOS", "NOMBRE CORTO", "Tipo de Linea", "TIPO BASE")
 
@@ -71,7 +71,7 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, partitions, widget_filter):
     
     if widget_filter == "Intercom":
 
-        Type_File = "BD Claro IVR Intercom"
+        Type_File = "BD Claro IVR Blaster"
         save_to_csv(Data_Frame, Directory_to_Save, Type_File, partitions, delimiter)
 
     if widget_filter == "Saem":
@@ -180,7 +180,7 @@ def IVR_Process (Data_, Directory_to_Save, partitions, filter_brands, filter_ori
                 .otherwise(lit("Fijo")))
     
     Data_ = Renamed_Column(Data_)
-    Data_ = Data_.orderBy(col("VENDOR LEAD CODE"))
+    Data_ = Data_.orderBy(col("DOCUMENTO"))
     
     return Data_
 
@@ -190,15 +190,15 @@ def IVR_Saem(DataFrame, Directory_to_Save, partitions):
 
     DataFrame = DataFrame.withColumn("email", lit("coordinador.operativo2@recuperasas.com"))
     
-    DataFrame = DataFrame.withColumnRenamed("VENDOR LEAD CODE", "identificacion")
+    DataFrame = DataFrame.withColumnRenamed("DOCUMENTO", "identificacion")
     DataFrame = DataFrame.withColumnRenamed("NOMBRE CORTO", "nombre")
-    DataFrame = DataFrame.withColumnRenamed("PHONE NUMBER", "telefono")
-    DataFrame = DataFrame.withColumnRenamed("SOURCE ID", "cuenta")
+    DataFrame = DataFrame.withColumnRenamed("TELEFONO 1", "telefono")
+    DataFrame = DataFrame.withColumnRenamed("IDENTI", "cuenta")
     DataFrame = DataFrame.withColumnRenamed("MONTO_INICIAL", "saldo")
 
-    DataFrame = DataFrame.withColumnRenamed("TITLE", "CRM")
-    DataFrame = DataFrame.withColumnRenamed("FIRST NAME", "MARCA")
-    DataFrame = DataFrame.withColumnRenamed("LAST NAME", "FLP")
+    DataFrame = DataFrame.withColumnRenamed("CRM_ORIGEN", "CRM")
+    DataFrame = DataFrame.withColumnRenamed("MARCA_ASIGNADA", "MARCA")
+    DataFrame = DataFrame.withColumnRenamed("FLP", "FLP")
     DataFrame = DataFrame.withColumnRenamed("marca2", "MARCA 2")
 
     DataFrame = DataFrame.select("email", "identificacion", "nombre", "telefono", "cuenta", "saldo",
