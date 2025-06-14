@@ -47,7 +47,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa el archivo.")
         Mbox_In_Process.exec()
 
-        #self.BD_Control_Next()
+        self.BD_Control_Next()
         self.DB_Create()
 
         Mbox_In_Process = QMessageBox()
