@@ -47,7 +47,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa el archivo.")
         Mbox_In_Process.exec()
 
-        self.BD_Control_Next()
+        #self.BD_Control_Next()
         self.DB_Create()
 
         Mbox_In_Process = QMessageBox()
@@ -296,6 +296,13 @@ class Charge_DB(QtWidgets.QMainWindow):
         RDD_Data = self.Function_Complete(file)
         RDD_Data = self.Renamed_column(RDD_Data)
 
+        origin = "Multimarca"
+        brand = "Corporativos"
+        RDD_Data_CORP = RDD_Data.filter(col("CRM_Origen").isin(list_origins))
+        RDD_Data_CORP = RDD_Data_CORP.filter(col("Nombre Campana") == "Clientes Corporativos")
+        
+        self.Save_File(RDD_Data_CORP, root, partitions, brand, origin, Time_File)
+        
         origin = "Multiorigen"
         brand = "Multimarca"
         RDD_Data_MULTIBRAND = RDD_Data.filter(col("CRM_Origen").isin(list_origins))
@@ -409,6 +416,11 @@ class Charge_DB(QtWidgets.QMainWindow):
             Type_File = f"---- Bases para CRUCE ----"
             extension = "0csv"
             Name_File = f"Cruce Castigo {Origin_Filter}"
+        
+        elif Brand_Filter == "Corporativos":
+            Type_File = f"---- Bases para CRUCE ----"
+            extension = "0csv"
+            Name_File = f"Cruce Corporativos {Origin_Filter}"
         
         elif Brand_Filter == "Cargue" or Brand_Filter == "Errores" or Brand_Filter == "Multimarca_Cargue" or Brand_Filter == "Multimarca_Cargue_Actualizacion":
             Type_File = f"---- Bases para CARGUE ----"

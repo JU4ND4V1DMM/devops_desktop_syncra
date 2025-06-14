@@ -12,6 +12,7 @@ def process_ranking_files(input_folder, output_file):
         output_file (str): Path to save the resulting CSV file.
     """
     all_data = []
+    all_data_detail = []
     unprocessed_files = []  # List to track files with 0 records
     
     # Define possible column names for dynamic handling
@@ -19,6 +20,9 @@ def process_ranking_files(input_folder, output_file):
     estado_columns = ["gestion", "recuperada"]
     filter_columns = ["aliado", "casa", "casacobro", "agencia"]
     servicios_column = "nservicios"
+    pago_column = ["pago"]
+    datepayment_column = ["fecha de pago"]
+    concept_column = ["concepto", "estado actual"]
 
     # Iterate through all files in the input folder
     for file in os.listdir(input_folder):
@@ -69,6 +73,27 @@ def process_ranking_files(input_folder, output_file):
                 else:
                     df["estado"] = "desconocido"  # Default value if no estado column is found
 
+                # Add "pago" column dynamically
+                payment_column = next((col for col in pago_column if col in df.columns), None)
+                if payment_column:
+                    df["pago"] = df[payment_column]
+                else:
+                    df["pago"] = None  # Default value if no pago column is found
+
+                # Add "fecha" column dynamically
+                date_column = next((col for col in datepayment_column if col in df.columns), None)
+                if date_column:
+                    df["fecha"] = df[date_column]
+                else:
+                    df["fecha"] = None  # Default value if no fecha column is found
+
+                # Add "concepto" column dynamically
+                concepto_column = next((col for col in concept_column if col in df.columns), None)
+                if concepto_column:
+                    df["concepto"] = df[concepto_column]
+                else:
+                    df["concepto"] = None  # Default value if no concepto column is found
+
                 # Create a new column "llave" based on "estado" and "tipo"
                 df["llave"] = (df["estado"].astype(str) + df["tipo"].astype(str)).str.upper()
 
@@ -81,18 +106,25 @@ def process_ranking_files(input_folder, output_file):
                               "GESTION RECAUDO" if "GESTION RECAUDO" in x else
                               x
                 )
-
+                
+                df["archivo"] = file  # 'file' es el nombre del archivo en tu ciclo
+                
                 # Select relevant columns if they exist
                 df.columns = df.columns.str.upper()
                 required_columns = ["CUENTA", "SERVICIOS", "ESTADO"]
+                required_columns_detail = ["CUENTA", "SERVICIOS", "ESTADO", "PAGO", "FECHA", "CONCEPTO", "ARCHIVO"]
+                
+                df_detail = df[[col for col in required_columns_detail if col in df.columns]]
                 df = df[[col for col in required_columns if col in df.columns]]
 
                 # Remove duplicates
                 df = df.drop_duplicates()
+                df_detail = df_detail.drop_duplicates()
 
                 # Append to the list of all data
                 if len(df)>0:
                     all_data.append(df)
+                    all_data_detail.append(df_detail)
                 else:
                     unprocessed_files.append(file)
         else:
@@ -104,9 +136,19 @@ def process_ranking_files(input_folder, output_file):
         output_directory = os.path.join(output_file, folder)
         os.makedirs(output_directory, exist_ok=True)  # Ensure the directory exists
 
-        output_file_ranking = os.path.join(output_directory, f"Rankings Claro {datetime.now().strftime('%Y-%m-%d')}.csv")
+        output_file_ranking = os.path.join(output_directory, f"Cargue Rankings {datetime.now().strftime('%Y-%m-%d')}.csv")
 
         final_df = pd.concat(all_data, ignore_index=True)
+        final_df.to_csv(output_file_ranking, sep=";", index=False, encoding="utf-8")
+        print(f"Processing complete. Results saved to: {output_file_ranking}")
+        
+        folder = f"---- Bases para CRUCE ----"
+        output_directory = os.path.join(output_file, folder)
+        os.makedirs(output_directory, exist_ok=True)  # Ensure the directory exists
+
+        output_file_ranking = os.path.join(output_directory, f"Detalle Rankings {datetime.now().strftime('%Y-%m-%d')}.csv")
+
+        final_df = pd.concat(all_data_detail, ignore_index=True)
         final_df.to_csv(output_file_ranking, sep=";", index=False, encoding="utf-8")
         print(f"Processing complete. Results saved to: {output_file_ranking}")
     else:
