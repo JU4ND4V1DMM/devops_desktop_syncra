@@ -1172,12 +1172,29 @@ class Init_APP():
         Value = "Run"
         self.Base = utils.IVR_Downloads_List.Function_Download(Value)
 
-
+    def clean_hive_tmp_dirs():
+        paths = [r"C:\tmp\hive", r"D:\tmp\hive"]
+        for path in paths:
+            if os.path.exists(path) and os.path.isdir(path):
+                for filename in os.listdir(path):
+                    file_path = os.path.join(path, filename)
+                    try:
+                        if os.path.isfile(file_path) or os.path.islink(file_path):
+                            os.unlink(file_path)
+                        elif os.path.isdir(file_path):
+                            shutil.rmtree(file_path)
+                    except Exception as e:
+                        print(f"Error eliminando {file_path}: {e}")
     def run_bat_temp(self):
 
         Root_API = self.root_API 
         bat_file_path = f"{Root_API}/files/bat/Temp.bat"  
-
+        
+        try:
+            self.clean_hive_tmp_dirs()  # Clean up Hive temporary directories
+        except Exception as e:
+            print(f"Error al limpiar las carpetas temporales: {e}")
+            
         try:
             subprocess.run([bat_file_path], check=True)
             Mbox_In_Process = QMessageBox()
