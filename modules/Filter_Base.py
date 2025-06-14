@@ -22,7 +22,7 @@ def Function_Complete(Data_):
     
     #### Inclusion of brand (dont exist)
     Data_ = Data_.withColumn(
-        "marca", 
+        "marca2", 
         when(((col("marca_refinanciado") == "REFINANCIADO")) , lit("potencial a castigar"))
         .otherwise(col("marca")))
     
@@ -46,24 +46,13 @@ def Function_Complete(Data_):
     
     Data_ = Data_.withColumn(
         "Tipo Base", 
-        when(((col("nombre_campana") == "FLP 02") | (col("nombre_campana") == "FLP 01") | (col("nombre_campana") == "FLP 03")), concat(lit("CLIENTES"), col("nombre_campana")))
+        when(((col("nombre_campana") == "FLP 02") | (col("nombre_campana") == "FLP 01") | (col("nombre_campana") == "FLP 03")), concat(lit("CLIENTES "), col("nombre_campana")))
         .when(col("nombre_campana") == "Clientes Corporativos", lit("CLIENTES CORPORATIVOS"))
         .otherwise(lit("CLIENTES INVENTARIO")))
     
     special_marcas = [
         "Prepotencial Especial", "churn", "prechurn", "prepotencial", "potencial"
     ]
-    
-    # special_filters = ((col("marca") == "Prepotencial Especial") | 
-    #                    (col("marca") == "churn") | 
-    #                    (col("marca") == "prechurn") | 
-    #                    (col("marca") == "prepotencial") | 
-    #                    (col("marca") == "potencial"))
-    
-    # Data_ = Data_.withColumn(
-    #     "estado_ranking", 
-    #     when((col("estado_ranking") == "NO APLICA FILTRO RANKING") & special_filters, lit("RETIRAR"))
-    #     .otherwise(col("estado_ranking")))
     
     for marca in special_marcas:
         
