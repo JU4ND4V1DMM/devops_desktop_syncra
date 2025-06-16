@@ -22,7 +22,7 @@ def Function_Complete(path, output_directory, Partitions, Wallet_Brand, Origins_
     Data_Frame = First_Changes_DataFrame(path)
     Data_Frame = Phone_Data(Data_Frame)
 
-    BOT_list = ["IPCom", "WiseBot"] 
+    BOT_list = ["IPCom", "WiseBot", "Atria"]
 
     for Type_Proccess in BOT_list:
         BOT_Process(Data_Frame, Wallet_Brand, Origins_Filter, output_directory, \
@@ -111,7 +111,35 @@ def Renamed_Column(Data_Frame, Type_Proccess):
         Data_Frame = Data_Frame.withColumnRenamed("referencia", "Referencia_")
         Data_Frame = Data_Frame.withColumnRenamed("descuento", "DESCUENTO")
         Data_Frame = Data_Frame.withColumnRenamed("fecha_vencimiento", "FLP")
-    
+
+    elif Type_Proccess == "Atria":
+        
+        Data_Frame = Data_Frame.withColumn(
+            "origen",
+            when(col("origen") == "BSCS", "Linea Movil")
+            .when(col("origen") == "ASCARD", "Equipo")
+            .when(col("origen") == "RR", "Hogar")
+            .when(col("origen") == "SGA", "Negocios")
+            .otherwise(col("origen"))
+        )
+
+        Data_Frame = Data_Frame.withColumnRenamed("identificacion", "IDENTIFICACION")
+        Data_Frame = Data_Frame.withColumnRenamed("nombrecompleto", "NOMBRE COMPLETO")
+        Data_Frame = Data_Frame.withColumnRenamed("Dato_Contacto", "CELULAR")
+        Data_Frame = Data_Frame.withColumnRenamed("Mod_init_cta", "MONTO")
+        Data_Frame = Data_Frame.withColumnRenamed("fecha_asignacion", "Fecha_Asignacion_")
+        Data_Frame = Data_Frame.withColumnRenamed("origen", "PRODUCTO")
+        Data_Frame = Data_Frame.withColumnRenamed("referencia", "REFERENCIA")
+        Data_Frame = Data_Frame.withColumnRenamed("descuento", "DESCUENTO")
+        Data_Frame = Data_Frame.withColumnRenamed("fecha_vencimiento", "FLP")
+
+        columns_select = ["cuenta", "NOMBRE CAMPANA", "IDENTIFICACION", "NOMBRE COMPLETO",
+            "APELLIDO COMPLETO", "CELULAR", "MONTO", "MARCA", "ESTADO", "DIAS MORA",
+            "CAJA", "CUENTA_NEXT", "DESCUENTO", "FLP", "PRODUCTO", "Mejor Gestion",
+            "marca2", "FECHA PLAZO", "REFERENCIA"]
+        
+        Data_Frame = Data_Frame.select(columns_select)
+        
     else:
         pass
     
@@ -264,10 +292,77 @@ def IPCom(RDD, Type_Proccess):
     RDD = RDD.withColumn("debtdays", datediff(col("fecharray"), col("fecha_vencimiento")))
 
     RDD = RDD.select("phone", "nombrecompleto", "company", f"{Price_Col}", "company2", "debtdays", "fecharray", \
-                      "botname", "currency", "identificacion", "cuenta", "Edad de Mora", "origen", "cuenta2", "mejorperfil_mes", "fecha_vencimiento", "Tipo Base")
+                      "botname", "currency", "identificacion", "cuenta", "Edad de Mora", "origen", "cuenta2", "mejorperfil_mes", \
+                          "fecha_vencimiento", "Tipo Base")
     
     RDD = RDD.sort(col("identificacion"), col("cuenta"))
 
+    RDD = Renamed_Column(RDD, Type_Proccess)
+
+    return RDD
+
+def Atria(RDD, Type_Proccess):
+    
+    RDD = RDD.withColumn("name_function", split(col("nombrecompleto"), " "))
+    RDD = RDD.withColumn("len_name_function", size(col("name_function")))
+    
+    RDD = RDD.withColumn(
+        "nombrecompleto",
+        when(col("len_name_function") % 2 == 0,
+            expr("slice(name_function, 1, len_name_function / 2)"))
+        .otherwise(expr("slice(name_function, 1, (len_name_function / 2) + 1)"))
+    )
+    
+    RDD = RDD.withColumn(
+        "APELLIDO COMPLETO",
+        when(col("len_name_function") % 2 == 0,
+            expr("slice(name_function, len_name_function / 2 + 1, len_name_function)"))
+        .otherwise(expr("slice(name_function, (len_name_function / 2) + 1, len_name_function)"))
+    )
+    
+    RDD = RDD.withColumn("nombrecompleto", concat_ws(" ", col("nombrecompleto")))
+    RDD = RDD.withColumn("APELLIDO COMPLETO", concat_ws(" ", col("APELLIDO COMPLETO")))
+    
+    RDD = RDD.withColumn(
+        "Mod_init_cta", 
+        when((col("descuento") == "0%") | (col("descuento").isNull()) | (col("descuento") == "N/A"), col("Mod_init_cta"))
+        .otherwise(col("Mod_init_cta") * (1 - col("descuento") / 100)))
+    
+    Price_Col = "Mod_init_cta"     
+
+    RDD = RDD.withColumn("cuenta", col("cuenta").cast("string"))
+    
+    RDD = RDD.withColumn(f"{Price_Col}", col(f"{Price_Col}").cast("double").cast("int"))
+    
+    for col_name, data_type in RDD.dtypes:
+        if data_type == "double":
+            RDD = RDD.withColumn(col_name, col(col_name).cast(StringType()))
+
+    RDD = RDD.dropDuplicates(["Cruce_Cuentas"])
+
+    RDD = RDD.withColumnRenamed("marca", "NOMBRE CAMPANA")
+    RDD = RDD.withColumn("MARCA", col("Tipo Base"))
+    RDD = RDD.withColumn("now", current_date())
+    RDD = RDD.withColumn("DIAS MORA", datediff(col("now"), col("fecha_vencimiento")))
+
+    RDD = RDD.withColumn(
+            "ESTADO",
+            when(col("origen") == "ASCARD", "bloqueo")
+            .otherwise(lit("suspension"))
+        ) 
+    RDD = RDD.withColumn("CAJA",lit("Mensaje Personalizado"))
+    RDD = RDD.withColumn("Dato_Contacto", concat(lit("57"), col("Dato_Contacto")))
+
+    RDD = RDD.select("NOMBRE CAMPANA", "identificacion", "nombrecompleto", "APELLIDO COMPLETO", "Dato_Contacto", f"{Price_Col}", \
+                      "MARCA", "ESTADO", "DIAS MORA", "CAJA", "cuenta","cuenta2",  "descuento", "fecha_vencimiento", "origen", \
+                          "mejorperfil_mes", "marca2", "tipo_pago", "Referencia")
+    
+    RDD = RDD.sort(col("identificacion"), col("cuenta"))
+
+    now = datetime.now()
+    Day = now.strftime("%Y-%m-%d")
+
+    RDD = RDD. withColumn("FECHA PLAZO", lit(f"{Day}"))
     RDD = Renamed_Column(RDD, Type_Proccess)
 
     return RDD
@@ -288,7 +383,8 @@ def BOT_Process (Data_, Wallet_Brand, Origins_Filter, Directory_to_Save, Partiti
 
     Data_ = Data_.filter(col("marca").isin(Wallet_Brand))
     Data_ = Data_.filter(col("origen").isin(Origins_Filter))
-
+    
+    Contacts_Min = "Celular" if Type_Proccess == "Atria" else Contacts_Min
     Data_ = Function_Filter(Data_, Dates, Benefits, Contacts_Min, Value_Min, Value_Max)    
     
     Data_ = Data_.withColumn("Cruce_Cuentas", concat(col("cuenta"), lit("-"), col("Dato_Contacto")))
@@ -299,6 +395,10 @@ def BOT_Process (Data_, Wallet_Brand, Origins_Filter, Directory_to_Save, Partiti
     if Type_Proccess == "IPCom":
         delimiter = ","
         Data_ = IPCom(Data_, Type_Proccess)
+
+    elif Type_Proccess == "Atria":
+        delimiter = ";"
+        Data_ = Atria(Data_, Type_Proccess)
 
     else:
         delimiter = ";"
@@ -317,7 +417,8 @@ def Function_Filter(RDD, Dates, Benefits, Contacts_Min, Value_Min, Value_Max):
     else: 
         RDD = RDD.filter(col("fecha_vencimiento") == Dates)
 
-    RDD = RDD.withColumn("Referencia",  when(col("origen") == "RR", col("cuenta")).otherwise(col("Referencia")))           
+    RDD = RDD.withColumn("Referencia",  when(col("origen") == "RR", col("cuenta")).otherwise(col("Referencia")))      
+    RDD = RDD.withColumn("Referencia", regexp_replace(col("Referencia"), "-", ""))      
     RDD = RDD.withColumn("Referencia",  when(col("Referencia") != "", col("Referencia")).otherwise(lit("SIN REFERENCIA")))
 
     if Contacts_Min == "Celular":

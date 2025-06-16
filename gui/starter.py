@@ -1258,7 +1258,6 @@ class Init_APP():
                 Mbox_Incomplete.exec()
 
             else:
-
                 self.list_IVR = [Channels, Search_Data, Date_Selection_Filter]
         
         else:
