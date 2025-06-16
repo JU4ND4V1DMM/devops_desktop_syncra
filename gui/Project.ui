@@ -42,7 +42,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_10">
      <attribute name="title">
@@ -1128,7 +1128,7 @@ QPushButton:pressed
     </widget>
     <widget class="QWidget" name="tab_7">
      <attribute name="title">
-      <string>Claro</string>
+      <string>Operaciones</string>
      </attribute>
      <widget class="QTabWidget" name="tabWidget">
       <property name="geometry">
@@ -1140,7 +1140,7 @@ QPushButton:pressed
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="Upload">
        <attribute name="title">
@@ -5934,6 +5934,45 @@ font: 87 10pt &quot;Arial Black&quot;;</string>
         </property>
         <property name="text">
          <string>trial</string>
+        </property>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>120</y>
+          <width>221</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Validación Números WhatsApp</string>
+        </property>
+       </widget>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>80</y>
+          <width>631</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton_2">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>170</y>
+          <width>221</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Envío Proceso RPA WhatsApp</string>
         </property>
        </widget>
       </widget>
