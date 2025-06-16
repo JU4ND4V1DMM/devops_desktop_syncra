@@ -21,8 +21,8 @@ def process_ranking_files(input_folder, output_file):
     filter_columns = ["aliado", "casa", "casacobro", "agencia"]
     servicios_column = "nservicios"
     pago_column = ["pago"]
-    datepayment_column = ["fecha de pago"]
-    concept_column = ["concepto", "estado actual"]
+    datepayment_column = ["fechadepago"]
+    concept_column = ["concepto", "estadoactual"]
 
     # Iterate through all files in the input folder
     for file in os.listdir(input_folder):
@@ -115,6 +115,7 @@ def process_ranking_files(input_folder, output_file):
                 required_columns_detail = ["CUENTA", "SERVICIOS", "ESTADO", "PAGO", "FECHA", "CONCEPTO", "ARCHIVO"]
                 
                 df_detail = df[[col for col in required_columns_detail if col in df.columns]]
+                df_detail["PAGO"] = df_detail["PAGO"].fillna(0).astype(int)
                 df = df[[col for col in required_columns if col in df.columns]]
 
                 # Remove duplicates
