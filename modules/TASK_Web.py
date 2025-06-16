@@ -1,7 +1,7 @@
 import os
 import pyspark
 from pyspark.sql.window import Window
-from modules import Filter_Base
+from modules import filter_base
 from datetime import datetime
 from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
@@ -129,7 +129,7 @@ def Filter_Phone(Data_Frame, list_columns):
 ### Proceso de filtrado de líneas
 def Task_Process(Data_, Directory_to_Save, partitions, filter_brands, filter_origins, Dates, today_IVR, Benefits, Contacts_Min, Value_Min, Value_Max):
 
-    Data_ = Filter_Base.Function_Complete(Data_)
+    Data_ = filter_base.Function_Complete(Data_)
     filter_cash = ["", "Pago Parcial", "Sin Pago"]
     Data_ = Data_.filter((col("tipo_pago").isin(filter_cash)) | (col("tipo_pago").isNull()) | (col("tipo_pago") == ""))
 

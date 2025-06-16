@@ -1,5 +1,5 @@
 import os
-import modules.Filter_Base as Filter_Base
+import modules.filter_base as filter_base
 import pyspark
 from datetime import datetime
 from pyspark.sql import SparkSession, SQLContext, Row
@@ -160,7 +160,7 @@ def Email_Data(Data_):
 ### Proceso de mensajería
 def EMAIL_Proccess (Data_, Wallet_Brand, Directory_to_Save, partitions, Origins_Filter, Dates, Benefits, Value_Min, Value_Max, widget_filter):
 
-    Data_ = Filter_Base.Function_Complete(Data_)
+    Data_ = filter_base.Function_Complete(Data_)
 
     now = datetime.now()
     Time_File = now.strftime("%Y%m%d_%H%M")

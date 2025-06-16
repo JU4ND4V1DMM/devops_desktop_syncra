@@ -14,10 +14,10 @@ import gui.structure_files
 import gui.union_demo
 import gui.conversion_csv
 import gui.union_files
-import skills.COUNT_Ivr
-import skills.COUNT_Sms
-import skills.COUNT_Bot
-import skills.COUNT_Email
+import skills.count_ivr
+import skills.count_sms
+import skills.count_bot
+import skills.count_email
 import utils.IVR_Change_Audios
 import utils.IVR_Downloads_List
 import utils.IVR_Clean_Lists
@@ -1313,13 +1313,13 @@ class Init_APP():
             Mbox_In_Process.exec()
             
             Path_Resource = f"{self.folder_path_IVR}/IVR"
-            self.Base = skills.COUNT_Ivr.function_complete_IVR(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
+            self.Base = skills.count_ivr.function_complete_IVR(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
             Path_Resource = f"{self.folder_path_IVR}/BOT"
-            self.Base = skills.COUNT_Bot.function_complete_BOT(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
+            self.Base = skills.count_bot.function_complete_BOT(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
             Path_Resource = f"{self.folder_path_IVR}/EMAIL"
-            self.Base = skills.COUNT_Email.function_complete_EMAIL(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
+            self.Base = skills.count_email.function_complete_EMAIL(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
             Path_Resource = f"{self.folder_path_IVR}/SMS"
-            self.Base = skills.COUNT_Sms.function_complete_SMS(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
+            self.Base = skills.count_sms.function_complete_SMS(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -1336,7 +1336,7 @@ class Init_APP():
             Mbox_In_Process.exec()
 
             Path_Resource = f"{self.folder_path_IVR}"
-            self.Base = skills.COUNT_Ivr.function_complete_IVR(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
+            self.Base = skills.count_ivr.function_complete_IVR(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -1353,7 +1353,7 @@ class Init_APP():
             Mbox_In_Process.exec()
             
             Path_Resource = f"{self.folder_path_IVR}"
-            self.Base = skills.COUNT_Bot.function_complete_BOT(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
+            self.Base = skills.count_bot.function_complete_BOT(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -1370,7 +1370,7 @@ class Init_APP():
             Mbox_In_Process.exec()
             
             Path_Resource = f"{self.folder_path_IVR}"
-            self.Base = skills.COUNT_Sms.function_complete_SMS(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
+            self.Base = skills.count_sms.function_complete_SMS(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -1387,7 +1387,7 @@ class Init_APP():
             Mbox_In_Process.exec()
             
             Path_Resource = f"{self.folder_path_IVR}"
-            self.Base = skills.COUNT_Email.function_complete_EMAIL(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
+            self.Base = skills.count_email.function_complete_EMAIL(Path_Resource, self.folder_path, self.partitions_FOLDER, self.process_data)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")

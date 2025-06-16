@@ -4,16 +4,16 @@ from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
 import modules.fragment_dataBase
 import web.download_saem_reports
-import modules.BOT_Process
-import modules.EMAIL_Process
-import modules.IVR_Process
-import modules.Phone_Order
+import modules.bot_process
+import modules.email_process
+import modules.ivr_process
+import modules.phone_order
 import modules.fragment_dataBase
-import modules.TMO_Trial
-import modules.Report_Exclusions
-import modules.Exclusions
-import modules.SMS_Process
-import modules.TASK_Web
+import modules.tmo_trial
+import modules.report_exclusions
+import modules.exclusions
+import modules.sms_process
+import modules.task_web
 
 class Process_Data(QtWidgets.QMainWindow):
 
@@ -78,7 +78,7 @@ class Process_Data(QtWidgets.QMainWindow):
             Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
             Mbox_In_Process.exec()
 
-            modules.Report_Exclusions.Function_Exclusions(file, root, partitions)
+            modules.report_exclusions.Function_exclusions(file, root, partitions)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -105,7 +105,7 @@ class Process_Data(QtWidgets.QMainWindow):
             Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
             Mbox_In_Process.exec()
 
-            modules.Exclusions.process_xlsx_file(file, root)
+            modules.exclusions.process_xlsx_file(file, root)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -132,7 +132,7 @@ class Process_Data(QtWidgets.QMainWindow):
             Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
             Mbox_In_Process.exec()
 
-            modules.Phone_Order.Function_Complete(file, root, partitions)
+            modules.phone_order.Function_Complete(file, root, partitions)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -185,7 +185,7 @@ class Process_Data(QtWidgets.QMainWindow):
             Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
             Mbox_In_Process.exec()
 
-            modules.TMO_Trial.Function_Complete(file, root, partitions)
+            modules.tmo_trial.Function_Complete(file, root, partitions)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -741,7 +741,7 @@ class Process_Data(QtWidgets.QMainWindow):
                 Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
                 Mbox_In_Process.exec()
 
-                modules.BOT_Process_Pash.Function_Complete(file, root, partitions, Type_Clients, Benefits_Pash, \
+                modules.bot_process_Pash.Function_Complete(file, root, partitions, Type_Clients, Benefits_Pash, \
                                                       Contact_Pash, List_Credit, value_min, value_max,\
                                                         widget_filter)
                 
@@ -759,7 +759,7 @@ class Process_Data(QtWidgets.QMainWindow):
                 Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
                 Mbox_In_Process.exec()
 
-                modules.EMAIL_Process.Function_Complete(file, root, partitions, Type_Clients, Benefits_Pash, \
+                modules.email_process.Function_Complete(file, root, partitions, Type_Clients, Benefits_Pash, \
                                                       Contact_Pash, List_Credit, value_min, value_max,\
                                                         widget_filter)
                 
@@ -777,7 +777,7 @@ class Process_Data(QtWidgets.QMainWindow):
                 Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
                 Mbox_In_Process.exec()
 
-                modules.IVR_Process_Pash.Function_Complete(file, root, partitions, Type_Clients, Benefits_Pash, \
+                modules.ivr_process_Pash.Function_Complete(file, root, partitions, Type_Clients, Benefits_Pash, \
                                                       Contact_Pash, List_Credit, value_min, value_max,\
                                                         widget_filter)
                 
@@ -795,7 +795,7 @@ class Process_Data(QtWidgets.QMainWindow):
                 Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
                 Mbox_In_Process.exec()
 
-                modules.SMS_Process.Function_Complete(file, root, partitions, Type_Clients, Benefits_Pash, \
+                modules.sms_process.Function_Complete(file, root, partitions, Type_Clients, Benefits_Pash, \
                                                       Contact_Pash, List_Credit, value_min, value_max,\
                                                         widget_filter)
                 
@@ -884,7 +884,7 @@ class Process_Data(QtWidgets.QMainWindow):
             self.today = formatted_date_today
             Today_ = self.today
 
-            modules.TASK_Web.Function_Complete(file, root, partitions, brands, origins, date, Today_, benefits, contact, value_min, value_max)
+            modules.task_web.Function_Complete(file, root, partitions, brands, origins, date, Today_, benefits, contact, value_min, value_max)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -991,7 +991,7 @@ class Process_Data(QtWidgets.QMainWindow):
                 Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
                 Mbox_In_Process.exec()
 
-                modules.BOT_Process.Function_Complete(file, root, partitions, brands, origins, date, benefits, contact, \
+                modules.bot_process.Function_Complete(file, root, partitions, brands, origins, date, benefits, contact, \
                                                       value_min, value_max, widget_filter)
                 Mbox_In_Process = QMessageBox()
                 Mbox_In_Process.setWindowTitle("")
@@ -1007,7 +1007,7 @@ class Process_Data(QtWidgets.QMainWindow):
                 Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
                 Mbox_In_Process.exec()
 
-                modules.EMAIL_Process.Function_Complete(file, root, partitions, brands, origins, date, benefits, \
+                modules.email_process.Function_Complete(file, root, partitions, brands, origins, date, benefits, \
                                                         value_min, value_max, widget_filter)
                 
                 Mbox_In_Process = QMessageBox()
@@ -1024,7 +1024,7 @@ class Process_Data(QtWidgets.QMainWindow):
                 Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
                 Mbox_In_Process.exec()
 
-                modules.IVR_Process.Function_Complete(file, root, partitions, brands, origins, date, today_IVR, benefits, contact, \
+                modules.ivr_process.Function_Complete(file, root, partitions, brands, origins, date, today_IVR, benefits, contact, \
                                                       value_min, value_max, widget_filter)
                 
                 Mbox_In_Process = QMessageBox()
@@ -1041,7 +1041,7 @@ class Process_Data(QtWidgets.QMainWindow):
                 Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
                 Mbox_In_Process.exec()
 
-                modules.SMS_Process.Function_Complete(file, root, partitions, brands, origins, date, benefits, contact, \
+                modules.sms_process.Function_Complete(file, root, partitions, brands, origins, date, benefits, contact, \
                                                       value_min, value_max, widget_filter)
                 
                 Mbox_In_Process = QMessageBox()

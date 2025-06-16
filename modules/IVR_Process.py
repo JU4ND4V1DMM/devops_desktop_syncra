@@ -1,5 +1,5 @@
 import os
-import modules.Filter_Base as Filter_Base
+import modules.filter_base as filter_base
 import pyspark
 from datetime import datetime
 from pyspark.sql import SparkSession, SQLContext, Row
@@ -106,7 +106,7 @@ def Phone_Data(Data_):
 def IVR_Process (Data_, Directory_to_Save, partitions, filter_brands, filter_origins, Dates, today_IVR, Benefits, Contacts_Min, Value_Min, Value_Max, widget_filter):
 
     print("intercom")
-    Data_ = Filter_Base.Function_Complete(Data_)
+    Data_ = filter_base.Function_Complete(Data_)
     
     filter_cash = ["", "Pago Parcial", "Sin Pago"]
     Data_ = Data_.filter((col("tipo_pago").isin(filter_cash)) | (col("tipo_pago").isNull()) | (col("tipo_pago") == ""))

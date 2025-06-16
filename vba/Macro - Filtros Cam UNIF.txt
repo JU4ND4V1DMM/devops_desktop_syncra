@@ -111,7 +111,18 @@ Sub Titles()
         Range("AW1").Value = "Telefono 3"
         Range("AX1").Value = "Telefono 4"
         Range("AY1").Value = "Email"
-        Range("AZ1").Value = "[ActivesLines?]"
+        
+        Range("AZ1").Value = "[ActivesLines]"
+        Columns("BA:BF").Insert Shift:=xlToRight
+        Range("BA1").Value = "[ActivesLines2]"
+        Range("BB1").Value = "[ActivesLines3]"
+        Range("BC1").Value = "[ActivesLines4]"
+        Range("BD1").Value = "[ActivesLines5]"
+        Range("BE1").Value = "[ActivesLines6]"
+        Range("BF1").Value = "[ActivesLines7]"
+        
+        Range("BG1").Value = "Monitor"
+        Range("BH1").Value = "Valor Scorint"
         
     End If
 End Sub
@@ -256,125 +267,11 @@ Sub Headers()
 '
 
 '
+    Dim i As Integer
     Range("A1").Select
-    ActiveCell.FormulaR1C1 = "1_"
-    Range("B1").Select
-    ActiveCell.FormulaR1C1 = "2_"
-    Range("C1").Select
-    ActiveCell.FormulaR1C1 = "3_"
-    Range("D1").Select
-    ActiveCell.FormulaR1C1 = "4_"
-    Range("E1").Select
-    ActiveCell.FormulaR1C1 = "5_"
-    Range("F1").Select
-    ActiveCell.FormulaR1C1 = "6_"
-    Range("G1").Select
-    ActiveCell.FormulaR1C1 = "7_"
-    Range("H1").Select
-    ActiveCell.FormulaR1C1 = "8_"
-    Range("I1").Select
-    ActiveCell.FormulaR1C1 = "9_"
-    Range("J1").Select
-    ActiveCell.FormulaR1C1 = "10_"
-    
-    Range("K1").Select
-    ActiveCell.FormulaR1C1 = "11_"
-    Range("L1").Select
-    ActiveCell.FormulaR1C1 = "12_"
-    Range("M1").Select
-    ActiveCell.FormulaR1C1 = "13_"
-    Range("N1").Select
-    ActiveCell.FormulaR1C1 = "14_"
-    Range("O1").Select
-    ActiveCell.FormulaR1C1 = "15_"
-    Range("P1").Select
-    ActiveCell.FormulaR1C1 = "16_"
-    Range("Q1").Select
-    ActiveCell.FormulaR1C1 = "17_"
-    Range("R1").Select
-    ActiveCell.FormulaR1C1 = "18_"
-    Range("S1").Select
-    ActiveCell.FormulaR1C1 = "19_"
-    Range("T1").Select
-    ActiveCell.FormulaR1C1 = "20_"
-    
-    Range("U1").Select
-    ActiveCell.FormulaR1C1 = "21_"
-    Range("V1").Select
-    ActiveCell.FormulaR1C1 = "22_"
-    Range("W1").Select
-    ActiveCell.FormulaR1C1 = "23_"
-    Range("X1").Select
-    ActiveCell.FormulaR1C1 = "24_"
-    Range("Y1").Select
-    ActiveCell.FormulaR1C1 = "25_"
-    Range("Z1").Select
-    ActiveCell.FormulaR1C1 = "26_"
-    Range("AA1").Select
-    ActiveCell.FormulaR1C1 = "27_"
-    Range("AB1").Select
-    ActiveCell.FormulaR1C1 = "28_"
-    Range("AC1").Select
-    ActiveCell.FormulaR1C1 = "29_"
-    Range("AD1").Select
-    ActiveCell.FormulaR1C1 = "30_"
-    
-    Range("AE1").Select
-    ActiveCell.FormulaR1C1 = "31_"
-    Range("AF1").Select
-    ActiveCell.FormulaR1C1 = "32_"
-    Range("AG1").Select
-    ActiveCell.FormulaR1C1 = "33_"
-    Range("AH1").Select
-    ActiveCell.FormulaR1C1 = "34_"
-    Range("AI1").Select
-    ActiveCell.FormulaR1C1 = "35_"
-    Range("AJ1").Select
-    ActiveCell.FormulaR1C1 = "36_"
-    Range("AK1").Select
-    ActiveCell.FormulaR1C1 = "37_"
-    Range("AL1").Select
-    ActiveCell.FormulaR1C1 = "38_"
-    Range("AM1").Select
-    ActiveCell.FormulaR1C1 = "39_"
-    Range("AN1").Select
-    ActiveCell.FormulaR1C1 = "40_"
-    
-    Range("AO1").Select
-    ActiveCell.FormulaR1C1 = "41_"
-    Range("AP1").Select
-    ActiveCell.FormulaR1C1 = "42_"
-    Range("AQ1").Select
-    ActiveCell.FormulaR1C1 = "43_"
-    Range("AR1").Select
-    ActiveCell.FormulaR1C1 = "44_"
-    Range("AS1").Select
-    ActiveCell.FormulaR1C1 = "45_"
-    Range("AT1").Select
-    ActiveCell.FormulaR1C1 = "46_"
-    Range("AU1").Select
-    ActiveCell.FormulaR1C1 = "47_"
-    Range("AV1").Select
-    ActiveCell.FormulaR1C1 = "48_"
-    Range("AW1").Select
-    ActiveCell.FormulaR1C1 = "49_"
-    Range("AX1").Select
-    ActiveCell.FormulaR1C1 = "50_"
-    
-    Range("AY1").Select
-    ActiveCell.FormulaR1C1 = "51_"
-    Range("AZ1").Select
-    ActiveCell.FormulaR1C1 = "52_"
-    Range("BA1").Select
-    ActiveCell.FormulaR1C1 = "53_"
-    Range("BB1").Select
-    ActiveCell.FormulaR1C1 = "54_"
-    Range("BC1").Select
-    ActiveCell.FormulaR1C1 = "55_"
-    Range("BD1").Select
-    ActiveCell.FormulaR1C1 = "56_"
-    Range("BE1").Select
-    ActiveCell.FormulaR1C1 = "57_"
+    For i = 1 To 61
+        Cells(1, i).FormulaR1C1 = i & "_"
+    Next i
     Range("BF1").Select
 
 End Sub
@@ -391,10 +288,10 @@ End Sub
 Sub Dates()
     Range("A1").Select
     Selection.End(xlToRight).Select
-    Range("BE2").Select
+    Range("BI2").Select
     ActiveCell.Value = Date
     ActiveCell.NumberFormat = "dd/mm/yyyy"
-    Range("BE2").Select
+    Range("BI2").Select
     Range(Selection, ActiveCell.SpecialCells(xlLastCell)).Select
     Selection.FillDown
     Call Segment_Type
@@ -486,11 +383,11 @@ End Sub
 
 Sub DatesDelete()
     Do
-        Range("BE2").Select
+        Range("BI2").Select
         Selection.End(xlDown).Select
         
         If IsEmpty(Cells(ActiveCell.Row, "A").Value) Then
-            Cells(ActiveCell.Row, "BE").ClearContents
+            Cells(ActiveCell.Row, "BI").ClearContents
         End If
         
         If Not IsEmpty(Cells(ActiveCell.Row, "A").Value) Then

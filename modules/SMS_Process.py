@@ -1,6 +1,6 @@
 import os
-import modules.Filter_Base as Filter_Base
-from skills import Letters_SMS
+import modules.filter_base as filter_base
+from skills import letters_sms
 from datetime import datetime
 from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
@@ -91,7 +91,7 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, Partitions, Wallet_Brand, wi
     for i in list_key:
 
         if i == "BD Claro SMS_TEXTO":
-            Data_Frame = Letters_SMS.generate_sms_message_column(Data_Frame)
+            Data_Frame = letters_sms.generate_sms_message_column(Data_Frame)
         else:
             Data_Frame = Data_Frame
 
@@ -126,7 +126,7 @@ def Phone_Data(Data_):
 def SMS_Proccess (Data_Frame, Wallet_Brand, output_directory, Type_Proccess, Partitions, Origins_Filter, \
                               Dates, Benefits, Contacts_Min, Value_Min, Value_Max,  widget_filter):
 
-    Data_Frame = Filter_Base.Function_Complete(Data_Frame)
+    Data_Frame = filter_base.Function_Complete(Data_Frame)
 
     now = datetime.now()
     Time_File = now.strftime("%Y%m%d_%H%M")

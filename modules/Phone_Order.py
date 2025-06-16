@@ -1,4 +1,4 @@
-import modules.Filter_Base as Filter_Base
+import modules.filter_base as filter_base
 import os
 import pyspark
 from datetime import datetime
@@ -96,7 +96,7 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, Partitions):
 ### Dinamización de columnas de celulares
 def Phone_Data(Data_):
 
-    Data_ = Filter_Base.Function_Complete(Data_)
+    Data_ = filter_base.Function_Complete(Data_)
 
     columns_to_stack_celular = [f"celular{i}" for i in range(1, 11)]
     columns_to_stack_fijo = [f"fijo{i}" for i in range(1, 4)]
