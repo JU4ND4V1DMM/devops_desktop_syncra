@@ -1,5 +1,5 @@
 import os
-import utils.Active_Lines
+import utils.active_lines
 from web.pyspark import get_spark_session
 from datetime import datetime
 from PyQt6.QtCore import QDate
@@ -7,7 +7,7 @@ from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
 from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
-from pyspark.sql.functions import col, concat, lit, regexp_replace, when, date_format, current_date, to_date, date_format, split, length, upper
+from pyspark.sql.functions import col, concat, lit, regexp_replace, when, date_format, current_date, to_date, date_format, split, length, upper, coalesce
 from web.save_files import save_to_0csv, save_to_csv
 
 class Charge_DB(QtWidgets.QMainWindow):
@@ -85,7 +85,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa el archivo.")
         Mbox_In_Process.exec()
 
-        utils.Active_Lines.Function_Complete(path, output_directory, partitions)
+        utils.active_lines.Function_Complete(path, output_directory, partitions)
 
         Mbox_In_Process = QMessageBox()
         Mbox_In_Process.setWindowTitle("")
@@ -171,19 +171,15 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = spark.read.csv(file, header= True, sep=";")
         Data_Root = Data_Root.select([col(c).cast(StringType()).alias(c) for c in Data_Root.columns])
 
-        columns_to_list = [f"{i}_" for i in range(1, 53)]
+        columns_to_list = [f"{i}_" for i in range(1, 61)]
         Data_Root = Data_Root.select(columns_to_list)
         Data_Root = Data_Root.filter(col("3_").isin(list_origins))
-
-        ##############
-        #Data_Root = Data_Root.filter(col("7_") != "Y")      #Filter Brand CASTIGO
-        ##############
 
         Data_Root = Data_Root.withColumn("Telefono 1", lit(""))
         Data_Root = Data_Root.withColumn("Telefono 2", lit(""))
         Data_Root = Data_Root.withColumn("Telefono 3", lit(""))
         Data_Root = Data_Root.withColumn("Telefono 4", lit(""))
-        Data_Root = Data_Root.withColumn("Valor Scoring", lit(""))
+        Data_Root = Data_Root.withColumn("Valor Scoring", col("60_"))
         Data_Root = Data_Root.withColumn("[AccountAccountCode2?]", col("2_"))
         Data_Root = Data_Root.withColumn("44_", lit(""))
         
@@ -197,6 +193,7 @@ class Charge_DB(QtWidgets.QMainWindow):
                            "Telefono 4", "Valor Scoring", "19_", "20_", "21_", "22_", "23_", "24_", "25_", \
                            "26_", "27_", "28_", "29_", "30_", "31_", "32_", "33_", "34_", "35_", "36_", "37_", \
                            "38_", "39_", "40_", "41_", "42_", "43_", "44_", "[AccountAccountCode2?]"]
+                            #"59_"]
         
         Data_Root = Data_Root.select(columns_to_list)
         Data_Root = Data_Root.dropDuplicates(["2_"])
@@ -253,11 +250,14 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumnRenamed("42_", "[CustomerTypeId?]")
         Data_Root = Data_Root.withColumnRenamed("43_", "[RefinanciedMark?]")
         Data_Root = Data_Root.withColumnRenamed("44_", "[Discount?]")
+        
+        if "59_" in Data_Root.columns:
+            Data_Root = Data_Root.withColumnRenamed("59_", "Monitor")
 
         Data_Error = Data_Root
 
-        Data_Root = Data_Root.filter(col("[CustomerTypeId?]") >= 0)
-        Data_Root = Data_Root.filter(col("[CustomerTypeId?]") <= 100)
+        Data_Root = Data_Root.filter(col("[CustomerTypeId?]") >= 80)
+        Data_Root = Data_Root.filter(col("[CustomerTypeId?]") <= 89)
         name = "Cargue" 
         origin = "Multiorigen"
         self.Save_File(Data_Root, root, partitions, name, origin, Time_File)
@@ -272,7 +272,12 @@ class Charge_DB(QtWidgets.QMainWindow):
         origin = "Multiorigen"
         self.Save_File(Data_Brands_Update, root, partitions, name, origin, Time_File)
 
-        Data_Error = Data_Error.filter((col("[CustomerTypeId?]").isNull()) & (col("[CustomerTypeId?]").cast("double").isNull()))
+        Data_Error = Data_Error.filter(
+            (col("[CustomerTypeId?]").isNull()) |
+            (col("[CustomerTypeId?]").cast("double").isNull()) |
+            (~(col("[CustomerTypeId?]").cast("int").between(80, 89)))
+        )
+        
         name = "Errores"
         origin = "Multiorigen"
         self.Save_File(Data_Error, root, partitions, name, origin, Time_File)
@@ -341,9 +346,30 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.select([col(c).cast(StringType()).alias(c) for c in Data_Root.columns])
 
         #ActiveLines
-        Data_Root = Data_Root.withColumn("52_", concat(col("53_"), lit(","), col("54_"), lit(", "), col("55_"), lit(","), col("56_")))
-
-        columns_to_list = [f"{i}_" for i in range(1, 53)]
+        Data_Root = Data_Root.withColumn(
+            "52_",
+            concat(
+                coalesce(col("52_"), lit("")),
+                lit(","),
+                coalesce(col("53_"), lit("")),
+                lit(","),
+                coalesce(col("54_"), lit("")),
+                lit(","),
+                coalesce(col("55_"), lit("")),
+                lit(","),
+                coalesce(col("56_"), lit("")),
+                lit(","),
+                coalesce(col("57_"), lit("")),
+                lit(","),
+                coalesce(col("58_"), lit(""))
+            )
+        )
+        
+        Data_Root = Data_Root.withColumn("52_", regexp_replace(col("52_"), ",,", ","))
+        Data_Root = Data_Root.withColumn("52_", regexp_replace(col("52_"), ",,", ","))
+        Data_Root = Data_Root.withColumn("52_", regexp_replace(col("52_"), ",,", ","))
+        
+        columns_to_list = [f"{i}_" for i in range(1, 61)]
         Data_Root = Data_Root.select(columns_to_list)
         
         potencial = (col("5_") == "Y") & (col("3_") == "BSCS")
@@ -516,6 +542,8 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumnRenamed("57_", "Rango_Deuda")
         Data_Root = Data_Root.withColumnRenamed("Multiproducto", "Multiproducto")
         Data_Root = Data_Root.withColumnRenamed("58_", "Tipo_Base")
+        Data_Root = Data_Root.withColumnRenamed("59_", "Monitor")
+        Data_Root = Data_Root.withColumnRenamed("60_", "Valor Scoring")
         Data_Root = Data_Root.withColumn("Fecha_Ingreso", date_format(current_date(), "dd/MM/yyyy"))
         Data_Root = Data_Root.withColumn("Fecha_Salida", lit(""))
         Data_Root = Data_Root.withColumn("Valor_Pago", lit(""))
@@ -525,6 +553,25 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumn("Excl_Descuento", lit(""))
         Data_Root = Data_Root.withColumn("Liquidacion", lit("SI"))
 
+        columns_to_list = [
+            "Documento", "Cuenta", "CRM_Origen", "Edad de Deuda", "Potencial_Mark", "PrePotencial_Mark",
+            "Write_Off_Mark", "Monto inicial", "Mod_Init_Cta", "Deuda_Real_Cuenta", "Bill_CycleName",
+            "Nombre Campana", "Debt_Age_Inicial", "Nombre_Casa_de_Cobro", "Fecha_de_Asignacion",
+            "Deuda_Gestionable", "Direccion_Completa", "Fecha_Final", "Segmento", "Documento_Limpio",
+            "Acc_Sts_Name", "Ciudad", "Inbox_Name", "Nombre_del_Cliente", "Id_de_Ejecucion",
+            "Fecha_de_Vencimiento", "Numero_Referencia_de_Pago", "MIN", "Plan", "Cuotas_Aceleradas",
+            "Fecha_de_Aceleracion", "Valor_Acelerado", "Intereses_Contingentes", "Intereses_Corrientes_Facturados",
+            "Intereses_por_mora_facturados", "Cuotas_Facturadas", "Iva_Intereses_Contigentes_Facturado",
+            "Iva Intereses Corrientes_Facturados", "Iva_Intereses_por_Mora_Facturado", "Precio_Subscripcion",
+            "Codigo_de_proceso", "Customer_Type_Id", "Refinancied_Mark", "Discount", "Permanencia",
+            "Deuda_sin_Permanencia", "Telefono_1", "Telefono_2", "Telefono_3", "Telefono_4", "Email",
+            "Active_Lines", "Monitor", "Valor Scoring", "Marca_Asignada", "Cuenta_Next", "Valor_Deuda",
+            "56_", "Rango_Deuda", "Tipo_Base", "Multiproducto", "Fecha_Ingreso", "Fecha_Salida",
+            "Valor_Pago", "Valor_Pago_Real", "Fecha_Ult_Pago", "Descuento", "Excl_Descuento", "Liquidacion"
+        ]
+        
+        Data_Root = Data_Root.select(columns_to_list)
+        
         return Data_Root
     
     def partition_DATA(self):

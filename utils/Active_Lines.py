@@ -1,5 +1,5 @@
 import os
-from skills import List_City_Mins
+from skills import list_city_mins
 from functools import reduce
 import string
 from datetime import datetime
@@ -103,8 +103,8 @@ def Phone_Data(Data_):
           ##  Replace for exclusion of mins
 
     columns_to_stack_min = ["28_"] #MIN
-    columns_to_stack_mobile = ["47_", "48_", "49_", "50_"] #Telefono X
-    columns_to_stack_activelines = ["52_", "53_", "54_", "55_", "56_"] #ActiveLines
+    columns_to_stack_mobile = ["47_", "48_", "49_", "50_", "51_"] #Telefono X
+    columns_to_stack_activelines = ["52_", "53_", "54_", "55_", "56_", "57_", "58_"] #ActiveLines
 
     all_columns_to_stack = columns_to_stack_mobile + columns_to_stack_activelines + columns_to_stack_min
 
@@ -194,7 +194,7 @@ def Function_Filter(RDD, TypeProccess):
     
     else:
 
-        RDD = List_City_Mins.lines_inactives_df(RDD)
+        RDD = list_city_mins.lines_inactives_df(RDD)
 
     return RDD
 

@@ -1,5 +1,5 @@
 import os
-import modules.Filter_Base as Filter_Base
+import modules.filter_base as filter_base
 from datetime import datetime
 from pyspark.sql.window import Window
 from pyspark.sql import SparkSession, SQLContext
@@ -275,7 +275,7 @@ def IPCom(RDD, Type_Proccess):
 ### Proceso de mensajería
 def BOT_Process (Data_, Wallet_Brand, Origins_Filter, Directory_to_Save, Partitions, Type_Proccess, Dates, Benefits, Contacts_Min, Value_Min, Value_Max, widget_filter):
     
-    Data_ = Filter_Base.Function_Complete(Data_)
+    Data_ = filter_base.Function_Complete(Data_)
 
     filter_cash = ["", "Pago Parcial", "Sin Pago"]
     Data_ = Data_.filter((col("tipo_pago").isin(filter_cash)) | (col("tipo_pago").isNull()) | (col("tipo_pago") == ""))
