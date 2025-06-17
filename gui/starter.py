@@ -1,3 +1,5 @@
+import threading
+import queue
 import random
 import webbrowser
 import pandas as pd
@@ -36,6 +38,8 @@ from PyQt6.QtCore import QDate, QThread, pyqtSignal, Qt
 from PyQt6 import uic
 from PyQt6.QtWidgets import QMessageBox, QFileDialog, QDialog, QVBoxLayout, QLabel
 
+import web.whatsapp_validate
+
 def count_files_folder(input_path):
     try:
         file_count = sum(len(files) for _, _, files in os.walk(input_path))
@@ -72,6 +76,28 @@ def count_xlsx_data(file_path):
 Version_Winutils = datetime.datetime.now().date()
 Buffering, Compiles, Path_Root = random.randint(11, 14), int(cache_winutils), int((980 + Version_Pyspark))
 
+class DynamicThread(threading.Thread):
+    def __init__(self, func, args=None, kwargs=None):
+        super(DynamicThread, self).__init__()
+        self.func = func
+        self.args = args if args is not None else []
+        self.kwargs = kwargs if kwargs is not None else {}
+        self.queue = queue.Queue()
+
+    def run(self):
+        
+        try:
+            result = self.func(*self.args, **self.kwargs)
+            self.queue.put(result)
+        except Exception as e:
+            self.queue.put(e)
+
+    def get_result(self):
+        return self.queue.get()
+
+    def is_alive(self):
+        return super().is_alive()
+        
 class Init_APP():
 
     def __init__(self):
@@ -206,6 +232,7 @@ class Init_APP():
 
         self.process_data.pushButton_Partitions_BD_8.clicked.connect(self.reports_saem_error)
         self.process_data.pushButton_Select_File_13.clicked.connect(self.select_file_RPA)
+        self.process_data.commandLinkButton.clicked.connect(self.validate_whatsapp)
         
     def exec__process(self):
         
@@ -266,6 +293,28 @@ class Init_APP():
                 if self.row_count_RPA is not None:
                     self.row_count_RPA = "{:,}".format(self.row_count_RPA)
                     self.process_data.label_Total_Registers_7.setText(f"{self.row_count_RPA}")
+                    
+    def validate_whatsapp(self):
+            
+        if self.file_path_RPA != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de WhatsApp e inicie sesión.")
+            Mbox_In_Process.exec()
+            
+            thread = DynamicThread(web.whatsapp_validate.process_numbers, 
+                        args=[self.file_path_RPA, self.folder_path, self.process_data])
+
+            thread.start()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar un archivo con la base para ejecutar la validación de WhatsApp.")
+            Mbox_File_Error.exec()
                     
     def reports_saem(self):
         

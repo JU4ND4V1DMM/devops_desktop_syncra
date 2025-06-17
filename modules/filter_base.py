@@ -81,7 +81,7 @@ def Function_Complete(Data_):
         
     #### Filter for Colas and Ranking´s
     #Data_ = Data_.filter((col("colas").isNull()) | (col("colas") == ""))
-    filter_ranking = ["GESTION RECAUDO", "GESTIONAR", "NO RECUPERADA", "NO APLICA FILTRO RANKING"]
+    #filter_ranking = ["GESTION RECAUDO", "GESTIONAR", "NO RECUPERADA", "NO APLICA FILTRO RANKING"]
     #Data_ = Data_.filter((col("estado_ranking").isin(filter_ranking)) | (col("estado_ranking").isNull()) | (col("estado_ranking") == ""))
     
     return Data_
