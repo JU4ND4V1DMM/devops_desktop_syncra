@@ -8,3 +8,6 @@ openpyxl
 selenium
 webdriver-manager
 msoffcrypto-tool
+py-cpuinfo
+queue
+threading
