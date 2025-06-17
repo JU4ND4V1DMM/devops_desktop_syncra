@@ -644,6 +644,438 @@ class Ui_Process_Data(object):
         self.tabWidget = QtWidgets.QTabWidget(parent=self.tab_7)
         self.tabWidget.setGeometry(QtCore.QRect(10, 10, 971, 675))
         self.tabWidget.setObjectName("tabWidget")
+        self.tab_3 = QtWidgets.QWidget()
+        self.tab_3.setObjectName("tab_3")
+        self.label_LOGO_5 = QtWidgets.QLabel(parent=self.tab_3)
+        self.label_LOGO_5.setGeometry(QtCore.QRect(420, 15, 109, 31))
+        self.label_LOGO_5.setText("")
+        self.label_LOGO_5.setPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/Logo_Label.png"))
+        self.label_LOGO_5.setScaledContents(True)
+        self.label_LOGO_5.setObjectName("label_LOGO_5")
+        self.label_Version_Control_5 = QtWidgets.QLabel(parent=self.tab_3)
+        self.label_Version_Control_5.setGeometry(QtCore.QRect(700, 20, 241, 21))
+        self.label_Version_Control_5.setStyleSheet("color: rgb(162, 162, 162);\n"
+"font: italic 10pt \"MS Sans Serif\";")
+        self.label_Version_Control_5.setObjectName("label_Version_Control_5")
+        self.line_Vertical_Tittle_5 = QtWidgets.QFrame(parent=self.tab_3)
+        self.line_Vertical_Tittle_5.setGeometry(QtCore.QRect(310, 50, 651, 20))
+        self.line_Vertical_Tittle_5.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+        self.line_Vertical_Tittle_5.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
+        self.line_Vertical_Tittle_5.setObjectName("line_Vertical_Tittle_5")
+        self.Group_Selection_Starter_12 = QtWidgets.QGroupBox(parent=self.tab_3)
+        self.Group_Selection_Starter_12.setGeometry(QtCore.QRect(10, 20, 271, 151))
+        self.Group_Selection_Starter_12.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.Group_Selection_Starter_12.setObjectName("Group_Selection_Starter_12")
+        self.pushButton_Select_File_10 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_12)
+        self.pushButton_Select_File_10.setGeometry(QtCore.QRect(30, 40, 201, 31))
+        self.pushButton_Select_File_10.setStyleSheet("QPushButton\n"
+"{\n"
+"    border-radius:8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}\n"
+"QPushButton:Hover\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(94, 94, 94);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(0, 0, 0);\n"
+"}\n"
+"")
+        self.pushButton_Select_File_10.setDefault(False)
+        self.pushButton_Select_File_10.setObjectName("pushButton_Select_File_10")
+        self.pushButton_Select_File_13 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_12)
+        self.pushButton_Select_File_13.setGeometry(QtCore.QRect(30, 90, 201, 31))
+        self.pushButton_Select_File_13.setStyleSheet("QPushButton\n"
+"{\n"
+"    border-radius:8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}\n"
+"QPushButton:Hover\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(94, 94, 94);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(0, 0, 0);\n"
+"}\n"
+"")
+        self.pushButton_Select_File_13.setDefault(False)
+        self.pushButton_Select_File_13.setObjectName("pushButton_Select_File_13")
+        self.Group_Selection_Starter_19 = QtWidgets.QGroupBox(parent=self.tab_3)
+        self.Group_Selection_Starter_19.setGeometry(QtCore.QRect(10, 190, 271, 211))
+        self.Group_Selection_Starter_19.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.Group_Selection_Starter_19.setObjectName("Group_Selection_Starter_19")
+        self.scrollArea = QtWidgets.QScrollArea(parent=self.Group_Selection_Starter_19)
+        self.scrollArea.setGeometry(QtCore.QRect(20, 30, 231, 161))
+        self.scrollArea.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.scrollArea.setAutoFillBackground(True)
+        self.scrollArea.setLineWidth(3)
+        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.scrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 212, 222))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
+        self.gridLayout.setObjectName("gridLayout")
+        self.pushButton_5 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_5.setFont(font)
+        self.pushButton_5.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_5.setObjectName("pushButton_5")
+        self.gridLayout.addWidget(self.pushButton_5, 3, 0, 1, 1)
+        self.pushButton_6 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_6.setFont(font)
+        self.pushButton_6.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_6.setObjectName("pushButton_6")
+        self.gridLayout.addWidget(self.pushButton_6, 4, 0, 1, 1)
+        self.pushButton_7 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_7.setFont(font)
+        self.pushButton_7.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_7.setObjectName("pushButton_7")
+        self.gridLayout.addWidget(self.pushButton_7, 5, 0, 1, 1)
+        self.pushButton_3 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_3.setFont(font)
+        self.pushButton_3.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.gridLayout.addWidget(self.pushButton_3, 1, 0, 1, 1)
+        self.pushButton_2 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_2.setFont(font)
+        self.pushButton_2.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.gridLayout.addWidget(self.pushButton_2, 0, 0, 1, 1)
+        self.pushButton_4 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_4.setFont(font)
+        self.pushButton_4.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.gridLayout.addWidget(self.pushButton_4, 2, 0, 1, 1)
+        self.pushButton_14 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_14.setFont(font)
+        self.pushButton_14.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_14.setObjectName("pushButton_14")
+        self.gridLayout.addWidget(self.pushButton_14, 6, 0, 1, 1)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.label_Total_Registers_8 = QtWidgets.QLabel(parent=self.tab_3)
+        self.label_Total_Registers_8.setGeometry(QtCore.QRect(400, 610, 241, 21))
+        self.label_Total_Registers_8.setStyleSheet("color: rgb(217, 16, 76);\n"
+"font: 87 9pt \"Arial Black\";")
+        self.label_Total_Registers_8.setObjectName("label_Total_Registers_8")
+        self.label_Total_Registers_7 = QtWidgets.QLabel(parent=self.tab_3)
+        self.label_Total_Registers_7.setGeometry(QtCore.QRect(650, 610, 111, 21))
+        font = QtGui.QFont()
+        font.setFamily("Arial Black")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(10)
+        self.label_Total_Registers_7.setFont(font)
+        self.label_Total_Registers_7.setStyleSheet("color: rgb(217, 16, 76);\n"
+"font: 87 10pt \"Arial Black\";")
+        self.label_Total_Registers_7.setObjectName("label_Total_Registers_7")
+        self.Group_Selection_Starter_36 = QtWidgets.QGroupBox(parent=self.tab_3)
+        self.Group_Selection_Starter_36.setGeometry(QtCore.QRect(10, 430, 271, 211))
+        self.Group_Selection_Starter_36.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.Group_Selection_Starter_36.setObjectName("Group_Selection_Starter_36")
+        self.lcdNumber = QtWidgets.QLCDNumber(parent=self.Group_Selection_Starter_36)
+        self.lcdNumber.setGeometry(QtCore.QRect(170, 160, 81, 23))
+        self.lcdNumber.setStyleSheet("QLCDNumber {\n"
+"    background-color: #444444;    /* Gris medio, menos oscuro que #2b2b2b */\n"
+"    color: #f0f0f0;               /* Casi blanco para buen contraste */\n"
+"    border: 2px solid #888888;    /* Borde más claro y visible */\n"
+"    border-radius: 6px;\n"
+"    padding: 4px;\n"
+"}")
+        self.lcdNumber.setObjectName("lcdNumber")
+        self.label_2 = QtWidgets.QLabel(parent=self.Group_Selection_Starter_36)
+        self.label_2.setGeometry(QtCore.QRect(20, 160, 161, 21))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift")
+        font.setPointSize(9)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(3)
+        self.label_2.setFont(font)
+        self.label_2.setStyleSheet("font: 25 9pt \"Bahnschrift\";")
+        self.label_2.setObjectName("label_2")
+        self.label_4 = QtWidgets.QLabel(parent=self.Group_Selection_Starter_36)
+        self.label_4.setGeometry(QtCore.QRect(20, 120, 161, 21))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift")
+        font.setPointSize(9)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(3)
+        self.label_4.setFont(font)
+        self.label_4.setStyleSheet("font: 25 9pt \"Bahnschrift\";")
+        self.label_4.setObjectName("label_4")
+        self.lcdNumber_2 = QtWidgets.QLCDNumber(parent=self.Group_Selection_Starter_36)
+        self.lcdNumber_2.setGeometry(QtCore.QRect(170, 120, 81, 23))
+        self.lcdNumber_2.setStyleSheet("QLCDNumber {\n"
+"    background-color: #444444;    /* Gris medio, menos oscuro que #2b2b2b */\n"
+"    color: #f0f0f0;               /* Casi blanco para buen contraste */\n"
+"    border: 2px solid #888888;    /* Borde más claro y visible */\n"
+"    border-radius: 6px;\n"
+"    padding: 4px;\n"
+"}")
+        self.lcdNumber_2.setObjectName("lcdNumber_2")
+        self.label_3 = QtWidgets.QLabel(parent=self.Group_Selection_Starter_36)
+        self.label_3.setGeometry(QtCore.QRect(20, 30, 231, 31))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(9)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.label_3.setFont(font)
+        self.label_3.setLayoutDirection(QtCore.Qt.LayoutDirection.RightToLeft)
+        self.label_3.setStyleSheet("font: 63 9pt \"Bahnschrift SemiBold\";\n"
+"color: rgb(217, 16, 76);")
+        self.label_3.setTextFormat(QtCore.Qt.TextFormat.PlainText)
+        self.label_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignVCenter)
+        self.label_3.setObjectName("label_3")
+        self.lcdNumber_3 = QtWidgets.QLCDNumber(parent=self.Group_Selection_Starter_36)
+        self.lcdNumber_3.setGeometry(QtCore.QRect(170, 80, 81, 23))
+        self.lcdNumber_3.setStyleSheet("QLCDNumber {\n"
+"    background-color: #444444;    /* Gris medio, menos oscuro que #2b2b2b */\n"
+"    color: #f0f0f0;               /* Casi blanco para buen contraste */\n"
+"    border: 2px solid #888888;    /* Borde más claro y visible */\n"
+"    border-radius: 6px;\n"
+"    padding: 4px;\n"
+"}")
+        self.lcdNumber_3.setObjectName("lcdNumber_3")
+        self.label_5 = QtWidgets.QLabel(parent=self.Group_Selection_Starter_36)
+        self.label_5.setGeometry(QtCore.QRect(20, 80, 161, 21))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift")
+        font.setPointSize(9)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(3)
+        self.label_5.setFont(font)
+        self.label_5.setStyleSheet("font: 25 9pt \"Bahnschrift\";")
+        self.label_5.setObjectName("label_5")
+        self.Group_Selection_Starter_37 = QtWidgets.QGroupBox(parent=self.tab_3)
+        self.Group_Selection_Starter_37.setGeometry(QtCore.QRect(310, 80, 631, 181))
+        self.Group_Selection_Starter_37.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.Group_Selection_Starter_37.setObjectName("Group_Selection_Starter_37")
+        self.progressBar = QtWidgets.QProgressBar(parent=self.Group_Selection_Starter_37)
+        self.progressBar.setGeometry(QtCore.QRect(10, 30, 601, 23))
+        self.progressBar.setProperty("value", 24)
+        self.progressBar.setObjectName("progressBar")
+        self.commandLinkButton = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_37)
+        self.commandLinkButton.setGeometry(QtCore.QRect(10, 70, 241, 41))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton.setFont(font)
+        self.commandLinkButton.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/search.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton.setIcon(icon)
+        self.commandLinkButton.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton.setObjectName("commandLinkButton")
+        self.commandLinkButton_2 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_37)
+        self.commandLinkButton_2.setGeometry(QtCore.QRect(10, 120, 241, 41))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_2.setFont(font)
+        self.commandLinkButton_2.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/arrow wp.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_2.setIcon(icon1)
+        self.commandLinkButton_2.setObjectName("commandLinkButton_2")
+        self.plainTextEdit = QtWidgets.QPlainTextEdit(parent=self.Group_Selection_Starter_37)
+        self.plainTextEdit.setGeometry(QtCore.QRect(270, 80, 331, 71))
+        self.plainTextEdit.setStyleSheet("QPlainTextEdit {\n"
+"    border: 2px solid rgb(217, 16, 76);\n"
+"    border-radius: 4px;\n"
+"}")
+        self.plainTextEdit.setObjectName("plainTextEdit")
+        self.Group_Selection_Starter_38 = QtWidgets.QGroupBox(parent=self.tab_3)
+        self.Group_Selection_Starter_38.setGeometry(QtCore.QRect(310, 280, 631, 311))
+        self.Group_Selection_Starter_38.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.Group_Selection_Starter_38.setObjectName("Group_Selection_Starter_38")
+        self.commandLinkButton_3 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_38)
+        self.commandLinkButton_3.setGeometry(QtCore.QRect(10, 30, 241, 41))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_3.setFont(font)
+        self.commandLinkButton_3.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/SMS.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_3.setIcon(icon2)
+        self.commandLinkButton_3.setObjectName("commandLinkButton_3")
+        self.tabWidget.addTab(self.tab_3, "")
         self.Upload = QtWidgets.QWidget()
         self.Upload.setObjectName("Upload")
         self.label_Version_Control_2 = QtWidgets.QLabel(parent=self.Upload)
@@ -677,7 +1109,7 @@ class Ui_Process_Data(object):
         self.pushButton_Select_File.setDefault(False)
         self.pushButton_Select_File.setObjectName("pushButton_Select_File")
         self.spinBox_Partitions = QtWidgets.QSpinBox(parent=self.Group_Selection_Starter)
-        self.spinBox_Partitions.setGeometry(QtCore.QRect(194, 95, 61, 22))
+        self.spinBox_Partitions.setGeometry(QtCore.QRect(180, 95, 61, 22))
         self.spinBox_Partitions.setMinimum(1)
         self.spinBox_Partitions.setMaximum(50)
         self.spinBox_Partitions.setObjectName("spinBox_Partitions")
@@ -719,48 +1151,6 @@ class Ui_Process_Data(object):
         self.label_Partitions_7.setGeometry(QtCore.QRect(20, 90, 168, 31))
         self.label_Partitions_7.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.label_Partitions_7.setObjectName("label_Partitions_7")
-        self.pushButton_Partitions_BD = QtWidgets.QPushButton(parent=self.Upload)
-        self.pushButton_Partitions_BD.setGeometry(QtCore.QRect(30, 190, 231, 31))
-        self.pushButton_Partitions_BD.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD.setDefault(False)
-        self.pushButton_Partitions_BD.setObjectName("pushButton_Partitions_BD")
-        self.pushButton_Coding = QtWidgets.QPushButton(parent=self.Upload)
-        self.pushButton_Coding.setGeometry(QtCore.QRect(30, 260, 231, 31))
-        self.pushButton_Coding.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Coding.setDefault(False)
-        self.pushButton_Coding.setObjectName("pushButton_Coding")
         self.graphicsView = QtWidgets.QGraphicsView(parent=self.Upload)
         self.graphicsView.setGeometry(QtCore.QRect(310, 70, 641, 491))
         self.graphicsView.setObjectName("graphicsView")
@@ -786,48 +1176,6 @@ class Ui_Process_Data(object):
         self.line_Vertical_4.setFrameShape(QtWidgets.QFrame.Shape.HLine)
         self.line_Vertical_4.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line_Vertical_4.setObjectName("line_Vertical_4")
-        self.pushButton_Coding_3 = QtWidgets.QPushButton(parent=self.Upload)
-        self.pushButton_Coding_3.setGeometry(QtCore.QRect(30, 400, 231, 31))
-        self.pushButton_Coding_3.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Coding_3.setDefault(False)
-        self.pushButton_Coding_3.setObjectName("pushButton_Coding_3")
-        self.pushButton_Partitions_BD_30 = QtWidgets.QPushButton(parent=self.Upload)
-        self.pushButton_Partitions_BD_30.setGeometry(QtCore.QRect(30, 330, 231, 31))
-        self.pushButton_Partitions_BD_30.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_30.setDefault(False)
-        self.pushButton_Partitions_BD_30.setObjectName("pushButton_Partitions_BD_30")
         self.label_LOGO_10 = QtWidgets.QLabel(parent=self.Upload)
         self.label_LOGO_10.setGeometry(QtCore.QRect(330, 85, 601, 451))
         self.label_LOGO_10.setText("")
@@ -835,7 +1183,7 @@ class Ui_Process_Data(object):
         self.label_LOGO_10.setScaledContents(True)
         self.label_LOGO_10.setObjectName("label_LOGO_10")
         self.Group_Selection_Starter_9 = QtWidgets.QGroupBox(parent=self.Upload)
-        self.Group_Selection_Starter_9.setGeometry(QtCore.QRect(10, 480, 271, 151))
+        self.Group_Selection_Starter_9.setGeometry(QtCore.QRect(10, 240, 271, 261))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(10)
@@ -845,80 +1193,178 @@ class Ui_Process_Data(object):
         self.Group_Selection_Starter_9.setFont(font)
         self.Group_Selection_Starter_9.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.Group_Selection_Starter_9.setObjectName("Group_Selection_Starter_9")
-        self.pushButton_CAM = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_9)
-        self.pushButton_CAM.setGeometry(QtCore.QRect(20, 40, 231, 31))
+        self.commandLinkButton_9 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_9)
+        self.commandLinkButton_9.setGeometry(QtCore.QRect(30, 40, 211, 41))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(7)
-        self.pushButton_CAM.setFont(font)
-        self.pushButton_CAM.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
+        self.commandLinkButton_9.setFont(font)
+        self.commandLinkButton_9.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
 "}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(94, 94, 94);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_CAM.setDefault(False)
-        self.pushButton_CAM.setObjectName("pushButton_CAM")
-        self.pushButton_MINS = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_9)
-        self.pushButton_MINS.setGeometry(QtCore.QRect(20, 100, 231, 31))
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/bd.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_9.setIcon(icon3)
+        self.commandLinkButton_9.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_9.setObjectName("commandLinkButton_9")
+        self.commandLinkButton_10 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_9)
+        self.commandLinkButton_10.setGeometry(QtCore.QRect(30, 90, 211, 41))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(7)
-        self.pushButton_MINS.setFont(font)
-        self.pushButton_MINS.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
+        self.commandLinkButton_10.setFont(font)
+        self.commandLinkButton_10.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
 "}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(94, 94, 94);\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/demograficos.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_10.setIcon(icon4)
+        self.commandLinkButton_10.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_10.setObjectName("commandLinkButton_10")
+        self.commandLinkButton_11 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_9)
+        self.commandLinkButton_11.setGeometry(QtCore.QRect(30, 140, 211, 41))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_11.setFont(font)
+        self.commandLinkButton_11.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
 "}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/excel.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_11.setIcon(icon5)
+        self.commandLinkButton_11.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_11.setObjectName("commandLinkButton_11")
+        self.commandLinkButton_12 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_9)
+        self.commandLinkButton_12.setGeometry(QtCore.QRect(30, 190, 211, 41))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_12.setFont(font)
+        self.commandLinkButton_12.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
 "}\n"
-"")
-        self.pushButton_MINS.setDefault(False)
-        self.pushButton_MINS.setObjectName("pushButton_MINS")
-        self.graphicsView.raise_()
-        self.label_Version_Control_2.raise_()
-        self.Group_Selection_Starter.raise_()
-        self.pushButton_Partitions_BD.raise_()
-        self.pushButton_Coding.raise_()
-        self.label_Total_Registers_3.raise_()
-        self.label_Total_Registers_4.raise_()
-        self.line_Vertical_4.raise_()
-        self.pushButton_Coding_3.raise_()
-        self.pushButton_Partitions_BD_30.raise_()
-        self.label_LOGO_10.raise_()
-        self.Group_Selection_Starter_9.raise_()
-        self.tabWidget.addTab(self.Upload, "")
-        self.tab = QtWidgets.QWidget()
-        self.tab.setObjectName("tab")
-        self.pushButton_Partitions_BD_2 = QtWidgets.QPushButton(parent=self.tab)
-        self.pushButton_Partitions_BD_2.setGeometry(QtCore.QRect(30, 390, 231, 31))
-        self.pushButton_Partitions_BD_2.setStyleSheet("QPushButton\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/alert.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_12.setIcon(icon6)
+        self.commandLinkButton_12.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_12.setObjectName("commandLinkButton_12")
+        self.commandLinkButton_7 = QtWidgets.QCommandLinkButton(parent=self.Upload)
+        self.commandLinkButton_7.setGeometry(QtCore.QRect(10, 180, 131, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        self.commandLinkButton_7.setFont(font)
+        self.commandLinkButton_7.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/Fragment_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_7.setIcon(icon7)
+        self.commandLinkButton_7.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_7.setObjectName("commandLinkButton_7")
+        self.commandLinkButton_8 = QtWidgets.QCommandLinkButton(parent=self.Upload)
+        self.commandLinkButton_8.setGeometry(QtCore.QRect(150, 180, 131, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        self.commandLinkButton_8.setFont(font)
+        self.commandLinkButton_8.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/powershell.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_8.setIcon(icon8)
+        self.commandLinkButton_8.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_8.setObjectName("commandLinkButton_8")
+        self.pushButton_Partitions_BD_39 = QtWidgets.QPushButton(parent=self.Upload)
+        self.pushButton_Partitions_BD_39.setGeometry(QtCore.QRect(490, 290, 221, 31))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.pushButton_Partitions_BD_39.setFont(font)
+        self.pushButton_Partitions_BD_39.setStyleSheet("QPushButton\n"
 "{\n"
 "    border-radius:8px;\n"
 "    color: rgb(0, 0, 0);\n"
@@ -935,8 +1381,77 @@ class Ui_Process_Data(object):
 "    background-color: rgb(0, 0, 0);\n"
 "}\n"
 "")
-        self.pushButton_Partitions_BD_2.setDefault(False)
-        self.pushButton_Partitions_BD_2.setObjectName("pushButton_Partitions_BD_2")
+        self.pushButton_Partitions_BD_39.setDefault(False)
+        self.pushButton_Partitions_BD_39.setObjectName("pushButton_Partitions_BD_39")
+        self.pushButton_Select_File_8 = QtWidgets.QPushButton(parent=self.Upload)
+        self.pushButton_Select_File_8.setGeometry(QtCore.QRect(50, 530, 201, 31))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.pushButton_Select_File_8.setFont(font)
+        self.pushButton_Select_File_8.setStyleSheet("QPushButton\n"
+"{\n"
+"    border-radius:8px;\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}\n"
+"QPushButton:Hover\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(94, 94, 94);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(0, 0, 0);\n"
+"}\n"
+"")
+        self.pushButton_Select_File_8.setDefault(False)
+        self.pushButton_Select_File_8.setObjectName("pushButton_Select_File_8")
+        self.commandLinkButton_13 = QtWidgets.QCommandLinkButton(parent=self.Upload)
+        self.commandLinkButton_13.setGeometry(QtCore.QRect(30, 580, 241, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.commandLinkButton_13.setFont(font)
+        self.commandLinkButton_13.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/prohibido.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_13.setIcon(icon9)
+        self.commandLinkButton_13.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_13.setObjectName("commandLinkButton_13")
+        self.graphicsView.raise_()
+        self.label_Version_Control_2.raise_()
+        self.Group_Selection_Starter.raise_()
+        self.label_Total_Registers_3.raise_()
+        self.label_Total_Registers_4.raise_()
+        self.line_Vertical_4.raise_()
+        self.label_LOGO_10.raise_()
+        self.Group_Selection_Starter_9.raise_()
+        self.commandLinkButton_7.raise_()
+        self.commandLinkButton_8.raise_()
+        self.pushButton_Partitions_BD_39.raise_()
+        self.pushButton_Select_File_8.raise_()
+        self.commandLinkButton_13.raise_()
+        self.tabWidget.addTab(self.Upload, "")
+        self.tab = QtWidgets.QWidget()
+        self.tab.setObjectName("tab")
         self.Group_Selection_Starter_3 = QtWidgets.QGroupBox(parent=self.tab)
         self.Group_Selection_Starter_3.setGeometry(QtCore.QRect(10, 20, 271, 141))
         self.Group_Selection_Starter_3.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
@@ -963,7 +1478,7 @@ class Ui_Process_Data(object):
         self.pushButton_Select_File_3.setDefault(False)
         self.pushButton_Select_File_3.setObjectName("pushButton_Select_File_3")
         self.spinBox_Partitions_3 = QtWidgets.QSpinBox(parent=self.Group_Selection_Starter_3)
-        self.spinBox_Partitions_3.setGeometry(QtCore.QRect(194, 95, 61, 22))
+        self.spinBox_Partitions_3.setGeometry(QtCore.QRect(180, 95, 61, 22))
         self.spinBox_Partitions_3.setMinimum(1)
         self.spinBox_Partitions_3.setMaximum(50)
         self.spinBox_Partitions_3.setObjectName("spinBox_Partitions_3")
@@ -971,69 +1486,6 @@ class Ui_Process_Data(object):
         self.label_Partitions_3.setGeometry(QtCore.QRect(20, 90, 168, 31))
         self.label_Partitions_3.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.label_Partitions_3.setObjectName("label_Partitions_3")
-        self.pushButton_Partitions_BD_3 = QtWidgets.QPushButton(parent=self.tab)
-        self.pushButton_Partitions_BD_3.setGeometry(QtCore.QRect(30, 190, 231, 31))
-        self.pushButton_Partitions_BD_3.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_3.setDefault(False)
-        self.pushButton_Partitions_BD_3.setObjectName("pushButton_Partitions_BD_3")
-        self.pushButton_Partitions_BD_4 = QtWidgets.QPushButton(parent=self.tab)
-        self.pushButton_Partitions_BD_4.setGeometry(QtCore.QRect(30, 290, 231, 31))
-        self.pushButton_Partitions_BD_4.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_4.setDefault(False)
-        self.pushButton_Partitions_BD_4.setObjectName("pushButton_Partitions_BD_4")
-        self.pushButton_Partitions_BD_5 = QtWidgets.QPushButton(parent=self.tab)
-        self.pushButton_Partitions_BD_5.setGeometry(QtCore.QRect(30, 240, 231, 31))
-        self.pushButton_Partitions_BD_5.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_5.setDefault(False)
-        self.pushButton_Partitions_BD_5.setObjectName("pushButton_Partitions_BD_5")
         self.label_LOGO_3 = QtWidgets.QLabel(parent=self.tab)
         self.label_LOGO_3.setGeometry(QtCore.QRect(420, 15, 109, 31))
         self.label_LOGO_3.setText("")
@@ -1050,49 +1502,8 @@ class Ui_Process_Data(object):
         self.line_Vertical_Tittle_2.setFrameShape(QtWidgets.QFrame.Shape.HLine)
         self.line_Vertical_Tittle_2.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line_Vertical_Tittle_2.setObjectName("line_Vertical_Tittle_2")
-        self.pushButton_Partitions_BD_9 = QtWidgets.QPushButton(parent=self.tab)
-        self.pushButton_Partitions_BD_9.setGeometry(QtCore.QRect(710, 290, 231, 31))
-        self.pushButton_Partitions_BD_9.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_9.setDefault(False)
-        self.pushButton_Partitions_BD_9.setObjectName("pushButton_Partitions_BD_9")
-        self.comboBox_Benefits_2 = QtWidgets.QComboBox(parent=self.tab)
-        self.comboBox_Benefits_2.setGeometry(QtCore.QRect(760, 110, 151, 22))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift Light")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(3)
-        self.comboBox_Benefits_2.setFont(font)
-        self.comboBox_Benefits_2.setStyleSheet("font: 25 10pt \"Bahnschrift Light\";")
-        self.comboBox_Benefits_2.setObjectName("comboBox_Benefits_2")
-        self.comboBox_Benefits_2.addItem("")
-        self.comboBox_Benefits_2.addItem("")
-        self.comboBox_Benefits_2.addItem("")
-        self.comboBox_Benefits_2.addItem("")
-        self.label_Benefits_2 = QtWidgets.QLabel(parent=self.tab)
-        self.label_Benefits_2.setGeometry(QtCore.QRect(770, 80, 131, 20))
-        self.label_Benefits_2.setStyleSheet("/*color: rgb(217, 16, 76);*/\n"
-"font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.label_Benefits_2.setObjectName("label_Benefits_2")
         self.Group_Selection_Starter_6 = QtWidgets.QGroupBox(parent=self.tab)
-        self.Group_Selection_Starter_6.setGeometry(QtCore.QRect(710, 160, 231, 111))
+        self.Group_Selection_Starter_6.setGeometry(QtCore.QRect(620, 70, 331, 111))
         self.Group_Selection_Starter_6.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.Group_Selection_Starter_6.setObjectName("Group_Selection_Starter_6")
         self.label_Benefits_3 = QtWidgets.QLabel(parent=self.Group_Selection_Starter_6)
@@ -1102,96 +1513,10 @@ class Ui_Process_Data(object):
 "color: rgb(121, 121, 121);")
         self.label_Benefits_3.setObjectName("label_Benefits_3")
         self.Searching_Field = QtWidgets.QLineEdit(parent=self.Group_Selection_Starter_6)
-        self.Searching_Field.setGeometry(QtCore.QRect(20, 70, 201, 22))
+        self.Searching_Field.setGeometry(QtCore.QRect(20, 70, 291, 22))
         self.Searching_Field.setObjectName("Searching_Field")
-        self.calendarWidget_2 = QtWidgets.QCalendarWidget(parent=self.tab)
-        self.calendarWidget_2.setEnabled(True)
-        self.calendarWidget_2.setGeometry(QtCore.QRect(360, 120, 312, 201))
-        self.calendarWidget_2.setMinimumSize(QtCore.QSize(312, 180))
-        font = QtGui.QFont()
-        font.setItalic(False)
-        self.calendarWidget_2.setFont(font)
-        self.calendarWidget_2.setFocusPolicy(QtCore.Qt.FocusPolicy.ClickFocus)
-        self.calendarWidget_2.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.DefaultContextMenu)
-        self.calendarWidget_2.setStyleSheet("#qt_calendar_navigationbar{\n"
-"\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"\n"
-"#qt_calendar_prevmonth,\n"
-"#qt_calendar_nextmonth{\n"
-"border: none;\n"
-"qproperty-icon: none;\n"
-"\n"
-"min-width:13 px;\n"
-"max-width:13 px;\n"
-"min-height:13 px;\n"
-"max-height: 13 px;\n"
-"\n"
-"border-radius: 5px;\n"
-"\n"
-"background-color: transparent;\n"
-"padding: 5px\n"
-"\n"
-"}\n"
-"\n"
-"#qt_calendar_prevmonth{\n"
-"    margin-right: 5px;\n"
-"    image: url(:/Ico_Calendar/ico/Right.png);\n"
-"}\n"
-"#qt_calendar_nextmonth{\n"
-"    margin-left: 5px;\n"
-"    image: url(:/Ico_Calendar/ico/Left.png);\n"
-"}\n"
-"\n"
-"#qt_calendar_prevmonth:hover,\n"
-"#qt_calendar_nextmonth:hover{\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"\n"
-"#qt_calendar_prevmonth:pressed,\n"
-"#qt_calendar_nextmonth:pressed{\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"\n"
-"#qt_calendar_calendarview{\n"
-"\n"
-"    border: 1px solid #d9104c;\n"
-"    border-top: 0px;\n"
-"    border-bottom-left-radius: 5px;\n"
-"    border-bottom-right-radius: 5px;\n"
-"    font-size: 10px; \n"
-"    padding: 2px;\n"
-"    margin: 1px;\n"
-"\n"
-"}\n"
-"\n"
-"#qt_calendar_calendarview::item:hover{\n"
-"    border-radius: 5px;\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: #d9104c;\n"
-"}\n"
-"\n"
-"#qt_calendar_calendarview::item:selected{\n"
-"    border-radius: 5px;\n"
-"    background-color: #d9104c;\n"
-"}\n"
-"")
-        self.calendarWidget_2.setMinimumDate(QtCore.QDate(2024, 2, 1))
-        self.calendarWidget_2.setMaximumDate(QtCore.QDate(2025, 12, 31))
-        self.calendarWidget_2.setGridVisible(False)
-        self.calendarWidget_2.setVerticalHeaderFormat(QtWidgets.QCalendarWidget.VerticalHeaderFormat.NoVerticalHeader)
-        self.calendarWidget_2.setDateEditAcceptDelay(1500)
-        self.calendarWidget_2.setObjectName("calendarWidget_2")
-        self.checkBox_ALL_DATES_FLP_3 = QtWidgets.QCheckBox(parent=self.tab)
-        self.checkBox_ALL_DATES_FLP_3.setGeometry(QtCore.QRect(601, 81, 61, 20))
-        self.checkBox_ALL_DATES_FLP_3.setObjectName("checkBox_ALL_DATES_FLP_3")
-        self.label_Dates_FLP_3 = QtWidgets.QLabel(parent=self.tab)
-        self.label_Dates_FLP_3.setGeometry(QtCore.QRect(370, 80, 241, 20))
-        self.label_Dates_FLP_3.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.label_Dates_FLP_3.setObjectName("label_Dates_FLP_3")
         self.line_Vertical_Tittle_4 = QtWidgets.QFrame(parent=self.tab)
-        self.line_Vertical_Tittle_4.setGeometry(QtCore.QRect(310, 340, 651, 20))
+        self.line_Vertical_Tittle_4.setGeometry(QtCore.QRect(310, 370, 651, 20))
         self.line_Vertical_Tittle_4.setFrameShape(QtWidgets.QFrame.Shape.HLine)
         self.line_Vertical_Tittle_4.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line_Vertical_Tittle_4.setObjectName("line_Vertical_Tittle_4")
@@ -1212,154 +1537,428 @@ class Ui_Process_Data(object):
         self.label_Total_Registers_6.setStyleSheet("color: rgb(217, 16, 76);\n"
 "font: 87 10pt \"Arial Black\";")
         self.label_Total_Registers_6.setObjectName("label_Total_Registers_6")
-        self.line_Vertical_5 = QtWidgets.QFrame(parent=self.tab)
-        self.line_Vertical_5.setGeometry(QtCore.QRect(310, 580, 651, 20))
-        self.line_Vertical_5.setFrameShape(QtWidgets.QFrame.Shape.HLine)
-        self.line_Vertical_5.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
-        self.line_Vertical_5.setObjectName("line_Vertical_5")
-        self.pushButton_Partitions_BD_27 = QtWidgets.QPushButton(parent=self.tab)
-        self.pushButton_Partitions_BD_27.setGeometry(QtCore.QRect(30, 460, 231, 31))
-        self.pushButton_Partitions_BD_27.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
+        self.commandLinkButton_14 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_14.setGeometry(QtCore.QRect(30, 180, 231, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_14.setFont(font)
+        self.commandLinkButton_14.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
 "}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/batch.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_14.setIcon(icon10)
+        self.commandLinkButton_14.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_14.setObjectName("commandLinkButton_14")
+        self.Group_Selection_Starter_22 = QtWidgets.QGroupBox(parent=self.tab)
+        self.Group_Selection_Starter_22.setGeometry(QtCore.QRect(10, 340, 271, 291))
+        self.Group_Selection_Starter_22.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.Group_Selection_Starter_22.setObjectName("Group_Selection_Starter_22")
+        self.commandLinkButton_16 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_22)
+        self.commandLinkButton_16.setGeometry(QtCore.QRect(20, 30, 221, 41))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_16.setFont(font)
+        self.commandLinkButton_16.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/psa.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_16.setIcon(icon11)
+        self.commandLinkButton_16.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_16.setObjectName("commandLinkButton_16")
+        self.commandLinkButton_17 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_22)
+        self.commandLinkButton_17.setGeometry(QtCore.QRect(20, 80, 221, 41))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_17.setFont(font)
+        self.commandLinkButton_17.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon12 = QtGui.QIcon()
+        icon12.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/ng_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_17.setIcon(icon12)
+        self.commandLinkButton_17.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_17.setObjectName("commandLinkButton_17")
+        self.commandLinkButton_18 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_22)
+        self.commandLinkButton_18.setGeometry(QtCore.QRect(20, 130, 221, 41))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_18.setFont(font)
+        self.commandLinkButton_18.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/pago_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_18.setIcon(icon13)
+        self.commandLinkButton_18.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_18.setObjectName("commandLinkButton_18")
+        self.commandLinkButton_19 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_22)
+        self.commandLinkButton_19.setGeometry(QtCore.QRect(20, 180, 221, 41))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_19.setFont(font)
+        self.commandLinkButton_19.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon14 = QtGui.QIcon()
+        icon14.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/ranking.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_19.setIcon(icon14)
+        self.commandLinkButton_19.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_19.setObjectName("commandLinkButton_19")
+        self.commandLinkButton_15 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_22)
+        self.commandLinkButton_15.setGeometry(QtCore.QRect(20, 230, 231, 41))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_15.setFont(font)
+        self.commandLinkButton_15.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon15 = QtGui.QIcon()
+        icon15.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/demographic_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_15.setIcon(icon15)
+        self.commandLinkButton_15.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_15.setObjectName("commandLinkButton_15")
+        self.commandLinkButton_20 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_20.setGeometry(QtCore.QRect(30, 230, 231, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.commandLinkButton_20.setFont(font)
+        self.commandLinkButton_20.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon16 = QtGui.QIcon()
+        icon16.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/folder.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_20.setIcon(icon16)
+        self.commandLinkButton_20.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_20.setObjectName("commandLinkButton_20")
+        self.commandLinkButton_21 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_21.setGeometry(QtCore.QRect(30, 280, 231, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.commandLinkButton_21.setFont(font)
+        self.commandLinkButton_21.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon17 = QtGui.QIcon()
+        icon17.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/sheet.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_21.setIcon(icon17)
+        self.commandLinkButton_21.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_21.setObjectName("commandLinkButton_21")
+        self.commandLinkButton_22 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_22.setGeometry(QtCore.QRect(710, 410, 231, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_22.setFont(font)
+        self.commandLinkButton_22.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon18 = QtGui.QIcon()
+        icon18.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/insignias.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_22.setIcon(icon18)
+        self.commandLinkButton_22.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_22.setObjectName("commandLinkButton_22")
+        self.Group_Selection_Starter_23 = QtWidgets.QGroupBox(parent=self.tab)
+        self.Group_Selection_Starter_23.setGeometry(QtCore.QRect(320, 70, 271, 171))
+        self.Group_Selection_Starter_23.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.Group_Selection_Starter_23.setObjectName("Group_Selection_Starter_23")
+        self.scrollArea_2 = QtWidgets.QScrollArea(parent=self.Group_Selection_Starter_23)
+        self.scrollArea_2.setGeometry(QtCore.QRect(10, 30, 241, 121))
+        self.scrollArea_2.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.scrollArea_2.setAutoFillBackground(True)
+        self.scrollArea_2.setLineWidth(3)
+        self.scrollArea_2.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        self.scrollArea_2.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.scrollArea_2.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
+        self.scrollArea_2.setWidgetResizable(True)
+        self.scrollArea_2.setObjectName("scrollArea_2")
+        self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 222, 119))
+        self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.pushButton_12 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_2)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_12.setFont(font)
+        self.pushButton_12.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
 "    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_27.setDefault(False)
-        self.pushButton_Partitions_BD_27.setObjectName("pushButton_Partitions_BD_27")
-        self.pushButton_Partitions_BD_28 = QtWidgets.QPushButton(parent=self.tab)
-        self.pushButton_Partitions_BD_28.setGeometry(QtCore.QRect(30, 340, 231, 31))
-        self.pushButton_Partitions_BD_28.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
 "    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_12.setObjectName("pushButton_12")
+        self.gridLayout_2.addWidget(self.pushButton_12, 0, 0, 1, 1)
+        self.pushButton_11 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_2)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_11.setFont(font)
+        self.pushButton_11.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
 "}\n"
 "QPushButton:pressed\n"
 "{\n"
 "    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_28.setDefault(False)
-        self.pushButton_Partitions_BD_28.setObjectName("pushButton_Partitions_BD_28")
-        self.pushButton_Partitions_BD_29 = QtWidgets.QPushButton(parent=self.tab)
-        self.pushButton_Partitions_BD_29.setGeometry(QtCore.QRect(30, 530, 231, 31))
-        self.pushButton_Partitions_BD_29.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
 "    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_11.setObjectName("pushButton_11")
+        self.gridLayout_2.addWidget(self.pushButton_11, 1, 0, 1, 1)
+        self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
+        self.graphicsView_2 = QtWidgets.QGraphicsView(parent=self.tab)
+        self.graphicsView_2.setGeometry(QtCore.QRect(320, 400, 361, 192))
+        self.graphicsView_2.setObjectName("graphicsView_2")
+        self.commandLinkButton_23 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_23.setGeometry(QtCore.QRect(710, 510, 231, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.commandLinkButton_23.setFont(font)
+        self.commandLinkButton_23.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
 "}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_29.setDefault(False)
-        self.pushButton_Partitions_BD_29.setObjectName("pushButton_Partitions_BD_29")
-        self.Group_Selection_Starter_7 = QtWidgets.QGroupBox(parent=self.tab)
-        self.Group_Selection_Starter_7.setGeometry(QtCore.QRect(710, 380, 231, 111))
-        self.Group_Selection_Starter_7.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.Group_Selection_Starter_7.setObjectName("Group_Selection_Starter_7")
-        self.label_Benefits_4 = QtWidgets.QLabel(parent=self.Group_Selection_Starter_7)
-        self.label_Benefits_4.setGeometry(QtCore.QRect(40, 30, 171, 20))
-        self.label_Benefits_4.setStyleSheet("/*color: rgb(217, 16, 76);*/\n"
-"font: 63 10pt \"Bahnschrift\";\n"
-"color: rgb(121, 121, 121);")
-        self.label_Benefits_4.setObjectName("label_Benefits_4")
-        self.comboBox_Benefits_4 = QtWidgets.QComboBox(parent=self.Group_Selection_Starter_7)
-        self.comboBox_Benefits_4.setGeometry(QtCore.QRect(50, 70, 151, 22))
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon19 = QtGui.QIcon()
+        icon19.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/touch.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_23.setIcon(icon19)
+        self.commandLinkButton_23.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_23.setObjectName("commandLinkButton_23")
+        self.comboBox_Selected_Process_2 = QtWidgets.QComboBox(parent=self.tab)
+        self.comboBox_Selected_Process_2.setGeometry(QtCore.QRect(720, 570, 211, 22))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift Light")
         font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(3)
-        self.comboBox_Benefits_4.setFont(font)
-        self.comboBox_Benefits_4.setStyleSheet("font: 25 10pt \"Bahnschrift Light\";")
-        self.comboBox_Benefits_4.setObjectName("comboBox_Benefits_4")
-        self.comboBox_Benefits_4.addItem("")
-        self.comboBox_Benefits_4.addItem("")
-        self.comboBox_Benefits_4.addItem("")
-        self.comboBox_Benefits_4.addItem("")
-        self.comboBox_Benefits_4.addItem("")
-        self.checkBox_ALL_DATES_FLP_4 = QtWidgets.QCheckBox(parent=self.tab)
-        self.checkBox_ALL_DATES_FLP_4.setGeometry(QtCore.QRect(390, 370, 251, 20))
-        self.checkBox_ALL_DATES_FLP_4.setObjectName("checkBox_ALL_DATES_FLP_4")
-        self.pushButton_Partitions_BD_10 = QtWidgets.QPushButton(parent=self.tab)
-        self.pushButton_Partitions_BD_10.setGeometry(QtCore.QRect(710, 520, 231, 31))
-        self.pushButton_Partitions_BD_10.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
+        self.comboBox_Selected_Process_2.setFont(font)
+        self.comboBox_Selected_Process_2.setStyleSheet("font: 25 10pt \"Bahnschrift Light\";")
+        self.comboBox_Selected_Process_2.setObjectName("comboBox_Selected_Process_2")
+        self.comboBox_Selected_Process_2.addItem("")
+        self.comboBox_Selected_Process_2.addItem("")
+        self.comboBox_Selected_Process_2.addItem("")
+        self.comboBox_Selected_Process_2.addItem("")
+        self.comboBox_Selected_Process_2.addItem("")
+        self.comboBox_Selected_Process_2.addItem("")
+        self.commandLinkButton_24 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_24.setGeometry(QtCore.QRect(640, 200, 301, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.commandLinkButton_24.setFont(font)
+        self.commandLinkButton_24.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
+"}")
+        icon20 = QtGui.QIcon()
+        icon20.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/search_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_24.setIcon(icon20)
+        self.commandLinkButton_24.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_24.setObjectName("commandLinkButton_24")
+        self.commandLinkButton_25 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_25.setGeometry(QtCore.QRect(710, 460, 231, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.commandLinkButton_25.setFont(font)
+        self.commandLinkButton_25.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
 "}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_10.setDefault(False)
-        self.pushButton_Partitions_BD_10.setObjectName("pushButton_Partitions_BD_10")
-        self.graphicsView_2 = QtWidgets.QGraphicsView(parent=self.tab)
-        self.graphicsView_2.setGeometry(QtCore.QRect(360, 410, 311, 151))
-        self.graphicsView_2.setObjectName("graphicsView_2")
-        self.pushButton_Partitions_BD_31 = QtWidgets.QPushButton(parent=self.tab)
-        self.pushButton_Partitions_BD_31.setGeometry(QtCore.QRect(30, 580, 231, 31))
-        self.pushButton_Partitions_BD_31.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_31.setDefault(False)
-        self.pushButton_Partitions_BD_31.setObjectName("pushButton_Partitions_BD_31")
-        self.label_LOGO_12 = QtWidgets.QLabel(parent=self.tab)
-        self.label_LOGO_12.setGeometry(QtCore.QRect(400, 430, 241, 111))
-        self.label_LOGO_12.setText("")
-        self.label_LOGO_12.setPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/Structure_Folder.png"))
-        self.label_LOGO_12.setScaledContents(True)
-        self.label_LOGO_12.setObjectName("label_LOGO_12")
+"}")
+        icon21 = QtGui.QIcon()
+        icon21.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/Lumina.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_25.setIcon(icon21)
+        self.commandLinkButton_25.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_25.setObjectName("commandLinkButton_25")
         self.tabWidget.addTab(self.tab, "")
         self.Resources = QtWidgets.QWidget()
         self.Resources.setObjectName("Resources")
@@ -2531,34 +3130,6 @@ class Ui_Process_Data(object):
 "")
         self.pushButton_Partitions_BD_43.setDefault(False)
         self.pushButton_Partitions_BD_43.setObjectName("pushButton_Partitions_BD_43")
-        self.pushButton_Partitions_BD_38 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_17)
-        self.pushButton_Partitions_BD_38.setGeometry(QtCore.QRect(20, 280, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_38.setFont(font)
-        self.pushButton_Partitions_BD_38.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_38.setDefault(False)
-        self.pushButton_Partitions_BD_38.setObjectName("pushButton_Partitions_BD_38")
         self.Group_Selection_Starter_18 = QtWidgets.QGroupBox(parent=self.Group_Selection_Starter_17)
         self.Group_Selection_Starter_18.setGeometry(QtCore.QRect(250, 330, 271, 331))
         self.Group_Selection_Starter_18.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
@@ -2703,205 +3274,7 @@ class Ui_Process_Data(object):
 "")
         self.pushButton_Partitions_BD_52.setDefault(False)
         self.pushButton_Partitions_BD_52.setObjectName("pushButton_Partitions_BD_52")
-        self.pushButton_Partitions_BD_39 = QtWidgets.QPushButton(parent=self.tab_2)
-        self.pushButton_Partitions_BD_39.setGeometry(QtCore.QRect(40, 590, 221, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.pushButton_Partitions_BD_39.setFont(font)
-        self.pushButton_Partitions_BD_39.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_39.setDefault(False)
-        self.pushButton_Partitions_BD_39.setObjectName("pushButton_Partitions_BD_39")
-        self.pushButton_Select_File_8 = QtWidgets.QPushButton(parent=self.tab_2)
-        self.pushButton_Select_File_8.setGeometry(QtCore.QRect(50, 530, 201, 31))
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.pushButton_Select_File_8.setFont(font)
-        self.pushButton_Select_File_8.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(94, 94, 94);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Select_File_8.setDefault(False)
-        self.pushButton_Select_File_8.setObjectName("pushButton_Select_File_8")
         self.tabWidget.addTab(self.tab_2, "")
-        self.tab_3 = QtWidgets.QWidget()
-        self.tab_3.setObjectName("tab_3")
-        self.label_LOGO_5 = QtWidgets.QLabel(parent=self.tab_3)
-        self.label_LOGO_5.setGeometry(QtCore.QRect(420, 15, 109, 31))
-        self.label_LOGO_5.setText("")
-        self.label_LOGO_5.setPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/Logo_Label.png"))
-        self.label_LOGO_5.setScaledContents(True)
-        self.label_LOGO_5.setObjectName("label_LOGO_5")
-        self.label_Version_Control_5 = QtWidgets.QLabel(parent=self.tab_3)
-        self.label_Version_Control_5.setGeometry(QtCore.QRect(700, 20, 241, 21))
-        self.label_Version_Control_5.setStyleSheet("color: rgb(162, 162, 162);\n"
-"font: italic 10pt \"MS Sans Serif\";")
-        self.label_Version_Control_5.setObjectName("label_Version_Control_5")
-        self.line_Vertical_Tittle_5 = QtWidgets.QFrame(parent=self.tab_3)
-        self.line_Vertical_Tittle_5.setGeometry(QtCore.QRect(310, 50, 651, 20))
-        self.line_Vertical_Tittle_5.setFrameShape(QtWidgets.QFrame.Shape.HLine)
-        self.line_Vertical_Tittle_5.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
-        self.line_Vertical_Tittle_5.setObjectName("line_Vertical_Tittle_5")
-        self.Group_Selection_Starter_12 = QtWidgets.QGroupBox(parent=self.tab_3)
-        self.Group_Selection_Starter_12.setGeometry(QtCore.QRect(10, 20, 271, 141))
-        self.Group_Selection_Starter_12.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.Group_Selection_Starter_12.setObjectName("Group_Selection_Starter_12")
-        self.pushButton_Select_File_10 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_12)
-        self.pushButton_Select_File_10.setGeometry(QtCore.QRect(30, 40, 201, 31))
-        self.pushButton_Select_File_10.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(94, 94, 94);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Select_File_10.setDefault(False)
-        self.pushButton_Select_File_10.setObjectName("pushButton_Select_File_10")
-        self.pushButton_Select_File_13 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_12)
-        self.pushButton_Select_File_13.setGeometry(QtCore.QRect(30, 90, 201, 31))
-        self.pushButton_Select_File_13.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(94, 94, 94);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Select_File_13.setDefault(False)
-        self.pushButton_Select_File_13.setObjectName("pushButton_Select_File_13")
-        self.Group_Selection_Starter_19 = QtWidgets.QGroupBox(parent=self.tab_3)
-        self.Group_Selection_Starter_19.setGeometry(QtCore.QRect(10, 180, 271, 151))
-        self.Group_Selection_Starter_19.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.Group_Selection_Starter_19.setObjectName("Group_Selection_Starter_19")
-        self.pushButton_Partitions_BD_8 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_19)
-        self.pushButton_Partitions_BD_8.setGeometry(QtCore.QRect(20, 40, 231, 31))
-        self.pushButton_Partitions_BD_8.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_8.setDefault(False)
-        self.pushButton_Partitions_BD_8.setObjectName("pushButton_Partitions_BD_8")
-        self.pushButton_Partitions_BD_11 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_19)
-        self.pushButton_Partitions_BD_11.setGeometry(QtCore.QRect(20, 90, 231, 31))
-        self.pushButton_Partitions_BD_11.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_11.setDefault(False)
-        self.pushButton_Partitions_BD_11.setObjectName("pushButton_Partitions_BD_11")
-        self.label_Total_Registers_8 = QtWidgets.QLabel(parent=self.tab_3)
-        self.label_Total_Registers_8.setGeometry(QtCore.QRect(400, 610, 241, 21))
-        self.label_Total_Registers_8.setStyleSheet("color: rgb(217, 16, 76);\n"
-"font: 87 9pt \"Arial Black\";")
-        self.label_Total_Registers_8.setObjectName("label_Total_Registers_8")
-        self.label_Total_Registers_7 = QtWidgets.QLabel(parent=self.tab_3)
-        self.label_Total_Registers_7.setGeometry(QtCore.QRect(650, 610, 111, 21))
-        font = QtGui.QFont()
-        font.setFamily("Arial Black")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(10)
-        self.label_Total_Registers_7.setFont(font)
-        self.label_Total_Registers_7.setStyleSheet("color: rgb(217, 16, 76);\n"
-"font: 87 10pt \"Arial Black\";")
-        self.label_Total_Registers_7.setObjectName("label_Total_Registers_7")
-        self.commandLinkButton = QtWidgets.QCommandLinkButton(parent=self.tab_3)
-        self.commandLinkButton.setGeometry(QtCore.QRect(320, 120, 231, 41))
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/search.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton.setIcon(icon)
-        self.commandLinkButton.setIconSize(QtCore.QSize(20, 20))
-        self.commandLinkButton.setObjectName("commandLinkButton")
-        self.progressBar = QtWidgets.QProgressBar(parent=self.tab_3)
-        self.progressBar.setGeometry(QtCore.QRect(320, 80, 631, 23))
-        self.progressBar.setProperty("value", 24)
-        self.progressBar.setObjectName("progressBar")
-        self.commandLinkButton_2 = QtWidgets.QCommandLinkButton(parent=self.tab_3)
-        self.commandLinkButton_2.setGeometry(QtCore.QRect(320, 170, 231, 41))
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/arrow wp.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_2.setIcon(icon1)
-        self.commandLinkButton_2.setObjectName("commandLinkButton_2")
-        self.tabWidget.addTab(self.tab_3, "")
         self.tabWidget_2.addTab(self.tab_7, "")
         Process_Data.setCentralWidget(self.CentralWidget)
         self.menuBar = QtWidgets.QMenuBar(parent=Process_Data)
@@ -2944,8 +3317,8 @@ class Ui_Process_Data(object):
         self.menuBar.addAction(self.menu_Export.menuAction())
 
         self.retranslateUi(Process_Data)
-        self.tabWidget_2.setCurrentIndex(1)
-        self.tabWidget.setCurrentIndex(4)
+        self.tabWidget_2.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Process_Data)
 
     def retranslateUi(self, Process_Data):
@@ -2980,56 +3353,82 @@ class Ui_Process_Data(object):
         self.pushButton_Partitions_BD_42.setText(_translate("Process_Data", "Subir Bases del Sistema de IVR-TRANS"))
         self.pushButton_Select_File_9.setText(_translate("Process_Data", "Copiar archivo plantilla IVR"))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_10), _translate("Process_Data", "Menú"))
+        self.label_Version_Control_5.setText(_translate("Process_Data", "Versión - V. 1.08.661"))
+        self.Group_Selection_Starter_12.setTitle(_translate("Process_Data", "Selección de origen"))
+        self.pushButton_Select_File_10.setText(_translate("Process_Data", "Seleccionar Carpeta"))
+        self.pushButton_Select_File_13.setText(_translate("Process_Data", "Seleccionar Archivo"))
+        self.Group_Selection_Starter_19.setTitle(_translate("Process_Data", "Plantillas"))
+        self.pushButton_5.setText(_translate("Process_Data", "Descarga Masiva SAEM"))
+        self.pushButton_6.setText(_translate("Process_Data", "Carpetas Lectura por Toques"))
+        self.pushButton_7.setText(_translate("Process_Data", "Estructuras de Masivos"))
+        self.pushButton_3.setText(_translate("Process_Data", "Esquema Asignación Claro"))
+        self.pushButton_2.setText(_translate("Process_Data", "Códigos Visual Basic"))
+        self.pushButton_4.setText(_translate("Process_Data", "Estructuras de Cargue"))
+        self.pushButton_14.setText(_translate("Process_Data", "Reparto de Campañas"))
+        self.label_Total_Registers_8.setText(_translate("Process_Data", "TOTAL DE VALORES A PROCESAR:"))
+        self.label_Total_Registers_7.setText(_translate("Process_Data", "trial"))
+        self.Group_Selection_Starter_36.setTitle(_translate("Process_Data", "Recursos del Computador"))
+        self.label_2.setText(_translate("Process_Data", "RAM disponible en GB"))
+        self.label_4.setText(_translate("Process_Data", "D: Espacio libre en GB"))
+        self.label_3.setText(_translate("Process_Data", "Procesador"))
+        self.label_5.setText(_translate("Process_Data", "C: Espacio libre en GB"))
+        self.Group_Selection_Starter_37.setTitle(_translate("Process_Data", "Procesos WhatsApp"))
+        self.commandLinkButton.setText(_translate("Process_Data", " Validación Números WhatsApp"))
+        self.commandLinkButton_2.setText(_translate("Process_Data", " Envío Proceso RPA WhatsApp"))
+        self.plainTextEdit.setPlainText(_translate("Process_Data", "(NOMBRE), escribe acá el mensaje con las (VARIABLES) para el envío de WhatsApps con RPA."))
+        self.Group_Selection_Starter_38.setTitle(_translate("Process_Data", "Procesos Web"))
+        self.commandLinkButton_3.setText(_translate("Process_Data", "Descargue de Reportería SAEM"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("Process_Data", "Procesos RPA"))
         self.label_Version_Control_2.setText(_translate("Process_Data", "Automatización de Procesos - V. 1.08.661"))
-        self.Group_Selection_Starter.setTitle(_translate("Process_Data", "Selección Archivo Bession"))
+        self.Group_Selection_Starter.setTitle(_translate("Process_Data", "Selección de Archivo"))
         self.pushButton_Select_File.setText(_translate("Process_Data", "Seleccionar Archivo"))
         self.label_Partitions.setText(_translate("Process_Data", "Cantidad de Particiones           "))
         self.Group_Selection_Starter_8.setTitle(_translate("Process_Data", "Selección Archivo Bession"))
         self.pushButton_Select_File_7.setText(_translate("Process_Data", "Seleccionar Archivo"))
         self.label_Partitions_7.setText(_translate("Process_Data", "Cantidad de Particiones           "))
-        self.pushButton_Partitions_BD.setText(_translate("Process_Data", "Particionar archivo seleccionado"))
-        self.pushButton_Coding.setText(_translate("Process_Data", "Exportar códigos VBA - Bash"))
         self.label_Total_Registers_3.setText(_translate("Process_Data", "TOTAL DE REGISTROS:"))
         self.label_Total_Registers_4.setText(_translate("Process_Data", "trial"))
-        self.pushButton_Coding_3.setText(_translate("Process_Data", "Abrir Power Shell"))
-        self.pushButton_Partitions_BD_30.setText(_translate("Process_Data", "Exportar estructura de cargues"))
-        self.Group_Selection_Starter_9.setTitle(_translate("Process_Data", "Procesos con Archivo Transformado"))
-        self.pushButton_CAM.setText(_translate("Process_Data", "Validación de Base General y Cargue"))
-        self.pushButton_MINS.setText(_translate("Process_Data", "Exportar demográficos para cargue"))
+        self.Group_Selection_Starter_9.setTitle(_translate("Process_Data", "Procesos con Asignación de Claro"))
+        self.commandLinkButton_9.setText(_translate("Process_Data", " Exportar bases de cargue"))
+        self.commandLinkButton_10.setText(_translate("Process_Data", " Exportar demográficos"))
+        self.commandLinkButton_11.setText(_translate("Process_Data", " Exportar bases inventario"))
+        self.commandLinkButton_12.setText(_translate("Process_Data", " Reclamaciones de gestión"))
+        self.commandLinkButton_7.setText(_translate("Process_Data", "  Fragmentar"))
+        self.commandLinkButton_8.setText(_translate("Process_Data", "PowerShell"))
+        self.pushButton_Partitions_BD_39.setText(_translate("Process_Data", "Transformar Exclusiones (Libro)"))
+        self.pushButton_Select_File_8.setText(_translate("Process_Data", "Seleccionar Libro"))
+        self.commandLinkButton_13.setText(_translate("Process_Data", " Transformar exclusiones de excel"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Upload), _translate("Process_Data", "Procesos CAM Unif"))
-        self.pushButton_Partitions_BD_2.setText(_translate("Process_Data", "Validación Archivos (XLSX)"))
         self.Group_Selection_Starter_3.setTitle(_translate("Process_Data", "Selección de origen"))
         self.pushButton_Select_File_3.setText(_translate("Process_Data", "Seleccionar Carpeta"))
         self.label_Partitions_3.setText(_translate("Process_Data", "Cantidad de Particiones           "))
-        self.pushButton_Partitions_BD_3.setText(_translate("Process_Data", "Consolidar reportes para BATCH"))
-        self.pushButton_Partitions_BD_4.setText(_translate("Process_Data", "Consolidar Resultados BOT"))
-        self.pushButton_Partitions_BD_5.setText(_translate("Process_Data", "Consolidar Demográficos"))
         self.label_Version_Control_3.setText(_translate("Process_Data", "Versión - V. 1.08.661"))
-        self.pushButton_Partitions_BD_9.setText(_translate("Process_Data", "Consolidar resultado IVR intercom"))
-        self.comboBox_Benefits_2.setItemText(0, _translate("Process_Data", "--- Seleccione opción"))
-        self.comboBox_Benefits_2.setItemText(1, _translate("Process_Data", "Transaccionales"))
-        self.comboBox_Benefits_2.setItemText(2, _translate("Process_Data", "IVR Intercom"))
-        self.comboBox_Benefits_2.setItemText(3, _translate("Process_Data", "Todo"))
-        self.label_Benefits_2.setText(_translate("Process_Data", "Selección de Canales"))
         self.Group_Selection_Starter_6.setTitle(_translate("Process_Data", "Búsqueda avanzada para filtrar"))
         self.label_Benefits_3.setText(_translate("Process_Data", "Delimitar por comas los datos"))
-        self.checkBox_ALL_DATES_FLP_3.setText(_translate("Process_Data", "Todos"))
-        self.label_Dates_FLP_3.setText(_translate("Process_Data", "Selección de día de llamadas         "))
         self.label_Total_Registers_5.setText(_translate("Process_Data", "TOTAL DE ARCHIVOS:"))
         self.label_Total_Registers_6.setText(_translate("Process_Data", "trial"))
-        self.pushButton_Partitions_BD_27.setText(_translate("Process_Data", "Transformar PSA-NG-PAGOS"))
-        self.pushButton_Partitions_BD_28.setText(_translate("Process_Data", "Consolidar Archivos de Carpeta"))
-        self.pushButton_Partitions_BD_29.setText(_translate("Process_Data", "Leer Insignias"))
-        self.Group_Selection_Starter_7.setTitle(_translate("Process_Data", "Selección de Recurso"))
-        self.label_Benefits_4.setText(_translate("Process_Data", "Solo para carpetas segmentadas"))
-        self.comboBox_Benefits_4.setItemText(0, _translate("Process_Data", "--- Seleccione opción"))
-        self.comboBox_Benefits_4.setItemText(1, _translate("Process_Data", "BOT"))
-        self.comboBox_Benefits_4.setItemText(2, _translate("Process_Data", "EMAIL"))
-        self.comboBox_Benefits_4.setItemText(3, _translate("Process_Data", "IVR"))
-        self.comboBox_Benefits_4.setItemText(4, _translate("Process_Data", "SMS"))
-        self.checkBox_ALL_DATES_FLP_4.setText(_translate("Process_Data", "Carpeta con subcarpetas preordenadas"))
-        self.pushButton_Partitions_BD_10.setText(_translate("Process_Data", "Lectura de toques por Cuenta"))
-        self.pushButton_Partitions_BD_31.setText(_translate("Process_Data", "Transformación de Ranking´s"))
+        self.commandLinkButton_14.setText(_translate("Process_Data", " Consolidar batch de prectivos"))
+        self.Group_Selection_Starter_22.setTitle(_translate("Process_Data", "Anexos de Campaña Claro"))
+        self.commandLinkButton_16.setText(_translate("Process_Data", " Procesar pagos sin aplicar"))
+        self.commandLinkButton_17.setText(_translate("Process_Data", " Procesar no gestión"))
+        self.commandLinkButton_18.setText(_translate("Process_Data", " Procesar pagos"))
+        self.commandLinkButton_19.setText(_translate("Process_Data", " Procesar rankings de Claro"))
+        self.commandLinkButton_15.setText(_translate("Process_Data", " Consolidar demográficos"))
+        self.commandLinkButton_20.setText(_translate("Process_Data", " Consolidar archivos de carpeta"))
+        self.commandLinkButton_21.setText(_translate("Process_Data", " Validación de archivos XLSX"))
+        self.commandLinkButton_22.setText(_translate("Process_Data", " Consolidar data de insignias"))
+        self.Group_Selection_Starter_23.setTitle(_translate("Process_Data", "Herramientas Masvias"))
+        self.pushButton_12.setText(_translate("Process_Data", "Consolidar Resultados IPCom"))
+        self.pushButton_11.setText(_translate("Process_Data", "Consolidar Resultados Blaster"))
+        self.commandLinkButton_23.setText(_translate("Process_Data", " Consolidar toques por cuenta"))
+        self.comboBox_Selected_Process_2.setItemText(0, _translate("Process_Data", "--- Seleccione opción"))
+        self.comboBox_Selected_Process_2.setItemText(1, _translate("Process_Data", "TODOS"))
+        self.comboBox_Selected_Process_2.setItemText(2, _translate("Process_Data", "BOT"))
+        self.comboBox_Selected_Process_2.setItemText(3, _translate("Process_Data", "EMAIL"))
+        self.comboBox_Selected_Process_2.setItemText(4, _translate("Process_Data", "IVR"))
+        self.comboBox_Selected_Process_2.setItemText(5, _translate("Process_Data", "SMS"))
+        self.commandLinkButton_24.setText(_translate("Process_Data", " Realizar búsqueda masiva en carpeta"))
+        self.commandLinkButton_25.setText(_translate("Process_Data", " Validar información en Lumina"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Process_Data", "Consolidado de Archivos"))
         self.label_Selection_Process.setText(_translate("Process_Data", "Proceso de Telemática"))
         self.label_Benefits.setText(_translate("Process_Data", "Beneficios Aplicados"))
@@ -3198,28 +3597,13 @@ class Ui_Process_Data(object):
         self.pushButton_Partitions_BD_35.setText(_translate("Process_Data", "Exportar Predictivo"))
         self.pushButton_Partitions_BD_36.setText(_translate("Process_Data", "Exportar Bases de Pagos Filtrada"))
         self.pushButton_Partitions_BD_43.setText(_translate("Process_Data", "Convertir TMO Claro (Día anterior)"))
-        self.pushButton_Partitions_BD_38.setText(_translate("Process_Data", "Reclamaciones Reporte Gestión"))
         self.Group_Selection_Starter_18.setTitle(_translate("Process_Data", "Procesos Líderes"))
         self.pushButton_Partitions_BD_48.setText(_translate("Process_Data", "Reordenación de Números"))
         self.pushButton_Partitions_BD_49.setText(_translate("Process_Data", "Exportar Predictivo"))
         self.pushButton_Partitions_BD_50.setText(_translate("Process_Data", "Exportar Base con Filtros"))
         self.pushButton_Partitions_BD_51.setText(_translate("Process_Data", "Convertir TMO Claro (Día anterior)"))
         self.pushButton_Partitions_BD_52.setText(_translate("Process_Data", "Reclamaciones Reporte Gestión"))
-        self.pushButton_Partitions_BD_39.setText(_translate("Process_Data", "Transformar Exclusiones (Libro)"))
-        self.pushButton_Select_File_8.setText(_translate("Process_Data", "Seleccionar Libro"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Process_Data", "Tareas Operación"))
-        self.label_Version_Control_5.setText(_translate("Process_Data", "Versión - V. 1.08.661"))
-        self.Group_Selection_Starter_12.setTitle(_translate("Process_Data", "Selección de origen"))
-        self.pushButton_Select_File_10.setText(_translate("Process_Data", "Seleccionar Carpeta"))
-        self.pushButton_Select_File_13.setText(_translate("Process_Data", "Seleccionar Archivo"))
-        self.Group_Selection_Starter_19.setTitle(_translate("Process_Data", "Procesos SAEM"))
-        self.pushButton_Partitions_BD_8.setText(_translate("Process_Data", "Descargar reportes de SAEM"))
-        self.pushButton_Partitions_BD_11.setText(_translate("Process_Data", "Copiar Plantilla para Descarga"))
-        self.label_Total_Registers_8.setText(_translate("Process_Data", "TOTAL DE VALORES A PROCESAR:"))
-        self.label_Total_Registers_7.setText(_translate("Process_Data", "trial"))
-        self.commandLinkButton.setText(_translate("Process_Data", " Validación Números WhatsApp"))
-        self.commandLinkButton_2.setText(_translate("Process_Data", " Envío Proceso RPA WhatsApp"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("Process_Data", "Procesos RPA"))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_7), _translate("Process_Data", "Operaciones"))
         self.menu_Help.setTitle(_translate("Process_Data", "Ayuda"))
         self.menu_Creditos.setTitle(_translate("Process_Data", "Créditos"))

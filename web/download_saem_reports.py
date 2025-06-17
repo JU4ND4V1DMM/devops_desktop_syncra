@@ -1,3 +1,4 @@
+from PyQt6.QtWidgets import QMessageBox
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -101,4 +102,11 @@ def read_csv_lists_saem(csv_path):
             print(f"Invalid resource for ID {row['ID']}: {resource}")
 
     print("Process completed.")
+    
     driver.quit()
+    
+    Mbox_In_Process = QMessageBox() 
+    Mbox_In_Process.setWindowTitle("")
+    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+    Mbox_In_Process.setText("Descarga de reportes ejecutada exitosamente.")
+    Mbox_In_Process.exec()

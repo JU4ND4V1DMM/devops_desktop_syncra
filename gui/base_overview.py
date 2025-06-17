@@ -1,4 +1,6 @@
 import os
+import modules.report_exclusions
+from gui.dynamic_thread import DynamicThread
 import utils.active_lines
 from web.pyspark import get_spark_session
 from datetime import datetime
@@ -12,7 +14,7 @@ from web.save_files import save_to_0csv, save_to_csv
 
 class Charge_DB(QtWidgets.QMainWindow):
 
-    def __init__(self, row_count, file_path, folder_path, process_data):
+    def __init__(self, row_count, file_path, folder_path, process_data, thread_class=DynamicThread):
         
         super().__init__()
         
@@ -33,13 +35,43 @@ class Charge_DB(QtWidgets.QMainWindow):
 
     def exec_process(self):
         
+        
         self.digit_partitions()
         self.data_to_process = []
-        self.process_data.pushButton_CAM.clicked.connect(self.generate_DB)
-        self.process_data.pushButton_Partitions_BD.clicked.connect(self.Partitions_Data_Base)
-        self.process_data.pushButton_MINS.clicked.connect(self.mins_from_bd)
+        self.process_data.commandLinkButton_9.clicked.connect(self.upload_DB)
+        self.process_data.commandLinkButton_11.clicked.connect(self.generate_DB)
+        self.process_data.commandLinkButton_7.clicked.connect(self.Partitions_Data_Base)
+        self.process_data.commandLinkButton_10.clicked.connect(self.mins_from_bd)
+        self.process_data.commandLinkButton_12.clicked.connect(self.file_exclusions)
 
-    def generate_DB(self):
+    def file_exclusions(self):
+
+        list_data = [self.file_path, self.folder_path, self.partitions]
+        lenght_list = len(list_data)
+
+        file = list_data[0]
+        root = list_data[1]
+        partitions = int(list_data[2])
+
+        if lenght_list >= 3:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+            Mbox_In_Process.exec()
+
+            modules.report_exclusions.Function_Exclusions(file, root, partitions)
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Proceso de filtro de Reclamaciones ejecutado exitosamente.")
+            Mbox_In_Process.exec()
+        else:
+            pass
+        
+    def upload_DB(self):
 
         Mbox_In_Process = QMessageBox()
         Mbox_In_Process.setWindowTitle("Procesando")
@@ -48,8 +80,23 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.exec()
 
         self.BD_Control_Next()
-        self.DB_Create()
+        
+        Mbox_In_Process = QMessageBox()
+        Mbox_In_Process.setWindowTitle("")
+        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+        Mbox_In_Process.setText("Proceso de creación ejecutado exitosamente.")
+        Mbox_In_Process.exec()
+        
+    def generate_DB(self):
 
+        Mbox_In_Process = QMessageBox()
+        Mbox_In_Process.setWindowTitle("Procesando")
+        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+        Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa el archivo.")
+        Mbox_In_Process.exec()
+
+        self.DB_Create()
+        
         Mbox_In_Process = QMessageBox()
         Mbox_In_Process.setWindowTitle("")
         Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
@@ -86,7 +133,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.exec()
 
         utils.active_lines.Function_Complete(path, output_directory, partitions)
-
+        
         Mbox_In_Process = QMessageBox()
         Mbox_In_Process.setWindowTitle("")
         Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
@@ -281,9 +328,9 @@ class Charge_DB(QtWidgets.QMainWindow):
         name = "Errores"
         origin = "Multiorigen"
         self.Save_File(Data_Error, root, partitions, name, origin, Time_File)
-
+        
         return Data_Root
-
+    
     def DB_Create(self):
         
         list_data = [self.file_path, self.folder_path, self.partitions]

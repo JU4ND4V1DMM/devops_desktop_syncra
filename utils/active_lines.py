@@ -1,4 +1,5 @@
 import os
+from PyQt6.QtWidgets import QMessageBox
 from skills import list_city_mins
 from functools import reduce
 import string
