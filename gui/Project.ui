@@ -1140,7 +1140,7 @@ QPushButton:pressed
        </rect>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Upload">
        <attribute name="title">
@@ -1216,7 +1216,7 @@ QPushButton:pressed
         <widget class="QSpinBox" name="spinBox_Partitions">
          <property name="geometry">
           <rect>
-           <x>194</x>
+           <x>180</x>
            <y>95</y>
            <width>61</width>
            <height>22</height>
@@ -1329,76 +1329,6 @@ QPushButton:pressed
          </widget>
         </widget>
        </widget>
-       <widget class="QPushButton" name="pushButton_Partitions_BD">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>190</y>
-          <width>231</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton
-{
-	border-radius:8px;
-	color: rgb(0, 0, 0);
-	background-color: rgb(209, 209, 209);
-}
-QPushButton:Hover
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}
-</string>
-        </property>
-        <property name="text">
-         <string>Particionar archivo seleccionado</string>
-        </property>
-        <property name="default">
-         <bool>false</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_Coding">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>260</y>
-          <width>231</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton
-{
-	border-radius:8px;
-	color: rgb(0, 0, 0);
-	background-color: rgb(209, 209, 209);
-}
-QPushButton:Hover
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}
-</string>
-        </property>
-        <property name="text">
-         <string>Exportar códigos VBA - Bash</string>
-        </property>
-        <property name="default">
-         <bool>false</bool>
-        </property>
-       </widget>
        <widget class="QGraphicsView" name="graphicsView">
         <property name="geometry">
          <rect>
@@ -1465,76 +1395,6 @@ font: 87 10pt &quot;Arial Black&quot;;</string>
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_Coding_3">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>400</y>
-          <width>231</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton
-{
-	border-radius:8px;
-	color: rgb(0, 0, 0);
-	background-color: rgb(209, 209, 209);
-}
-QPushButton:Hover
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}
-</string>
-        </property>
-        <property name="text">
-         <string>Abrir Power Shell</string>
-        </property>
-        <property name="default">
-         <bool>false</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_Partitions_BD_30">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>330</y>
-          <width>231</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton
-{
-	border-radius:8px;
-	color: rgb(0, 0, 0);
-	background-color: rgb(209, 209, 209);
-}
-QPushButton:Hover
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}
-</string>
-        </property>
-        <property name="text">
-         <string>Exportar estructura de cargues</string>
-        </property>
-        <property name="default">
-         <bool>false</bool>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_LOGO_10">
         <property name="geometry">
          <rect>
@@ -1558,9 +1418,9 @@ QPushButton:pressed
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>480</y>
+          <y>300</y>
           <width>271</width>
-          <height>151</height>
+          <height>201</height>
          </rect>
         </property>
         <property name="font">
@@ -1666,19 +1526,151 @@ QPushButton:pressed
           <bool>false</bool>
          </property>
         </widget>
+        <widget class="QPushButton" name="pushButton_CAM_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>160</y>
+           <width>231</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Bahnschrift SemiBold</family>
+           <pointsize>10</pointsize>
+           <weight>7</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton
+{
+	border-radius:8px;
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}
+QPushButton:Hover
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(94, 94, 94);
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}
+</string>
+         </property>
+         <property name="text">
+          <string>Validación de Base General y Cargue</string>
+         </property>
+         <property name="default">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton_7">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>180</y>
+          <width>191</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+
+/* Al presionar */
+QPushButton:pressed {
+    background-color: rgb(230, 230, 230); /* Gris suave al presionar */
+    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+}</string>
+        </property>
+        <property name="text">
+         <string>  Fragmentar archivos</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../resources/ico/Fragment_.png</normaloff>../resources/ico/Fragment_.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton_8">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>230</y>
+          <width>191</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+
+/* Al presionar */
+QPushButton:pressed {
+    background-color: rgb(230, 230, 230); /* Gris suave al presionar */
+    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+}</string>
+        </property>
+        <property name="text">
+         <string> Abrir PowerShell</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../resources/ico/powershell.png</normaloff>../resources/ico/powershell.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
        </widget>
        <zorder>graphicsView</zorder>
        <zorder>label_Version_Control_2</zorder>
        <zorder>Group_Selection_Starter</zorder>
-       <zorder>pushButton_Partitions_BD</zorder>
-       <zorder>pushButton_Coding</zorder>
        <zorder>label_Total_Registers_3</zorder>
        <zorder>label_Total_Registers_4</zorder>
        <zorder>line_Vertical_4</zorder>
-       <zorder>pushButton_Coding_3</zorder>
-       <zorder>pushButton_Partitions_BD_30</zorder>
        <zorder>label_LOGO_10</zorder>
        <zorder>Group_Selection_Starter_9</zorder>
+       <zorder>commandLinkButton_7</zorder>
+       <zorder>commandLinkButton_8</zorder>
       </widget>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -5727,7 +5719,7 @@ font: italic 10pt &quot;MS Sans Serif&quot;;</string>
           <x>10</x>
           <y>20</y>
           <width>271</width>
-          <height>141</height>
+          <height>151</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -5811,86 +5803,262 @@ QPushButton:pressed
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>180</y>
+          <y>190</y>
           <width>271</width>
-          <height>151</height>
+          <height>211</height>
          </rect>
         </property>
         <property name="styleSheet">
          <string notr="true">font: 63 10pt &quot;Bahnschrift SemiBold&quot;;</string>
         </property>
         <property name="title">
-         <string>Procesos SAEM</string>
+         <string>Plantillas</string>
         </property>
-        <widget class="QPushButton" name="pushButton_Partitions_BD_8">
+        <widget class="QScrollArea" name="scrollArea">
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>40</y>
+           <y>30</y>
            <width>231</width>
-           <height>31</height>
+           <height>161</height>
           </rect>
          </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	border-radius:8px;
-	color: rgb(0, 0, 0);
-	background-color: rgb(209, 209, 209);
-}
-QPushButton:Hover
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="lineWidth">
+          <number>3</number>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOn</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAsNeeded</enum>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustIgnored</enum>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>212</width>
+            <height>222</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="3" column="0">
+            <widget class="QPushButton" name="pushButton_5">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
 }
 QPushButton:pressed
 {
 	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}
-</string>
-         </property>
-         <property name="text">
-          <string>Descargar reportes de SAEM</string>
-         </property>
-         <property name="default">
-          <bool>false</bool>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton_Partitions_BD_11">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>90</y>
-           <width>231</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton
-{
-	border-radius:8px;
-	color: rgb(0, 0, 0);
-	background-color: rgb(209, 209, 209);
-}
-QPushButton:Hover
-{
-	color: rgb(255, 255, 255);
 	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Descarga Masiva SAEM</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QPushButton" name="pushButton_6">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
 }
 QPushButton:pressed
 {
 	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Carpetas Lectura por Toques</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QPushButton" name="pushButton_7">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
 }
-</string>
-         </property>
-         <property name="text">
-          <string>Copiar Plantilla para Descarga</string>
-         </property>
-         <property name="default">
-          <bool>false</bool>
-         </property>
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Estructuras de Masivos</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton_3">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Esquema Asignación Claro</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="pushButton_2">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Códigos Visual Basic</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QPushButton" name="pushButton_4">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Estructuras de Cargue</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QPushButton" name="pushButton_14">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Reparto de Campañas</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </widget>
        <widget class="QLabel" name="label_Total_Registers_8">
@@ -5941,9 +6109,31 @@ font: 87 10pt &quot;Arial Black&quot;;</string>
          <rect>
           <x>320</x>
           <y>120</y>
-          <width>231</width>
+          <width>241</width>
           <height>41</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+
+/* Al presionar */
+QPushButton:pressed {
+    background-color: rgb(230, 230, 230); /* Gris suave al presionar */
+    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+}</string>
         </property>
         <property name="text">
          <string> Validación Números WhatsApp</string>
@@ -5977,9 +6167,31 @@ font: 87 10pt &quot;Arial Black&quot;;</string>
          <rect>
           <x>320</x>
           <y>170</y>
-          <width>231</width>
+          <width>241</width>
           <height>41</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+
+/* Al presionar */
+QPushButton:pressed {
+    background-color: rgb(230, 230, 230); /* Gris suave al presionar */
+    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+}</string>
         </property>
         <property name="text">
          <string> Envío Proceso RPA WhatsApp</string>
@@ -5988,6 +6200,228 @@ font: 87 10pt &quot;Arial Black&quot;;</string>
          <iconset>
           <normaloff>../resources/ico/arrow wp.png</normaloff>../resources/ico/arrow wp.png</iconset>
         </property>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton_3">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>220</y>
+          <width>241</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+
+/* Al presionar */
+QPushButton:pressed {
+    background-color: rgb(230, 230, 230); /* Gris suave al presionar */
+    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+}</string>
+        </property>
+        <property name="text">
+         <string>Descargar de Reportería SAEM</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../resources/ico/SMS.png</normaloff>../resources/ico/SMS.png</iconset>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="Group_Selection_Starter_36">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>430</y>
+          <width>271</width>
+          <height>211</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 63 10pt &quot;Bahnschrift SemiBold&quot;;</string>
+        </property>
+        <property name="title">
+         <string>Recursos del Computador</string>
+        </property>
+        <widget class="QLCDNumber" name="lcdNumber">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>160</y>
+           <width>81</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLCDNumber {
+    background-color: #444444;    /* Gris medio, menos oscuro que #2b2b2b */
+    color: #f0f0f0;               /* Casi blanco para buen contraste */
+    border: 2px solid #888888;    /* Borde más claro y visible */
+    border-radius: 6px;
+    padding: 4px;
+}</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>160</y>
+           <width>161</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Bahnschrift</family>
+           <pointsize>9</pointsize>
+           <weight>3</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 25 9pt &quot;Bahnschrift&quot;;</string>
+         </property>
+         <property name="text">
+          <string>RAM disponible en GB</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_4">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>120</y>
+           <width>161</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Bahnschrift</family>
+           <pointsize>9</pointsize>
+           <weight>3</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 25 9pt &quot;Bahnschrift&quot;;</string>
+         </property>
+         <property name="text">
+          <string>D: Espacio libre en GB</string>
+         </property>
+        </widget>
+        <widget class="QLCDNumber" name="lcdNumber_2">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>120</y>
+           <width>81</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLCDNumber {
+    background-color: #444444;    /* Gris medio, menos oscuro que #2b2b2b */
+    color: #f0f0f0;               /* Casi blanco para buen contraste */
+    border: 2px solid #888888;    /* Borde más claro y visible */
+    border-radius: 6px;
+    padding: 4px;
+}</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_3">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>30</y>
+           <width>231</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Bahnschrift SemiBold</family>
+           <pointsize>9</pointsize>
+           <weight>7</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 63 9pt &quot;Bahnschrift SemiBold&quot;;
+color: rgb(217, 16, 76);</string>
+         </property>
+         <property name="text">
+          <string>Procesador</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+        <widget class="QLCDNumber" name="lcdNumber_3">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>80</y>
+           <width>81</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLCDNumber {
+    background-color: #444444;    /* Gris medio, menos oscuro que #2b2b2b */
+    color: #f0f0f0;               /* Casi blanco para buen contraste */
+    border: 2px solid #888888;    /* Borde más claro y visible */
+    border-radius: 6px;
+    padding: 4px;
+}</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_5">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>80</y>
+           <width>161</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Bahnschrift</family>
+           <pointsize>9</pointsize>
+           <weight>3</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 25 9pt &quot;Bahnschrift&quot;;</string>
+         </property>
+         <property name="text">
+          <string>C: Espacio libre en GB</string>
+         </property>
+        </widget>
        </widget>
       </widget>
      </widget>

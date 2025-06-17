@@ -1,4 +1,5 @@
 import threading
+import cpuinfo
 import queue
 import random
 import webbrowser
@@ -37,6 +38,8 @@ import math
 from PyQt6.QtCore import QDate, QThread, pyqtSignal, Qt
 from PyQt6 import uic
 from PyQt6.QtWidgets import QMessageBox, QFileDialog, QDialog, QVBoxLayout, QLabel
+import psutil
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLCDNumber
 
 import web.whatsapp_validate
 
@@ -153,6 +156,29 @@ class Init_APP():
             self.process_data.label_Version_Control.setText(f"{API} - {Version_Api}")
             self.process_data.label_Version_Control_4.setText(f"{API} - {Version_Api}")
             self.process_data.label_Version_Control_5.setText(f"{API} - {Version_Api}")
+            
+            ram_avaliable = psutil.virtual_memory().available / (1024 ** 3) 
+            ram_gb = round(ram_avaliable, 1) 
+            self.process_data.lcdNumber.display(ram_gb)
+            
+            info = cpuinfo.get_cpu_info()
+            processor_name = info['brand_raw']
+            self.process_data.label_3.setText(f"{processor_name}")
+
+            try:
+                _, _, free_d = shutil.disk_usage("C:/")
+                free_gb_d = free_d // (1024**3)
+                self.process_data.lcdNumber_3.display(free_gb_d)
+            except FileNotFoundError:
+                self.process_data.lcdNumber_3.display(0)
+                
+            try:
+                _, _, free_d = shutil.disk_usage("D:/")
+                free_gb_d = free_d // (1024**3)
+                self.process_data.lcdNumber_2.display(free_gb_d)
+            except FileNotFoundError:
+                self.process_data.lcdNumber_2.display(0)
+    
             self.exec_process()
             
         else:
@@ -183,17 +209,17 @@ class Init_APP():
         self.process_data.pushButton_Partitions_BD_43.clicked.connect(self.error_type_FILES_task)
         self.process_data.pushButton_Graphic.clicked.connect(self.error_type_FILES)
 
-        self.process_data.pushButton_Partitions_BD.clicked.connect(self.error_type_CAM)
+        self.process_data.commandLinkButton_7.clicked.connect(self.error_type_CAM)
         self.process_data.pushButton_CAM.clicked.connect(self.error_type_CAM)
         self.process_data.pushButton_MINS.clicked.connect(self.error_type_CAM)
         self.process_data.pushButton_Partitions_BD_46.clicked.connect(self.error_type_IVR)
         self.process_data.pushButton_Partitions_BD_45.clicked.connect(self.error_type_IVR)
 
-        self.process_data.pushButton_Coding_3.clicked.connect(self.power_shell)
-        self.process_data.pushButton_Coding.clicked.connect(self.copy_code)
+        self.process_data.commandLinkButton_8.clicked.connect(self.power_shell)
+        self.process_data.pushButton_2.clicked.connect(self.copy_code)
         self.process_data.pushButton_Select_File_9.clicked.connect(self.copy_template_ivr)
-        self.process_data.pushButton_Partitions_BD_11.clicked.connect(self.copy_template_reports_saem)
-        self.process_data.pushButton_Partitions_BD_30.clicked.connect(self.copy_folder_scripts)
+        self.process_data.pushButton_5.clicked.connect(self.copy_template_reports_saem)
+        self.process_data.pushButton_4.clicked.connect(self.copy_folder_scripts)
         self.process_data.pushButton_Partitions_BD_9.clicked.connect(self.ivr_folder_read)
         self.process_data.pushButton_Partitions_BD_31.clicked.connect(self.ranking_read)
         self.process_data.pushButton_Partitions_BD_3.clicked.connect(self.task_web_folder)
@@ -230,7 +256,7 @@ class Init_APP():
         self.process_data.pushButton_Partitions_BD_41.clicked.connect(self.run_replay_intercom)
         self.process_data.pushButton_Partitions_BD_47.clicked.connect(self.run_downloads_intercom)
 
-        self.process_data.pushButton_Partitions_BD_8.clicked.connect(self.reports_saem_error)
+        self.process_data.commandLinkButton_3.clicked.connect(self.reports_saem_error)
         self.process_data.pushButton_Select_File_13.clicked.connect(self.select_file_RPA)
         self.process_data.commandLinkButton.clicked.connect(self.validate_whatsapp)
         
