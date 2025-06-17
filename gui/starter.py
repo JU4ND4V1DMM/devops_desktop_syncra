@@ -1,6 +1,5 @@
-import threading
 import cpuinfo
-import queue
+from gui.dynamic_thread import DynamicThread
 import random
 import webbrowser
 import pandas as pd
@@ -8,6 +7,7 @@ import shutil
 import gui.insignias
 import gui.payments
 import gui.ranking_read
+import gui.search_data
 import web.download_saem_reports
 import gui.payments_not_applied
 import gui.no_managment
@@ -27,7 +27,7 @@ import utils.IVR_Clean_Lists
 import utils.IVR_Upload
 from gui.project import Process_Data
 from gui.base_overview import Charge_DB
-import gui.read_ivr
+import gui.search_data
 from gui.upload import Process_Uploaded
 import gui.web_process
 import datetime
@@ -40,7 +40,7 @@ from PyQt6 import uic
 from PyQt6.QtWidgets import QMessageBox, QFileDialog, QDialog, QVBoxLayout, QLabel
 import psutil
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLCDNumber
-
+import web.sender_whatsapp
 import web.whatsapp_validate
 
 def count_files_folder(input_path):
@@ -78,28 +78,6 @@ def count_xlsx_data(file_path):
 
 Version_Winutils = datetime.datetime.now().date()
 Buffering, Compiles, Path_Root = random.randint(11, 14), int(cache_winutils), int((980 + Version_Pyspark))
-
-class DynamicThread(threading.Thread):
-    def __init__(self, func, args=None, kwargs=None):
-        super(DynamicThread, self).__init__()
-        self.func = func
-        self.args = args if args is not None else []
-        self.kwargs = kwargs if kwargs is not None else {}
-        self.queue = queue.Queue()
-
-    def run(self):
-        
-        try:
-            result = self.func(*self.args, **self.kwargs)
-            self.queue.put(result)
-        except Exception as e:
-            self.queue.put(e)
-
-    def get_result(self):
-        return self.queue.get()
-
-    def is_alive(self):
-        return super().is_alive()
         
 class Init_APP():
 
@@ -204,14 +182,15 @@ class Init_APP():
         self.process_data.pushButton_Process.clicked.connect(self.error_type_FILES)
         self.process_data.pushButton_Partitions_BD_35.clicked.connect(self.error_type_FILES_task)
         self.process_data.pushButton_Partitions_BD_34.clicked.connect(self.error_type_FILES_task)
-        self.process_data.pushButton_Partitions_BD_38.clicked.connect(self.error_type_FILES_task)
-        self.process_data.pushButton_Partitions_BD_39.clicked.connect(self.error_type_FILES_task)
+        self.process_data.commandLinkButton_13.clicked.connect(self.error_type_FILES_task)
         self.process_data.pushButton_Partitions_BD_43.clicked.connect(self.error_type_FILES_task)
         self.process_data.pushButton_Graphic.clicked.connect(self.error_type_FILES)
 
         self.process_data.commandLinkButton_7.clicked.connect(self.error_type_CAM)
-        self.process_data.pushButton_CAM.clicked.connect(self.error_type_CAM)
-        self.process_data.pushButton_MINS.clicked.connect(self.error_type_CAM)
+        self.process_data.commandLinkButton_9.clicked.connect(self.error_type_CAM)
+        self.process_data.commandLinkButton_11.clicked.connect(self.error_type_CAM)
+        self.process_data.commandLinkButton_10.clicked.connect(self.error_type_CAM)
+        self.process_data.commandLinkButton_12.clicked.connect(self.error_type_CAM)
         self.process_data.pushButton_Partitions_BD_46.clicked.connect(self.error_type_IVR)
         self.process_data.pushButton_Partitions_BD_45.clicked.connect(self.error_type_IVR)
 
@@ -220,17 +199,21 @@ class Init_APP():
         self.process_data.pushButton_Select_File_9.clicked.connect(self.copy_template_ivr)
         self.process_data.pushButton_5.clicked.connect(self.copy_template_reports_saem)
         self.process_data.pushButton_4.clicked.connect(self.copy_folder_scripts)
-        self.process_data.pushButton_Partitions_BD_9.clicked.connect(self.ivr_folder_read)
-        self.process_data.pushButton_Partitions_BD_31.clicked.connect(self.ranking_read)
-        self.process_data.pushButton_Partitions_BD_3.clicked.connect(self.task_web_folder)
+        self.process_data.commandLinkButton_24.clicked.connect(self.ivr_folder_read)
+        self.process_data.commandLinkButton_19.clicked.connect(self.ranking_read)
+        self.process_data.commandLinkButton_14.clicked.connect(self.task_web_folder)
         self.process_data.pushButton_Partitions_BD_42.clicked.connect(self.folder_webscrapping)
-        self.process_data.pushButton_Partitions_BD_5.clicked.connect(self.folder_demographic)
-        self.process_data.pushButton_Partitions_BD_4.clicked.connect(self.folder_bot_ipcom)
-        self.process_data.pushButton_Partitions_BD_2.clicked.connect(self.folder_validation)
-        self.process_data.pushButton_Partitions_BD_27.clicked.connect(self.folder_files_process)
-        self.process_data.pushButton_Partitions_BD_28.clicked.connect(self.folder_union_excel)
-        self.process_data.pushButton_Partitions_BD_29.clicked.connect(self.folder_union_insignias)
-        self.process_data.pushButton_Partitions_BD_10.clicked.connect(self.read_folder_resources)
+        self.process_data.commandLinkButton_15.clicked.connect(self.folder_demographic)
+        self.process_data.pushButton_12.clicked.connect(self.folder_bot_ipcom)
+        self.process_data.commandLinkButton_21.clicked.connect(self.folder_validation)
+        
+        self.process_data.commandLinkButton_17.clicked.connect(self.folder_files_process_ng)
+        self.process_data.commandLinkButton_16.clicked.connect(self.folder_files_process_psa)
+        self.process_data.commandLinkButton_18.clicked.connect(self.folder_files_process_pg)
+        
+        self.process_data.commandLinkButton_20.clicked.connect(self.folder_union_excel)
+        self.process_data.commandLinkButton_22.clicked.connect(self.folder_union_insignias)
+        self.process_data.commandLinkButton_23.clicked.connect(self.read_folder_resources)
         
         self.process_data.action_Developers.triggered.connect(self.show_developers_window)
         self.process_data.actionStakeholders.triggered.connect(self.show_stakeholders_window)
@@ -248,6 +231,7 @@ class Init_APP():
         self.process_data.pushButton_Partitions_BD_24.clicked.connect(lambda: self.open_chrome_with_url('https://saemcolombia.com.co/recupera'))
         self.process_data.pushButton_Partitions_BD_26.clicked.connect(lambda: self.open_chrome_with_url('https://recuperasas10.sharepoint.com/sites/ao2023/Shared%20Documents/Forms/AllItems.aspx?e=5%3A85a4c4a26e1945ebaf170ba95a64ae9c&sharingv2=true&fromShare=true&at=9&CID=e22e605d%2Dedfa%2D413e%2D8b01%2D91d335b7d083&FolderCTID=0x012000E7EC02C3E73C0744AADA5CD55A616229&isAscending=true&id=%2Fsites%2Fao2023%2FShared%20Documents%2FBackup%5FFS%5F2024&sortField=LinkFilename&viewid=3b190181%2D2dd9%2D4237%2D988e%2Dcb92220f7829'))
         self.process_data.pushButton_Partitions_BD_32.clicked.connect(lambda: self.open_chrome_with_url('https://frontend.masivapp.com/home'))
+        self.process_data.commandLinkButton_25.clicked.connect(lambda: self.open_firefox_with_url('http://luminasystems.recuperasas.com/'))
 
         self.process_data.pushButton_Process_8.clicked.connect(self.schedule_shutdown)
 
@@ -259,6 +243,7 @@ class Init_APP():
         self.process_data.commandLinkButton_3.clicked.connect(self.reports_saem_error)
         self.process_data.pushButton_Select_File_13.clicked.connect(self.select_file_RPA)
         self.process_data.commandLinkButton.clicked.connect(self.validate_whatsapp)
+        self.process_data.commandLinkButton_2.clicked.connect(self.sending_sms_whatsapp)
         
     def exec__process(self):
         
@@ -319,7 +304,7 @@ class Init_APP():
                 if self.row_count_RPA is not None:
                     self.row_count_RPA = "{:,}".format(self.row_count_RPA)
                     self.process_data.label_Total_Registers_7.setText(f"{self.row_count_RPA}")
-                    
+                
     def validate_whatsapp(self):
             
         if self.file_path_RPA != None:
@@ -341,6 +326,28 @@ class Init_APP():
             Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
             Mbox_File_Error.setText("Debe seleccionar un archivo con la base para ejecutar la validación de WhatsApp.")
             Mbox_File_Error.exec()
+            
+    def sending_sms_whatsapp(self):
+            
+        if self.file_path_RPA != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de WhatsApp e inicie sesión.")
+            Mbox_In_Process.exec()
+            
+            thread = DynamicThread(web.sender_whatsapp.process_numbers, 
+                        args=[self.file_path_RPA, self.folder_path, self.process_data])
+
+            thread.start()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar un archivo con la base para ejecutar la validación de WhatsApp.")
+            Mbox_File_Error.exec()
                     
     def reports_saem(self):
         
@@ -350,13 +357,8 @@ class Init_APP():
         Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa la descarga de ID de Saem.")
         Mbox_In_Process.exec()
         
-        self.Base = web.download_saem_reports.read_csv_lists_saem(self.file_path_RPA)
-
-        Mbox_In_Process = QMessageBox() 
-        Mbox_In_Process.setWindowTitle("")
-        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-        Mbox_In_Process.setText("Descarga de reportes ejecutada exitosamente.")
-        Mbox_In_Process.exec()
+        thread1 = DynamicThread(web.download_saem_reports.read_csv_lists_saem, args=[self.file_path_RPA])
+        thread1.start()
         
     def error_type_CAM_(self):
         try:
@@ -722,7 +724,7 @@ class Init_APP():
     def bd_process_start(self):
 
         if self.row_count_CAM and self.file_path_CAM and self.folder_path:
-            self.Base = Charge_DB(self.row_count_CAM, self.file_path_CAM, self.folder_path, self.process_data)
+            self.Base = Charge_DB(self.row_count_CAM, self.file_path_CAM, self.folder_path, self.process_data, thread_class=DynamicThread)
 
         else:
 
@@ -1021,7 +1023,7 @@ class Init_APP():
             Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a validar.")
             Mbox_File_Error.exec()
     
-    def folder_files_process(self):
+    def folder_files_process_ng(self):
 
         type_process = "folder"
         
@@ -1037,13 +1039,71 @@ class Init_APP():
             Mbox_In_Process.exec()
             
             self.Base = gui.no_managment.transform_no_management(self.folder_path_IVR, self.folder_path)
+            
+            Mbox_In_Process = QMessageBox() 
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Procesamiento de no gestión ejecutado exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a procesar.")
+            Mbox_File_Error.exec()
+    
+    def folder_files_process_psa(self):
+
+        type_process = "folder"
+        
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+
+        if self.partitions_FOLDER != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa la carpeta.")
+            Mbox_In_Process.exec()
+            
             self.Base = gui.payments_not_applied.Transform_Payments_without_Applied(self.folder_path_IVR, self.folder_path)
+            
+            Mbox_In_Process = QMessageBox() 
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Procesamiento de pagos sin aplicar ejecutado exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a procesar.")
+            Mbox_File_Error.exec()
+    
+    def folder_files_process_pg(self):
+
+        type_process = "folder"
+        
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+
+        if self.partitions_FOLDER != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa la carpeta.")
+            Mbox_In_Process.exec()
+            
             self.Base = gui.payments.unify_payments(self.folder_path_IVR, self.folder_path)
             
             Mbox_In_Process = QMessageBox() 
             Mbox_In_Process.setWindowTitle("")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("Procesamiento de archvios ejecutado exitosamente.")
+            Mbox_In_Process.setText("Procesamiento de pagos ejecutado exitosamente.")
             Mbox_In_Process.exec()
         
         else:
@@ -1060,7 +1120,6 @@ class Init_APP():
         self.digit_partitions_FOLDER()
 
         list_to_process_IVR = self.list_IVR
-
         print(list_to_process_IVR)
 
         if len(list_to_process_IVR) > 2:
@@ -1075,7 +1134,7 @@ class Init_APP():
             Search_IVR = list_to_process_IVR[1]
             Date_IVR = list_to_process_IVR[2]
             
-            self.Base = gui.read_ivr.function_complete_IVR(self.folder_path_IVR, self.folder_path, self.partitions_FOLDER, self.process_data, Date_IVR, Search_IVR, Channel_IVR)
+            self.Base = gui.search_data.function_complete_IVR(self.folder_path_IVR, self.folder_path, self.partitions_FOLDER, self.process_data, Date_IVR, Search_IVR, Channel_IVR)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -1186,6 +1245,11 @@ class Init_APP():
     def open_chrome_with_url(self, url):
         chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
         webbrowser.get(chrome_path).open(url)
+        
+    def open_firefox_with_url(self, url):
+        firefox_path = 'C:/Program Files/Mozilla Firefox/firefox.exe %s'
+        import webbrowser
+        webbrowser.get(firefox_path).open(url)
 
     def schedule_shutdown(self):
 
@@ -1286,65 +1350,23 @@ class Init_APP():
             Mbox_Incomplete.exec()
         
     def validation_data_folders(self, type_process):
-
-        ##### IVR INTERCOM ######
         
-        self.partitions_FOLDER = None
-
-        Channels = self.process_data.comboBox_Benefits_2.currentText()
-        Search_Data = self.process_data.Searching_Field.text()
-
-        ### Calendar FLP
-        Date_Selection = str(self.process_data.checkBox_ALL_DATES_FLP_3.isChecked())
-        Calendar_Date = str(self.process_data.calendarWidget_2.selectedDate())
-        Calendar_Date_ = self.process_data.calendarWidget_2.selectedDate()
-        Today__ = Version_Winutils
-        Today = str(QDate(Today__.year, Today__.month, Today__.day))
-        Today_ = QDate(Today__.year, Today__.month, Today__.day)
-
-        formatted_date = Calendar_Date_.toString("yyyy-MM-dd")
-        formatted_date_today = Today_.toString("yyyy-MM-dd")
-        self.today = formatted_date_today
-
-        if Date_Selection == "True":
-            Date_Selection_Filter = "All Dates"
-
-        elif Calendar_Date == Today:
-            Date_Selection_Filter = None
-
-        else:
-            Date_Selection_Filter = formatted_date
-
         if type_process == "IVR":
-
-            if "--- Seleccione opción" == Channels:
-                Mbox_Incomplete = QMessageBox()
-                Mbox_Incomplete.setWindowTitle("Error de procesamiento")
-                Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
-                Mbox_Incomplete.setText("Debe elegir el tipo de canales.")
-                Mbox_Incomplete.exec()
-                self.process_data.comboBox_Benefits_2.setFocus()
-
-            elif Date_Selection_Filter is None:
-                Mbox_Incomplete = QMessageBox()
-                Mbox_Incomplete.setWindowTitle("Error de procesamiento")
-                Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
-                Mbox_Incomplete.setText("Debe seleccionar al menos una fecha o elegir todas los días de marcacion.")
-                Mbox_Incomplete.exec()
-
-            else:
-                self.list_IVR = [Channels, Search_Data, Date_Selection_Filter]
-        
+            self.partitions_FOLDER = None
+            Search_Data = self.process_data.Searching_Field.text()
+            self.list_IVR = [Search_Data]
+            
         else:
-            pass
+            self.partitions_FOLDER = None
+            Search_Data = self.process_data.Searching_Field.text()
+            self.list_IVR = [Search_Data]
     
     def validation_data_resources(self):
         
         self.partitions_FOLDER = None
         self.digit_partitions_FOLDER()
 
-        Resource_folder = self.process_data.comboBox_Benefits_4.currentText()
-        Check_Folders = str(self.process_data.checkBox_ALL_DATES_FLP_4.isChecked())
+        Resource_folder = self.process_data.comboBox_Selected_Process_2.currentText()
         
         if self.folder_path_IVR is None:
             
@@ -1354,31 +1376,27 @@ class Init_APP():
             Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a consolidar.")
             Mbox_File_Error.exec()
             
-        elif "--- Seleccione opción" == Resource_folder and Check_Folders != "True":
+        elif "--- Seleccione opción" == Resource_folder:
             Mbox_Incomplete = QMessageBox()
             Mbox_Incomplete.setWindowTitle("Error de procesamiento")
             Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
             Mbox_Incomplete.setText("Debe elegir el tipo de carpeta del recurso a leer o seleccionar todas.")
             Mbox_Incomplete.exec()
-            self.process_data.comboBox_Benefits_4.setFocus()
+            self.process_data.comboBox_Selected_Process_2.setFocus()
 
         else:
-            self.list_Resources = [Resource_folder, Check_Folders]
+            self.list_Resources = [Resource_folder]
     
     def read_folder_resources(self):
         
         self.validation_data_resources()
         list_to_process_Read = self.list_Resources
-        Folder_Resource = None
-        Check_Folders_Resource = None
-
-        if len(list_to_process_Read) > 1:
+        if len(list_to_process_Read) > 0:
             Folder_Resource = list_to_process_Read[0]
-            Check_Folders_Resource = list_to_process_Read[1]
         else:
-            pass
+            Folder_Resource = None
 
-        if Check_Folders_Resource == "True":
+        if Folder_Resource == "TODOS":
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")

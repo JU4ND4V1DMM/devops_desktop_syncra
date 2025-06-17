@@ -10,7 +10,6 @@ import modules.ivr_process
 import modules.phone_order
 import modules.fragment_dataBase
 import modules.tmo_trial
-import modules.report_exclusions
 import modules.exclusions
 import modules.sms_process
 import modules.task_web
@@ -57,36 +56,8 @@ class Process_Data(QtWidgets.QMainWindow):
         self.process_data.pushButton_Partitions_BD_35.clicked.connect(self.compilation_process_direction)
         self.process_data.pushButton_Partitions_BD_34.clicked.connect(self.reorder_phones)
         self.process_data.pushButton_Partitions_BD_36.clicked.connect(self.payments_bd_filter)
-        self.process_data.pushButton_Partitions_BD_38.clicked.connect(self.file_exclusions)
-        self.process_data.pushButton_Partitions_BD_39.clicked.connect(self.bd_exclusions)
+        self.process_data.commandLinkButton_13.clicked.connect(self.bd_exclusions)
         self.process_data.pushButton_Partitions_BD_43.clicked.connect(self.tmo_converter)
-    
-    def file_exclusions(self):
-
-        list_data = [self.file_path, self.folder_path, self.partitions]
-        lenght_list = len(list_data)
-
-        file = list_data[0]
-        root = list_data[1]
-        partitions = int(list_data[2])
-
-        if lenght_list >= 3:
-
-            Mbox_In_Process = QMessageBox()
-            Mbox_In_Process.setWindowTitle("Procesando")
-            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
-            Mbox_In_Process.exec()
-
-            modules.report_exclusions.Function_exclusions(file, root, partitions)
-
-            Mbox_In_Process = QMessageBox()
-            Mbox_In_Process.setWindowTitle("")
-            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("Proceso de filtro de Reclamaciones ejecutado exitosamente.")
-            Mbox_In_Process.exec()
-        else:
-            pass
     
     def bd_exclusions(self):
 

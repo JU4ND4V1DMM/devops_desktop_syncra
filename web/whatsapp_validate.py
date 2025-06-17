@@ -69,7 +69,7 @@ def validate_whatsapp(driver, phone_number, counter):
 def process_numbers(input_path, output_path, process):
     
     date = datetime.now().strftime("%Y-%m-%d")
-    output_path = f"{output_path}/Whatsapp Check Validate {date.format('%Y-%m-%d')}.csv"
+    output_path = f"{output_path}/Whatsapp Check Validate {date.format('%Y%m%d')}.csv"
     
     """Process phone numbers from a CSV file and validate if they have WhatsApp."""
     chrome_options = Options()
