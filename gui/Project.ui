@@ -5941,12 +5941,22 @@ font: 87 10pt &quot;Arial Black&quot;;</string>
          <rect>
           <x>320</x>
           <y>120</y>
-          <width>221</width>
+          <width>231</width>
           <height>41</height>
          </rect>
         </property>
         <property name="text">
-         <string>Validación Números WhatsApp</string>
+         <string> Validación Números WhatsApp</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../resources/ico/search.png</normaloff>../resources/ico/search.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
         </property>
        </widget>
        <widget class="QProgressBar" name="progressBar">
@@ -5967,12 +5977,16 @@ font: 87 10pt &quot;Arial Black&quot;;</string>
          <rect>
           <x>320</x>
           <y>170</y>
-          <width>221</width>
+          <width>231</width>
           <height>41</height>
          </rect>
         </property>
         <property name="text">
-         <string>Envío Proceso RPA WhatsApp</string>
+         <string> Envío Proceso RPA WhatsApp</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../resources/ico/arrow wp.png</normaloff>../resources/ico/arrow wp.png</iconset>
         </property>
        </widget>
       </widget>
