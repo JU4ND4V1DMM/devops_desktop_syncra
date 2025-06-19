@@ -4,9 +4,9 @@ from pyspark.sql import SparkSession
 from pyspark.sql import SQLContext
 from pyspark.sql.types import StringType
 from pyspark.sql.functions import col, regexp_replace, lit
-from web.pyspark import get_spark_session
+from web.pyspark_session import get_spark_session
 from web.save_files import save_to_csv
-
+ 
 def Function_Exclusions(Path, Outpath, Partitions):
     spark = get_spark_session()
     sqlContext = SQLContext(spark)

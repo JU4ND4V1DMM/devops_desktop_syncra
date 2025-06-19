@@ -2,8 +2,8 @@ from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.functions import col
 import pandas as pd
 import os
-from web.pyspark import get_spark_session
-
+from web.pyspark_session import get_spark_session
+ 
 spark = get_spark_session()
 
 sqlContext = SQLContext(spark)

@@ -4,8 +4,8 @@ from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, length, split, to_date, substring
 from pyspark.sql.functions import trim, format_number, expr, when, coalesce, datediff, current_date
-from web.pyspark import get_spark_session
-
+from web.pyspark_session import get_spark_session
+ 
 spark = get_spark_session()
 
 sqlContext = SQLContext(spark)

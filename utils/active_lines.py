@@ -7,7 +7,7 @@ from datetime import datetime
 from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.types import StringType
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, expr, length, size, split, lower, when
-from web.pyspark import get_spark_session
+from web.pyspark_session import get_spark_session
 from web.save_files import save_to_0csv, save_to_csv
 
 spark = get_spark_session()
