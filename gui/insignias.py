@@ -1,11 +1,11 @@
 import os
-from web.pyspark import get_spark_session
+from web.pyspark_session import get_spark_session
 from pyspark.sql import DataFrame
 from pyspark.sql.functions import col, lit, length
 from web.save_files import save_to_csv
 
 spark = get_spark_session()
-
+ 
 def read_files_insignias(file_path, output_directory):
 
     # Initialize an empty DataFrame for consolidation

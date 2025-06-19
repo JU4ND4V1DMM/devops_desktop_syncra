@@ -30,7 +30,7 @@ from gui.base_overview import Charge_DB
 import gui.search_data
 from gui.upload import Process_Uploaded
 import gui.web_process
-import datetime
+from datetime import datetime
 import os
 import sys
 import subprocess
@@ -76,7 +76,7 @@ def count_xlsx_data(file_path):
     
     return total_count
 
-Version_Winutils = datetime.datetime.now().date()
+Version_Winutils = datetime.now().date()
 Buffering, Compiles, Path_Root = random.randint(11, 14), int(cache_winutils), int((980 + Version_Pyspark))
         
 class Init_APP():
@@ -95,7 +95,7 @@ class Init_APP():
 
         self.folder_path = os.path.expanduser("~/Downloads/")
         script_path = os.path.abspath(__file__)
-        Version_Pyspark = datetime.datetime(Path_Root, Compiles, Buffering).date()
+        Version_Pyspark = datetime(Path_Root, Compiles, Buffering).date()
         self.root_API = os.path.dirname(os.path.dirname(script_path))
         
         self.partitions_FILES = None
@@ -317,13 +317,20 @@ class Init_APP():
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("Por favor espere la ventana de WhatsApp e inicie sesión.")
+            Mbox_In_Process.setText("Por favor espere la ventana de WhatsApp e inicie sesión. No olvide que el archivo solo necesita una columna con los telefonos a validar")
             Mbox_In_Process.exec()
             
             thread = DynamicThread(web.whatsapp_validate.process_numbers, 
                         args=[self.file_path_RPA, self.folder_path, self.process_data])
 
             thread.start()
+            thread.join()
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Informacion del proceso") 
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Base de datos ejecutada con RPA exitosamente. No olvide dejar el archivo en la compartida.") 
+            Mbox_In_Process.exec()
         
         else:
             Mbox_File_Error = QMessageBox()
@@ -336,16 +343,27 @@ class Init_APP():
             
         if self.file_path_RPA != None:
 
+            template = self.process_data.plainTextEdit.toPlainText()
+            
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("Por favor espere la ventana de WhatsApp e inicie sesión.")
+            Mbox_In_Process.setText("Por favor espere la ventana de WhatsApp e inicie sesión. Recuerde que las variables deben estar en MAYUSCULAS y debe existir la columna CELULAR")
             Mbox_In_Process.exec()
             
-            thread = DynamicThread(web.sender_whatsapp.process_numbers, 
-                        args=[self.file_path_RPA, self.folder_path, self.process_data])
+            thread_wp = DynamicThread(web.sender_whatsapp.send_messages, 
+                        args=[self.file_path_RPA, self.folder_path, template, self.process_data])
 
-            thread.start()
+            thread_wp.start()
+            thread_wp.join()  # Wait for the thread to finish
+            result = thread_wp.get_result()
+            message = str(result)
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Informacion del proceso") 
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText(message) 
+            Mbox_In_Process.exec()
         
         else:
             Mbox_File_Error = QMessageBox()
@@ -602,7 +620,7 @@ class Init_APP():
                 self.row_count_DIR = count_xlsx_data(self.file_path_DIRECTION)
                 if self.row_count_DIR is not None:
                     self.row_count_DIR = "{:,}".format(self.row_count_DIR)
-                    self.process_data.label_Total_Registers_14.setText(f"{self.row_count_DIR} Hoja(s)")
+                    self.process_data.label_Total_Registers_4.setText(f"{self.row_count_DIR} Hoja(s)")
                     self.start_process_FILES_task()
 
     def select_path_IVR(self):
@@ -751,6 +769,28 @@ class Init_APP():
         
         except Exception as e:
             print(f"Error al intentar abrir PowerShell: {e}")
+            
+    def validate_whatsapp(self):
+            
+        if self.file_path_RPA != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de WhatsApp e inicie sesión.")
+            Mbox_In_Process.exec()
+            
+            thread = DynamicThread(web.sender_whatsapp.process_numbers, 
+                        args=[self.file_path_RPA, self.folder_path, self.template, self.process_data])
+
+            thread.start()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar un archivo con la base para ejecutar la validación de WhatsApp.")
+            Mbox_File_Error.exec()
 
     def copy_code(self):
 
@@ -859,11 +899,9 @@ class Init_APP():
 
         code2 = f"{Root_API}/vba/Macro - Filtros Cam UNIF.txt"
         code3 = f"{Root_API}/vba/PowerShell - Union Archivos.txt"
-        code4 = f"{Root_API}/vba/Plantilla CAM Unif Virgen.xlsx"
 
         shutil.copy(code2, output_directory)
         shutil.copy(code3, output_directory)
-        shutil.copy(code4, output_directory)
         
     def function_asignment(self, output_directory):
 
@@ -889,7 +927,7 @@ class Init_APP():
         output_directory = self.folder_path
 
         Root_API = self.root_API 
-        folder_script = f"{Root_API}/vba/Estructuras Control Next"
+        folder_script = f"{Root_API}/vba/---- ESTRUCTURAS CONTROLNEXT ----"
 
         try:
             destination = os.path.join(output_directory, os.path.basename(folder_script))
@@ -1192,9 +1230,8 @@ class Init_APP():
         self.digit_partitions_FOLDER()
 
         list_to_process_IVR = self.list_IVR
-        print(list_to_process_IVR)
 
-        if len(list_to_process_IVR) > 2:
+        if len(list_to_process_IVR) > 0:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -1202,16 +1239,14 @@ class Init_APP():
             Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa la carpeta.")
             Mbox_In_Process.exec()
     
-            Channel_IVR = list_to_process_IVR[0]
-            Search_IVR = list_to_process_IVR[1]
-            Date_IVR = list_to_process_IVR[2]
+            Search_IVR = list_to_process_IVR[0]
             
-            self.Base = gui.search_data.function_complete_IVR(self.folder_path_IVR, self.folder_path, self.partitions_FOLDER, self.process_data, Date_IVR, Search_IVR, Channel_IVR)
+            self.Base = gui.search_data.search_values_in_csvs(self.folder_path_IVR, self.folder_path, Search_IVR, self.process_data)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("Consolidado de IVR ejecutado exitosamente.")
+            Mbox_In_Process.setText("Busqueda de informacion ejecutada exitosamente.")
             Mbox_In_Process.exec()
         
         else:
@@ -1259,7 +1294,7 @@ class Init_APP():
         dialog.setWindowState(Qt.WindowState.WindowFullScreen)
         
         Version_Api = "v1.0.13 (Py3.11-Spark3.5)"
-        
+
         label = QLabel(
             "<h1>Esta aplicación fue desarrollada por:</h1><br>"
             "<b><h2>Juan Méndez – Arquitecto de Software</h2></b><br>"
