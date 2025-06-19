@@ -220,6 +220,7 @@ def unify_payments(input_folder, output_folder):
         # Construct the full path for the output folder
         output_folder_ = "---- Bases para CARGUE ----/" 
         output_path_folder = os.path.join(output_folder, output_folder_)
+        
         output_folder_details = "---- Bases para CRUCE ----/" 
         output_path_folder_details = os.path.join(output_folder, output_folder_details)
         
