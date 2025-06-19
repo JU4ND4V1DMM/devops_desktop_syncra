@@ -26,8 +26,8 @@ def try_create_spark_session(config_level):
                 .config("spark.local.dir", "C:/tmp/hive") \
                 .config("spark.driver.extraJavaOptions", "-Djava.security.manager=allow") \
                 .config("spark.executor.extraJavaOptions", "-Djava.security.manager=allow") \
-                .config("spark.driver.memory", '16g') \
-                .config("spark.executor.memory", '16g') \
+                .config("spark.driver.memory", '12g') \
+                .config("spark.executor.memory", '12g') \
                 .config("spark.jars.packages", "com.crealytics:spark-excel_2.12:0.13.5") \
                 .getOrCreate()
             spark.conf.set("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false")
