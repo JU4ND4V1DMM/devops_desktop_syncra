@@ -196,6 +196,7 @@ class Init_APP():
 
         self.process_data.commandLinkButton_8.clicked.connect(self.power_shell)
         self.process_data.pushButton_2.clicked.connect(self.copy_code)
+        self.process_data.pushButton_3.clicked.connect(self.copy_code)
         self.process_data.pushButton_Select_File_9.clicked.connect(self.copy_template_ivr)
         self.process_data.pushButton_5.clicked.connect(self.copy_template_reports_saem)
         self.process_data.pushButton_4.clicked.connect(self.copy_folder_scripts)
@@ -220,7 +221,10 @@ class Init_APP():
         self.process_data.action_Lists.triggered.connect(self.copy_folder_scripts)
         self.process_data.action_Min_Corp.triggered.connect(self.copy_lines_corp)
         self.process_data.action_Files_Soported.triggered.connect(self.show_files_soported)
-        self.process_data.action_Pictionary.triggered.connect(self.copy_folders_root)
+        self.process_data.pushButton_6.clicked.connect(self.copy_folders_root)
+        self.process_data.pushButton_8.clicked.connect(self.copy_code_documentation)
+        self.process_data.pushButton_14.clicked.connect(self.copy_schema_campaings)
+        self.process_data.pushButton_7.clicked.connect(self.copy_schema_masiv)
 
         self.process_data.pushButton_Partitions_BD_19.clicked.connect(lambda: self.open_chrome_with_url('https://recupera.controlnextapp.com/'))
         self.process_data.pushButton_Partitions_BD_25.clicked.connect(lambda: self.open_chrome_with_url('http://mesadeayuda.sinapsys-it.com:8088/index.php'))
@@ -235,8 +239,9 @@ class Init_APP():
 
         self.process_data.pushButton_Process_8.clicked.connect(self.schedule_shutdown)
 
-        self.process_data.pushButton_Partitions_BD_40.clicked.connect(self.run_bat_excel)
-        self.process_data.pushButton_Partitions_BD_44.clicked.connect(self.run_bat_temp)
+        self.process_data.commandLinkButton_4.clicked.connect(self.run_bat_excel)
+        self.process_data.commandLinkButton_5.clicked.connect(self.run_bat_powerbi)
+        self.process_data.commandLinkButton_6.clicked.connect(self.run_bat_temp)
         self.process_data.pushButton_Partitions_BD_41.clicked.connect(self.run_replay_intercom)
         self.process_data.pushButton_Partitions_BD_47.clicked.connect(self.run_downloads_intercom)
 
@@ -758,6 +763,54 @@ class Init_APP():
         Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
         Mbox_In_Process.setText("Codigos exportados en el directorio de Descargas.")
         Mbox_In_Process.exec()
+        
+    def copy_bd_asignment(self):
+
+        output_directory = self.folder_path
+
+        self.function_asignment(output_directory)
+
+        Mbox_In_Process = QMessageBox()
+        Mbox_In_Process.setWindowTitle("")
+        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+        Mbox_In_Process.setText("Esquema de asignacion exportado en el directorio de Descargas.")
+        Mbox_In_Process.exec()
+    
+    def copy_code_documentation(self):
+
+        output_directory = self.folder_path
+
+        self.function_copy_folders(output_directory, "---- DOCUMENTACION ----")
+
+        Mbox_In_Process = QMessageBox()
+        Mbox_In_Process.setWindowTitle("")
+        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+        Mbox_In_Process.setText("Documentacion exportada en el directorio de Descargas.")
+        Mbox_In_Process.exec()
+        
+    def copy_schema_campaings(self):
+
+        output_directory = self.folder_path
+
+        self.function_copy_folders(output_directory, "---- ESQUEMAS DE REPARTO ----")
+
+        Mbox_In_Process = QMessageBox()
+        Mbox_In_Process.setWindowTitle("")
+        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+        Mbox_In_Process.setText("Esquemas de reparto exportados en el directorio de Descargas.")
+        Mbox_In_Process.exec()
+        
+    def copy_schema_masiv(self):
+
+        output_directory = self.folder_path
+
+        self.function_copy_folders(output_directory, "---- ESTRUCTURA DE MASIVOS ----")
+
+        Mbox_In_Process = QMessageBox()
+        Mbox_In_Process.setWindowTitle("")
+        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+        Mbox_In_Process.setText("Esquemas de masivos exportados en el directorio de Descargas.")
+        Mbox_In_Process.exec()
 
     def copy_lines_corp(self):
         output_directory = self.folder_path  # Ensure output_directory is set to a valid path
@@ -811,6 +864,25 @@ class Init_APP():
         shutil.copy(code2, output_directory)
         shutil.copy(code3, output_directory)
         shutil.copy(code4, output_directory)
+        
+    def function_asignment(self, output_directory):
+
+        Root_API = self.root_API 
+
+        code4 = f"{Root_API}/vba/Plantilla CAM Unif Virgen.xlsx"
+        
+        shutil.copy(code4, output_directory)
+    
+    def function_copy_folders(self, output_directory, folder):
+        
+        Root_API = self.root_API
+        source_dir = os.path.join(Root_API, "vba", folder)
+        dest_dir = os.path.join(output_directory, folder)
+
+        if os.path.exists(dest_dir):
+            shutil.rmtree(dest_dir)
+
+        shutil.copytree(source_dir, dest_dir)
 
     def copy_folder_scripts(self):
 
@@ -1000,7 +1072,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.partitions_FOLDER != None:
+        if self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -1282,6 +1354,26 @@ class Init_APP():
             Mbox_In_Process.setWindowTitle("")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
             Mbox_In_Process.setText("Excel finalizado exitosamente.")
+            Mbox_In_Process.exec()
+
+        except subprocess.CalledProcessError as e:
+            Mbox_Incomplete = QMessageBox()
+            Mbox_Incomplete.setWindowTitle("Error de procesamiento")
+            Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
+            Mbox_Incomplete.setText(f"Error al ejecutar la operación: {e}")
+            Mbox_Incomplete.exec()
+    
+    def run_bat_powerbi(self):
+
+        Root_API = self.root_API 
+        bat_file_path = f"{Root_API}/files/bat/PowerBI_Finisher.bat"  
+        
+        try:
+            subprocess.run([bat_file_path])
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Power BI finalizado exitosamente.")
             Mbox_In_Process.exec()
 
         except subprocess.CalledProcessError as e:

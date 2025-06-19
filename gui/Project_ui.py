@@ -129,62 +129,6 @@ class Ui_Process_Data(object):
         self.Group_Selection_Starter_14.setGeometry(QtCore.QRect(320, 20, 271, 161))
         self.Group_Selection_Starter_14.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.Group_Selection_Starter_14.setObjectName("Group_Selection_Starter_14")
-        self.pushButton_Partitions_BD_40 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_14)
-        self.pushButton_Partitions_BD_40.setGeometry(QtCore.QRect(20, 40, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_40.setFont(font)
-        self.pushButton_Partitions_BD_40.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_40.setDefault(False)
-        self.pushButton_Partitions_BD_40.setObjectName("pushButton_Partitions_BD_40")
-        self.pushButton_Partitions_BD_44 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_14)
-        self.pushButton_Partitions_BD_44.setGeometry(QtCore.QRect(20, 100, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_44.setFont(font)
-        self.pushButton_Partitions_BD_44.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_44.setDefault(False)
-        self.pushButton_Partitions_BD_44.setObjectName("pushButton_Partitions_BD_44")
         self.Group_Selection_Starter_15 = QtWidgets.QGroupBox(parent=self.tab_10)
         self.Group_Selection_Starter_15.setGeometry(QtCore.QRect(320, 570, 651, 101))
         self.Group_Selection_Starter_15.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
@@ -723,31 +667,10 @@ class Ui_Process_Data(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 212, 222))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -93, 212, 252))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout.setObjectName("gridLayout")
-        self.pushButton_5 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_5.setFont(font)
-        self.pushButton_5.setStyleSheet("/* Al pasar el mouse */\n"
-"QPushButton:hover {\n"
-"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
-"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
-"    border-radius: 8px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}")
-        self.pushButton_5.setObjectName("pushButton_5")
-        self.gridLayout.addWidget(self.pushButton_5, 3, 0, 1, 1)
         self.pushButton_6 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
@@ -768,16 +691,16 @@ class Ui_Process_Data(object):
 "    background-color: rgb(217, 16, 76);\n"
 "}")
         self.pushButton_6.setObjectName("pushButton_6")
-        self.gridLayout.addWidget(self.pushButton_6, 4, 0, 1, 1)
-        self.pushButton_7 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        self.gridLayout.addWidget(self.pushButton_6, 5, 0, 1, 1)
+        self.pushButton_5 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(7)
-        self.pushButton_7.setFont(font)
-        self.pushButton_7.setStyleSheet("/* Al pasar el mouse */\n"
+        self.pushButton_5.setFont(font)
+        self.pushButton_5.setStyleSheet("/* Al pasar el mouse */\n"
 "QPushButton:hover {\n"
 "    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
 "    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
@@ -788,29 +711,8 @@ class Ui_Process_Data(object):
 "    color: rgb(255, 255, 255);\n"
 "    background-color: rgb(217, 16, 76);\n"
 "}")
-        self.pushButton_7.setObjectName("pushButton_7")
-        self.gridLayout.addWidget(self.pushButton_7, 5, 0, 1, 1)
-        self.pushButton_3 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_3.setFont(font)
-        self.pushButton_3.setStyleSheet("/* Al pasar el mouse */\n"
-"QPushButton:hover {\n"
-"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
-"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
-"    border-radius: 8px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}")
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.gridLayout.addWidget(self.pushButton_3, 1, 0, 1, 1)
+        self.pushButton_5.setObjectName("pushButton_5")
+        self.gridLayout.addWidget(self.pushButton_5, 4, 0, 1, 1)
         self.pushButton_2 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
@@ -831,7 +733,49 @@ class Ui_Process_Data(object):
 "    background-color: rgb(217, 16, 76);\n"
 "}")
         self.pushButton_2.setObjectName("pushButton_2")
-        self.gridLayout.addWidget(self.pushButton_2, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_2, 1, 0, 1, 1)
+        self.pushButton_7 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_7.setFont(font)
+        self.pushButton_7.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_7.setObjectName("pushButton_7")
+        self.gridLayout.addWidget(self.pushButton_7, 6, 0, 1, 1)
+        self.pushButton_3 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_3.setFont(font)
+        self.pushButton_3.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.gridLayout.addWidget(self.pushButton_3, 2, 0, 1, 1)
         self.pushButton_4 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
@@ -852,7 +796,7 @@ class Ui_Process_Data(object):
 "    background-color: rgb(217, 16, 76);\n"
 "}")
         self.pushButton_4.setObjectName("pushButton_4")
-        self.gridLayout.addWidget(self.pushButton_4, 2, 0, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_4, 3, 0, 1, 1)
         self.pushButton_14 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
@@ -873,7 +817,28 @@ class Ui_Process_Data(object):
 "    background-color: rgb(217, 16, 76);\n"
 "}")
         self.pushButton_14.setObjectName("pushButton_14")
-        self.gridLayout.addWidget(self.pushButton_14, 6, 0, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_14, 7, 0, 1, 1)
+        self.pushButton_8 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_8.setFont(font)
+        self.pushButton_8.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_8.setObjectName("pushButton_8")
+        self.gridLayout.addWidget(self.pushButton_8, 0, 0, 1, 1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.label_Total_Registers_8 = QtWidgets.QLabel(parent=self.tab_3)
         self.label_Total_Registers_8.setGeometry(QtCore.QRect(400, 610, 241, 21))
@@ -1006,7 +971,7 @@ class Ui_Process_Data(object):
 "    color: rgb(0, 0, 0);\n"
 "}")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/search.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/search_wp.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.commandLinkButton.setIcon(icon)
         self.commandLinkButton.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton.setObjectName("commandLinkButton")
@@ -1045,7 +1010,7 @@ class Ui_Process_Data(object):
 "}")
         self.plainTextEdit.setObjectName("plainTextEdit")
         self.Group_Selection_Starter_38 = QtWidgets.QGroupBox(parent=self.tab_3)
-        self.Group_Selection_Starter_38.setGeometry(QtCore.QRect(310, 280, 631, 311))
+        self.Group_Selection_Starter_38.setGeometry(QtCore.QRect(310, 340, 631, 251))
         self.Group_Selection_Starter_38.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.Group_Selection_Starter_38.setObjectName("Group_Selection_Starter_38")
         self.commandLinkButton_3 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_38)
@@ -1075,6 +1040,115 @@ class Ui_Process_Data(object):
         icon2.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/SMS.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.commandLinkButton_3.setIcon(icon2)
         self.commandLinkButton_3.setObjectName("commandLinkButton_3")
+        self.commandLinkButton_26 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_38)
+        self.commandLinkButton_26.setGeometry(QtCore.QRect(10, 80, 241, 41))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.commandLinkButton_26.setFont(font)
+        self.commandLinkButton_26.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/doc.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_26.setIcon(icon3)
+        self.commandLinkButton_26.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_26.setObjectName("commandLinkButton_26")
+        self.commandLinkButton_4 = QtWidgets.QCommandLinkButton(parent=self.tab_3)
+        self.commandLinkButton_4.setGeometry(QtCore.QRect(320, 280, 191, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.commandLinkButton_4.setFont(font)
+        self.commandLinkButton_4.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/FINISHER EXCEL.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_4.setIcon(icon4)
+        self.commandLinkButton_4.setObjectName("commandLinkButton_4")
+        self.commandLinkButton_5 = QtWidgets.QCommandLinkButton(parent=self.tab_3)
+        self.commandLinkButton_5.setGeometry(QtCore.QRect(530, 280, 191, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.commandLinkButton_5.setFont(font)
+        self.commandLinkButton_5.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/PBI.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_5.setIcon(icon5)
+        self.commandLinkButton_5.setObjectName("commandLinkButton_5")
+        self.commandLinkButton_6 = QtWidgets.QCommandLinkButton(parent=self.tab_3)
+        self.commandLinkButton_6.setGeometry(QtCore.QRect(740, 280, 191, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.commandLinkButton_6.setFont(font)
+        self.commandLinkButton_6.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/CLEAN.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_6.setIcon(icon6)
+        self.commandLinkButton_6.setObjectName("commandLinkButton_6")
         self.tabWidget.addTab(self.tab_3, "")
         self.Upload = QtWidgets.QWidget()
         self.Upload.setObjectName("Upload")
@@ -1216,9 +1290,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/bd.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_9.setIcon(icon3)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/bd.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_9.setIcon(icon7)
         self.commandLinkButton_9.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_9.setObjectName("commandLinkButton_9")
         self.commandLinkButton_10 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_9)
@@ -1244,9 +1318,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/demograficos.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_10.setIcon(icon4)
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/demograficos.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_10.setIcon(icon8)
         self.commandLinkButton_10.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_10.setObjectName("commandLinkButton_10")
         self.commandLinkButton_11 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_9)
@@ -1272,9 +1346,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/excel.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_11.setIcon(icon5)
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/excel.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_11.setIcon(icon9)
         self.commandLinkButton_11.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_11.setObjectName("commandLinkButton_11")
         self.commandLinkButton_12 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_9)
@@ -1300,9 +1374,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/alert.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_12.setIcon(icon6)
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/alert.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_12.setIcon(icon10)
         self.commandLinkButton_12.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_12.setObjectName("commandLinkButton_12")
         self.commandLinkButton_7 = QtWidgets.QCommandLinkButton(parent=self.Upload)
@@ -1325,9 +1399,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/Fragment_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_7.setIcon(icon7)
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/Fragment_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_7.setIcon(icon11)
         self.commandLinkButton_7.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_7.setObjectName("commandLinkButton_7")
         self.commandLinkButton_8 = QtWidgets.QCommandLinkButton(parent=self.Upload)
@@ -1350,39 +1424,11 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/powershell.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_8.setIcon(icon8)
+        icon12 = QtGui.QIcon()
+        icon12.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/powershell.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_8.setIcon(icon12)
         self.commandLinkButton_8.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_8.setObjectName("commandLinkButton_8")
-        self.pushButton_Partitions_BD_39 = QtWidgets.QPushButton(parent=self.Upload)
-        self.pushButton_Partitions_BD_39.setGeometry(QtCore.QRect(490, 290, 221, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.pushButton_Partitions_BD_39.setFont(font)
-        self.pushButton_Partitions_BD_39.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_39.setDefault(False)
-        self.pushButton_Partitions_BD_39.setObjectName("pushButton_Partitions_BD_39")
         self.pushButton_Select_File_8 = QtWidgets.QPushButton(parent=self.Upload)
         self.pushButton_Select_File_8.setGeometry(QtCore.QRect(50, 530, 201, 31))
         font = QtGui.QFont()
@@ -1431,9 +1477,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/prohibido.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_13.setIcon(icon9)
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/prohibido.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_13.setIcon(icon13)
         self.commandLinkButton_13.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_13.setObjectName("commandLinkButton_13")
         self.graphicsView.raise_()
@@ -1446,7 +1492,6 @@ class Ui_Process_Data(object):
         self.Group_Selection_Starter_9.raise_()
         self.commandLinkButton_7.raise_()
         self.commandLinkButton_8.raise_()
-        self.pushButton_Partitions_BD_39.raise_()
         self.pushButton_Select_File_8.raise_()
         self.commandLinkButton_13.raise_()
         self.tabWidget.addTab(self.Upload, "")
@@ -1544,7 +1589,7 @@ class Ui_Process_Data(object):
         font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
-        font.setWeight(7)
+        font.setWeight(50)
         self.commandLinkButton_14.setFont(font)
         self.commandLinkButton_14.setStyleSheet("/* Al pasar el mouse */\n"
 "QPushButton:hover {\n"
@@ -1560,9 +1605,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/batch.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_14.setIcon(icon10)
+        icon14 = QtGui.QIcon()
+        icon14.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/batch.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_14.setIcon(icon14)
         self.commandLinkButton_14.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_14.setObjectName("commandLinkButton_14")
         self.Group_Selection_Starter_22 = QtWidgets.QGroupBox(parent=self.tab)
@@ -1592,9 +1637,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/psa.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_16.setIcon(icon11)
+        icon15 = QtGui.QIcon()
+        icon15.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/psa.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_16.setIcon(icon15)
         self.commandLinkButton_16.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_16.setObjectName("commandLinkButton_16")
         self.commandLinkButton_17 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_22)
@@ -1620,9 +1665,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon12 = QtGui.QIcon()
-        icon12.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/ng_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_17.setIcon(icon12)
+        icon16 = QtGui.QIcon()
+        icon16.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/ng_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_17.setIcon(icon16)
         self.commandLinkButton_17.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_17.setObjectName("commandLinkButton_17")
         self.commandLinkButton_18 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_22)
@@ -1648,9 +1693,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon13 = QtGui.QIcon()
-        icon13.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/pago_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_18.setIcon(icon13)
+        icon17 = QtGui.QIcon()
+        icon17.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/pago_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_18.setIcon(icon17)
         self.commandLinkButton_18.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_18.setObjectName("commandLinkButton_18")
         self.commandLinkButton_19 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_22)
@@ -1676,9 +1721,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon14 = QtGui.QIcon()
-        icon14.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/ranking.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_19.setIcon(icon14)
+        icon18 = QtGui.QIcon()
+        icon18.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/ranking.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_19.setIcon(icon18)
         self.commandLinkButton_19.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_19.setObjectName("commandLinkButton_19")
         self.commandLinkButton_15 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_22)
@@ -1704,9 +1749,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon15 = QtGui.QIcon()
-        icon15.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/demographic_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_15.setIcon(icon15)
+        icon19 = QtGui.QIcon()
+        icon19.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/demographic_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_15.setIcon(icon19)
         self.commandLinkButton_15.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_15.setObjectName("commandLinkButton_15")
         self.commandLinkButton_20 = QtWidgets.QCommandLinkButton(parent=self.tab)
@@ -1732,9 +1777,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon16 = QtGui.QIcon()
-        icon16.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/folder.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_20.setIcon(icon16)
+        icon20 = QtGui.QIcon()
+        icon20.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/folder.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_20.setIcon(icon20)
         self.commandLinkButton_20.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_20.setObjectName("commandLinkButton_20")
         self.commandLinkButton_21 = QtWidgets.QCommandLinkButton(parent=self.tab)
@@ -1760,9 +1805,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon17 = QtGui.QIcon()
-        icon17.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/sheet.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_21.setIcon(icon17)
+        icon21 = QtGui.QIcon()
+        icon21.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/sheet.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_21.setIcon(icon21)
         self.commandLinkButton_21.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_21.setObjectName("commandLinkButton_21")
         self.commandLinkButton_22 = QtWidgets.QCommandLinkButton(parent=self.tab)
@@ -1772,7 +1817,7 @@ class Ui_Process_Data(object):
         font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
-        font.setWeight(7)
+        font.setWeight(50)
         self.commandLinkButton_22.setFont(font)
         self.commandLinkButton_22.setStyleSheet("/* Al pasar el mouse */\n"
 "QPushButton:hover {\n"
@@ -1788,9 +1833,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon18 = QtGui.QIcon()
-        icon18.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/insignias.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_22.setIcon(icon18)
+        icon22 = QtGui.QIcon()
+        icon22.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/insignias.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_22.setIcon(icon22)
         self.commandLinkButton_22.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_22.setObjectName("commandLinkButton_22")
         self.Group_Selection_Starter_23 = QtWidgets.QGroupBox(parent=self.tab)
@@ -1881,9 +1926,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon19 = QtGui.QIcon()
-        icon19.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/touch.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_23.setIcon(icon19)
+        icon23 = QtGui.QIcon()
+        icon23.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/touch.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_23.setIcon(icon23)
         self.commandLinkButton_23.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_23.setObjectName("commandLinkButton_23")
         self.comboBox_Selected_Process_2 = QtWidgets.QComboBox(parent=self.tab)
@@ -1926,9 +1971,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon20 = QtGui.QIcon()
-        icon20.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/search_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_24.setIcon(icon20)
+        icon24 = QtGui.QIcon()
+        icon24.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/search_.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_24.setIcon(icon24)
         self.commandLinkButton_24.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_24.setObjectName("commandLinkButton_24")
         self.commandLinkButton_25 = QtWidgets.QCommandLinkButton(parent=self.tab)
@@ -1954,9 +1999,9 @@ class Ui_Process_Data(object):
 "    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
 "}")
-        icon21 = QtGui.QIcon()
-        icon21.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/Lumina.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.commandLinkButton_25.setIcon(icon21)
+        icon25 = QtGui.QIcon()
+        icon25.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/Lumina.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_25.setIcon(icon25)
         self.commandLinkButton_25.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_25.setObjectName("commandLinkButton_25")
         self.tabWidget.addTab(self.tab, "")
@@ -3317,7 +3362,7 @@ class Ui_Process_Data(object):
         self.menuBar.addAction(self.menu_Export.menuAction())
 
         self.retranslateUi(Process_Data)
-        self.tabWidget_2.setCurrentIndex(0)
+        self.tabWidget_2.setCurrentIndex(1)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Process_Data)
 
@@ -3330,8 +3375,6 @@ class Ui_Process_Data(object):
         self.pushButton_Partitions_BD_19.setText(_translate("Process_Data", "Abrir plataforma Control Next"))
         self.pushButton_Partitions_BD_25.setText(_translate("Process_Data", "Abrir mesa de ayuda Recupera"))
         self.Group_Selection_Starter_14.setTitle(_translate("Process_Data", "Procesos del sistema"))
-        self.pushButton_Partitions_BD_40.setText(_translate("Process_Data", "Finzalidor de excel"))
-        self.pushButton_Partitions_BD_44.setText(_translate("Process_Data", "Limpieza de temporales"))
         self.Group_Selection_Starter_15.setTitle(_translate("Process_Data", "Programar apagado automático"))
         self.label_Mod_Init_CTA_Min_6.setText(_translate("Process_Data", "Hora(s)"))
         self.label_Mod_Init_CTA_Min_7.setText(_translate("Process_Data", "Minuto(s)"))
@@ -3358,13 +3401,14 @@ class Ui_Process_Data(object):
         self.pushButton_Select_File_10.setText(_translate("Process_Data", "Seleccionar Carpeta"))
         self.pushButton_Select_File_13.setText(_translate("Process_Data", "Seleccionar Archivo"))
         self.Group_Selection_Starter_19.setTitle(_translate("Process_Data", "Plantillas"))
-        self.pushButton_5.setText(_translate("Process_Data", "Descarga Masiva SAEM"))
         self.pushButton_6.setText(_translate("Process_Data", "Carpetas Lectura por Toques"))
+        self.pushButton_5.setText(_translate("Process_Data", "Descarga Masiva SAEM"))
+        self.pushButton_2.setText(_translate("Process_Data", "Códigos Visual Basic"))
         self.pushButton_7.setText(_translate("Process_Data", "Estructuras de Masivos"))
         self.pushButton_3.setText(_translate("Process_Data", "Esquema Asignación Claro"))
-        self.pushButton_2.setText(_translate("Process_Data", "Códigos Visual Basic"))
         self.pushButton_4.setText(_translate("Process_Data", "Estructuras de Cargue"))
         self.pushButton_14.setText(_translate("Process_Data", "Reparto de Campañas"))
+        self.pushButton_8.setText(_translate("Process_Data", "Manuales y Documentación"))
         self.label_Total_Registers_8.setText(_translate("Process_Data", "TOTAL DE VALORES A PROCESAR:"))
         self.label_Total_Registers_7.setText(_translate("Process_Data", "trial"))
         self.Group_Selection_Starter_36.setTitle(_translate("Process_Data", "Recursos del Computador"))
@@ -3378,6 +3422,10 @@ class Ui_Process_Data(object):
         self.plainTextEdit.setPlainText(_translate("Process_Data", "(NOMBRE), escribe acá el mensaje con las (VARIABLES) para el envío de WhatsApps con RPA."))
         self.Group_Selection_Starter_38.setTitle(_translate("Process_Data", "Procesos Web"))
         self.commandLinkButton_3.setText(_translate("Process_Data", "Descargue de Reportería SAEM"))
+        self.commandLinkButton_26.setText(_translate("Process_Data", " Cruzar demograficos de Claro"))
+        self.commandLinkButton_4.setText(_translate("Process_Data", " Finalizador de excel"))
+        self.commandLinkButton_5.setText(_translate("Process_Data", " Finalizador de Power BI"))
+        self.commandLinkButton_6.setText(_translate("Process_Data", " Limpiador de temporales"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("Process_Data", "Procesos RPA"))
         self.label_Version_Control_2.setText(_translate("Process_Data", "Automatización de Procesos - V. 1.08.661"))
         self.Group_Selection_Starter.setTitle(_translate("Process_Data", "Selección de Archivo"))
@@ -3395,7 +3443,6 @@ class Ui_Process_Data(object):
         self.commandLinkButton_12.setText(_translate("Process_Data", " Reclamaciones de gestión"))
         self.commandLinkButton_7.setText(_translate("Process_Data", "  Fragmentar"))
         self.commandLinkButton_8.setText(_translate("Process_Data", "PowerShell"))
-        self.pushButton_Partitions_BD_39.setText(_translate("Process_Data", "Transformar Exclusiones (Libro)"))
         self.pushButton_Select_File_8.setText(_translate("Process_Data", "Seleccionar Libro"))
         self.commandLinkButton_13.setText(_translate("Process_Data", " Transformar exclusiones de excel"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Upload), _translate("Process_Data", "Procesos CAM Unif"))

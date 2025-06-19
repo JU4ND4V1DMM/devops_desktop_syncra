@@ -42,7 +42,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_10">
      <attribute name="title">
@@ -247,94 +247,6 @@ QPushButton:pressed
       <property name="title">
        <string>Procesos del sistema</string>
       </property>
-      <widget class="QPushButton" name="pushButton_Partitions_BD_40">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>40</y>
-         <width>231</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Bahnschrift SemiBold</family>
-         <pointsize>10</pointsize>
-         <weight>7</weight>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton
-{
-	border-radius:8px;
-	color: rgb(0, 0, 0);
-	background-color: rgb(209, 209, 209);
-}
-QPushButton:Hover
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}
-</string>
-       </property>
-       <property name="text">
-        <string>Finzalidor de excel</string>
-       </property>
-       <property name="default">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_Partitions_BD_44">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>100</y>
-         <width>231</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Bahnschrift SemiBold</family>
-         <pointsize>10</pointsize>
-         <weight>7</weight>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton
-{
-	border-radius:8px;
-	color: rgb(0, 0, 0);
-	background-color: rgb(209, 209, 209);
-}
-QPushButton:Hover
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}
-</string>
-       </property>
-       <property name="text">
-        <string>Limpieza de temporales</string>
-       </property>
-       <property name="default">
-        <bool>false</bool>
-       </property>
-      </widget>
      </widget>
      <widget class="QGroupBox" name="Group_Selection_Starter_15">
       <property name="geometry">
@@ -1330,42 +1242,13 @@ QPushButton:pressed
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-93</y>
             <width>212</width>
-            <height>222</height>
+            <height>252</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout">
-           <item row="3" column="0">
-            <widget class="QPushButton" name="pushButton_5">
-             <property name="font">
-              <font>
-               <family>Bahnschrift SemiBold</family>
-               <pointsize>10</pointsize>
-               <weight>7</weight>
-               <italic>false</italic>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">/* Al pasar el mouse */
-QPushButton:hover {
-    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
-    border-radius: 8px;
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}</string>
-             </property>
-             <property name="text">
-              <string>Descarga Masiva SAEM</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
+           <item row="5" column="0">
             <widget class="QPushButton" name="pushButton_6">
              <property name="font">
               <font>
@@ -1394,8 +1277,8 @@ QPushButton:pressed
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
-            <widget class="QPushButton" name="pushButton_7">
+           <item row="4" column="0">
+            <widget class="QPushButton" name="pushButton_5">
              <property name="font">
               <font>
                <family>Bahnschrift SemiBold</family>
@@ -1419,40 +1302,11 @@ QPushButton:pressed
 }</string>
              </property>
              <property name="text">
-              <string>Estructuras de Masivos</string>
+              <string>Descarga Masiva SAEM</string>
              </property>
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QPushButton" name="pushButton_3">
-             <property name="font">
-              <font>
-               <family>Bahnschrift SemiBold</family>
-               <pointsize>10</pointsize>
-               <weight>7</weight>
-               <italic>false</italic>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">/* Al pasar el mouse */
-QPushButton:hover {
-    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
-    border-radius: 8px;
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}</string>
-             </property>
-             <property name="text">
-              <string>Esquema Asignación Claro</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
             <widget class="QPushButton" name="pushButton_2">
              <property name="font">
               <font>
@@ -1481,7 +1335,65 @@ QPushButton:pressed
              </property>
             </widget>
            </item>
+           <item row="6" column="0">
+            <widget class="QPushButton" name="pushButton_7">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Estructuras de Masivos</string>
+             </property>
+            </widget>
+           </item>
            <item row="2" column="0">
+            <widget class="QPushButton" name="pushButton_3">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Esquema Asignación Claro</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
             <widget class="QPushButton" name="pushButton_4">
              <property name="font">
               <font>
@@ -1510,7 +1422,7 @@ QPushButton:pressed
              </property>
             </widget>
            </item>
-           <item row="6" column="0">
+           <item row="7" column="0">
             <widget class="QPushButton" name="pushButton_14">
              <property name="font">
               <font>
@@ -1536,6 +1448,35 @@ QPushButton:pressed
              </property>
              <property name="text">
               <string>Reparto de Campañas</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="pushButton_8">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Manuales y Documentación</string>
              </property>
             </widget>
            </item>
@@ -1836,7 +1777,7 @@ QPushButton:pressed {
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../resources/ico/search.png</normaloff>../resources/ico/search.png</iconset>
+           <normaloff>../resources/ico/search_wp.png</normaloff>../resources/ico/search_wp.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1911,9 +1852,9 @@ QPushButton:pressed {
         <property name="geometry">
          <rect>
           <x>310</x>
-          <y>280</y>
+          <y>340</y>
           <width>631</width>
-          <height>311</height>
+          <height>251</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -1964,6 +1905,180 @@ QPushButton:pressed {
            <normaloff>../resources/ico/SMS.png</normaloff>../resources/ico/SMS.png</iconset>
          </property>
         </widget>
+        <widget class="QCommandLinkButton" name="commandLinkButton_26">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>80</y>
+           <width>241</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Bahnschrift SemiBold</family>
+           <pointsize>10</pointsize>
+           <weight>7</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+
+/* Al presionar */
+QPushButton:pressed {
+    background-color: rgb(230, 230, 230); /* Gris suave al presionar */
+    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+}</string>
+         </property>
+         <property name="text">
+          <string> Cruzar demograficos de Claro</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../resources/ico/doc.png</normaloff>../resources/ico/doc.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton_4">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>280</y>
+          <width>191</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+
+/* Al presionar */
+QPushButton:pressed {
+    background-color: rgb(230, 230, 230); /* Gris suave al presionar */
+    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+}</string>
+        </property>
+        <property name="text">
+         <string> Finalizador de excel</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../resources/ico/FINISHER EXCEL.png</normaloff>../resources/ico/FINISHER EXCEL.png</iconset>
+        </property>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton_5">
+        <property name="geometry">
+         <rect>
+          <x>530</x>
+          <y>280</y>
+          <width>191</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+
+/* Al presionar */
+QPushButton:pressed {
+    background-color: rgb(230, 230, 230); /* Gris suave al presionar */
+    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+}</string>
+        </property>
+        <property name="text">
+         <string> Finalizador de Power BI</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../resources/ico/PBI.png</normaloff>../resources/ico/PBI.png</iconset>
+        </property>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton_6">
+        <property name="geometry">
+         <rect>
+          <x>740</x>
+          <y>280</y>
+          <width>191</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efecto sombra sutil (puede que algunos frameworks no lo soporten) */
+    border-radius: 8px;
+}
+
+/* Al presionar */
+QPushButton:pressed {
+    background-color: rgb(230, 230, 230); /* Gris suave al presionar */
+    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+}</string>
+        </property>
+        <property name="text">
+         <string> Limpiador de temporales</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../resources/ico/CLEAN.png</normaloff>../resources/ico/CLEAN.png</iconset>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="Upload">
@@ -2545,50 +2660,6 @@ QPushButton:pressed {
          </size>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_Partitions_BD_39">
-        <property name="geometry">
-         <rect>
-          <x>490</x>
-          <y>290</y>
-          <width>221</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Bahnschrift SemiBold</family>
-          <pointsize>10</pointsize>
-          <weight>50</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton
-{
-	border-radius:8px;
-	color: rgb(0, 0, 0);
-	background-color: rgb(209, 209, 209);
-}
-QPushButton:Hover
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}
-</string>
-        </property>
-        <property name="text">
-         <string>Transformar Exclusiones (Libro)</string>
-        </property>
-        <property name="default">
-         <bool>false</bool>
-        </property>
-       </widget>
        <widget class="QPushButton" name="pushButton_Select_File_8">
         <property name="geometry">
          <rect>
@@ -2688,7 +2759,6 @@ QPushButton:pressed {
        <zorder>Group_Selection_Starter_9</zorder>
        <zorder>commandLinkButton_7</zorder>
        <zorder>commandLinkButton_8</zorder>
-       <zorder>pushButton_Partitions_BD_39</zorder>
        <zorder>pushButton_Select_File_8</zorder>
        <zorder>commandLinkButton_13</zorder>
       </widget>
@@ -2941,7 +3011,7 @@ font: 87 10pt &quot;Arial Black&quot;;</string>
          <font>
           <family>Segoe UI</family>
           <pointsize>10</pointsize>
-          <weight>7</weight>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -3341,7 +3411,7 @@ QPushButton:pressed {
          <font>
           <family>Segoe UI</family>
           <pointsize>10</pointsize>
-          <weight>7</weight>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>

@@ -92,15 +92,15 @@ def Transform_Payments_without_Applied(input_folder, output_folder):
             combined_df['FECHA'] = datetime.now().strftime('%Y-%m-%d')
             output_file = f'Pagos sin Aplicar {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
             output_file_payments = f'Pagos Detalle {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
-            output_folder = f"{output_folder}---- Bases para CARGUE ----/"
+            output_folder_ = f"{output_folder}---- Bases para CARGUE ----/"
             output_folder_detail = f"{output_folder}---- Bases para CRUCE ----/"
             
-            if output_folder and not os.path.exists(output_folder):
-                os.makedirs(output_folder)
+            if output_folder and not os.path.exists(output_folder_):
+                os.makedirs(output_folder_)
             if output_folder and not os.path.exists(output_folder_detail):
                 os.makedirs(output_folder_detail)
             
-            output_path = os.path.join(output_folder, output_file)
+            output_path = os.path.join(output_folder_, output_file)
             output_path_payments = os.path.join(output_folder_detail, output_file_payments)
             
             # Select only the 'CUENTA' and 'RECUENTO' columns
