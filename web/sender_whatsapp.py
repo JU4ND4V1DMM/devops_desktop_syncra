@@ -102,6 +102,7 @@ def send_messages(selected_file, output_file, template, process_data):
 
     except Exception as e:
         Message = f"❌ Error durante WhatsApp Web setup o preparacion de data: {e}"
+        print(Message)
         driver.quit()
         return Message
     
@@ -136,7 +137,7 @@ def send_messages(selected_file, output_file, template, process_data):
             # Wait for text box and send message
             message_box = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((
-                    By.XPATH, '//*[@id="main"]//footer//div[@contenteditable="true"]'
+                    By.XPATH, '/html/body/div[1]/div/div/div[3]/div/div[4]/div/footer/div[1]/div/span/div/div[2]/div/div[4]/button'
                 ))
             )
             time.sleep(1)

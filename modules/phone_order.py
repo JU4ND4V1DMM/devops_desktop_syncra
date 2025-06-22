@@ -89,7 +89,7 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, Partitions):
     Type_File = f"Reordenacion Demograficos Claro"
     delimiter = ";"
     
-    save_to_csv(Data_Frame, Directory_to_Save, Type_File, Partitions)
+    save_to_csv(Data_Frame, Directory_to_Save, Type_File, Partitions, delimiter)
 
     return Data_Frame
 
@@ -98,8 +98,8 @@ def Phone_Data(Data_):
 
     Data_ = filter_base.Function_Complete(Data_)
 
-    columns_to_stack_celular = [f"celular{i}" for i in range(1, 11)]
-    columns_to_stack_fijo = [f"fijo{i}" for i in range(1, 4)]
+    columns_to_stack_celular = [f"celular{i}" for i in range(1, 14)]
+    columns_to_stack_fijo = [f"fijo{i}" for i in range(1, 7)]
     columns_to_stack_min_ = ["min"]
     all_columns_to_stack = columns_to_stack_celular + columns_to_stack_fijo + columns_to_stack_min_
     columns_to_drop_contact = all_columns_to_stack
