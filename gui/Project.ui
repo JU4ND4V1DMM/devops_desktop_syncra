@@ -1052,7 +1052,7 @@ QPushButton:pressed
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -3732,6 +3732,68 @@ QPushButton:pressed {
           <height>20</height>
          </size>
         </property>
+       </widget>
+       <widget class="QComboBox" name="comboBox_Selected_Process_3">
+        <property name="geometry">
+         <rect>
+          <x>350</x>
+          <y>330</y>
+          <width>211</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Bahnschrift Light</family>
+          <pointsize>10</pointsize>
+          <weight>3</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 25 10pt &quot;Bahnschrift Light&quot;;</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>--- Seleccione opción</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Puntored</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Crediveci</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pash Inteligencia</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pash CRM</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>GM Financial</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Ya Dinero</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Gastrack</string>
+         </property>
+        </item>
        </widget>
       </widget>
       <widget class="QWidget" name="Resources">

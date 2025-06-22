@@ -8,6 +8,7 @@ import gui.insignias
 import gui.payments
 import gui.ranking_read
 import gui.search_data
+import gui.search_demograhic
 import web.download_saem_reports
 import gui.payments_not_applied
 import gui.no_managment
@@ -249,6 +250,7 @@ class Init_APP():
         self.process_data.pushButton_Select_File_13.clicked.connect(self.select_file_RPA)
         self.process_data.commandLinkButton.clicked.connect(self.validate_whatsapp)
         self.process_data.commandLinkButton_2.clicked.connect(self.sending_sms_whatsapp)
+        self.process_data.commandLinkButton_26.clicked.connect(self.search_demographic_claro)
         
     def exec__process(self):
         
@@ -320,16 +322,42 @@ class Init_APP():
             Mbox_In_Process.setText("Por favor espere la ventana de WhatsApp e inicie sesión. No olvide que el archivo solo necesita una columna con los telefonos a validar")
             Mbox_In_Process.exec()
             
-            thread = DynamicThread(web.whatsapp_validate.process_numbers, 
+            thread_vwp = DynamicThread(web.whatsapp_validate.process_numbers, 
                         args=[self.file_path_RPA, self.folder_path, self.process_data])
 
-            thread.start()
-            thread.join()
+            thread_vwp.start()
+            # thread_vwp.join()
+
+            # Mbox_In_Process = QMessageBox()
+            # Mbox_In_Process.setWindowTitle("Informacion del proceso") 
+            # Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            # Mbox_In_Process.setText("Base de datos ejecutada con RPA exitosamente. No olvide dejar el archivo en la compartida.") 
+            # Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar un archivo con la base para ejecutar la validación de WhatsApp.")
+            Mbox_File_Error.exec()
+            
+    def search_demographic_claro(self):
+            
+        if self.file_path_RPA != None:
 
             Mbox_In_Process = QMessageBox()
-            Mbox_In_Process.setWindowTitle("Informacion del proceso") 
+            Mbox_In_Process.setWindowTitle("Procesando")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("Base de datos ejecutada con RPA exitosamente. No olvide dejar el archivo en la compartida.") 
+            Mbox_In_Process.setText("Por favor espere mientras se procesa la consulta masiva")
+            Mbox_In_Process.exec()
+            partitions = 1
+            
+            gui.search_demograhic.search_demographic_claro(self.file_path_RPA, self.folder_path, partitions, self.process_data)
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Estado de Consulta") 
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Query ejecutada exitosamente.") 
             Mbox_In_Process.exec()
         
         else:
@@ -355,15 +383,15 @@ class Init_APP():
                         args=[self.file_path_RPA, self.folder_path, template, self.process_data])
 
             thread_wp.start()
-            thread_wp.join()  # Wait for the thread to finish
-            result = thread_wp.get_result()
-            message = str(result)
+            # thread_wp.join()  # Wait for the thread to finish
+            # result = thread_wp.get_result()
+            # message = str(result)
 
-            Mbox_In_Process = QMessageBox()
-            Mbox_In_Process.setWindowTitle("Informacion del proceso") 
-            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText(message) 
-            Mbox_In_Process.exec()
+            # Mbox_In_Process = QMessageBox()
+            # Mbox_In_Process.setWindowTitle("Informacion del proceso") 
+            # Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            # Mbox_In_Process.setText(message) 
+            # Mbox_In_Process.exec()
         
         else:
             Mbox_File_Error = QMessageBox()
@@ -769,28 +797,6 @@ class Init_APP():
         
         except Exception as e:
             print(f"Error al intentar abrir PowerShell: {e}")
-            
-    def validate_whatsapp(self):
-            
-        if self.file_path_RPA != None:
-
-            Mbox_In_Process = QMessageBox()
-            Mbox_In_Process.setWindowTitle("Procesando")
-            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("Por favor espere la ventana de WhatsApp e inicie sesión.")
-            Mbox_In_Process.exec()
-            
-            thread = DynamicThread(web.sender_whatsapp.process_numbers, 
-                        args=[self.file_path_RPA, self.folder_path, self.template, self.process_data])
-
-            thread.start()
-        
-        else:
-            Mbox_File_Error = QMessageBox()
-            Mbox_File_Error.setWindowTitle("Error de procesamiento")
-            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
-            Mbox_File_Error.setText("Debe seleccionar un archivo con la base para ejecutar la validación de WhatsApp.")
-            Mbox_File_Error.exec()
 
     def copy_code(self):
 
