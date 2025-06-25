@@ -291,6 +291,8 @@ def IPCom(RDD, Type_Proccess):
     RDD = RDD.withColumn("fecharray", current_date())
     RDD = RDD.withColumn("debtdays", datediff(col("fecharray"), col("fecha_vencimiento")))
 
+    RDD = RDD.withColumn("nombrecompleto", col("NOMBRE CORTO"))
+    
     RDD = RDD.select("phone", "nombrecompleto", "company", f"{Price_Col}", "company2", "debtdays", "fecharray", \
                       "botname", "currency", "identificacion", "cuenta", "Edad de Mora", "origen", "cuenta2", "mejorperfil_mes", \
                           "fecha_vencimiento", "Tipo Base")
@@ -374,6 +376,21 @@ def BOT_Process (Data_, Wallet_Brand, Origins_Filter, Directory_to_Save, Partiti
 
     filter_cash = ["", "Pago Parcial", "Sin Pago"]
     Data_ = Data_.filter((col("tipo_pago").isin(filter_cash)) | (col("tipo_pago").isNull()) | (col("tipo_pago") == ""))
+    
+    Data_ = Data_.withColumn("NOMBRE CORTO", col("nombrecompleto"))
+
+    Data_ = Data_.withColumn("NOMBRE CORTO", split(col("NOMBRE CORTO"), " "))
+    
+    print(Data_["NOMBRE CORTO"].dtype)
+
+    for position in range(4):
+        Data_ = Data_.withColumn(f"Name_{position}", (Data_["NOMBRE CORTO"][position]))
+                    
+    Data_ = Data_.withColumn("NOMBRE CORTO",  when(length(col("Name_0")) > 2, col("Name_0"))
+                             .when(length(col("Name_1")) > 2, col("Name_1"))
+                             .when(length(col("Name_2")) > 2, col("Name_2"))
+                             .when(length(col("Name_3")) > 2, col("Name_3"))
+                             .otherwise(col("Name_1")))
     
     Data_ = Data_.withColumn(
         "Mod_init_cta", 
