@@ -1,7 +1,7 @@
 import os
 import shutil
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, lit, regexp_replace, concat
+from pyspark.sql.functions import col, lit, regexp_replace, concat, when, length
 from web.pyspark_session import get_spark_session
 from web.save_files import save_to_csv
 
@@ -13,7 +13,7 @@ def process_data(directory, output_directory, selected_columns, return_matches, 
     original_data = spark.read.csv(directory, header=True, sep=";")
     join_column_original = original_data.columns[0]
     
-    src_folder = r"D:\OneDrive - Recupera SAS\Data Claro\Claro_Data_Lake\Demográficos Unificados"
+    src_folder = r"\\172.128.10.200\4. Gestion de Operaciones\2. Claro\Data compartida\NO BORRAR CONEXIÓN API\Demos Unificados"
     cruce_path = copy_csv_files(src_folder, output_directory)
     unions_csv = read_and_union_csvs(cruce_path, spark)
     cruce_data = unions_csv  
@@ -34,14 +34,29 @@ def process_data(directory, output_directory, selected_columns, return_matches, 
     # Select the specified columns
     result_data = result_data.select(*selected_columns)
     result_data = result_data.dropDuplicates()
+
+    result_data = result_data.withColumn(
+        "tipodato",
+        when(col("dato").contains("@"), "correo")
+        .when((length(col("dato")) == 10) & (col("dato").startswith("6")) & (col("dato").rlike("^\d+$")), "fijo")
+        .when((length(col("dato")) == 10) & (col("dato").startswith("3")) & (col("dato").rlike("^\d+$")), "celular")
+        .otherwise("error")
+    )
     
     # Save the result to the specified output directory
     Type_File = f"Demograficos Cruzados"
     delimiter = ";"
     save_to_csv(result_data, output_directory, Type_File, partitions, delimiter)
     
+    delete_temp_folder(output_directory)
+    
     print(f"Data processing complete. Results saved to: {output_directory}")
 
+def delete_temp_folder(output_directory):
+    temp_folder = os.path.join(output_directory, "temp_spark_30042000")
+    if os.path.exists(temp_folder):
+        shutil.rmtree(temp_folder)
+        
 def copy_csv_files(src_folder, output_directory):
     # Nombre temporal raro para la carpeta destino
     temp_folder = os.path.join(output_directory, "temp_spark_30042000")
@@ -52,6 +67,7 @@ def copy_csv_files(src_folder, output_directory):
             if file.lower().endswith('.csv'):
                 src_file = os.path.join(root, file)
                 dst_file = os.path.join(temp_folder, file)
+                print(f"📩 Copying {src_file} to {dst_file}")
                 shutil.copy2(src_file, dst_file)
                 
     return temp_folder
@@ -70,7 +86,7 @@ def read_and_union_csvs(cruce_path, spark):
 
 def search_demographic_claro(filepath, output_directory, partitions, process_data_):
     
-    selected_columns = ["identificacion", "dato"]  # Replace with your desired columns
+    selected_columns = ["identificacion", "dato", "tipodato"]  # Replace with your desired columns
     return_matches = True  # Set to False if you want non-matching records
     join_column_cruce = "identificacion"  # The column from Data para Cruce to join on
 
