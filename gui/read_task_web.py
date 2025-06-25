@@ -112,7 +112,7 @@ def function_complete_task_WEB(input_folder, output_folder, Partitions):
         consolidated_df = Function_ADD(consolidated_df)
         
         delimiter = ";"
-        Type_Proccess = "Resultado BATCH Claro"
+        Type_Proccess = "Resultado BATCH"
         
         save_to_csv(consolidated_df, output_folder, Type_Proccess, Partitions, delimiter)
 

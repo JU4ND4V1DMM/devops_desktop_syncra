@@ -476,7 +476,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumn("Multiproducto", lit(""))
         
         Data_Root = Data_Root.withColumn("58_", when(flp_filter_databse, concat(lit("CLIENTES "), col("12_"))) \
-                .when((col("12_") == "Clientes Corporativos"), lit("CLIENTES CORPORATIVAS")) \
+                .when((col("12_") == "Clientes Corporativos"), lit("CLIENTES CORPORATIVOS")) \
                 .otherwise(lit("CLIENTES INVENTARIO")))
         
         Data_Root = Data_Root.orderBy(col("3_"))
@@ -613,7 +613,7 @@ class Charge_DB(QtWidgets.QMainWindow):
             "Codigo_de_proceso", "Customer_Type_Id", "Refinancied_Mark", "Discount", "Permanencia",
             "Deuda_sin_Permanencia", "Telefono_1", "Telefono_2", "Telefono_3", "Telefono_4", "Email",
             "Active_Lines", "Monitor", "Valor Scoring", "Marca_Asignada", "Cuenta_Next", "Valor_Deuda",
-            "56_", "Rango_Deuda", "Tipo_Base", "Multiproducto", "Fecha_Ingreso", "Fecha_Salida",
+            "56_", "Rango_Deuda", "Multiproducto", "Tipo_Base", "Fecha_Ingreso", "Fecha_Salida",
             "Valor_Pago", "Valor_Pago_Real", "Fecha_Ult_Pago", "Descuento", "Excl_Descuento", "Liquidacion"
         ]
         
