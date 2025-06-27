@@ -11,3 +11,4 @@ msoffcrypto-tool
 py-cpuinfo
 queue
 threading
+xlsxwriter
