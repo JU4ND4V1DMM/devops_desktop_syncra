@@ -11,7 +11,7 @@ import modules.phone_order
 import modules.fragment_dataBase
 import modules.tmo_trial
 import modules.exclusions
-import modules.sms_process
+import modules.exclusions_file_claro
 import modules.task_web
 
 class Process_Data(QtWidgets.QMainWindow):
@@ -58,7 +58,7 @@ class Process_Data(QtWidgets.QMainWindow):
         self.process_data.pushButton_Partitions_BD_36.clicked.connect(self.payments_bd_filter)
         self.process_data.commandLinkButton_13.clicked.connect(self.bd_exclusions)
         self.process_data.pushButton_Partitions_BD_43.clicked.connect(self.tmo_converter)
-    
+
     def bd_exclusions(self):
 
         list_data = [self.file_path, self.folder_path, self.partitions]
@@ -76,7 +76,15 @@ class Process_Data(QtWidgets.QMainWindow):
             Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
             Mbox_In_Process.exec()
 
-            modules.exclusions.process_xlsx_file(file, root)
+            sheets_str = self.process_data.label_Total_Registers_4.text()
+            sheets = int(sheets_str.split()[0])
+            
+            if sheets < 3:
+                modules.exclusions.process_xlsx_file(file, root)
+                print("Normal Exclusions")
+            elif sheets > 2:
+                modules.exclusions_file_claro.process_xlsx_file(file, root)
+                print("High Exclusions")
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
