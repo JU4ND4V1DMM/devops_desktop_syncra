@@ -6,6 +6,7 @@ import modules.fragment_dataBase
 import web.download_saem_reports
 import modules.bot_process
 import modules.email_process
+import modules.sms_process
 import modules.ivr_process
 import modules.phone_order
 import modules.fragment_dataBase
