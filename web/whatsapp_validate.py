@@ -63,7 +63,7 @@ def validate_whatsapp(driver, phone_number, counter):
     except (selexceptions.TimeoutException, selexceptions.ElementClickInterceptedException):
         # Ensure search box is cleared if an error occurs
         search_box.send_keys(Keys.ESCAPE)
-        print(f"Number {phone_number} does not have WhatsApp. ❌")
+        print(f"{counter} Number {phone_number} does not have WhatsApp. ❌")
         return False
 
 def process_numbers(input_path, output_path, process):
