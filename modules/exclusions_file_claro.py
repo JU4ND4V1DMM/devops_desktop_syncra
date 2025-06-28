@@ -3,10 +3,6 @@ import re
 from xlsxwriter import Workbook
 import os
 
-file_path = r"C:\Users\C.operativo\Downloads\Files\Consolidado Telefonos y Correos para Excluir de Gestión 20250626.xlsx"
-excel_file = pd.ExcelFile(file_path)
-sheet_names = excel_file.sheet_names
-
 numeric_sheets = ["TELEFONOS DE EMERGENCIA", "LINEAS MOVILES", "EMPRESAS Y VIP"]
 documents_sheets = ["CEDULAS", "EMPRESAS Y VIP"]
 accounts_sheets = ["PAGO POR AMNISTIA", "CUENTAS", "EMPRESAS Y VIP"]
@@ -14,6 +10,9 @@ emails_sheets = ["CORREOS"]
 phone_sheets = ["NUMEROS FIJOS ", "NUMEROS FIJOS"]
 
 def process_xlsx_file(input_file, output_dir):
+    
+    excel_file = pd.ExcelFile(input_file)
+    sheet_names = excel_file.sheet_names
     
     os.makedirs(output_dir, exist_ok=True)
     
