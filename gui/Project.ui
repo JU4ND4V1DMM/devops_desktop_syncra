@@ -1052,7 +1052,7 @@ QPushButton:pressed
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -3803,8 +3803,8 @@ QPushButton:pressed {
        <widget class="QLabel" name="label_Selection_Process">
         <property name="geometry">
          <rect>
-          <x>630</x>
-          <y>350</y>
+          <x>20</x>
+          <y>190</y>
           <width>161</width>
           <height>20</height>
          </rect>
@@ -3930,8 +3930,8 @@ font: italic 10pt &quot;MS Sans Serif&quot;;</string>
        <widget class="QComboBox" name="comboBox_Selected_Process">
         <property name="geometry">
          <rect>
-          <x>790</x>
-          <y>350</y>
+          <x>160</x>
+          <y>190</y>
           <width>151</width>
           <height>22</height>
          </rect>
@@ -4766,76 +4766,6 @@ QPushButton:pressed
          </property>
         </widget>
        </widget>
-       <widget class="QPushButton" name="pushButton_Partitions_BD_6">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>190</y>
-          <width>231</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton
-{
-	border-radius:8px;
-	color: rgb(0, 0, 0);
-	background-color: rgb(209, 209, 209);
-}
-QPushButton:Hover
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}
-</string>
-        </property>
-        <property name="text">
-         <string>Exportar directrices de recursos</string>
-        </property>
-        <property name="default">
-         <bool>false</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_Partitions_BD_7">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>250</y>
-          <width>231</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton
-{
-	border-radius:8px;
-	color: rgb(0, 0, 0);
-	background-color: rgb(209, 209, 209);
-}
-QPushButton:Hover
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}
-</string>
-        </property>
-        <property name="text">
-         <string>Exportar PBI de recursos</string>
-        </property>
-        <property name="default">
-         <bool>false</bool>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_Brands_2">
         <property name="geometry">
          <rect>
@@ -4881,36 +4811,6 @@ QPushButton:pressed
          <string>Selección de FLP (fecha límite de pago)         </string>
         </property>
        </widget>
-       <widget class="QGraphicsView" name="graphicsView_3">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>320</y>
-          <width>271</width>
-          <height>301</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QTextEdit" name="textEdit">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>340</y>
-          <width>231</width>
-          <height>261</height>
-         </rect>
-        </property>
-        <property name="html">
-         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9.75pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#7a7a7a;&quot;&gt;Se exportan archivos para la lectura de los registros exportados. Asegúrese de mantener el formato correcto para el cargue de las bases en cada una de las respectivas plataformas.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; color:#7a7a7a;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#7a7a7a;&quot;&gt;Para SMS, utilice el formato Línea - Mensaje. En el caso de BOT, elimine las últimas dos columnas. Para EMAIL, cargue solo las columnas necesarias para concatenar el mensaje. Para IVR, cargue columnas hasta LAST NAME.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
        <zorder>Mod_Init_CTA_Group</zorder>
        <zorder>label_Selection_Process</zorder>
        <zorder>line_Vertical_2</zorder>
@@ -4943,13 +4843,9 @@ p, li { white-space: pre-wrap; }
        <zorder>label_LOGO</zorder>
        <zorder>label_Mod_Init_CTA_Max</zorder>
        <zorder>Group_Selection_Starter_2</zorder>
-       <zorder>pushButton_Partitions_BD_6</zorder>
-       <zorder>pushButton_Partitions_BD_7</zorder>
        <zorder>label_Brands_2</zorder>
        <zorder>checkBox_ALL_DATES_FLP_2</zorder>
        <zorder>label_Dates_FLP_2</zorder>
-       <zorder>graphicsView_3</zorder>
-       <zorder>textEdit</zorder>
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">

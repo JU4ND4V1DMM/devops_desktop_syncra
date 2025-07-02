@@ -9,6 +9,7 @@ from pyspark.sql.types import StringType
 from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, expr, length, size, split, lower, when
 from web.pyspark_session import get_spark_session
 from web.save_files import save_to_0csv, save_to_csv
+from web.temp_parquet import save_temp_log
 
 spark = get_spark_session()
 
@@ -22,11 +23,13 @@ def Function_Complete(path, output_directory, partitions):
     Data_Email = Email_Data(Data_Frame)
     Type = "Emails"
     Data_Email = Demographic_Proccess_Emails(Data_Email, output_directory, partitions)
+    Data_Email = save_temp_log(Data_Email, spark)
     Save_Data_Frame(Data_Email, output_directory, partitions, Type)
 
     Data_Frame = Phone_Data(Data_Frame)
     Type = "Mins"
     Data_NO = Demographic_Proccess_Mins(Data_Frame, output_directory, partitions, "NO_valido")
+    Data_NO = save_temp_log(Data_NO, spark)
     Data_AC = Demographic_Proccess_Mins(Data_Frame, output_directory, partitions, "valido")
 
     Data_Frame = Data_AC.union(Data_NO)
