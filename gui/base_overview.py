@@ -11,6 +11,7 @@ from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
 from pyspark.sql.functions import col, concat, lit, regexp_replace, when, date_format, current_date, to_date, date_format, split, length, upper, coalesce
 from web.save_files import save_to_0csv, save_to_csv
+from web.temp_parquet import save_temp_log
  
 class Charge_DB(QtWidgets.QMainWindow):
 
@@ -301,8 +302,9 @@ class Charge_DB(QtWidgets.QMainWindow):
         if "59_" in Data_Root.columns:
             Data_Root = Data_Root.withColumnRenamed("59_", "Monitor")
 
+        Data_Root = save_temp_log(Data_Root, spark)
         Data_Error = Data_Root
-
+        
         Data_Root = Data_Root.filter(col("[CustomerTypeId?]") >= 80)
         Data_Root = Data_Root.filter(col("[CustomerTypeId?]") <= 89)
         name = "Cargue" 
@@ -480,6 +482,8 @@ class Charge_DB(QtWidgets.QMainWindow):
                 .otherwise(lit("CLIENTES INVENTARIO")))
         
         Data_Root = Data_Root.orderBy(col("3_"))
+        
+        Data_Root = save_temp_log(Data_Root, spark)
         
         return Data_Root
         
