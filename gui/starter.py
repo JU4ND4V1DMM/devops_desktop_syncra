@@ -136,7 +136,7 @@ class Init_APP():
             var__count = 0
             self.process_data.label_Total_Registers_2.setText(f"{var__count}")
             self.process_data.label_Total_Registers_6.setText(f"{var__count}")
-            self.process_data.label_Total_Registers_2.setText(f"{var__count}")
+            self.process_data.label_Total_Registers_4.setText(f"{var__count}")
             self.process_data.label_Total_Registers_2.setText(f"{var__count}")
             self.process_data.label_Total_Registers_7.setText(f"{var__count}")
 
@@ -528,7 +528,7 @@ class Init_APP():
                 self.row_count_CAM = count_csv_rows(self.file_path_CAM)
                 if self.row_count_CAM is not None:
                     self.row_count_CAM = "{:,}".format(self.row_count_CAM)
-                    self.process_data.label_Total_Registers_2.setText(f"{self.row_count_CAM}")
+                    self.process_data.label_Total_Registers_4.setText(f"{self.row_count_CAM}")
                     self.bd_process_start()
 
     def select_file_IVR(self):
@@ -1048,7 +1048,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.self.folder_path_IVR != None:
+        if self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -1198,7 +1198,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.self.folder_path_IVR != None:
+        if self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
