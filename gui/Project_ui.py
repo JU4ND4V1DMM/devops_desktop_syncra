@@ -37,336 +37,8 @@ class Ui_Process_Data(object):
         self.label_LOGO_9.setPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/Logo.png"))
         self.label_LOGO_9.setScaledContents(True)
         self.label_LOGO_9.setObjectName("label_LOGO_9")
-        self.Group_Selection_Starter_13 = QtWidgets.QGroupBox(parent=self.tab_10)
-        self.Group_Selection_Starter_13.setGeometry(QtCore.QRect(20, 20, 271, 231))
-        self.Group_Selection_Starter_13.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.Group_Selection_Starter_13.setObjectName("Group_Selection_Starter_13")
-        self.pushButton_Partitions_BD_20 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_13)
-        self.pushButton_Partitions_BD_20.setGeometry(QtCore.QRect(20, 170, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_20.setFont(font)
-        self.pushButton_Partitions_BD_20.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_20.setDefault(False)
-        self.pushButton_Partitions_BD_20.setObjectName("pushButton_Partitions_BD_20")
-        self.pushButton_Partitions_BD_19 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_13)
-        self.pushButton_Partitions_BD_19.setGeometry(QtCore.QRect(20, 50, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_19.setFont(font)
-        self.pushButton_Partitions_BD_19.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_19.setDefault(False)
-        self.pushButton_Partitions_BD_19.setObjectName("pushButton_Partitions_BD_19")
-        self.pushButton_Partitions_BD_25 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_13)
-        self.pushButton_Partitions_BD_25.setGeometry(QtCore.QRect(20, 110, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_25.setFont(font)
-        self.pushButton_Partitions_BD_25.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_25.setDefault(False)
-        self.pushButton_Partitions_BD_25.setObjectName("pushButton_Partitions_BD_25")
-        self.Group_Selection_Starter_14 = QtWidgets.QGroupBox(parent=self.tab_10)
-        self.Group_Selection_Starter_14.setGeometry(QtCore.QRect(320, 20, 271, 161))
-        self.Group_Selection_Starter_14.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.Group_Selection_Starter_14.setObjectName("Group_Selection_Starter_14")
-        self.Group_Selection_Starter_15 = QtWidgets.QGroupBox(parent=self.tab_10)
-        self.Group_Selection_Starter_15.setGeometry(QtCore.QRect(320, 570, 651, 101))
-        self.Group_Selection_Starter_15.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.Group_Selection_Starter_15.setObjectName("Group_Selection_Starter_15")
-        self.spinBox_Partitions_13 = QtWidgets.QSpinBox(parent=self.Group_Selection_Starter_15)
-        self.spinBox_Partitions_13.setGeometry(QtCore.QRect(104, 50, 41, 22))
-        self.spinBox_Partitions_13.setMinimum(0)
-        self.spinBox_Partitions_13.setMaximum(24)
-        self.spinBox_Partitions_13.setObjectName("spinBox_Partitions_13")
-        self.label_Mod_Init_CTA_Min_6 = QtWidgets.QLabel(parent=self.Group_Selection_Starter_15)
-        self.label_Mod_Init_CTA_Min_6.setGeometry(QtCore.QRect(50, 50, 51, 20))
-        font = QtGui.QFont()
-        font.setFamily("Leelawadee UI")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_Mod_Init_CTA_Min_6.setFont(font)
-        self.label_Mod_Init_CTA_Min_6.setStyleSheet("font: 10pt \"Leelawadee UI\";")
-        self.label_Mod_Init_CTA_Min_6.setObjectName("label_Mod_Init_CTA_Min_6")
-        self.spinBox_Partitions_14 = QtWidgets.QSpinBox(parent=self.Group_Selection_Starter_15)
-        self.spinBox_Partitions_14.setGeometry(QtCore.QRect(275, 50, 41, 22))
-        self.spinBox_Partitions_14.setMinimum(1)
-        self.spinBox_Partitions_14.setMaximum(59)
-        self.spinBox_Partitions_14.setObjectName("spinBox_Partitions_14")
-        self.label_Mod_Init_CTA_Min_7 = QtWidgets.QLabel(parent=self.Group_Selection_Starter_15)
-        self.label_Mod_Init_CTA_Min_7.setGeometry(QtCore.QRect(210, 50, 61, 20))
-        font = QtGui.QFont()
-        font.setFamily("Leelawadee UI")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_Mod_Init_CTA_Min_7.setFont(font)
-        self.label_Mod_Init_CTA_Min_7.setStyleSheet("font: 10pt \"Leelawadee UI\";")
-        self.label_Mod_Init_CTA_Min_7.setObjectName("label_Mod_Init_CTA_Min_7")
-        self.pushButton_Process_8 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_15)
-        self.pushButton_Process_8.setGeometry(QtCore.QRect(410, 40, 211, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Process_8.setFont(font)
-        self.pushButton_Process_8.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Process_8.setDefault(False)
-        self.pushButton_Process_8.setObjectName("pushButton_Process_8")
-        self.Group_Selection_Starter_16 = QtWidgets.QGroupBox(parent=self.tab_10)
-        self.Group_Selection_Starter_16.setGeometry(QtCore.QRect(20, 270, 271, 411))
-        self.Group_Selection_Starter_16.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.Group_Selection_Starter_16.setObjectName("Group_Selection_Starter_16")
-        self.pushButton_Partitions_BD_32 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_16)
-        self.pushButton_Partitions_BD_32.setGeometry(QtCore.QRect(20, 350, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_32.setFont(font)
-        self.pushButton_Partitions_BD_32.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_32.setDefault(False)
-        self.pushButton_Partitions_BD_32.setObjectName("pushButton_Partitions_BD_32")
-        self.pushButton_Partitions_BD_21 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_16)
-        self.pushButton_Partitions_BD_21.setGeometry(QtCore.QRect(20, 50, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_21.setFont(font)
-        self.pushButton_Partitions_BD_21.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_21.setDefault(False)
-        self.pushButton_Partitions_BD_21.setObjectName("pushButton_Partitions_BD_21")
-        self.pushButton_Partitions_BD_24 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_16)
-        self.pushButton_Partitions_BD_24.setGeometry(QtCore.QRect(20, 230, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_24.setFont(font)
-        self.pushButton_Partitions_BD_24.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_24.setDefault(False)
-        self.pushButton_Partitions_BD_24.setObjectName("pushButton_Partitions_BD_24")
-        self.pushButton_Partitions_BD_22 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_16)
-        self.pushButton_Partitions_BD_22.setGeometry(QtCore.QRect(20, 110, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_22.setFont(font)
-        self.pushButton_Partitions_BD_22.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_22.setDefault(False)
-        self.pushButton_Partitions_BD_22.setObjectName("pushButton_Partitions_BD_22")
-        self.pushButton_Partitions_BD_26 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_16)
-        self.pushButton_Partitions_BD_26.setGeometry(QtCore.QRect(20, 290, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_26.setFont(font)
-        self.pushButton_Partitions_BD_26.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_26.setDefault(False)
-        self.pushButton_Partitions_BD_26.setObjectName("pushButton_Partitions_BD_26")
-        self.pushButton_Partitions_BD_23 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_16)
-        self.pushButton_Partitions_BD_23.setGeometry(QtCore.QRect(20, 170, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_23.setFont(font)
-        self.pushButton_Partitions_BD_23.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_23.setDefault(False)
-        self.pushButton_Partitions_BD_23.setObjectName("pushButton_Partitions_BD_23")
         self.Group_Selection_Starter_20 = QtWidgets.QGroupBox(parent=self.tab_10)
-        self.Group_Selection_Starter_20.setGeometry(QtCore.QRect(320, 220, 651, 331))
+        self.Group_Selection_Starter_20.setGeometry(QtCore.QRect(10, 20, 651, 331))
         self.Group_Selection_Starter_20.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.Group_Selection_Starter_20.setObjectName("Group_Selection_Starter_20")
         self.pushButton_Partitions_BD_41 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_20)
@@ -833,12 +505,12 @@ class Ui_Process_Data(object):
         self.gridLayout.addWidget(self.pushButton_8, 0, 0, 1, 1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.label_Total_Registers_8 = QtWidgets.QLabel(parent=self.tab_3)
-        self.label_Total_Registers_8.setGeometry(QtCore.QRect(400, 610, 241, 21))
+        self.label_Total_Registers_8.setGeometry(QtCore.QRect(650, 610, 161, 21))
         self.label_Total_Registers_8.setStyleSheet("color: rgb(217, 16, 76);\n"
 "font: 87 9pt \"Arial Black\";")
         self.label_Total_Registers_8.setObjectName("label_Total_Registers_8")
         self.label_Total_Registers_7 = QtWidgets.QLabel(parent=self.tab_3)
-        self.label_Total_Registers_7.setGeometry(QtCore.QRect(650, 610, 111, 21))
+        self.label_Total_Registers_7.setGeometry(QtCore.QRect(830, 610, 111, 21))
         font = QtGui.QFont()
         font.setFamily("Arial Black")
         font.setPointSize(10)
@@ -1000,11 +672,11 @@ class Ui_Process_Data(object):
 "}")
         self.plainTextEdit.setObjectName("plainTextEdit")
         self.Group_Selection_Starter_38 = QtWidgets.QGroupBox(parent=self.tab_3)
-        self.Group_Selection_Starter_38.setGeometry(QtCore.QRect(310, 340, 631, 251))
+        self.Group_Selection_Starter_38.setGeometry(QtCore.QRect(310, 340, 301, 141))
         self.Group_Selection_Starter_38.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.Group_Selection_Starter_38.setObjectName("Group_Selection_Starter_38")
         self.commandLinkButton_3 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_38)
-        self.commandLinkButton_3.setGeometry(QtCore.QRect(10, 30, 241, 41))
+        self.commandLinkButton_3.setGeometry(QtCore.QRect(20, 30, 261, 41))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(10)
@@ -1030,7 +702,7 @@ class Ui_Process_Data(object):
         self.commandLinkButton_3.setIcon(icon2)
         self.commandLinkButton_3.setObjectName("commandLinkButton_3")
         self.commandLinkButton_26 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_38)
-        self.commandLinkButton_26.setGeometry(QtCore.QRect(10, 80, 241, 41))
+        self.commandLinkButton_26.setGeometry(QtCore.QRect(20, 80, 261, 41))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(10)
@@ -1134,6 +806,270 @@ class Ui_Process_Data(object):
         icon6.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/CLEAN.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.commandLinkButton_6.setIcon(icon6)
         self.commandLinkButton_6.setObjectName("commandLinkButton_6")
+        self.Group_Selection_Starter_39 = QtWidgets.QGroupBox(parent=self.tab_3)
+        self.Group_Selection_Starter_39.setGeometry(QtCore.QRect(650, 340, 271, 251))
+        self.Group_Selection_Starter_39.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.Group_Selection_Starter_39.setObjectName("Group_Selection_Starter_39")
+        self.scrollArea_3 = QtWidgets.QScrollArea(parent=self.Group_Selection_Starter_39)
+        self.scrollArea_3.setGeometry(QtCore.QRect(20, 30, 231, 201))
+        self.scrollArea_3.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.scrollArea_3.setAutoFillBackground(True)
+        self.scrollArea_3.setLineWidth(3)
+        self.scrollArea_3.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        self.scrollArea_3.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.scrollArea_3.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
+        self.scrollArea_3.setWidgetResizable(True)
+        self.scrollArea_3.setObjectName("scrollArea_3")
+        self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, -33, 212, 282))
+        self.scrollAreaWidgetContents_3.setObjectName("scrollAreaWidgetContents_3")
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_3)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.pushButton_19 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_3)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_19.setFont(font)
+        self.pushButton_19.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_19.setObjectName("pushButton_19")
+        self.gridLayout_3.addWidget(self.pushButton_19, 0, 0, 1, 1)
+        self.pushButton_10 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_3)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_10.setFont(font)
+        self.pushButton_10.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_10.setObjectName("pushButton_10")
+        self.gridLayout_3.addWidget(self.pushButton_10, 4, 0, 1, 1)
+        self.pushButton_16 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_3)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_16.setFont(font)
+        self.pushButton_16.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_16.setObjectName("pushButton_16")
+        self.gridLayout_3.addWidget(self.pushButton_16, 2, 0, 1, 1)
+        self.pushButton_9 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_3)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_9.setFont(font)
+        self.pushButton_9.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_9.setObjectName("pushButton_9")
+        self.gridLayout_3.addWidget(self.pushButton_9, 5, 0, 1, 1)
+        self.pushButton_13 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_3)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_13.setFont(font)
+        self.pushButton_13.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_13.setObjectName("pushButton_13")
+        self.gridLayout_3.addWidget(self.pushButton_13, 9, 0, 1, 1)
+        self.pushButton_15 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_3)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_15.setFont(font)
+        self.pushButton_15.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_15.setObjectName("pushButton_15")
+        self.gridLayout_3.addWidget(self.pushButton_15, 6, 0, 1, 1)
+        self.pushButton_17 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_3)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_17.setFont(font)
+        self.pushButton_17.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_17.setObjectName("pushButton_17")
+        self.gridLayout_3.addWidget(self.pushButton_17, 10, 0, 1, 1)
+        self.pushButton_18 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_3)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_18.setFont(font)
+        self.pushButton_18.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_18.setObjectName("pushButton_18")
+        self.gridLayout_3.addWidget(self.pushButton_18, 7, 0, 1, 1)
+        self.pushButton_20 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_3)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_20.setFont(font)
+        self.pushButton_20.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_20.setObjectName("pushButton_20")
+        self.gridLayout_3.addWidget(self.pushButton_20, 8, 0, 1, 1)
+        self.scrollArea_3.setWidget(self.scrollAreaWidgetContents_3)
+        self.Group_Selection_Starter_15 = QtWidgets.QGroupBox(parent=self.tab_3)
+        self.Group_Selection_Starter_15.setGeometry(QtCore.QRect(310, 500, 301, 141))
+        self.Group_Selection_Starter_15.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.Group_Selection_Starter_15.setObjectName("Group_Selection_Starter_15")
+        self.spinBox_Partitions_13 = QtWidgets.QSpinBox(parent=self.Group_Selection_Starter_15)
+        self.spinBox_Partitions_13.setGeometry(QtCore.QRect(20, 90, 41, 22))
+        self.spinBox_Partitions_13.setMinimum(0)
+        self.spinBox_Partitions_13.setMaximum(24)
+        self.spinBox_Partitions_13.setObjectName("spinBox_Partitions_13")
+        self.label_Mod_Init_CTA_Min_6 = QtWidgets.QLabel(parent=self.Group_Selection_Starter_15)
+        self.label_Mod_Init_CTA_Min_6.setGeometry(QtCore.QRect(20, 50, 51, 20))
+        font = QtGui.QFont()
+        font.setFamily("Leelawadee UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label_Mod_Init_CTA_Min_6.setFont(font)
+        self.label_Mod_Init_CTA_Min_6.setStyleSheet("font: 10pt \"Leelawadee UI\";")
+        self.label_Mod_Init_CTA_Min_6.setObjectName("label_Mod_Init_CTA_Min_6")
+        self.spinBox_Partitions_14 = QtWidgets.QSpinBox(parent=self.Group_Selection_Starter_15)
+        self.spinBox_Partitions_14.setGeometry(QtCore.QRect(110, 90, 41, 22))
+        self.spinBox_Partitions_14.setMinimum(1)
+        self.spinBox_Partitions_14.setMaximum(59)
+        self.spinBox_Partitions_14.setObjectName("spinBox_Partitions_14")
+        self.label_Mod_Init_CTA_Min_7 = QtWidgets.QLabel(parent=self.Group_Selection_Starter_15)
+        self.label_Mod_Init_CTA_Min_7.setGeometry(QtCore.QRect(100, 50, 61, 20))
+        font = QtGui.QFont()
+        font.setFamily("Leelawadee UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label_Mod_Init_CTA_Min_7.setFont(font)
+        self.label_Mod_Init_CTA_Min_7.setStyleSheet("font: 10pt \"Leelawadee UI\";")
+        self.label_Mod_Init_CTA_Min_7.setObjectName("label_Mod_Init_CTA_Min_7")
+        self.pushButton_Process_8 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_15)
+        self.pushButton_Process_8.setGeometry(QtCore.QRect(190, 40, 91, 31))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_Process_8.setFont(font)
+        self.pushButton_Process_8.setStyleSheet("QPushButton\n"
+"{\n"
+"    border-radius:8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"    background-color: rgb(209, 209, 209);\n"
+"}\n"
+"QPushButton:Hover\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(0, 0, 0);\n"
+"}\n"
+"")
+        self.pushButton_Process_8.setDefault(False)
+        self.pushButton_Process_8.setObjectName("pushButton_Process_8")
         self.tabWidget.addTab(self.tab_3, "")
         self.Upload = QtWidgets.QWidget()
         self.Upload.setObjectName("Upload")
@@ -1868,7 +1804,7 @@ class Ui_Process_Data(object):
         self.gridLayout_2.addWidget(self.pushButton_11, 1, 0, 1, 1)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.graphicsView_2 = QtWidgets.QGraphicsView(parent=self.tab)
-        self.graphicsView_2.setGeometry(QtCore.QRect(320, 400, 361, 192))
+        self.graphicsView_2.setGeometry(QtCore.QRect(320, 410, 361, 121))
         self.graphicsView_2.setObjectName("graphicsView_2")
         self.commandLinkButton_23 = QtWidgets.QCommandLinkButton(parent=self.tab)
         self.commandLinkButton_23.setGeometry(QtCore.QRect(710, 510, 231, 41))
@@ -1968,45 +1904,226 @@ class Ui_Process_Data(object):
         self.commandLinkButton_25.setIcon(icon25)
         self.commandLinkButton_25.setIconSize(QtCore.QSize(20, 20))
         self.commandLinkButton_25.setObjectName("commandLinkButton_25")
-        self.comboBox_Selected_Process_3 = QtWidgets.QComboBox(parent=self.tab)
-        self.comboBox_Selected_Process_3.setGeometry(QtCore.QRect(350, 330, 211, 22))
+        self.line_Vertical_Tittle_6 = QtWidgets.QFrame(parent=self.tab)
+        self.line_Vertical_Tittle_6.setGeometry(QtCore.QRect(310, 250, 651, 20))
+        self.line_Vertical_Tittle_6.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+        self.line_Vertical_Tittle_6.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
+        self.line_Vertical_Tittle_6.setObjectName("line_Vertical_Tittle_6")
+        self.commandLinkButton_27 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_27.setGeometry(QtCore.QRect(320, 270, 231, 41))
         font = QtGui.QFont()
-        font.setFamily("Bahnschrift Light")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(3)
-        self.comboBox_Selected_Process_3.setFont(font)
-        self.comboBox_Selected_Process_3.setStyleSheet("font: 25 10pt \"Bahnschrift Light\";")
-        self.comboBox_Selected_Process_3.setObjectName("comboBox_Selected_Process_3")
-        self.comboBox_Selected_Process_3.addItem("")
-        self.comboBox_Selected_Process_3.addItem("")
-        self.comboBox_Selected_Process_3.addItem("")
-        self.comboBox_Selected_Process_3.addItem("")
-        self.comboBox_Selected_Process_3.addItem("")
-        self.comboBox_Selected_Process_3.addItem("")
-        self.comboBox_Selected_Process_3.addItem("")
-        self.comboBox_Selected_Process_3.addItem("")
+        font.setFamily("Segoe UI")
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        self.commandLinkButton_27.setFont(font)
+        self.commandLinkButton_27.setStyleSheet("/* Estado normal */\n"
+"QPushButton {\n"
+"    color: rgb(0, 0, 139); /* Azul oscuro */\n"
+"    font-weight: bold;     /* Negrita */\n"
+"}\n"
+"\n"
+"/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon26 = QtGui.QIcon()
+        icon26.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/datalake.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_27.setIcon(icon26)
+        self.commandLinkButton_27.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_27.setObjectName("commandLinkButton_27")
+        self.commandLinkButton_28 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_28.setGeometry(QtCore.QRect(320, 320, 231, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        self.commandLinkButton_28.setFont(font)
+        self.commandLinkButton_28.setStyleSheet("/* Estado normal */\n"
+"QPushButton {\n"
+"    color: rgb(0, 0, 139); /* Azul oscuro */\n"
+"    font-weight: bold;     /* Negrita */\n"
+"}\n"
+"\n"
+"/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        self.commandLinkButton_28.setIcon(icon26)
+        self.commandLinkButton_28.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_28.setObjectName("commandLinkButton_28")
+        self.commandLinkButton_29 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_29.setGeometry(QtCore.QRect(570, 270, 231, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        self.commandLinkButton_29.setFont(font)
+        self.commandLinkButton_29.setStyleSheet("/* Estado normal */\n"
+"QPushButton {\n"
+"    color: rgb(0, 0, 139); /* Azul oscuro */\n"
+"    font-weight: bold;     /* Negrita */\n"
+"}\n"
+"\n"
+"/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        self.commandLinkButton_29.setIcon(icon26)
+        self.commandLinkButton_29.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_29.setObjectName("commandLinkButton_29")
+        self.commandLinkButton_30 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_30.setGeometry(QtCore.QRect(570, 320, 231, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        self.commandLinkButton_30.setFont(font)
+        self.commandLinkButton_30.setStyleSheet("/* Estado normal */\n"
+"QPushButton {\n"
+"    color: rgb(0, 0, 139); /* Azul oscuro */\n"
+"    font-weight: bold;     /* Negrita */\n"
+"}\n"
+"\n"
+"/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        self.commandLinkButton_30.setIcon(icon26)
+        self.commandLinkButton_30.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_30.setObjectName("commandLinkButton_30")
+        self.spinBox_Partitions_5 = QtWidgets.QSpinBox(parent=self.tab)
+        self.spinBox_Partitions_5.setGeometry(QtCore.QRect(820, 280, 61, 22))
+        self.spinBox_Partitions_5.setMinimum(2025)
+        self.spinBox_Partitions_5.setMaximum(2040)
+        self.spinBox_Partitions_5.setObjectName("spinBox_Partitions_5")
+        self.spinBox_Partitions_10 = QtWidgets.QSpinBox(parent=self.tab)
+        self.spinBox_Partitions_10.setGeometry(QtCore.QRect(820, 330, 61, 22))
+        self.spinBox_Partitions_10.setMinimum(1)
+        self.spinBox_Partitions_10.setMaximum(12)
+        self.spinBox_Partitions_10.setObjectName("spinBox_Partitions_10")
+        self.label_Partitions_5 = QtWidgets.QLabel(parent=self.tab)
+        self.label_Partitions_5.setGeometry(QtCore.QRect(910, 270, 41, 41))
+        self.label_Partitions_5.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.label_Partitions_5.setObjectName("label_Partitions_5")
+        self.label_Partitions_10 = QtWidgets.QLabel(parent=self.tab)
+        self.label_Partitions_10.setGeometry(QtCore.QRect(910, 320, 41, 41))
+        self.label_Partitions_10.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.label_Partitions_10.setObjectName("label_Partitions_10")
+        self.commandLinkButton_31 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_31.setGeometry(QtCore.QRect(320, 550, 161, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        self.commandLinkButton_31.setFont(font)
+        self.commandLinkButton_31.setStyleSheet("/* Estado normal */\n"
+"QPushButton {\n"
+"    font-weight: bold;     /* Negrita */\n"
+"}\n"
+"\n"
+"/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        icon27 = QtGui.QIcon()
+        icon27.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/sharepoint.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_31.setIcon(icon27)
+        self.commandLinkButton_31.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_31.setObjectName("commandLinkButton_31")
+        self.commandLinkButton_32 = QtWidgets.QCommandLinkButton(parent=self.tab)
+        self.commandLinkButton_32.setGeometry(QtCore.QRect(510, 550, 161, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        self.commandLinkButton_32.setFont(font)
+        self.commandLinkButton_32.setStyleSheet("/* Estado normal */\n"
+"QPushButton {\n"
+"    font-weight: bold;     /* Negrita */\n"
+"}\n"
+"\n"
+"/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
+"    color: rgb(0, 0, 0);\n"
+"}")
+        self.commandLinkButton_32.setIcon(icon27)
+        self.commandLinkButton_32.setIconSize(QtCore.QSize(20, 20))
+        self.commandLinkButton_32.setObjectName("commandLinkButton_32")
         self.tabWidget.addTab(self.tab, "")
         self.Resources = QtWidgets.QWidget()
         self.Resources.setObjectName("Resources")
-        self.label_Selection_Process = QtWidgets.QLabel(parent=self.Resources)
-        self.label_Selection_Process.setGeometry(QtCore.QRect(20, 190, 161, 20))
-        self.label_Selection_Process.setStyleSheet("color: rgb(217, 16, 76);\n"
-"font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.label_Selection_Process.setObjectName("label_Selection_Process")
         self.line_Vertical_2 = QtWidgets.QFrame(parent=self.Resources)
         self.line_Vertical_2.setGeometry(QtCore.QRect(310, 583, 651, 20))
         self.line_Vertical_2.setFrameShape(QtWidgets.QFrame.Shape.HLine)
         self.line_Vertical_2.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line_Vertical_2.setObjectName("line_Vertical_2")
         self.label_Benefits = QtWidgets.QLabel(parent=self.Resources)
-        self.label_Benefits.setGeometry(QtCore.QRect(630, 390, 161, 20))
+        self.label_Benefits.setGeometry(QtCore.QRect(630, 370, 161, 20))
         self.label_Benefits.setStyleSheet("/*color: rgb(217, 16, 76);*/\n"
 "font: 63 10pt \"Bahnschrift SemiBold\";")
         self.label_Benefits.setObjectName("label_Benefits")
         self.label_Contact_Min = QtWidgets.QLabel(parent=self.Resources)
-        self.label_Contact_Min.setGeometry(QtCore.QRect(630, 430, 161, 20))
+        self.label_Contact_Min.setGeometry(QtCore.QRect(630, 410, 161, 20))
         self.label_Contact_Min.setStyleSheet("/*color: rgb(217, 16, 76);*/\n"
 "font: 63 10pt \"Bahnschrift SemiBold\";")
         self.label_Contact_Min.setObjectName("label_Contact_Min")
@@ -2035,22 +2152,6 @@ class Ui_Process_Data(object):
         self.checkBox_Brand_GROUP_SPECIALS_2 = QtWidgets.QCheckBox(parent=self.layoutWidget_4)
         self.checkBox_Brand_GROUP_SPECIALS_2.setObjectName("checkBox_Brand_GROUP_SPECIALS_2")
         self.verticalLayout_Brands_6.addWidget(self.checkBox_Brand_GROUP_SPECIALS_2)
-        self.comboBox_Selected_Process = QtWidgets.QComboBox(parent=self.Resources)
-        self.comboBox_Selected_Process.setGeometry(QtCore.QRect(160, 190, 151, 22))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift Light")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(3)
-        self.comboBox_Selected_Process.setFont(font)
-        self.comboBox_Selected_Process.setStyleSheet("font: 25 10pt \"Bahnschrift Light\";")
-        self.comboBox_Selected_Process.setObjectName("comboBox_Selected_Process")
-        self.comboBox_Selected_Process.addItem("")
-        self.comboBox_Selected_Process.addItem("")
-        self.comboBox_Selected_Process.addItem("")
-        self.comboBox_Selected_Process.addItem("")
-        self.comboBox_Selected_Process.addItem("")
         self.pushButton_Process = QtWidgets.QPushButton(parent=self.Resources)
         self.pushButton_Process.setGeometry(QtCore.QRect(860, 608, 75, 24))
         self.pushButton_Process.setStyleSheet("QPushButton\n"
@@ -2106,10 +2207,10 @@ class Ui_Process_Data(object):
         self.checkBox_Origin_ALL_Origins_2.setObjectName("checkBox_Origin_ALL_Origins_2")
         self.verticalLayout_Origins_3.addWidget(self.checkBox_Origin_ALL_Origins_2)
         self.lineEdit_Mod_Init_Min = QtWidgets.QLineEdit(parent=self.Resources)
-        self.lineEdit_Mod_Init_Min.setGeometry(QtCore.QRect(632, 530, 101, 22))
+        self.lineEdit_Mod_Init_Min.setGeometry(QtCore.QRect(632, 520, 101, 22))
         self.lineEdit_Mod_Init_Min.setObjectName("lineEdit_Mod_Init_Min")
         self.comboBox_Benefits = QtWidgets.QComboBox(parent=self.Resources)
-        self.comboBox_Benefits.setGeometry(QtCore.QRect(790, 390, 151, 22))
+        self.comboBox_Benefits.setGeometry(QtCore.QRect(790, 370, 151, 22))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift Light")
         font.setPointSize(10)
@@ -2244,7 +2345,7 @@ class Ui_Process_Data(object):
         self.pushButton_Graphic.setDefault(False)
         self.pushButton_Graphic.setObjectName("pushButton_Graphic")
         self.comboBox_Min_Contact = QtWidgets.QComboBox(parent=self.Resources)
-        self.comboBox_Min_Contact.setGeometry(QtCore.QRect(790, 430, 151, 22))
+        self.comboBox_Min_Contact.setGeometry(QtCore.QRect(790, 410, 151, 22))
         self.comboBox_Min_Contact.setStyleSheet("font: 25 10pt \"Bahnschrift Light\";")
         self.comboBox_Min_Contact.setObjectName("comboBox_Min_Contact")
         self.comboBox_Min_Contact.addItem("")
@@ -2291,13 +2392,13 @@ class Ui_Process_Data(object):
         self.label_Origins_2.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.label_Origins_2.setObjectName("label_Origins_2")
         self.label_Mod_Init_CTA_ = QtWidgets.QLabel(parent=self.Resources)
-        self.label_Mod_Init_CTA_.setGeometry(QtCore.QRect(750, 530, 61, 20))
+        self.label_Mod_Init_CTA_.setGeometry(QtCore.QRect(750, 520, 61, 20))
         self.label_Mod_Init_CTA_.setStyleSheet("font: 11pt \"Microsoft Yi Baiti\";\n"
 "color: rgb(163, 163, 163);\n"
 "font: 75 10pt \"MS Shell Dlg 2\";")
         self.label_Mod_Init_CTA_.setObjectName("label_Mod_Init_CTA_")
         self.lineEdit_Mod_Init_Max = QtWidgets.QLineEdit(parent=self.Resources)
-        self.lineEdit_Mod_Init_Max.setGeometry(QtCore.QRect(822, 530, 111, 22))
+        self.lineEdit_Mod_Init_Max.setGeometry(QtCore.QRect(822, 520, 111, 22))
         self.lineEdit_Mod_Init_Max.setObjectName("lineEdit_Mod_Init_Max")
         self.layoutWidget_6 = QtWidgets.QWidget(parent=self.Resources)
         self.layoutWidget_6.setGeometry(QtCore.QRect(450, 110, 97, 201))
@@ -2330,7 +2431,7 @@ class Ui_Process_Data(object):
         self.checkBox_Brand_Provision_4.setObjectName("checkBox_Brand_Provision_4")
         self.verticalLayout_Brands_7.addWidget(self.checkBox_Brand_Provision_4)
         self.label_Mod_Init_CTA_Min = QtWidgets.QLabel(parent=self.Resources)
-        self.label_Mod_Init_CTA_Min.setGeometry(QtCore.QRect(640, 500, 91, 20))
+        self.label_Mod_Init_CTA_Min.setGeometry(QtCore.QRect(640, 490, 91, 20))
         font = QtGui.QFont()
         font.setFamily("Leelawadee UI")
         font.setPointSize(10)
@@ -2359,7 +2460,7 @@ class Ui_Process_Data(object):
         self.label_LOGO.setScaledContents(True)
         self.label_LOGO.setObjectName("label_LOGO")
         self.label_Mod_Init_CTA_Max = QtWidgets.QLabel(parent=self.Resources)
-        self.label_Mod_Init_CTA_Max.setGeometry(QtCore.QRect(830, 500, 91, 20))
+        self.label_Mod_Init_CTA_Max.setGeometry(QtCore.QRect(830, 490, 91, 20))
         font = QtGui.QFont()
         font.setFamily("Leelawadee UI")
         font.setPointSize(10)
@@ -2370,11 +2471,11 @@ class Ui_Process_Data(object):
         self.label_Mod_Init_CTA_Max.setStyleSheet("font: 10pt \"Leelawadee UI\";")
         self.label_Mod_Init_CTA_Max.setObjectName("label_Mod_Init_CTA_Max")
         self.Mod_Init_CTA_Group = QtWidgets.QGroupBox(parent=self.Resources)
-        self.Mod_Init_CTA_Group.setGeometry(QtCore.QRect(615, 478, 331, 91))
+        self.Mod_Init_CTA_Group.setGeometry(QtCore.QRect(615, 470, 331, 91))
         self.Mod_Init_CTA_Group.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.Mod_Init_CTA_Group.setObjectName("Mod_Init_CTA_Group")
         self.Group_Selection_Starter_2 = QtWidgets.QGroupBox(parent=self.Resources)
-        self.Group_Selection_Starter_2.setGeometry(QtCore.QRect(10, 20, 271, 141))
+        self.Group_Selection_Starter_2.setGeometry(QtCore.QRect(10, 20, 271, 291))
         self.Group_Selection_Starter_2.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.Group_Selection_Starter_2.setObjectName("Group_Selection_Starter_2")
         self.pushButton_Select_File_2 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_2)
@@ -2399,7 +2500,7 @@ class Ui_Process_Data(object):
         self.pushButton_Select_File_2.setDefault(False)
         self.pushButton_Select_File_2.setObjectName("pushButton_Select_File_2")
         self.spinBox_Partitions_2 = QtWidgets.QSpinBox(parent=self.Group_Selection_Starter_2)
-        self.spinBox_Partitions_2.setGeometry(QtCore.QRect(194, 95, 61, 22))
+        self.spinBox_Partitions_2.setGeometry(QtCore.QRect(180, 95, 61, 22))
         self.spinBox_Partitions_2.setMinimum(1)
         self.spinBox_Partitions_2.setMaximum(50)
         self.spinBox_Partitions_2.setObjectName("spinBox_Partitions_2")
@@ -2407,6 +2508,49 @@ class Ui_Process_Data(object):
         self.label_Partitions_2.setGeometry(QtCore.QRect(20, 90, 168, 31))
         self.label_Partitions_2.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.label_Partitions_2.setObjectName("label_Partitions_2")
+        self.label_Selection_Process = QtWidgets.QLabel(parent=self.Group_Selection_Starter_2)
+        self.label_Selection_Process.setGeometry(QtCore.QRect(30, 140, 161, 20))
+        self.label_Selection_Process.setStyleSheet("color: rgb(217, 16, 76);\n"
+"font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.label_Selection_Process.setObjectName("label_Selection_Process")
+        self.comboBox_Selected_Process = QtWidgets.QComboBox(parent=self.Group_Selection_Starter_2)
+        self.comboBox_Selected_Process.setGeometry(QtCore.QRect(30, 170, 211, 22))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift Light")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(3)
+        self.comboBox_Selected_Process.setFont(font)
+        self.comboBox_Selected_Process.setStyleSheet("font: 25 10pt \"Bahnschrift Light\";")
+        self.comboBox_Selected_Process.setObjectName("comboBox_Selected_Process")
+        self.comboBox_Selected_Process.addItem("")
+        self.comboBox_Selected_Process.addItem("")
+        self.comboBox_Selected_Process.addItem("")
+        self.comboBox_Selected_Process.addItem("")
+        self.comboBox_Selected_Process.addItem("")
+        self.comboBox_Selected_Process_3 = QtWidgets.QComboBox(parent=self.Group_Selection_Starter_2)
+        self.comboBox_Selected_Process_3.setGeometry(QtCore.QRect(30, 240, 211, 22))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift Light")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(3)
+        self.comboBox_Selected_Process_3.setFont(font)
+        self.comboBox_Selected_Process_3.setStyleSheet("font: 25 10pt \"Bahnschrift Light\";")
+        self.comboBox_Selected_Process_3.setObjectName("comboBox_Selected_Process_3")
+        self.comboBox_Selected_Process_3.addItem("")
+        self.comboBox_Selected_Process_3.addItem("")
+        self.comboBox_Selected_Process_3.addItem("")
+        self.comboBox_Selected_Process_3.addItem("")
+        self.comboBox_Selected_Process_3.addItem("")
+        self.comboBox_Selected_Process_3.addItem("")
+        self.label_Selection_Process_2 = QtWidgets.QLabel(parent=self.Group_Selection_Starter_2)
+        self.label_Selection_Process_2.setGeometry(QtCore.QRect(30, 210, 161, 20))
+        self.label_Selection_Process_2.setStyleSheet("color: rgb(217, 16, 76);\n"
+"font: 63 10pt \"Bahnschrift SemiBold\";")
+        self.label_Selection_Process_2.setObjectName("label_Selection_Process_2")
         self.label_Brands_2 = QtWidgets.QLabel(parent=self.Resources)
         self.label_Brands_2.setGeometry(QtCore.QRect(340, 70, 174, 22))
         self.label_Brands_2.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
@@ -2418,62 +2562,8 @@ class Ui_Process_Data(object):
         self.label_Dates_FLP_2.setGeometry(QtCore.QRect(620, 72, 249, 21))
         self.label_Dates_FLP_2.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.label_Dates_FLP_2.setObjectName("label_Dates_FLP_2")
-        self.Mod_Init_CTA_Group.raise_()
-        self.label_Selection_Process.raise_()
-        self.line_Vertical_2.raise_()
-        self.label_Benefits.raise_()
-        self.label_Contact_Min.raise_()
-        self.line_Vertical_Tittle.raise_()
-        self.label_Version_Control.raise_()
-        self.layoutWidget_4.raise_()
-        self.comboBox_Selected_Process.raise_()
-        self.pushButton_Process.raise_()
-        self.line_Vertical_3.raise_()
-        self.label_Origins.raise_()
-        self.label_Total_Registers_2.raise_()
-        self.layoutWidget_3.raise_()
-        self.lineEdit_Mod_Init_Min.raise_()
-        self.comboBox_Benefits.raise_()
-        self.label_Total_Registers.raise_()
-        self.calendarWidget.raise_()
-        self.layoutWidget_2.raise_()
-        self.pushButton_Graphic.raise_()
-        self.comboBox_Min_Contact.raise_()
-        self.layoutWidget_5.raise_()
-        self.line_Horizontal.raise_()
-        self.label_Origins_2.raise_()
-        self.label_Mod_Init_CTA_.raise_()
-        self.lineEdit_Mod_Init_Max.raise_()
-        self.layoutWidget_6.raise_()
-        self.label_Mod_Init_CTA_Min.raise_()
-        self.layoutWidget_7.raise_()
-        self.label_LOGO.raise_()
-        self.label_Mod_Init_CTA_Max.raise_()
-        self.Group_Selection_Starter_2.raise_()
-        self.label_Brands_2.raise_()
-        self.checkBox_ALL_DATES_FLP_2.raise_()
-        self.label_Dates_FLP_2.raise_()
-        self.tabWidget.addTab(self.Resources, "")
-        self.tab_2 = QtWidgets.QWidget()
-        self.tab_2.setObjectName("tab_2")
-        self.label_LOGO_4 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_LOGO_4.setGeometry(QtCore.QRect(420, 15, 109, 31))
-        self.label_LOGO_4.setText("")
-        self.label_LOGO_4.setPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/Logo_Label.png"))
-        self.label_LOGO_4.setScaledContents(True)
-        self.label_LOGO_4.setObjectName("label_LOGO_4")
-        self.label_Version_Control_4 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_Version_Control_4.setGeometry(QtCore.QRect(690, 20, 251, 21))
-        self.label_Version_Control_4.setStyleSheet("color: rgb(162, 162, 162);\n"
-"font: italic 10pt \"MS Sans Serif\";")
-        self.label_Version_Control_4.setObjectName("label_Version_Control_4")
-        self.line_Vertical_Tittle_3 = QtWidgets.QFrame(parent=self.tab_2)
-        self.line_Vertical_Tittle_3.setGeometry(QtCore.QRect(310, 50, 651, 20))
-        self.line_Vertical_Tittle_3.setFrameShape(QtWidgets.QFrame.Shape.HLine)
-        self.line_Vertical_Tittle_3.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
-        self.line_Vertical_Tittle_3.setObjectName("line_Vertical_Tittle_3")
-        self.Group_Selection_Starter_4 = QtWidgets.QGroupBox(parent=self.tab_2)
-        self.Group_Selection_Starter_4.setGeometry(QtCore.QRect(10, 20, 271, 131))
+        self.Group_Selection_Starter_4 = QtWidgets.QGroupBox(parent=self.Resources)
+        self.Group_Selection_Starter_4.setGeometry(QtCore.QRect(10, 330, 271, 301))
         self.Group_Selection_Starter_4.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.Group_Selection_Starter_4.setObjectName("Group_Selection_Starter_4")
         self.pushButton_Select_File_4 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_4)
@@ -2498,7 +2588,7 @@ class Ui_Process_Data(object):
         self.pushButton_Select_File_4.setDefault(False)
         self.pushButton_Select_File_4.setObjectName("pushButton_Select_File_4")
         self.spinBox_Partitions_4 = QtWidgets.QSpinBox(parent=self.Group_Selection_Starter_4)
-        self.spinBox_Partitions_4.setGeometry(QtCore.QRect(194, 95, 61, 22))
+        self.spinBox_Partitions_4.setGeometry(QtCore.QRect(180, 95, 61, 22))
         self.spinBox_Partitions_4.setMinimum(1)
         self.spinBox_Partitions_4.setMaximum(50)
         self.spinBox_Partitions_4.setObjectName("spinBox_Partitions_4")
@@ -2608,649 +2698,119 @@ class Ui_Process_Data(object):
         self.label_Partitions_9.setGeometry(QtCore.QRect(20, 90, 168, 31))
         self.label_Partitions_9.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.label_Partitions_9.setObjectName("label_Partitions_9")
-        self.label_Total_Registers_13 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_Total_Registers_13.setGeometry(QtCore.QRect(470, 610, 161, 21))
-        self.label_Total_Registers_13.setStyleSheet("color: rgb(217, 16, 76);\n"
-"font: 87 9pt \"Arial Black\";")
-        self.label_Total_Registers_13.setObjectName("label_Total_Registers_13")
-        self.label_Total_Registers_14 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_Total_Registers_14.setGeometry(QtCore.QRect(650, 610, 111, 21))
-        font = QtGui.QFont()
-        font.setFamily("Arial Black")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(10)
-        self.label_Total_Registers_14.setFont(font)
-        self.label_Total_Registers_14.setStyleSheet("color: rgb(217, 16, 76);\n"
-"font: 87 10pt \"Arial Black\";")
-        self.label_Total_Registers_14.setObjectName("label_Total_Registers_14")
-        self.line_Vertical_10 = QtWidgets.QFrame(parent=self.tab_2)
-        self.line_Vertical_10.setGeometry(QtCore.QRect(310, 583, 651, 20))
-        self.line_Vertical_10.setFrameShape(QtWidgets.QFrame.Shape.HLine)
-        self.line_Vertical_10.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
-        self.line_Vertical_10.setObjectName("line_Vertical_10")
-        self.label_Brands_4 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_Brands_4.setGeometry(QtCore.QRect(340, 70, 174, 22))
-        self.label_Brands_4.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.label_Brands_4.setObjectName("label_Brands_4")
-        self.layoutWidget_15 = QtWidgets.QWidget(parent=self.tab_2)
-        self.layoutWidget_15.setGeometry(QtCore.QRect(350, 110, 91, 204))
-        self.layoutWidget_15.setObjectName("layoutWidget_15")
-        self.verticalLayout_Brands_14 = QtWidgets.QVBoxLayout(self.layoutWidget_15)
-        self.verticalLayout_Brands_14.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_Brands_14.setObjectName("verticalLayout_Brands_14")
-        self.checkBox_Brand_4 = QtWidgets.QCheckBox(parent=self.layoutWidget_15)
-        self.checkBox_Brand_4.setObjectName("checkBox_Brand_4")
-        self.verticalLayout_Brands_14.addWidget(self.checkBox_Brand_4)
-        self.checkBox_Brand_34 = QtWidgets.QCheckBox(parent=self.layoutWidget_15)
-        self.checkBox_Brand_34.setObjectName("checkBox_Brand_34")
-        self.verticalLayout_Brands_14.addWidget(self.checkBox_Brand_34)
-        self.checkBox_Brand_64 = QtWidgets.QCheckBox(parent=self.layoutWidget_15)
-        self.checkBox_Brand_64.setObjectName("checkBox_Brand_64")
-        self.verticalLayout_Brands_14.addWidget(self.checkBox_Brand_64)
-        self.checkBox_Brand_94 = QtWidgets.QCheckBox(parent=self.layoutWidget_15)
-        self.checkBox_Brand_94.setObjectName("checkBox_Brand_94")
-        self.verticalLayout_Brands_14.addWidget(self.checkBox_Brand_94)
-        self.checkBox_Brand_124 = QtWidgets.QCheckBox(parent=self.layoutWidget_15)
-        self.checkBox_Brand_124.setObjectName("checkBox_Brand_124")
-        self.verticalLayout_Brands_14.addWidget(self.checkBox_Brand_124)
-        self.checkBox_brand_154 = QtWidgets.QCheckBox(parent=self.layoutWidget_15)
-        self.checkBox_brand_154.setObjectName("checkBox_brand_154")
-        self.verticalLayout_Brands_14.addWidget(self.checkBox_brand_154)
-        self.checkBox_Brand_184 = QtWidgets.QCheckBox(parent=self.layoutWidget_15)
-        self.checkBox_Brand_184.setObjectName("checkBox_Brand_184")
-        self.verticalLayout_Brands_14.addWidget(self.checkBox_Brand_184)
-        self.checkBox_Brand_214 = QtWidgets.QCheckBox(parent=self.layoutWidget_15)
-        self.checkBox_Brand_214.setObjectName("checkBox_Brand_214")
-        self.verticalLayout_Brands_14.addWidget(self.checkBox_Brand_214)
-        self.layoutWidget_16 = QtWidgets.QWidget(parent=self.tab_2)
-        self.layoutWidget_16.setGeometry(QtCore.QRect(450, 110, 97, 178))
-        self.layoutWidget_16.setObjectName("layoutWidget_16")
-        self.verticalLayout_Brands_15 = QtWidgets.QVBoxLayout(self.layoutWidget_16)
-        self.verticalLayout_Brands_15.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_Brands_15.setObjectName("verticalLayout_Brands_15")
-        self.checkBox_Brand_Castigo_5 = QtWidgets.QCheckBox(parent=self.layoutWidget_16)
-        self.checkBox_Brand_Castigo_5.setObjectName("checkBox_Brand_Castigo_5")
-        self.verticalLayout_Brands_15.addWidget(self.checkBox_Brand_Castigo_5)
-        self.checkBox_Brand_Churn_5 = QtWidgets.QCheckBox(parent=self.layoutWidget_16)
-        self.checkBox_Brand_Churn_5.setObjectName("checkBox_Brand_Churn_5")
-        self.verticalLayout_Brands_15.addWidget(self.checkBox_Brand_Churn_5)
-        self.checkBox_Brand_Potencial_5 = QtWidgets.QCheckBox(parent=self.layoutWidget_16)
-        self.checkBox_Brand_Potencial_5.setObjectName("checkBox_Brand_Potencial_5")
-        self.verticalLayout_Brands_15.addWidget(self.checkBox_Brand_Potencial_5)
-        self.checkBox_Brand_Prechurn_5 = QtWidgets.QCheckBox(parent=self.layoutWidget_16)
-        self.checkBox_Brand_Prechurn_5.setObjectName("checkBox_Brand_Prechurn_5")
-        self.verticalLayout_Brands_15.addWidget(self.checkBox_Brand_Prechurn_5)
-        self.checkBox_Brand_Preprovision_5 = QtWidgets.QCheckBox(parent=self.layoutWidget_16)
-        self.checkBox_Brand_Preprovision_5.setObjectName("checkBox_Brand_Preprovision_5")
-        self.verticalLayout_Brands_15.addWidget(self.checkBox_Brand_Preprovision_5)
-        self.checkBox_Brand_Prepotencial_5 = QtWidgets.QCheckBox(parent=self.layoutWidget_16)
-        self.checkBox_Brand_Prepotencial_5.setObjectName("checkBox_Brand_Prepotencial_5")
-        self.verticalLayout_Brands_15.addWidget(self.checkBox_Brand_Prepotencial_5)
-        self.checkBox_Brand_Provision_5 = QtWidgets.QCheckBox(parent=self.layoutWidget_16)
-        self.checkBox_Brand_Provision_5.setObjectName("checkBox_Brand_Provision_5")
-        self.verticalLayout_Brands_15.addWidget(self.checkBox_Brand_Provision_5)
-        self.label_Origins_5 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_Origins_5.setGeometry(QtCore.QRect(340, 340, 211, 16))
-        self.label_Origins_5.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.label_Origins_5.setObjectName("label_Origins_5")
-        self.layoutWidget_17 = QtWidgets.QWidget(parent=self.tab_2)
-        self.layoutWidget_17.setGeometry(QtCore.QRect(450, 370, 109, 48))
-        self.layoutWidget_17.setObjectName("layoutWidget_17")
-        self.verticalLayout_Brands_16 = QtWidgets.QVBoxLayout(self.layoutWidget_17)
-        self.verticalLayout_Brands_16.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_Brands_16.setObjectName("verticalLayout_Brands_16")
-        self.checkBox_Brand_Less_Castigo_4 = QtWidgets.QCheckBox(parent=self.layoutWidget_17)
-        self.checkBox_Brand_Less_Castigo_4.setObjectName("checkBox_Brand_Less_Castigo_4")
-        self.verticalLayout_Brands_16.addWidget(self.checkBox_Brand_Less_Castigo_4)
-        self.checkBox_brand_ALL_4 = QtWidgets.QCheckBox(parent=self.layoutWidget_17)
-        self.checkBox_brand_ALL_4.setObjectName("checkBox_brand_ALL_4")
-        self.verticalLayout_Brands_16.addWidget(self.checkBox_brand_ALL_4)
-        self.layoutWidget_18 = QtWidgets.QWidget(parent=self.tab_2)
-        self.layoutWidget_18.setGeometry(QtCore.QRect(350, 370, 91, 74))
-        self.layoutWidget_18.setObjectName("layoutWidget_18")
-        self.verticalLayout_Brands_17 = QtWidgets.QVBoxLayout(self.layoutWidget_18)
-        self.verticalLayout_Brands_17.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_Brands_17.setObjectName("verticalLayout_Brands_17")
-        self.checkBox_Brand_GROUP_4 = QtWidgets.QCheckBox(parent=self.layoutWidget_18)
-        self.checkBox_Brand_GROUP_4.setObjectName("checkBox_Brand_GROUP_4")
-        self.verticalLayout_Brands_17.addWidget(self.checkBox_Brand_GROUP_4)
-        self.checkBox_Brand_GROUP_64 = QtWidgets.QCheckBox(parent=self.layoutWidget_18)
-        self.checkBox_Brand_GROUP_64.setObjectName("checkBox_Brand_GROUP_64")
-        self.verticalLayout_Brands_17.addWidget(self.checkBox_Brand_GROUP_64)
-        self.checkBox_Brand_GROUP_SPECIALS_5 = QtWidgets.QCheckBox(parent=self.layoutWidget_18)
-        self.checkBox_Brand_GROUP_SPECIALS_5.setObjectName("checkBox_Brand_GROUP_SPECIALS_5")
-        self.verticalLayout_Brands_17.addWidget(self.checkBox_Brand_GROUP_SPECIALS_5)
-        self.label_Origins_6 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_Origins_6.setGeometry(QtCore.QRect(340, 470, 211, 16))
-        self.label_Origins_6.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.label_Origins_6.setObjectName("label_Origins_6")
-        self.layoutWidget_19 = QtWidgets.QWidget(parent=self.tab_2)
-        self.layoutWidget_19.setGeometry(QtCore.QRect(350, 500, 73, 74))
-        self.layoutWidget_19.setObjectName("layoutWidget_19")
-        self.verticalLayout_Origins_7 = QtWidgets.QVBoxLayout(self.layoutWidget_19)
-        self.verticalLayout_Origins_7.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_Origins_7.setObjectName("verticalLayout_Origins_7")
-        self.checkBox_Origin_ASCARD_4 = QtWidgets.QCheckBox(parent=self.layoutWidget_19)
-        self.checkBox_Origin_ASCARD_4.setObjectName("checkBox_Origin_ASCARD_4")
-        self.verticalLayout_Origins_7.addWidget(self.checkBox_Origin_ASCARD_4)
-        self.checkBox_Origin_BSCS_4 = QtWidgets.QCheckBox(parent=self.layoutWidget_19)
-        self.checkBox_Origin_BSCS_4.setObjectName("checkBox_Origin_BSCS_4")
-        self.verticalLayout_Origins_7.addWidget(self.checkBox_Origin_BSCS_4)
-        self.checkBox_Origin_RR_4 = QtWidgets.QCheckBox(parent=self.layoutWidget_19)
-        self.checkBox_Origin_RR_4.setObjectName("checkBox_Origin_RR_4")
-        self.verticalLayout_Origins_7.addWidget(self.checkBox_Origin_RR_4)
-        self.layoutWidget_20 = QtWidgets.QWidget(parent=self.tab_2)
-        self.layoutWidget_20.setGeometry(QtCore.QRect(450, 500, 73, 48))
-        self.layoutWidget_20.setObjectName("layoutWidget_20")
-        self.verticalLayout_Origins_8 = QtWidgets.QVBoxLayout(self.layoutWidget_20)
-        self.verticalLayout_Origins_8.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_Origins_8.setObjectName("verticalLayout_Origins_8")
-        self.checkBox_Origin_SGA_4 = QtWidgets.QCheckBox(parent=self.layoutWidget_20)
-        self.checkBox_Origin_SGA_4.setObjectName("checkBox_Origin_SGA_4")
-        self.verticalLayout_Origins_8.addWidget(self.checkBox_Origin_SGA_4)
-        self.checkBox_Origin_ALL_Origins_4 = QtWidgets.QCheckBox(parent=self.layoutWidget_20)
-        self.checkBox_Origin_ALL_Origins_4.setObjectName("checkBox_Origin_ALL_Origins_4")
-        self.verticalLayout_Origins_8.addWidget(self.checkBox_Origin_ALL_Origins_4)
-        self.line_Horizontal_3 = QtWidgets.QFrame(parent=self.tab_2)
-        self.line_Horizontal_3.setGeometry(QtCore.QRect(570, 60, 20, 531))
-        self.line_Horizontal_3.setFrameShape(QtWidgets.QFrame.Shape.VLine)
-        self.line_Horizontal_3.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
-        self.line_Horizontal_3.setObjectName("line_Horizontal_3")
-        self.label_Contact_Min_3 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_Contact_Min_3.setGeometry(QtCore.QRect(620, 121, 161, 20))
-        self.label_Contact_Min_3.setStyleSheet("/*color: rgb(217, 16, 76);*/\n"
-"font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.label_Contact_Min_3.setObjectName("label_Contact_Min_3")
-        self.label_Benefits_7 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_Benefits_7.setGeometry(QtCore.QRect(620, 81, 161, 20))
-        self.label_Benefits_7.setStyleSheet("/*color: rgb(217, 16, 76);*/\n"
-"font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.label_Benefits_7.setObjectName("label_Benefits_7")
-        self.comboBox_Benefits_7 = QtWidgets.QComboBox(parent=self.tab_2)
-        self.comboBox_Benefits_7.setGeometry(QtCore.QRect(780, 81, 151, 22))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift Light")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(3)
-        self.comboBox_Benefits_7.setFont(font)
-        self.comboBox_Benefits_7.setStyleSheet("font: 25 10pt \"Bahnschrift Light\";")
-        self.comboBox_Benefits_7.setObjectName("comboBox_Benefits_7")
-        self.comboBox_Benefits_7.addItem("")
-        self.comboBox_Benefits_7.addItem("")
-        self.comboBox_Benefits_7.addItem("")
-        self.comboBox_Benefits_7.addItem("")
-        self.comboBox_Min_Contact_3 = QtWidgets.QComboBox(parent=self.tab_2)
-        self.comboBox_Min_Contact_3.setGeometry(QtCore.QRect(780, 121, 151, 22))
-        self.comboBox_Min_Contact_3.setStyleSheet("font: 25 10pt \"Bahnschrift Light\";")
-        self.comboBox_Min_Contact_3.setObjectName("comboBox_Min_Contact_3")
-        self.comboBox_Min_Contact_3.addItem("")
-        self.comboBox_Min_Contact_3.addItem("")
-        self.comboBox_Min_Contact_3.addItem("")
-        self.comboBox_Min_Contact_3.addItem("")
-        self.Mod_Init_CTA_Group_3 = QtWidgets.QGroupBox(parent=self.tab_2)
-        self.Mod_Init_CTA_Group_3.setGeometry(QtCore.QRect(610, 170, 331, 101))
-        self.Mod_Init_CTA_Group_3.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.Mod_Init_CTA_Group_3.setObjectName("Mod_Init_CTA_Group_3")
-        self.lineEdit_Mod_Init_Min_3 = QtWidgets.QLineEdit(parent=self.Mod_Init_CTA_Group_3)
-        self.lineEdit_Mod_Init_Min_3.setGeometry(QtCore.QRect(20, 60, 101, 22))
-        self.lineEdit_Mod_Init_Min_3.setObjectName("lineEdit_Mod_Init_Min_3")
-        self.lineEdit_Mod_Init_Max_3 = QtWidgets.QLineEdit(parent=self.Mod_Init_CTA_Group_3)
-        self.lineEdit_Mod_Init_Max_3.setGeometry(QtCore.QRect(210, 60, 111, 22))
-        self.lineEdit_Mod_Init_Max_3.setObjectName("lineEdit_Mod_Init_Max_3")
-        self.label_Mod_Init_CTA_2 = QtWidgets.QLabel(parent=self.Mod_Init_CTA_Group_3)
-        self.label_Mod_Init_CTA_2.setGeometry(QtCore.QRect(138, 60, 61, 20))
-        self.label_Mod_Init_CTA_2.setStyleSheet("font: 11pt \"Microsoft Yi Baiti\";\n"
-"color: rgb(163, 163, 163);\n"
-"font: 75 10pt \"MS Shell Dlg 2\";")
-        self.label_Mod_Init_CTA_2.setObjectName("label_Mod_Init_CTA_2")
-        self.label_Mod_Init_CTA_Max_3 = QtWidgets.QLabel(parent=self.Mod_Init_CTA_Group_3)
-        self.label_Mod_Init_CTA_Max_3.setGeometry(QtCore.QRect(218, 30, 91, 20))
-        font = QtGui.QFont()
-        font.setFamily("Leelawadee UI")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_Mod_Init_CTA_Max_3.setFont(font)
-        self.label_Mod_Init_CTA_Max_3.setStyleSheet("font: 10pt \"Leelawadee UI\";")
-        self.label_Mod_Init_CTA_Max_3.setObjectName("label_Mod_Init_CTA_Max_3")
-        self.label_Mod_Init_CTA_Min_3 = QtWidgets.QLabel(parent=self.Mod_Init_CTA_Group_3)
-        self.label_Mod_Init_CTA_Min_3.setGeometry(QtCore.QRect(28, 30, 91, 20))
-        font = QtGui.QFont()
-        font.setFamily("Leelawadee UI")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_Mod_Init_CTA_Min_3.setFont(font)
-        self.label_Mod_Init_CTA_Min_3.setStyleSheet("font: 10pt \"Leelawadee UI\";")
-        self.label_Mod_Init_CTA_Min_3.setObjectName("label_Mod_Init_CTA_Min_3")
-        self.line_Vertical_11 = QtWidgets.QFrame(parent=self.tab_2)
-        self.line_Vertical_11.setGeometry(QtCore.QRect(580, 284, 391, 20))
-        self.line_Vertical_11.setFrameShape(QtWidgets.QFrame.Shape.HLine)
-        self.line_Vertical_11.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
-        self.line_Vertical_11.setObjectName("line_Vertical_11")
-        self.label_Brands_5 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_Brands_5.setGeometry(QtCore.QRect(600, 316, 174, 22))
-        self.label_Brands_5.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.label_Brands_5.setObjectName("label_Brands_5")
-        self.spinBox_Partitions_11 = QtWidgets.QSpinBox(parent=self.tab_2)
-        self.spinBox_Partitions_11.setGeometry(QtCore.QRect(770, 316, 61, 22))
-        self.spinBox_Partitions_11.setMinimum(2024)
-        self.spinBox_Partitions_11.setMaximum(2050)
-        self.spinBox_Partitions_11.setObjectName("spinBox_Partitions_11")
-        self.spinBox_Partitions_12 = QtWidgets.QSpinBox(parent=self.tab_2)
-        self.spinBox_Partitions_12.setGeometry(QtCore.QRect(890, 316, 61, 22))
-        self.spinBox_Partitions_12.setMinimum(1)
-        self.spinBox_Partitions_12.setMaximum(12)
-        self.spinBox_Partitions_12.setObjectName("spinBox_Partitions_12")
-        self.label_Mod_Init_CTA_Min_4 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_Mod_Init_CTA_Min_4.setGeometry(QtCore.QRect(730, 316, 51, 20))
-        font = QtGui.QFont()
-        font.setFamily("Leelawadee UI")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_Mod_Init_CTA_Min_4.setFont(font)
-        self.label_Mod_Init_CTA_Min_4.setStyleSheet("font: 10pt \"Leelawadee UI\";")
-        self.label_Mod_Init_CTA_Min_4.setObjectName("label_Mod_Init_CTA_Min_4")
-        self.label_Mod_Init_CTA_Min_5 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_Mod_Init_CTA_Min_5.setGeometry(QtCore.QRect(850, 316, 51, 20))
-        font = QtGui.QFont()
-        font.setFamily("Leelawadee UI")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_Mod_Init_CTA_Min_5.setFont(font)
-        self.label_Mod_Init_CTA_Min_5.setStyleSheet("font: 10pt \"Leelawadee UI\";")
-        self.label_Mod_Init_CTA_Min_5.setObjectName("label_Mod_Init_CTA_Min_5")
-        self.layoutWidget_21 = QtWidgets.QWidget(parent=self.tab_2)
-        self.layoutWidget_21.setGeometry(QtCore.QRect(620, 360, 51, 211))
-        self.layoutWidget_21.setObjectName("layoutWidget_21")
-        self.verticalLayout_Brands_18 = QtWidgets.QVBoxLayout(self.layoutWidget_21)
-        self.verticalLayout_Brands_18.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_Brands_18.setObjectName("verticalLayout_Brands_18")
-        self.checkBox_Brand_5 = QtWidgets.QCheckBox(parent=self.layoutWidget_21)
-        self.checkBox_Brand_5.setObjectName("checkBox_Brand_5")
-        self.verticalLayout_Brands_18.addWidget(self.checkBox_Brand_5)
-        self.checkBox_Brand_35 = QtWidgets.QCheckBox(parent=self.layoutWidget_21)
-        self.checkBox_Brand_35.setObjectName("checkBox_Brand_35")
-        self.verticalLayout_Brands_18.addWidget(self.checkBox_Brand_35)
-        self.checkBox_Brand_65 = QtWidgets.QCheckBox(parent=self.layoutWidget_21)
-        self.checkBox_Brand_65.setObjectName("checkBox_Brand_65")
-        self.verticalLayout_Brands_18.addWidget(self.checkBox_Brand_65)
-        self.checkBox_Brand_95 = QtWidgets.QCheckBox(parent=self.layoutWidget_21)
-        self.checkBox_Brand_95.setObjectName("checkBox_Brand_95")
-        self.verticalLayout_Brands_18.addWidget(self.checkBox_Brand_95)
-        self.checkBox_Brand_125 = QtWidgets.QCheckBox(parent=self.layoutWidget_21)
-        self.checkBox_Brand_125.setObjectName("checkBox_Brand_125")
-        self.verticalLayout_Brands_18.addWidget(self.checkBox_Brand_125)
-        self.checkBox_brand_155 = QtWidgets.QCheckBox(parent=self.layoutWidget_21)
-        self.checkBox_brand_155.setObjectName("checkBox_brand_155")
-        self.verticalLayout_Brands_18.addWidget(self.checkBox_brand_155)
-        self.checkBox_Brand_185 = QtWidgets.QCheckBox(parent=self.layoutWidget_21)
-        self.checkBox_Brand_185.setObjectName("checkBox_Brand_185")
-        self.verticalLayout_Brands_18.addWidget(self.checkBox_Brand_185)
-        self.checkBox_Brand_215 = QtWidgets.QCheckBox(parent=self.layoutWidget_21)
-        self.checkBox_Brand_215.setObjectName("checkBox_Brand_215")
-        self.verticalLayout_Brands_18.addWidget(self.checkBox_Brand_215)
-        self.layoutWidget_22 = QtWidgets.QWidget(parent=self.tab_2)
-        self.layoutWidget_22.setGeometry(QtCore.QRect(710, 360, 51, 211))
-        self.layoutWidget_22.setObjectName("layoutWidget_22")
-        self.verticalLayout_Brands_19 = QtWidgets.QVBoxLayout(self.layoutWidget_22)
-        self.verticalLayout_Brands_19.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_Brands_19.setObjectName("verticalLayout_Brands_19")
-        self.checkBox_Brand_6 = QtWidgets.QCheckBox(parent=self.layoutWidget_22)
-        self.checkBox_Brand_6.setObjectName("checkBox_Brand_6")
-        self.verticalLayout_Brands_19.addWidget(self.checkBox_Brand_6)
-        self.checkBox_Brand_36 = QtWidgets.QCheckBox(parent=self.layoutWidget_22)
-        self.checkBox_Brand_36.setObjectName("checkBox_Brand_36")
-        self.verticalLayout_Brands_19.addWidget(self.checkBox_Brand_36)
-        self.checkBox_Brand_66 = QtWidgets.QCheckBox(parent=self.layoutWidget_22)
-        self.checkBox_Brand_66.setObjectName("checkBox_Brand_66")
-        self.verticalLayout_Brands_19.addWidget(self.checkBox_Brand_66)
-        self.checkBox_Brand_96 = QtWidgets.QCheckBox(parent=self.layoutWidget_22)
-        self.checkBox_Brand_96.setObjectName("checkBox_Brand_96")
-        self.verticalLayout_Brands_19.addWidget(self.checkBox_Brand_96)
-        self.checkBox_Brand_126 = QtWidgets.QCheckBox(parent=self.layoutWidget_22)
-        self.checkBox_Brand_126.setObjectName("checkBox_Brand_126")
-        self.verticalLayout_Brands_19.addWidget(self.checkBox_Brand_126)
-        self.checkBox_brand_156 = QtWidgets.QCheckBox(parent=self.layoutWidget_22)
-        self.checkBox_brand_156.setObjectName("checkBox_brand_156")
-        self.verticalLayout_Brands_19.addWidget(self.checkBox_brand_156)
-        self.checkBox_Brand_186 = QtWidgets.QCheckBox(parent=self.layoutWidget_22)
-        self.checkBox_Brand_186.setObjectName("checkBox_Brand_186")
-        self.verticalLayout_Brands_19.addWidget(self.checkBox_Brand_186)
-        self.checkBox_Brand_216 = QtWidgets.QCheckBox(parent=self.layoutWidget_22)
-        self.checkBox_Brand_216.setObjectName("checkBox_Brand_216")
-        self.verticalLayout_Brands_19.addWidget(self.checkBox_Brand_216)
-        self.layoutWidget_23 = QtWidgets.QWidget(parent=self.tab_2)
-        self.layoutWidget_23.setGeometry(QtCore.QRect(800, 360, 51, 211))
-        self.layoutWidget_23.setObjectName("layoutWidget_23")
-        self.verticalLayout_Brands_20 = QtWidgets.QVBoxLayout(self.layoutWidget_23)
-        self.verticalLayout_Brands_20.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_Brands_20.setObjectName("verticalLayout_Brands_20")
-        self.checkBox_Brand_7 = QtWidgets.QCheckBox(parent=self.layoutWidget_23)
-        self.checkBox_Brand_7.setObjectName("checkBox_Brand_7")
-        self.verticalLayout_Brands_20.addWidget(self.checkBox_Brand_7)
-        self.checkBox_Brand_37 = QtWidgets.QCheckBox(parent=self.layoutWidget_23)
-        self.checkBox_Brand_37.setObjectName("checkBox_Brand_37")
-        self.verticalLayout_Brands_20.addWidget(self.checkBox_Brand_37)
-        self.checkBox_Brand_67 = QtWidgets.QCheckBox(parent=self.layoutWidget_23)
-        self.checkBox_Brand_67.setObjectName("checkBox_Brand_67")
-        self.verticalLayout_Brands_20.addWidget(self.checkBox_Brand_67)
-        self.checkBox_Brand_97 = QtWidgets.QCheckBox(parent=self.layoutWidget_23)
-        self.checkBox_Brand_97.setObjectName("checkBox_Brand_97")
-        self.verticalLayout_Brands_20.addWidget(self.checkBox_Brand_97)
-        self.checkBox_Brand_127 = QtWidgets.QCheckBox(parent=self.layoutWidget_23)
-        self.checkBox_Brand_127.setObjectName("checkBox_Brand_127")
-        self.verticalLayout_Brands_20.addWidget(self.checkBox_Brand_127)
-        self.checkBox_brand_157 = QtWidgets.QCheckBox(parent=self.layoutWidget_23)
-        self.checkBox_brand_157.setObjectName("checkBox_brand_157")
-        self.verticalLayout_Brands_20.addWidget(self.checkBox_brand_157)
-        self.checkBox_Brand_187 = QtWidgets.QCheckBox(parent=self.layoutWidget_23)
-        self.checkBox_Brand_187.setObjectName("checkBox_Brand_187")
-        self.verticalLayout_Brands_20.addWidget(self.checkBox_Brand_187)
-        self.checkBox_Brand_217 = QtWidgets.QCheckBox(parent=self.layoutWidget_23)
-        self.checkBox_Brand_217.setObjectName("checkBox_Brand_217")
-        self.verticalLayout_Brands_20.addWidget(self.checkBox_Brand_217)
-        self.layoutWidget_24 = QtWidgets.QWidget(parent=self.tab_2)
-        self.layoutWidget_24.setGeometry(QtCore.QRect(890, 360, 54, 211))
-        self.layoutWidget_24.setObjectName("layoutWidget_24")
-        self.verticalLayout_Brands_21 = QtWidgets.QVBoxLayout(self.layoutWidget_24)
-        self.verticalLayout_Brands_21.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_Brands_21.setObjectName("verticalLayout_Brands_21")
-        self.checkBox_Brand_8 = QtWidgets.QCheckBox(parent=self.layoutWidget_24)
-        self.checkBox_Brand_8.setObjectName("checkBox_Brand_8")
-        self.verticalLayout_Brands_21.addWidget(self.checkBox_Brand_8)
-        self.checkBox_Brand_38 = QtWidgets.QCheckBox(parent=self.layoutWidget_24)
-        self.checkBox_Brand_38.setObjectName("checkBox_Brand_38")
-        self.verticalLayout_Brands_21.addWidget(self.checkBox_Brand_38)
-        self.checkBox_Brand_68 = QtWidgets.QCheckBox(parent=self.layoutWidget_24)
-        self.checkBox_Brand_68.setObjectName("checkBox_Brand_68")
-        self.verticalLayout_Brands_21.addWidget(self.checkBox_Brand_68)
-        self.checkBox_Brand_98 = QtWidgets.QCheckBox(parent=self.layoutWidget_24)
-        self.checkBox_Brand_98.setObjectName("checkBox_Brand_98")
-        self.verticalLayout_Brands_21.addWidget(self.checkBox_Brand_98)
-        self.checkBox_Brand_128 = QtWidgets.QCheckBox(parent=self.layoutWidget_24)
-        self.checkBox_Brand_128.setObjectName("checkBox_Brand_128")
-        self.verticalLayout_Brands_21.addWidget(self.checkBox_Brand_128)
-        self.checkBox_brand_158 = QtWidgets.QCheckBox(parent=self.layoutWidget_24)
-        self.checkBox_brand_158.setObjectName("checkBox_brand_158")
-        self.verticalLayout_Brands_21.addWidget(self.checkBox_brand_158)
-        self.checkBox_Brand_188 = QtWidgets.QCheckBox(parent=self.layoutWidget_24)
-        self.checkBox_Brand_188.setObjectName("checkBox_Brand_188")
-        self.verticalLayout_Brands_21.addWidget(self.checkBox_Brand_188)
-        self.checkBox_Brand_189 = QtWidgets.QCheckBox(parent=self.layoutWidget_24)
-        self.checkBox_Brand_189.setObjectName("checkBox_Brand_189")
-        self.verticalLayout_Brands_21.addWidget(self.checkBox_Brand_189)
-        self.Group_Selection_Starter_17 = QtWidgets.QGroupBox(parent=self.tab_2)
-        self.Group_Selection_Starter_17.setGeometry(QtCore.QRect(10, 170, 271, 331))
-        self.Group_Selection_Starter_17.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.Group_Selection_Starter_17.setObjectName("Group_Selection_Starter_17")
-        self.pushButton_Partitions_BD_34 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_17)
-        self.pushButton_Partitions_BD_34.setGeometry(QtCore.QRect(20, 40, 231, 31))
+        self.commandLinkButton_35 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_4)
+        self.commandLinkButton_35.setGeometry(QtCore.QRect(20, 140, 221, 41))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(7)
-        self.pushButton_Partitions_BD_34.setFont(font)
-        self.pushButton_Partitions_BD_34.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
+        self.commandLinkButton_35.setFont(font)
+        self.commandLinkButton_35.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_34.setDefault(False)
-        self.pushButton_Partitions_BD_34.setObjectName("pushButton_Partitions_BD_34")
-        self.pushButton_Partitions_BD_35 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_17)
-        self.pushButton_Partitions_BD_35.setGeometry(QtCore.QRect(20, 100, 231, 31))
+"}")
+        icon28 = QtGui.QIcon()
+        icon28.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/123456789.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_35.setIcon(icon28)
+        self.commandLinkButton_35.setObjectName("commandLinkButton_35")
+        self.commandLinkButton_69 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_4)
+        self.commandLinkButton_69.setGeometry(QtCore.QRect(20, 190, 221, 41))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(7)
-        self.pushButton_Partitions_BD_35.setFont(font)
-        self.pushButton_Partitions_BD_35.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
+        self.commandLinkButton_69.setFont(font)
+        self.commandLinkButton_69.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_35.setDefault(False)
-        self.pushButton_Partitions_BD_35.setObjectName("pushButton_Partitions_BD_35")
-        self.pushButton_Partitions_BD_36 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_17)
-        self.pushButton_Partitions_BD_36.setGeometry(QtCore.QRect(20, 160, 231, 31))
+"}")
+        icon29 = QtGui.QIcon()
+        icon29.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/inventory.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_69.setIcon(icon29)
+        self.commandLinkButton_69.setObjectName("commandLinkButton_69")
+        self.commandLinkButton_70 = QtWidgets.QCommandLinkButton(parent=self.Group_Selection_Starter_4)
+        self.commandLinkButton_70.setGeometry(QtCore.QRect(20, 240, 221, 41))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(7)
-        self.pushButton_Partitions_BD_36.setFont(font)
-        self.pushButton_Partitions_BD_36.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
+        self.commandLinkButton_70.setFont(font)
+        self.commandLinkButton_70.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Al presionar */\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(230, 230, 230); /* Gris suave al presionar */\n"
+"    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */\n"
+"    border-radius: 8px;\n"
 "    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_36.setDefault(False)
-        self.pushButton_Partitions_BD_36.setObjectName("pushButton_Partitions_BD_36")
-        self.pushButton_Partitions_BD_43 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_17)
-        self.pushButton_Partitions_BD_43.setGeometry(QtCore.QRect(20, 220, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_43.setFont(font)
-        self.pushButton_Partitions_BD_43.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_43.setDefault(False)
-        self.pushButton_Partitions_BD_43.setObjectName("pushButton_Partitions_BD_43")
-        self.Group_Selection_Starter_18 = QtWidgets.QGroupBox(parent=self.Group_Selection_Starter_17)
-        self.Group_Selection_Starter_18.setGeometry(QtCore.QRect(250, 330, 271, 331))
-        self.Group_Selection_Starter_18.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
-        self.Group_Selection_Starter_18.setObjectName("Group_Selection_Starter_18")
-        self.pushButton_Partitions_BD_48 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_18)
-        self.pushButton_Partitions_BD_48.setGeometry(QtCore.QRect(20, 40, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_48.setFont(font)
-        self.pushButton_Partitions_BD_48.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_48.setDefault(False)
-        self.pushButton_Partitions_BD_48.setObjectName("pushButton_Partitions_BD_48")
-        self.pushButton_Partitions_BD_49 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_18)
-        self.pushButton_Partitions_BD_49.setGeometry(QtCore.QRect(20, 100, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_49.setFont(font)
-        self.pushButton_Partitions_BD_49.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_49.setDefault(False)
-        self.pushButton_Partitions_BD_49.setObjectName("pushButton_Partitions_BD_49")
-        self.pushButton_Partitions_BD_50 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_18)
-        self.pushButton_Partitions_BD_50.setGeometry(QtCore.QRect(20, 160, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_50.setFont(font)
-        self.pushButton_Partitions_BD_50.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_50.setDefault(False)
-        self.pushButton_Partitions_BD_50.setObjectName("pushButton_Partitions_BD_50")
-        self.pushButton_Partitions_BD_51 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_18)
-        self.pushButton_Partitions_BD_51.setGeometry(QtCore.QRect(20, 220, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_51.setFont(font)
-        self.pushButton_Partitions_BD_51.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_51.setDefault(False)
-        self.pushButton_Partitions_BD_51.setObjectName("pushButton_Partitions_BD_51")
-        self.pushButton_Partitions_BD_52 = QtWidgets.QPushButton(parent=self.Group_Selection_Starter_18)
-        self.pushButton_Partitions_BD_52.setGeometry(QtCore.QRect(20, 280, 231, 31))
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_Partitions_BD_52.setFont(font)
-        self.pushButton_Partitions_BD_52.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_52.setDefault(False)
-        self.pushButton_Partitions_BD_52.setObjectName("pushButton_Partitions_BD_52")
-        self.tabWidget.addTab(self.tab_2, "")
+"}")
+        icon30 = QtGui.QIcon()
+        icon30.addPixmap(QtGui.QPixmap("d:\\API\\cpd\\gui\\../resources/ico/timer.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.commandLinkButton_70.setIcon(icon30)
+        self.commandLinkButton_70.setObjectName("commandLinkButton_70")
+        self.Mod_Init_CTA_Group.raise_()
+        self.line_Vertical_2.raise_()
+        self.label_Benefits.raise_()
+        self.label_Contact_Min.raise_()
+        self.line_Vertical_Tittle.raise_()
+        self.label_Version_Control.raise_()
+        self.layoutWidget_4.raise_()
+        self.pushButton_Process.raise_()
+        self.line_Vertical_3.raise_()
+        self.label_Origins.raise_()
+        self.label_Total_Registers_2.raise_()
+        self.layoutWidget_3.raise_()
+        self.lineEdit_Mod_Init_Min.raise_()
+        self.comboBox_Benefits.raise_()
+        self.label_Total_Registers.raise_()
+        self.calendarWidget.raise_()
+        self.layoutWidget_2.raise_()
+        self.pushButton_Graphic.raise_()
+        self.comboBox_Min_Contact.raise_()
+        self.layoutWidget_5.raise_()
+        self.line_Horizontal.raise_()
+        self.label_Origins_2.raise_()
+        self.label_Mod_Init_CTA_.raise_()
+        self.lineEdit_Mod_Init_Max.raise_()
+        self.layoutWidget_6.raise_()
+        self.label_Mod_Init_CTA_Min.raise_()
+        self.layoutWidget_7.raise_()
+        self.label_LOGO.raise_()
+        self.label_Mod_Init_CTA_Max.raise_()
+        self.Group_Selection_Starter_2.raise_()
+        self.label_Brands_2.raise_()
+        self.checkBox_ALL_DATES_FLP_2.raise_()
+        self.label_Dates_FLP_2.raise_()
+        self.Group_Selection_Starter_4.raise_()
+        self.tabWidget.addTab(self.Resources, "")
         self.tabWidget_2.addTab(self.tab_7, "")
         Process_Data.setCentralWidget(self.CentralWidget)
         self.menuBar = QtWidgets.QMenuBar(parent=Process_Data)
@@ -3294,29 +2854,13 @@ class Ui_Process_Data(object):
 
         self.retranslateUi(Process_Data)
         self.tabWidget_2.setCurrentIndex(1)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Process_Data)
 
     def retranslateUi(self, Process_Data):
         _translate = QtCore.QCoreApplication.translate
         Process_Data.setWindowTitle(_translate("Process_Data", "Syncra"))
         self.label_Version_Control_9.setText(_translate("Process_Data", "Automatización de Procesos - V. 1.08.661"))
-        self.Group_Selection_Starter_13.setTitle(_translate("Process_Data", "Acceso a plataformas de gestión"))
-        self.pushButton_Partitions_BD_20.setText(_translate("Process_Data", "Abrir plataforma Bession"))
-        self.pushButton_Partitions_BD_19.setText(_translate("Process_Data", "Abrir plataforma Control Next"))
-        self.pushButton_Partitions_BD_25.setText(_translate("Process_Data", "Abrir mesa de ayuda Recupera"))
-        self.Group_Selection_Starter_14.setTitle(_translate("Process_Data", "Procesos del sistema"))
-        self.Group_Selection_Starter_15.setTitle(_translate("Process_Data", "Programar apagado automático"))
-        self.label_Mod_Init_CTA_Min_6.setText(_translate("Process_Data", "Hora(s)"))
-        self.label_Mod_Init_CTA_Min_7.setText(_translate("Process_Data", "Minuto(s)"))
-        self.pushButton_Process_8.setText(_translate("Process_Data", "Ejecutar cierre del sistema"))
-        self.Group_Selection_Starter_16.setTitle(_translate("Process_Data", "Acceso a plataformas de telemática"))
-        self.pushButton_Partitions_BD_32.setText(_translate("Process_Data", "Abrir plataforma de Masivian"))
-        self.pushButton_Partitions_BD_21.setText(_translate("Process_Data", "Abrir plataforma para predictivo"))
-        self.pushButton_Partitions_BD_24.setText(_translate("Process_Data", "Abrir plataforma de SAEM"))
-        self.pushButton_Partitions_BD_22.setText(_translate("Process_Data", "Abrir plataforma de Intercom"))
-        self.pushButton_Partitions_BD_26.setText(_translate("Process_Data", "Abrir sharepoint Recupera"))
-        self.pushButton_Partitions_BD_23.setText(_translate("Process_Data", "Abrir plataforma de 360-NRS"))
         self.Group_Selection_Starter_20.setTitle(_translate("Process_Data", "Procesos RPA del Sistema de IVR - TRANS"))
         self.pushButton_Partitions_BD_41.setText(_translate("Process_Data", "Reprogramación de Listas IVR - TRANS"))
         self.pushButton_Partitions_BD_45.setText(_translate("Process_Data", "Limpieza de Canales"))
@@ -3326,7 +2870,7 @@ class Ui_Process_Data(object):
         self.pushButton_Select_File_6.setText(_translate("Process_Data", "Seleccionar Carpeta Cargue de IVR - TRANS"))
         self.pushButton_Partitions_BD_42.setText(_translate("Process_Data", "Subir Bases del Sistema de IVR-TRANS"))
         self.pushButton_Select_File_9.setText(_translate("Process_Data", "Copiar archivo plantilla IVR"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_10), _translate("Process_Data", "Menú"))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_10), _translate("Process_Data", "Refactorizado"))
         self.label_Version_Control_5.setText(_translate("Process_Data", "Versión - V. 1.08.661"))
         self.Group_Selection_Starter_12.setTitle(_translate("Process_Data", "Selección de origen"))
         self.pushButton_Select_File_10.setText(_translate("Process_Data", "Seleccionar Carpeta"))
@@ -3340,7 +2884,7 @@ class Ui_Process_Data(object):
         self.pushButton_4.setText(_translate("Process_Data", "Estructuras de Cargue"))
         self.pushButton_14.setText(_translate("Process_Data", "Reparto de Campañas"))
         self.pushButton_8.setText(_translate("Process_Data", "Manuales y Documentación"))
-        self.label_Total_Registers_8.setText(_translate("Process_Data", "TOTAL DE VALORES A PROCESAR:"))
+        self.label_Total_Registers_8.setText(_translate("Process_Data", "TOTAL DE REGISTROS:"))
         self.label_Total_Registers_7.setText(_translate("Process_Data", "trial"))
         self.Group_Selection_Starter_36.setTitle(_translate("Process_Data", "Recursos del Computador"))
         self.label_2.setText(_translate("Process_Data", "RAM disponible en GB"))
@@ -3357,6 +2901,20 @@ class Ui_Process_Data(object):
         self.commandLinkButton_4.setText(_translate("Process_Data", " Finalizador de excel"))
         self.commandLinkButton_5.setText(_translate("Process_Data", " Finalizador de Power BI"))
         self.commandLinkButton_6.setText(_translate("Process_Data", " Limpiador de temporales"))
+        self.Group_Selection_Starter_39.setTitle(_translate("Process_Data", "Servicios Web"))
+        self.pushButton_19.setText(_translate("Process_Data", "CRM - Control Next"))
+        self.pushButton_10.setText(_translate("Process_Data", "Blaster Intercom"))
+        self.pushButton_16.setText(_translate("Process_Data", "Gevenue Bession"))
+        self.pushButton_9.setText(_translate("Process_Data", "SAEM"))
+        self.pushButton_13.setText(_translate("Process_Data", "Mesa de Ayuda - Synapsis"))
+        self.pushButton_15.setText(_translate("Process_Data", "Masivian"))
+        self.pushButton_17.setText(_translate("Process_Data", "Predictivo Vicidial"))
+        self.pushButton_18.setText(_translate("Process_Data", "Plataformas de IPCom"))
+        self.pushButton_20.setText(_translate("Process_Data", "360 NRS"))
+        self.Group_Selection_Starter_15.setTitle(_translate("Process_Data", "Programar apagado automático"))
+        self.label_Mod_Init_CTA_Min_6.setText(_translate("Process_Data", "Hora(s)"))
+        self.label_Mod_Init_CTA_Min_7.setText(_translate("Process_Data", "Minuto(s)"))
+        self.pushButton_Process_8.setText(_translate("Process_Data", "Programar"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("Process_Data", "Procesos RPA"))
         self.label_Version_Control_2.setText(_translate("Process_Data", "Automatización de Procesos - V. 1.08.661"))
         self.Group_Selection_Starter.setTitle(_translate("Process_Data", "Selección de Archivo"))
@@ -3399,7 +2957,7 @@ class Ui_Process_Data(object):
         self.pushButton_12.setText(_translate("Process_Data", "Consolidar Resultados IPCom"))
         self.pushButton_11.setText(_translate("Process_Data", "Consolidar Resultados Blaster"))
         self.commandLinkButton_23.setText(_translate("Process_Data", " Consolidar toques por cuenta"))
-        self.comboBox_Selected_Process_2.setItemText(0, _translate("Process_Data", "--- Seleccione opción"))
+        self.comboBox_Selected_Process_2.setItemText(0, _translate("Process_Data", "--- Seleccione opción toques"))
         self.comboBox_Selected_Process_2.setItemText(1, _translate("Process_Data", "TODOS"))
         self.comboBox_Selected_Process_2.setItemText(2, _translate("Process_Data", "BOT"))
         self.comboBox_Selected_Process_2.setItemText(3, _translate("Process_Data", "EMAIL"))
@@ -3407,27 +2965,21 @@ class Ui_Process_Data(object):
         self.comboBox_Selected_Process_2.setItemText(5, _translate("Process_Data", "SMS"))
         self.commandLinkButton_24.setText(_translate("Process_Data", " Realizar búsqueda masiva en carpeta"))
         self.commandLinkButton_25.setText(_translate("Process_Data", " Validar información en Lumina"))
-        self.comboBox_Selected_Process_3.setItemText(0, _translate("Process_Data", "--- Seleccione opción"))
-        self.comboBox_Selected_Process_3.setItemText(1, _translate("Process_Data", "Puntored"))
-        self.comboBox_Selected_Process_3.setItemText(2, _translate("Process_Data", "Crediveci"))
-        self.comboBox_Selected_Process_3.setItemText(3, _translate("Process_Data", "Pash Inteligencia"))
-        self.comboBox_Selected_Process_3.setItemText(4, _translate("Process_Data", "Pash CRM"))
-        self.comboBox_Selected_Process_3.setItemText(5, _translate("Process_Data", "GM Financial"))
-        self.comboBox_Selected_Process_3.setItemText(6, _translate("Process_Data", "Ya Dinero"))
-        self.comboBox_Selected_Process_3.setItemText(7, _translate("Process_Data", "Gastrack"))
+        self.commandLinkButton_27.setText(_translate("Process_Data", "Dataframe de data estructurada"))
+        self.commandLinkButton_28.setText(_translate("Process_Data", "Dataframe de demográficos"))
+        self.commandLinkButton_29.setText(_translate("Process_Data", "Dataframe de toques telemática"))
+        self.commandLinkButton_30.setText(_translate("Process_Data", "Base Consolidada de Datalake"))
+        self.label_Partitions_5.setText(_translate("Process_Data", "Año"))
+        self.label_Partitions_10.setText(_translate("Process_Data", "Mes"))
+        self.commandLinkButton_31.setText(_translate("Process_Data", "Sharepoint Big Data"))
+        self.commandLinkButton_32.setText(_translate("Process_Data", "Sharepoint Backup TI"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Process_Data", "Consolidado de Archivos"))
-        self.label_Selection_Process.setText(_translate("Process_Data", "Proceso de Telemática"))
         self.label_Benefits.setText(_translate("Process_Data", "Beneficios Aplicados"))
         self.label_Contact_Min.setText(_translate("Process_Data", "Números de Contacto"))
         self.label_Version_Control.setText(_translate("Process_Data", "Versión - V. 1.08.661"))
         self.checkBox_Brand_GROUP_1.setText(_translate("Process_Data", "0 - 30"))
         self.checkBox_Brand_GROUP_61.setText(_translate("Process_Data", "60 - 210"))
         self.checkBox_Brand_GROUP_SPECIALS_2.setText(_translate("Process_Data", "Especiales"))
-        self.comboBox_Selected_Process.setItemText(0, _translate("Process_Data", "--- Seleccione opción"))
-        self.comboBox_Selected_Process.setItemText(1, _translate("Process_Data", "BOT"))
-        self.comboBox_Selected_Process.setItemText(2, _translate("Process_Data", "EMAIL"))
-        self.comboBox_Selected_Process.setItemText(3, _translate("Process_Data", "IVR"))
-        self.comboBox_Selected_Process.setItemText(4, _translate("Process_Data", "SMS"))
         self.pushButton_Process.setText(_translate("Process_Data", "Procesar"))
         self.label_Origins.setText(_translate("Process_Data", "Selección de Origenes (Servicio)"))
         self.label_Total_Registers_2.setText(_translate("Process_Data", "trial"))
@@ -3469,14 +3021,25 @@ class Ui_Process_Data(object):
         self.checkBox_brand_ALL_2.setText(_translate("Process_Data", "Todo"))
         self.label_Mod_Init_CTA_Max.setText(_translate("Process_Data", "Deuda Máxima"))
         self.Mod_Init_CTA_Group.setTitle(_translate("Process_Data", "Filtro de Saldos"))
-        self.Group_Selection_Starter_2.setTitle(_translate("Process_Data", "Selección de Reporte Clientes 2"))
+        self.Group_Selection_Starter_2.setTitle(_translate("Process_Data", "Selección de Reporte Clientes"))
         self.pushButton_Select_File_2.setText(_translate("Process_Data", "Seleccionar Archivo"))
         self.label_Partitions_2.setText(_translate("Process_Data", "Cantidad de Particiones           "))
+        self.label_Selection_Process.setText(_translate("Process_Data", "Proceso de Telemática"))
+        self.comboBox_Selected_Process.setItemText(0, _translate("Process_Data", "--- Seleccione opción"))
+        self.comboBox_Selected_Process.setItemText(1, _translate("Process_Data", "BOT"))
+        self.comboBox_Selected_Process.setItemText(2, _translate("Process_Data", "EMAIL"))
+        self.comboBox_Selected_Process.setItemText(3, _translate("Process_Data", "IVR"))
+        self.comboBox_Selected_Process.setItemText(4, _translate("Process_Data", "SMS"))
+        self.comboBox_Selected_Process_3.setItemText(0, _translate("Process_Data", "--- Seleccione opción"))
+        self.comboBox_Selected_Process_3.setItemText(1, _translate("Process_Data", "Claro"))
+        self.comboBox_Selected_Process_3.setItemText(2, _translate("Process_Data", "Puntored"))
+        self.comboBox_Selected_Process_3.setItemText(3, _translate("Process_Data", "Crediveci"))
+        self.comboBox_Selected_Process_3.setItemText(4, _translate("Process_Data", "GM Financial"))
+        self.comboBox_Selected_Process_3.setItemText(5, _translate("Process_Data", "Ya Dinero"))
+        self.label_Selection_Process_2.setText(_translate("Process_Data", "Campaña de Asignación"))
         self.label_Brands_2.setText(_translate("Process_Data", "Selección de Marcas (Cartera)"))
         self.checkBox_ALL_DATES_FLP_2.setText(_translate("Process_Data", "Todas"))
         self.label_Dates_FLP_2.setText(_translate("Process_Data", "Selección de FLP (fecha límite de pago)         "))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Resources), _translate("Process_Data", "Envío Recursos"))
-        self.label_Version_Control_4.setText(_translate("Process_Data", "Versión - V. 1.08.661"))
         self.Group_Selection_Starter_4.setTitle(_translate("Process_Data", "Selección de Archivo"))
         self.pushButton_Select_File_4.setText(_translate("Process_Data", "Seleccionar Archivo"))
         self.label_Partitions_4.setText(_translate("Process_Data", "Cantidad de Particiones           "))
@@ -3489,97 +3052,10 @@ class Ui_Process_Data(object):
         self.Group_Selection_Starter_11.setTitle(_translate("Process_Data", "Selección de Archivo"))
         self.pushButton_Select_File_14.setText(_translate("Process_Data", "Seleccionar Archivo"))
         self.label_Partitions_9.setText(_translate("Process_Data", "Cantidad de Particiones           "))
-        self.label_Total_Registers_13.setText(_translate("Process_Data", "TOTAL DE REGISTROS:"))
-        self.label_Total_Registers_14.setText(_translate("Process_Data", "trial"))
-        self.label_Brands_4.setText(_translate("Process_Data", "Selección de Marcas (Cartera)"))
-        self.checkBox_Brand_4.setText(_translate("Process_Data", "Marca 0"))
-        self.checkBox_Brand_34.setText(_translate("Process_Data", "Marca 30"))
-        self.checkBox_Brand_64.setText(_translate("Process_Data", "Marca 60"))
-        self.checkBox_Brand_94.setText(_translate("Process_Data", "Marca 90"))
-        self.checkBox_Brand_124.setText(_translate("Process_Data", "Marca 120"))
-        self.checkBox_brand_154.setText(_translate("Process_Data", "Marca 150"))
-        self.checkBox_Brand_184.setText(_translate("Process_Data", "Marca 180"))
-        self.checkBox_Brand_214.setText(_translate("Process_Data", "Marca 210"))
-        self.checkBox_Brand_Castigo_5.setText(_translate("Process_Data", "Castigo"))
-        self.checkBox_Brand_Churn_5.setText(_translate("Process_Data", "Churn"))
-        self.checkBox_Brand_Potencial_5.setText(_translate("Process_Data", "Potencial"))
-        self.checkBox_Brand_Prechurn_5.setText(_translate("Process_Data", "Prechurn"))
-        self.checkBox_Brand_Preprovision_5.setText(_translate("Process_Data", "Preprovision"))
-        self.checkBox_Brand_Prepotencial_5.setText(_translate("Process_Data", "Prepotencial"))
-        self.checkBox_Brand_Provision_5.setText(_translate("Process_Data", "Provision"))
-        self.label_Origins_5.setText(_translate("Process_Data", "Selección de Marcas por Grupo"))
-        self.checkBox_Brand_Less_Castigo_4.setText(_translate("Process_Data", "Todo - Castigo"))
-        self.checkBox_brand_ALL_4.setText(_translate("Process_Data", "Todo"))
-        self.checkBox_Brand_GROUP_4.setText(_translate("Process_Data", "0 - 30"))
-        self.checkBox_Brand_GROUP_64.setText(_translate("Process_Data", "60 - 210"))
-        self.checkBox_Brand_GROUP_SPECIALS_5.setText(_translate("Process_Data", "Especiales"))
-        self.label_Origins_6.setText(_translate("Process_Data", "Selección de Origenes (Servicio)"))
-        self.checkBox_Origin_ASCARD_4.setText(_translate("Process_Data", "ASCARD"))
-        self.checkBox_Origin_BSCS_4.setText(_translate("Process_Data", "BSCS"))
-        self.checkBox_Origin_RR_4.setText(_translate("Process_Data", "RR"))
-        self.checkBox_Origin_SGA_4.setText(_translate("Process_Data", "SGA"))
-        self.checkBox_Origin_ALL_Origins_4.setText(_translate("Process_Data", "Todo"))
-        self.label_Contact_Min_3.setText(_translate("Process_Data", "Números de Contacto"))
-        self.label_Benefits_7.setText(_translate("Process_Data", "Beneficios Aplicados"))
-        self.comboBox_Benefits_7.setItemText(0, _translate("Process_Data", "--- Seleccione opción"))
-        self.comboBox_Benefits_7.setItemText(1, _translate("Process_Data", "Con Descuento"))
-        self.comboBox_Benefits_7.setItemText(2, _translate("Process_Data", "Sin Descuento"))
-        self.comboBox_Benefits_7.setItemText(3, _translate("Process_Data", "Todo"))
-        self.comboBox_Min_Contact_3.setItemText(0, _translate("Process_Data", "--- Seleccione opción"))
-        self.comboBox_Min_Contact_3.setItemText(1, _translate("Process_Data", "Celular"))
-        self.comboBox_Min_Contact_3.setItemText(2, _translate("Process_Data", "Fijo"))
-        self.comboBox_Min_Contact_3.setItemText(3, _translate("Process_Data", "Todos"))
-        self.Mod_Init_CTA_Group_3.setTitle(_translate("Process_Data", "Filtro de Saldos"))
-        self.label_Mod_Init_CTA_2.setText(_translate("Process_Data", ">= $$ <="))
-        self.label_Mod_Init_CTA_Max_3.setText(_translate("Process_Data", "Deuda Máxima"))
-        self.label_Mod_Init_CTA_Min_3.setText(_translate("Process_Data", "Deuda Mínima"))
-        self.label_Brands_5.setText(_translate("Process_Data", "Selección de FLP"))
-        self.label_Mod_Init_CTA_Min_4.setText(_translate("Process_Data", "Año"))
-        self.label_Mod_Init_CTA_Min_5.setText(_translate("Process_Data", "Mes"))
-        self.checkBox_Brand_5.setText(_translate("Process_Data", "01"))
-        self.checkBox_Brand_35.setText(_translate("Process_Data", "02"))
-        self.checkBox_Brand_65.setText(_translate("Process_Data", "03"))
-        self.checkBox_Brand_95.setText(_translate("Process_Data", "04"))
-        self.checkBox_Brand_125.setText(_translate("Process_Data", "05"))
-        self.checkBox_brand_155.setText(_translate("Process_Data", "06"))
-        self.checkBox_Brand_185.setText(_translate("Process_Data", "07"))
-        self.checkBox_Brand_215.setText(_translate("Process_Data", "08"))
-        self.checkBox_Brand_6.setText(_translate("Process_Data", "09"))
-        self.checkBox_Brand_36.setText(_translate("Process_Data", "10"))
-        self.checkBox_Brand_66.setText(_translate("Process_Data", "11"))
-        self.checkBox_Brand_96.setText(_translate("Process_Data", "12"))
-        self.checkBox_Brand_126.setText(_translate("Process_Data", "13"))
-        self.checkBox_brand_156.setText(_translate("Process_Data", "14"))
-        self.checkBox_Brand_186.setText(_translate("Process_Data", "15"))
-        self.checkBox_Brand_216.setText(_translate("Process_Data", "16"))
-        self.checkBox_Brand_7.setText(_translate("Process_Data", "17"))
-        self.checkBox_Brand_37.setText(_translate("Process_Data", "18"))
-        self.checkBox_Brand_67.setText(_translate("Process_Data", "19"))
-        self.checkBox_Brand_97.setText(_translate("Process_Data", "20"))
-        self.checkBox_Brand_127.setText(_translate("Process_Data", "21"))
-        self.checkBox_brand_157.setText(_translate("Process_Data", "22"))
-        self.checkBox_Brand_187.setText(_translate("Process_Data", "23"))
-        self.checkBox_Brand_217.setText(_translate("Process_Data", "24"))
-        self.checkBox_Brand_8.setText(_translate("Process_Data", "25"))
-        self.checkBox_Brand_38.setText(_translate("Process_Data", "26"))
-        self.checkBox_Brand_68.setText(_translate("Process_Data", "27"))
-        self.checkBox_Brand_98.setText(_translate("Process_Data", "28"))
-        self.checkBox_Brand_128.setText(_translate("Process_Data", "29"))
-        self.checkBox_brand_158.setText(_translate("Process_Data", "30"))
-        self.checkBox_Brand_188.setText(_translate("Process_Data", "31"))
-        self.checkBox_Brand_189.setText(_translate("Process_Data", "Todo"))
-        self.Group_Selection_Starter_17.setTitle(_translate("Process_Data", "Procesos Líderes"))
-        self.pushButton_Partitions_BD_34.setText(_translate("Process_Data", "Reordenación de Números"))
-        self.pushButton_Partitions_BD_35.setText(_translate("Process_Data", "Exportar Predictivo"))
-        self.pushButton_Partitions_BD_36.setText(_translate("Process_Data", "Exportar Bases de Pagos Filtrada"))
-        self.pushButton_Partitions_BD_43.setText(_translate("Process_Data", "Convertir TMO Claro (Día anterior)"))
-        self.Group_Selection_Starter_18.setTitle(_translate("Process_Data", "Procesos Líderes"))
-        self.pushButton_Partitions_BD_48.setText(_translate("Process_Data", "Reordenación de Números"))
-        self.pushButton_Partitions_BD_49.setText(_translate("Process_Data", "Exportar Predictivo"))
-        self.pushButton_Partitions_BD_50.setText(_translate("Process_Data", "Exportar Base con Filtros"))
-        self.pushButton_Partitions_BD_51.setText(_translate("Process_Data", "Convertir TMO Claro (Día anterior)"))
-        self.pushButton_Partitions_BD_52.setText(_translate("Process_Data", "Reclamaciones Reporte Gestión"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Process_Data", "Tareas Operación"))
+        self.commandLinkButton_35.setText(_translate("Process_Data", "Reordenación de Números"))
+        self.commandLinkButton_69.setText(_translate("Process_Data", "Exportar Pagos de Inventario"))
+        self.commandLinkButton_70.setText(_translate("Process_Data", "Convertir TMO de Predictivo"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Resources), _translate("Process_Data", "Recursos Operativos"))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_7), _translate("Process_Data", "Operaciones"))
         self.menu_Help.setTitle(_translate("Process_Data", "Ayuda"))
         self.menu_Creditos.setTitle(_translate("Process_Data", "Créditos"))
