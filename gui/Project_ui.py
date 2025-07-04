@@ -1991,7 +1991,7 @@ class Ui_Process_Data(object):
         self.Resources = QtWidgets.QWidget()
         self.Resources.setObjectName("Resources")
         self.label_Selection_Process = QtWidgets.QLabel(parent=self.Resources)
-        self.label_Selection_Process.setGeometry(QtCore.QRect(630, 350, 161, 20))
+        self.label_Selection_Process.setGeometry(QtCore.QRect(20, 190, 161, 20))
         self.label_Selection_Process.setStyleSheet("color: rgb(217, 16, 76);\n"
 "font: 63 10pt \"Bahnschrift SemiBold\";")
         self.label_Selection_Process.setObjectName("label_Selection_Process")
@@ -2036,7 +2036,7 @@ class Ui_Process_Data(object):
         self.checkBox_Brand_GROUP_SPECIALS_2.setObjectName("checkBox_Brand_GROUP_SPECIALS_2")
         self.verticalLayout_Brands_6.addWidget(self.checkBox_Brand_GROUP_SPECIALS_2)
         self.comboBox_Selected_Process = QtWidgets.QComboBox(parent=self.Resources)
-        self.comboBox_Selected_Process.setGeometry(QtCore.QRect(790, 350, 151, 22))
+        self.comboBox_Selected_Process.setGeometry(QtCore.QRect(160, 190, 151, 22))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift Light")
         font.setPointSize(10)
@@ -2407,48 +2407,6 @@ class Ui_Process_Data(object):
         self.label_Partitions_2.setGeometry(QtCore.QRect(20, 90, 168, 31))
         self.label_Partitions_2.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.label_Partitions_2.setObjectName("label_Partitions_2")
-        self.pushButton_Partitions_BD_6 = QtWidgets.QPushButton(parent=self.Resources)
-        self.pushButton_Partitions_BD_6.setGeometry(QtCore.QRect(30, 190, 231, 31))
-        self.pushButton_Partitions_BD_6.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_6.setDefault(False)
-        self.pushButton_Partitions_BD_6.setObjectName("pushButton_Partitions_BD_6")
-        self.pushButton_Partitions_BD_7 = QtWidgets.QPushButton(parent=self.Resources)
-        self.pushButton_Partitions_BD_7.setGeometry(QtCore.QRect(30, 250, 231, 31))
-        self.pushButton_Partitions_BD_7.setStyleSheet("QPushButton\n"
-"{\n"
-"    border-radius:8px;\n"
-"    color: rgb(0, 0, 0);\n"
-"    background-color: rgb(209, 209, 209);\n"
-"}\n"
-"QPushButton:Hover\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(0, 0, 0);\n"
-"}\n"
-"")
-        self.pushButton_Partitions_BD_7.setDefault(False)
-        self.pushButton_Partitions_BD_7.setObjectName("pushButton_Partitions_BD_7")
         self.label_Brands_2 = QtWidgets.QLabel(parent=self.Resources)
         self.label_Brands_2.setGeometry(QtCore.QRect(340, 70, 174, 22))
         self.label_Brands_2.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
@@ -2460,12 +2418,6 @@ class Ui_Process_Data(object):
         self.label_Dates_FLP_2.setGeometry(QtCore.QRect(620, 72, 249, 21))
         self.label_Dates_FLP_2.setStyleSheet("font: 63 10pt \"Bahnschrift SemiBold\";")
         self.label_Dates_FLP_2.setObjectName("label_Dates_FLP_2")
-        self.graphicsView_3 = QtWidgets.QGraphicsView(parent=self.Resources)
-        self.graphicsView_3.setGeometry(QtCore.QRect(10, 320, 271, 301))
-        self.graphicsView_3.setObjectName("graphicsView_3")
-        self.textEdit = QtWidgets.QTextEdit(parent=self.Resources)
-        self.textEdit.setGeometry(QtCore.QRect(30, 340, 231, 261))
-        self.textEdit.setObjectName("textEdit")
         self.Mod_Init_CTA_Group.raise_()
         self.label_Selection_Process.raise_()
         self.line_Vertical_2.raise_()
@@ -2498,13 +2450,9 @@ class Ui_Process_Data(object):
         self.label_LOGO.raise_()
         self.label_Mod_Init_CTA_Max.raise_()
         self.Group_Selection_Starter_2.raise_()
-        self.pushButton_Partitions_BD_6.raise_()
-        self.pushButton_Partitions_BD_7.raise_()
         self.label_Brands_2.raise_()
         self.checkBox_ALL_DATES_FLP_2.raise_()
         self.label_Dates_FLP_2.raise_()
-        self.graphicsView_3.raise_()
-        self.textEdit.raise_()
         self.tabWidget.addTab(self.Resources, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
@@ -3346,7 +3294,7 @@ class Ui_Process_Data(object):
 
         self.retranslateUi(Process_Data)
         self.tabWidget_2.setCurrentIndex(1)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(Process_Data)
 
     def retranslateUi(self, Process_Data):
@@ -3524,19 +3472,9 @@ class Ui_Process_Data(object):
         self.Group_Selection_Starter_2.setTitle(_translate("Process_Data", "Selección de Reporte Clientes 2"))
         self.pushButton_Select_File_2.setText(_translate("Process_Data", "Seleccionar Archivo"))
         self.label_Partitions_2.setText(_translate("Process_Data", "Cantidad de Particiones           "))
-        self.pushButton_Partitions_BD_6.setText(_translate("Process_Data", "Exportar directrices de recursos"))
-        self.pushButton_Partitions_BD_7.setText(_translate("Process_Data", "Exportar PBI de recursos"))
         self.label_Brands_2.setText(_translate("Process_Data", "Selección de Marcas (Cartera)"))
         self.checkBox_ALL_DATES_FLP_2.setText(_translate("Process_Data", "Todas"))
         self.label_Dates_FLP_2.setText(_translate("Process_Data", "Selección de FLP (fecha límite de pago)         "))
-        self.textEdit.setHtml(_translate("Process_Data", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9.75pt;\"><br /></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; color:#7a7a7a;\">Se exportan archivos para la lectura de los registros exportados. Asegúrese de mantener el formato correcto para el cargue de las bases en cada una de las respectivas plataformas.</span></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; color:#7a7a7a;\"><br /></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; color:#7a7a7a;\">Para SMS, utilice el formato Línea - Mensaje. En el caso de BOT, elimine las últimas dos columnas. Para EMAIL, cargue solo las columnas necesarias para concatenar el mensaje. Para IVR, cargue columnas hasta LAST NAME.</span></p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Resources), _translate("Process_Data", "Envío Recursos"))
         self.label_Version_Control_4.setText(_translate("Process_Data", "Versión - V. 1.08.661"))
         self.Group_Selection_Starter_4.setTitle(_translate("Process_Data", "Selección de Archivo"))
