@@ -1,4 +1,7 @@
 import cpuinfo
+import bigdata.demos_ai
+import bigdata.touch_ai
+import bigdata.union_datalakes_claro
 from gui.dynamic_thread import DynamicThread
 import random
 import webbrowser
@@ -31,6 +34,10 @@ from gui.base_overview import Charge_DB
 import gui.search_data
 from gui.upload import Process_Uploaded
 import gui.web_process
+import bigdata.data_ai
+import bigdata.demos_ai
+import bigdata.touch_ai
+import bigdata.union_datalakes_claro
 from datetime import datetime
 import os
 import sys
@@ -104,6 +111,10 @@ class Init_APP():
         self.partitions_DIRECTION = None
         self.partitions_PASH = None
         self.partitions_FOLDER = None
+        self.partitions_FOLDER = None
+        
+        self.bigdatamonth = None
+        self.bigdatayear = None
 
         self.list_IVR = []
         self.list_Resources = []
@@ -216,6 +227,11 @@ class Init_APP():
         self.process_data.commandLinkButton_20.clicked.connect(self.folder_union_excel)
         self.process_data.commandLinkButton_22.clicked.connect(self.folder_union_insignias)
         self.process_data.commandLinkButton_23.clicked.connect(self.read_folder_resources)
+        
+        self.process_data.commandLinkButton_27.clicked.connect(self.exec_claro_structure_df)
+        self.process_data.commandLinkButton_28.clicked.connect(self.exec_claro_demographic_df)
+        self.process_data.commandLinkButton_29.clicked.connect(self.exec_claro_touch_df)
+        self.process_data.commandLinkButton_30.clicked.connect(self.exec_claro_bigdata)
         
         self.process_data.action_Developers.triggered.connect(self.show_developers_window)
         self.process_data.actionStakeholders.triggered.connect(self.show_stakeholders_window)
@@ -959,6 +975,11 @@ class Init_APP():
 
         self.partitions_FOLDER = str(self.process_data.spinBox_Partitions_3.value())
 
+    def digit_timemap_bigdata(self):
+
+        self.bigdatamonth = str(self.process_data.spinBox_Partitions_10.value())
+        self.bigdatayear = str(self.process_data.spinBox_Partitions_5.value())
+        
     def task_web_folder(self):
 
         type_process = "folder"
@@ -966,7 +987,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.partitions_FOLDER != None:
+        if self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -996,7 +1017,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.partitions_FOLDER != None:
+        if self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -1026,7 +1047,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.partitions_FOLDER != None:
+        if self.self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -1056,7 +1077,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.partitions_FOLDER != None:
+        if self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -1086,7 +1107,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.partitions_FOLDER != None:
+        if self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -1146,7 +1167,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.partitions_FOLDER != None:
+        if self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -1176,7 +1197,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.partitions_FOLDER != None:
+        if self.self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -1206,7 +1227,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.partitions_FOLDER != None:
+        if self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -1269,7 +1290,7 @@ class Init_APP():
         self.validation_data_folders(type_process)
         self.digit_partitions_FOLDER()
 
-        if self.partitions_FOLDER != None:
+        if self.folder_path_IVR != None:
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
@@ -1493,7 +1514,7 @@ class Init_APP():
             self.partitions_FOLDER = None
             Search_Data = self.process_data.Searching_Field.text()
             self.list_IVR = [Search_Data]
-    
+
     def validation_data_resources(self):
         
         self.partitions_FOLDER = None
@@ -1520,6 +1541,129 @@ class Init_APP():
         else:
             self.list_Resources = [Resource_folder]
     
+    def exec_claro_structure_df(self):
+
+        type_process = "folder"
+        
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+
+        if self.folder_path_IVR != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa las asignaciones.")
+            Mbox_In_Process.exec()
+            
+            bigdata.data_ai.claro_structure_df(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER)
+
+            Mbox_In_Process = QMessageBox() 
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("DataSet generado exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a consolidar.")
+            Mbox_File_Error.exec()
+    
+    def exec_claro_demographic_df(self):
+
+        type_process = "folder"
+        
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+        self.digit_timemap_bigdata()
+
+        if self.folder_path_IVR != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesan los demograficos.")
+            Mbox_In_Process.exec()
+            
+            bigdata.demos_ai.function_complete_demographic(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
+
+            Mbox_In_Process = QMessageBox() 
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("DataSet generado exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a consolidar.")
+            Mbox_File_Error.exec()
+    
+    def exec_claro_touch_df(self):
+
+        type_process = "folder"
+        
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+        self.digit_timemap_bigdata()
+
+        if self.folder_path_IVR != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesan los toques por telematica.")
+            Mbox_In_Process.exec()
+            
+            bigdata.touch_ai.touch_dataframes_bd(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
+
+            Mbox_In_Process = QMessageBox() 
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("DataSet generado exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a consolidar.")
+            Mbox_File_Error.exec()
+    
+    def exec_claro_bigdata(self):
+
+        type_process = "folder"
+        
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+        self.digit_timemap_bigdata()
+
+        if self.folder_path_IVR != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesan los datasets de bigdata.")
+            Mbox_In_Process.exec()
+            
+            bigdata.union_datalakes_claro.read_compilation_datasets(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
+
+            Mbox_In_Process = QMessageBox() 
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("DataSet generado exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a consolidar.")
+            Mbox_File_Error.exec()
+            
     def read_folder_resources(self):
         
         self.validation_data_resources()
