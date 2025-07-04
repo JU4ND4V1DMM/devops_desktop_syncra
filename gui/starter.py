@@ -134,9 +134,9 @@ class Init_APP():
             self.process_data.show()
             
             var__count = 0
-            self.process_data.label_Total_Registers_14.setText(f"{var__count}")
+            self.process_data.label_Total_Registers_2.setText(f"{var__count}")
             self.process_data.label_Total_Registers_6.setText(f"{var__count}")
-            self.process_data.label_Total_Registers_4.setText(f"{var__count}")
+            self.process_data.label_Total_Registers_2.setText(f"{var__count}")
             self.process_data.label_Total_Registers_2.setText(f"{var__count}")
             self.process_data.label_Total_Registers_7.setText(f"{var__count}")
 
@@ -144,7 +144,6 @@ class Init_APP():
             self.process_data.label_Version_Control_2.setText(f"{API} - {Version_Api}") 
             self.process_data.label_Version_Control_3.setText(f"{API} - {Version_Api}")
             self.process_data.label_Version_Control.setText(f"{API} - {Version_Api}")
-            self.process_data.label_Version_Control_4.setText(f"{API} - {Version_Api}")
             self.process_data.label_Version_Control_5.setText(f"{API} - {Version_Api}")
             
             ram_avaliable = psutil.virtual_memory().available / (1024 ** 3) 
@@ -192,10 +191,9 @@ class Init_APP():
         self.process_data.pushButton_Select_File_6.clicked.connect(self.select_path_webscraping)
         
         self.process_data.pushButton_Process.clicked.connect(self.error_type_FILES)
-        self.process_data.pushButton_Partitions_BD_35.clicked.connect(self.error_type_FILES_task)
-        self.process_data.pushButton_Partitions_BD_34.clicked.connect(self.error_type_FILES_task)
+        self.process_data.commandLinkButton_35.clicked.connect(self.error_type_FILES_task)
         self.process_data.commandLinkButton_13.clicked.connect(self.error_type_FILES_task)
-        self.process_data.pushButton_Partitions_BD_43.clicked.connect(self.error_type_FILES_task)
+        self.process_data.commandLinkButton_70.clicked.connect(self.error_type_FILES_task)
         self.process_data.pushButton_Graphic.clicked.connect(self.error_type_FILES)
 
         self.process_data.commandLinkButton_7.clicked.connect(self.error_type_CAM)
@@ -243,16 +241,19 @@ class Init_APP():
         self.process_data.pushButton_14.clicked.connect(self.copy_schema_campaings)
         self.process_data.pushButton_7.clicked.connect(self.copy_schema_masiv)
 
-        self.process_data.pushButton_Partitions_BD_19.clicked.connect(lambda: self.open_chrome_with_url('https://recupera.controlnextapp.com/'))
-        self.process_data.pushButton_Partitions_BD_25.clicked.connect(lambda: self.open_chrome_with_url('http://mesadeayuda.sinapsys-it.com:8088/index.php'))
-        self.process_data.pushButton_Partitions_BD_20.clicked.connect(lambda: self.open_chrome_with_url('https://portalgevenue.claro.com.co/gevenue/#'))
-        self.process_data.pushButton_Partitions_BD_21.clicked.connect(lambda: self.open_chrome_with_url('https://pbxrecuperanext.controlnextapp.com/vicidial/realtime_report.php?report_display_type=HTML'))
-        self.process_data.pushButton_Partitions_BD_22.clicked.connect(lambda: self.open_chrome_with_url('http://38.130.226.232/vicidial/admin.php?ADD=10'))
-        self.process_data.pushButton_Partitions_BD_23.clicked.connect(lambda: self.open_chrome_with_url('https://app.360nrs.com/#/home'))
-        self.process_data.pushButton_Partitions_BD_24.clicked.connect(lambda: self.open_chrome_with_url('https://saemcolombia.com.co/recupera'))
-        self.process_data.pushButton_Partitions_BD_26.clicked.connect(lambda: self.open_chrome_with_url('https://recuperasas10.sharepoint.com/sites/ao2023/Shared%20Documents/Forms/AllItems.aspx?e=5%3A85a4c4a26e1945ebaf170ba95a64ae9c&sharingv2=true&fromShare=true&at=9&CID=e22e605d%2Dedfa%2D413e%2D8b01%2D91d335b7d083&FolderCTID=0x012000E7EC02C3E73C0744AADA5CD55A616229&isAscending=true&id=%2Fsites%2Fao2023%2FShared%20Documents%2FBackup%5FFS%5F2024&sortField=LinkFilename&viewid=3b190181%2D2dd9%2D4237%2D988e%2Dcb92220f7829'))
-        self.process_data.pushButton_Partitions_BD_32.clicked.connect(lambda: self.open_chrome_with_url('https://frontend.masivapp.com/home'))
+        self.process_data.pushButton_19.clicked.connect(lambda: self.open_chrome_with_url('https://recupera.controlnextapp.com/'))
+        self.process_data.pushButton_13.clicked.connect(lambda: self.open_chrome_with_url('http://mesadeayuda.sinapsys-it.com:8088/index.php'))
+        self.process_data.pushButton_16.clicked.connect(lambda: self.open_chrome_with_url('https://portalgevenue.claro.com.co/gevenue/#'))
+        self.process_data.pushButton_17.clicked.connect(lambda: self.open_chrome_with_url('https://pbxrecuperanext.controlnextapp.com/vicidial/realtime_report.php?report_display_type=HTML'))
+        self.process_data.pushButton_20.clicked.connect(lambda: self.open_chrome_with_url('https://app.360nrs.com/#/home'))
+        self.process_data.pushButton_9.clicked.connect(lambda: self.open_chrome_with_url('https://saemcolombia.com.co/recupera'))
+        self.process_data.pushButton_15.clicked.connect(lambda: self.open_chrome_with_url('https://frontend.masivapp.com/home'))
+        self.process_data.pushButton_18.clicked.connect(lambda: self.open_chrome_with_url('https://vcc.ipcom.ai/login'))
+        self.process_data.pushButton_18.clicked.connect(lambda: self.open_chrome_with_url('https://interdigit.vcc.ipcom.ai/login'))
         self.process_data.commandLinkButton_25.clicked.connect(lambda: self.open_firefox_with_url('http://luminasystems.recuperasas.com/'))
+        
+        self.process_data.commandLinkButton_31.clicked.connect(lambda: self.open_chrome_with_url('https://recuperasas10-my.sharepoint.com/:f:/g/personal/coordinador_operativo2_recuperasas_com/Erd9Zszk2gBMpOY-HSs_4EwBhYQGgJfmQCN8NTgOlPhF8A?e=oXfjnt'))
+        self.process_data.commandLinkButton_32.clicked.connect(lambda: self.open_chrome_with_url('https://recuperasas10.sharepoint.com/sites/ao2023/Shared%20Documents/Forms/AllItems.aspx?viewid=3b190181%2D2dd9%2D4237%2D988e%2Dcb92220f7829&p=true&ga=1'))
 
         self.process_data.pushButton_Process_8.clicked.connect(self.schedule_shutdown)
 
@@ -527,7 +528,7 @@ class Init_APP():
                 self.row_count_CAM = count_csv_rows(self.file_path_CAM)
                 if self.row_count_CAM is not None:
                     self.row_count_CAM = "{:,}".format(self.row_count_CAM)
-                    self.process_data.label_Total_Registers_4.setText(f"{self.row_count_CAM}")
+                    self.process_data.label_Total_Registers_2.setText(f"{self.row_count_CAM}")
                     self.bd_process_start()
 
     def select_file_IVR(self):
@@ -645,7 +646,7 @@ class Init_APP():
                 self.row_count_DIR = count_csv_rows(self.file_path_DIRECTION)
                 if self.row_count_DIR is not None:
                     self.row_count_DIR = "{:,}".format(self.row_count_DIR)
-                    self.process_data.label_Total_Registers_14.setText(f"{self.row_count_DIR}")
+                    self.process_data.label_Total_Registers_2.setText(f"{self.row_count_DIR}")
                     self.start_process_FILES_task()
                     
     def select_file_XLSX(self):
@@ -664,7 +665,7 @@ class Init_APP():
                 self.row_count_DIR = count_xlsx_data(self.file_path_DIRECTION)
                 if self.row_count_DIR is not None:
                     self.row_count_DIR = "{:,}".format(self.row_count_DIR)
-                    self.process_data.label_Total_Registers_4.setText(f"{self.row_count_DIR} Hoja(s)")
+                    self.process_data.label_Total_Registers_2.setText(f"{self.row_count_DIR} Hoja(s)")
                     self.start_process_FILES_task()
 
     def select_path_IVR(self):
@@ -1556,6 +1557,7 @@ class Init_APP():
             Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa las asignaciones.")
             Mbox_In_Process.exec()
             
+            self.partitions_FOLDER = f"{self.partitions_FOLDER}----- Bases para BIG DATA ----"
             bigdata.data_ai.claro_structure_df(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER)
 
             Mbox_In_Process = QMessageBox() 
@@ -1587,6 +1589,7 @@ class Init_APP():
             Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesan los demograficos.")
             Mbox_In_Process.exec()
             
+            self.partitions_FOLDER = f"{self.partitions_FOLDER}----- Bases para BIG DATA ----"
             bigdata.demos_ai.function_complete_demographic(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
 
             Mbox_In_Process = QMessageBox() 
@@ -1618,6 +1621,7 @@ class Init_APP():
             Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesan los toques por telematica.")
             Mbox_In_Process.exec()
             
+            self.partitions_FOLDER = f"{self.partitions_FOLDER}----- Bases para BIG DATA ----"
             bigdata.touch_ai.touch_dataframes_bd(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
 
             Mbox_In_Process = QMessageBox() 
@@ -1649,6 +1653,7 @@ class Init_APP():
             Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesan los datasets de bigdata.")
             Mbox_In_Process.exec()
             
+            self.partitions_FOLDER = f"{self.partitions_FOLDER}----- Bases para BIG DATA ----"
             bigdata.union_datalakes_claro.read_compilation_datasets(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
 
             Mbox_In_Process = QMessageBox() 

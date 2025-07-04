@@ -3,6 +3,10 @@ from PyQt6.QtCore import QDate
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
 import modules.fragment_dataBase
+import modules.telematics_crediveci
+import modules.telematics_gmfinancial
+import modules.telematics_puntored
+import modules.telematics_yadinero
 import web.download_saem_reports
 import modules.bot_process
 import modules.email_process
@@ -54,11 +58,11 @@ class Process_Data(QtWidgets.QMainWindow):
         self.process_data.pushButton_Process.clicked.connect(self.compilation_process)
         self.process_data.pushButton_Graphic.clicked.connect(self.data_tables)
         #self.process_data.pushButton_Process_3.clicked.connect(self.compilation_process_pash)
-        self.process_data.pushButton_Partitions_BD_35.clicked.connect(self.compilation_process_direction)
-        self.process_data.pushButton_Partitions_BD_34.clicked.connect(self.reorder_phones)
-        self.process_data.pushButton_Partitions_BD_36.clicked.connect(self.payments_bd_filter)
+        #self.process_data.commandLinkButton_35.clicked.connect(self.compilation_process_direction)
+        self.process_data.commandLinkButton_35.clicked.connect(self.reorder_phones)
+        self.process_data.commandLinkButton_69.clicked.connect(self.payments_bd_filter)
         self.process_data.commandLinkButton_13.clicked.connect(self.bd_exclusions)
-        self.process_data.pushButton_Partitions_BD_43.clicked.connect(self.tmo_converter)
+        self.process_data.commandLinkButton_70.clicked.connect(self.tmo_converter)
 
     def bd_exclusions(self):
 
@@ -77,7 +81,7 @@ class Process_Data(QtWidgets.QMainWindow):
             Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
             Mbox_In_Process.exec()
 
-            sheets_str = self.process_data.label_Total_Registers_4.text()
+            sheets_str = self.process_data.label_Total_Registers_2.text()
             sheets = int(sheets_str.split()[0])
             
             if sheets < 3:
@@ -386,6 +390,7 @@ class Process_Data(QtWidgets.QMainWindow):
         V_Benefits = self.process_data.comboBox_Benefits.currentText()
         V_Min_Contact = self.process_data.comboBox_Min_Contact.currentText()
         V_Selected_Process = self.process_data.comboBox_Selected_Process.currentText()
+        V_Selected_Campaign = self.process_data.comboBox_Selected_Process_3.currentText()
 
         if V_Selected_Process == "EMAIL" or V_Selected_Process == "SMS":
             V_Min_Contact_Filter = "Todos"
@@ -398,108 +403,133 @@ class Process_Data(QtWidgets.QMainWindow):
         V_Max_Price = self.process_data.lineEdit_Mod_Init_Max.text()
 
         ### Validation
-        if len(list_CheckBox_Brands) == 0 or len(list_CheckBox_Origins) == 0:
-
-            Mbox_Incomplete = QMessageBox()
-            Mbox_Incomplete.setWindowTitle("Error de procesamiento")
-            Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
-            Mbox_Incomplete.setText("Debe seleccionar al menos una opcion de marca y origen.")
-            Mbox_Incomplete.exec()
-
-        elif Date_Selection_Filter is None:
-            Mbox_Incomplete = QMessageBox()
-            Mbox_Incomplete.setWindowTitle("Error de procesamiento")
-            Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
-            Mbox_Incomplete.setText("Debe seleccionar al menos una fecha o elegir todas las FLP.")
-            Mbox_Incomplete.exec()
-
-        elif all(item in validation_list_filters for item in list_empty):
+        if V_Selected_Campaign == "Claro":
             
-            if "--- Seleccione opcion" == V_Selected_Process:
-                Mbox_Incomplete = QMessageBox()
-                Mbox_Incomplete.setWindowTitle("Error de procesamiento")
-                Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
-                Mbox_Incomplete.setText("Debe elegir el tipo de proceso que desea realizar\npara generar el respectivo archivo.")
-                Mbox_Incomplete.exec()
-                self.process_data.comboBox_Selected_Process.setFocus()
+            if len(list_CheckBox_Brands) == 0 or len(list_CheckBox_Origins) == 0:
 
-            elif "--- Seleccione opcion" == V_Benefits:
                 Mbox_Incomplete = QMessageBox()
                 Mbox_Incomplete.setWindowTitle("Error de procesamiento")
                 Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
-                Mbox_Incomplete.setText("Debe completar el campo de filtro de beneficios\npara realizar la transformacion de los datos.")
+                Mbox_Incomplete.setText("Debe seleccionar al menos una opcion de marca y origen.")
                 Mbox_Incomplete.exec()
-                self.process_data.comboBox_Benefits.setFocus()
+
+            elif Date_Selection_Filter is None:
+                Mbox_Incomplete = QMessageBox()
+                Mbox_Incomplete.setWindowTitle("Error de procesamiento")
+                Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
+                Mbox_Incomplete.setText("Debe seleccionar al menos una fecha o elegir todas las FLP.")
+                Mbox_Incomplete.exec()
+
+            elif all(item in validation_list_filters for item in list_empty):
+                
+                if "--- Seleccione opcion" == V_Selected_Process:
+                    Mbox_Incomplete = QMessageBox()
+                    Mbox_Incomplete.setWindowTitle("Error de procesamiento")
+                    Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
+                    Mbox_Incomplete.setText("Debe elegir el tipo de proceso que desea realizar\npara generar el respectivo archivo.")
+                    Mbox_Incomplete.exec()
+                    self.process_data.comboBox_Selected_Process.setFocus()
+
+                elif "--- Seleccione opcion" == V_Benefits:
+                    Mbox_Incomplete = QMessageBox()
+                    Mbox_Incomplete.setWindowTitle("Error de procesamiento")
+                    Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
+                    Mbox_Incomplete.setText("Debe completar el campo de filtro de beneficios\npara realizar la transformacion de los datos.")
+                    Mbox_Incomplete.exec()
+                    self.process_data.comboBox_Benefits.setFocus()
+                
+                else:
+                    Mbox_Incomplete = QMessageBox()
+                    Mbox_Incomplete.setWindowTitle("Error de procesamiento")
+                    Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
+                    Mbox_Incomplete.setText("Debe completar el campo de filtro de números\npara realizar la transformacion de los datos.")
+                    Mbox_Incomplete.exec()    
+                    self.process_data.comboBox_Min_Contact.setFocus()
             
-            else:
+            elif V_Min_Price.strip() == "" or V_Max_Price.strip() == "":
+
                 Mbox_Incomplete = QMessageBox()
                 Mbox_Incomplete.setWindowTitle("Error de procesamiento")
                 Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
-                Mbox_Incomplete.setText("Debe completar el campo de filtro de números\npara realizar la transformacion de los datos.")
-                Mbox_Incomplete.exec()    
-                self.process_data.comboBox_Min_Contact.setFocus()
-        
-        elif V_Min_Price.strip() == "" or V_Max_Price.strip() == "":
+                Mbox_Incomplete.setText("Ingrese un valor numérico en el rango mínimo y máximo.")
+                Mbox_Incomplete.exec()
 
-            Mbox_Incomplete = QMessageBox()
-            Mbox_Incomplete.setWindowTitle("Error de procesamiento")
-            Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
-            Mbox_Incomplete.setText("Ingrese un valor numérico en el rango mínimo y máximo.")
-            Mbox_Incomplete.exec()
+                if V_Min_Price.strip() == "" and V_Max_Price.strip() == "":
+                    self.process_data.lineEdit_Mod_Init_Min.setText("1")
+                    self.process_data.lineEdit_Mod_Init_Max.setText("999999999")
+                    self.process_data.lineEdit_Mod_Init_Min.setFocus()
+                elif V_Min_Price.strip() == "":
+                    self.process_data.lineEdit_Mod_Init_Min.setText("1")
+                    self.process_data.lineEdit_Mod_Init_Min.setFocus()
+                else:
+                    self.process_data.lineEdit_Mod_Init_Max.setText("999999999")
+                    self.process_data.lineEdit_Mod_Init_Max.setFocus()
 
-            if V_Min_Price.strip() == "" and V_Max_Price.strip() == "":
-                self.process_data.lineEdit_Mod_Init_Min.setText("1")
-                self.process_data.lineEdit_Mod_Init_Max.setText("999999999")
-                self.process_data.lineEdit_Mod_Init_Min.setFocus()
-            elif V_Min_Price.strip() == "":
-                self.process_data.lineEdit_Mod_Init_Min.setText("1")
-                self.process_data.lineEdit_Mod_Init_Min.setFocus()
-            else:
-                self.process_data.lineEdit_Mod_Init_Max.setText("999999999")
-                self.process_data.lineEdit_Mod_Init_Max.setFocus()
+            elif not (V_Min_Price.isdigit() and V_Max_Price.isdigit()):
 
-        elif not (V_Min_Price.isdigit() and V_Max_Price.isdigit()):
+                Mbox_Incomplete = QMessageBox()
+                Mbox_Incomplete.setWindowTitle("Error de procesamiento")
+                Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
+                Mbox_Incomplete.setText("Ha digitado valores inválidos, ingrese solo NÚMEROS.")
+                Mbox_Incomplete.exec()
 
-            Mbox_Incomplete = QMessageBox()
-            Mbox_Incomplete.setWindowTitle("Error de procesamiento")
-            Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
-            Mbox_Incomplete.setText("Ha digitado valores inválidos, ingrese solo NÚMEROS.")
-            Mbox_Incomplete.exec()
+                if not (V_Min_Price.isdigit() or V_Max_Price.isdigit()):
+                    self.process_data.lineEdit_Mod_Init_Max.setText("")
+                    self.process_data.lineEdit_Mod_Init_Min.setText("")
+                    self.process_data.lineEdit_Mod_Init_Max.setFocus()
+                elif V_Min_Price.isdigit():
+                    self.process_data.lineEdit_Mod_Init_Max.setText("")
+                    self.process_data.lineEdit_Mod_Init_Max.setFocus()
+                else:
+                    self.process_data.lineEdit_Mod_Init_Min.setText("")
+                    self.process_data.lineEdit_Mod_Init_Min.setFocus()
 
-            if not (V_Min_Price.isdigit() or V_Max_Price.isdigit()):
+            elif int(V_Min_Price) >= int(V_Max_Price):
+
+                Mbox_Incomplete = QMessageBox()
+                Mbox_Incomplete.setWindowTitle("Error de procesamiento")
+                Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
+                Mbox_Incomplete.setText("Ha digitado valores inválidos, ingrese un rango coherente.")
+                Mbox_Incomplete.exec()
+
                 self.process_data.lineEdit_Mod_Init_Max.setText("")
                 self.process_data.lineEdit_Mod_Init_Min.setText("")
                 self.process_data.lineEdit_Mod_Init_Max.setFocus()
-            elif V_Min_Price.isdigit():
-                self.process_data.lineEdit_Mod_Init_Max.setText("")
-                self.process_data.lineEdit_Mod_Init_Max.setFocus()
+
             else:
-                self.process_data.lineEdit_Mod_Init_Min.setText("")
-                self.process_data.lineEdit_Mod_Init_Min.setFocus()
+                
+                V_Min_Contact_Filter = V_Min_Contact
 
-        elif int(V_Min_Price) >= int(V_Max_Price):
+                self.data_to_process = [list_CheckBox_Brands, list_CheckBox_Origins, Date_Selection_Filter, V_Benefits, V_Min_Contact_Filter, \
+                                        V_Selected_Process, V_Min_Price, V_Max_Price]
 
+                list_data = [self.file_path, self.folder_path, self.partitions]
+                list_data.extend(self.data_to_process)
+                self.data_to_process = list_data
+                
+        elif "--- Seleccione opción" == V_Selected_Campaign:
+            
             Mbox_Incomplete = QMessageBox()
             Mbox_Incomplete.setWindowTitle("Error de procesamiento")
             Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
-            Mbox_Incomplete.setText("Ha digitado valores inválidos, ingrese un rango coherente.")
+            Mbox_Incomplete.setText("Debe elegir el tipo de asignacion que desea tratar\npara generar el respectivo archivo.")
             Mbox_Incomplete.exec()
-
-            self.process_data.lineEdit_Mod_Init_Max.setText("")
-            self.process_data.lineEdit_Mod_Init_Min.setText("")
-            self.process_data.lineEdit_Mod_Init_Max.setFocus()
-
+            self.process_data.comboBox_Selected_Process_3.setFocus()
+                
+        elif "--- Seleccione opción" == V_Selected_Process:
+            
+            Mbox_Incomplete = QMessageBox()
+            Mbox_Incomplete.setWindowTitle("Error de procesamiento")
+            Mbox_Incomplete.setIcon(QMessageBox.Icon.Warning)
+            Mbox_Incomplete.setText("Debe elegir el tipo de proceso que desea realizar\npara generar el respectivo archivo.")
+            Mbox_Incomplete.exec()
+            self.process_data.comboBox_Selected_Process.setFocus()
+            
         else:
-            
-            V_Min_Contact_Filter = V_Min_Contact
-
-            self.data_to_process = [list_CheckBox_Brands, list_CheckBox_Origins, Date_Selection_Filter, V_Benefits, V_Min_Contact_Filter, \
-                                    V_Selected_Process, V_Min_Price, V_Max_Price]
-
-            list_data = [self.file_path, self.folder_path, self.partitions]
-            list_data.extend(self.data_to_process)
+            list_data = [self.file_path, self.folder_path, self.partitions, V_Selected_Process, V_Selected_Campaign]
             self.data_to_process = list_data
-
+            print(f"There are selected campaigns and resource {list_data}")
+        
     def validation_data_direction(self):
 
         self.digit_partitions_direction()
@@ -791,247 +821,258 @@ class Process_Data(QtWidgets.QMainWindow):
         else:
             pass
 
-    def compilation_process_direction(self):
-        
-        self.validation_data_direction()
-        lenght_list = len(self.data_to_process)
-
-        if lenght_list >= 8:        
-
-            list_data = self.data_to_process
-    
-            file = list_data[0]
-            root = list_data[1]
-            partitions = int(list_data[2])
-            brands = list_data[3]
-
-            brands_all = []
-            brands_all_less_castigo = []
-            brands_group_0_30 = []
-            brands_group_60_210 = []
-            brands_specials = []
-
-            if "Todo" in brands:
-                brands_all = ["0", "30", "60", "90", "120", "150", "180", "210", "prechurn", "potencial", "castigo", "churn", "preprovision", "prepotencial", "provision"]
-
-            if "Todo - Castigo" in brands:
-                brands_all_less_castigo = ["0", "30", "60", "90", "120", "150", "180", "210", "prechurn", "potencial", "churn", "preprovision", "prepotencial", "provision"]
-
-            if "0 - 30" in brands:
-                brands_group_0_30 = ["0", "30"]
-
-            if "60 - 210" in brands:
-                brands_group_60_210 = ["60", "90", "120", "150", "180", "210"]
-
-            if "Especiales" in brands:
-                brands_specials = ["prechurn", "potencial", "churn", "preprovision", "provision", "prepotencial"]
-
-            brands = brands + brands_all + brands_all_less_castigo + brands_group_0_30 + brands_group_60_210 + brands_specials
-
-            brands_group = [brand_w.lower() for brand_w in brands]
-            
-            brands = []
-            for brand in brands_group:
-                if brand not in brands:
-                    brands.append(brand)
-
-            origins = list_data[4]
-            
-            if "Todo" in origins:
-                origins =["ASCARD", "BSCS", "RR", "SGA"]
-
-            else:
-                origins = list_data[4]
-            
-            print(list_data)
-            date = list_data[5]
-            print(date)
-            benefits = list_data[6]
-            contact = list_data[7]
-            value_min = int(list_data[8])
-            value_max = int(list_data[9])
-
-            Mbox_In_Process = QMessageBox()
-            Mbox_In_Process.setWindowTitle("Procesando")
-            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
-            Mbox_In_Process.exec()
-
-            Today__ = datetime.now().date()
-            Today = str(QDate(Today__.year, Today__.month, Today__.day))
-            Today_ = QDate(Today__.year, Today__.month, Today__.day)
-            formatted_date_today = Today_.toString("yyyy-MM-dd")
-            self.today = formatted_date_today
-            Today_ = self.today
-
-            modules.task_web.Function_Complete(file, root, partitions, brands, origins, date, Today_, benefits, contact, value_min, value_max)
-
-            Mbox_In_Process = QMessageBox()
-            Mbox_In_Process.setWindowTitle("")
-            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("Proceso de compilacion ejecutado exitosamente.")
-            Mbox_In_Process.exec()
-
-        else:
-            pass
-
     def compilation_process(self):
         
         self.validation_data()
-        lenght_list = len(self.data_to_process)
-        widget_filter = "Create_File"
-
-        if lenght_list >= 8:        
-
-            list_data = self.data_to_process
-            today_IVR = self.today
-
-            Process = list_data[8]
-
-            file = list_data[0]
-            root = list_data[1]
-            partitions = int(list_data[2])
-            brands = list_data[3]
-
-            brands_all = []
-            brands_all_less_castigo = []
-            brands_group_0_30 = []
-            brands_group_60_210 = []
-            brands_specials = []
-
-            if "Todo" in brands:
-                brands_all = ["0", "30", "60", "90", "120", "150", "180", "210", "prechurn", "potencial", "castigo", "churn", "preprovision", "prepotencial", "provision", "otros"]
-
-            if "Todo - Castigo" in brands:
-                brands_all_less_castigo = ["0", "30", "60", "90", "120", "150", "180", "210", "prechurn", "potencial", "churn", "preprovision", "prepotencial", "provision", "otros"]
-
-            if "0 - 30" in brands:
-                brands_group_0_30 = ["0", "30"]
-
-            if "60 - 210" in brands:
-                brands_group_60_210 = ["60", "90", "120", "150", "180", "210"]
-
-            if "Especiales" in brands:
-                brands_specials = ["prechurn", "potencial", "churn", "preprovision", "provision", "prepotencial"]
-
-            brands = brands + brands_all + brands_all_less_castigo + brands_group_0_30 + brands_group_60_210 + brands_specials
-
-            brands_group = [brand_w.lower() for brand_w in brands]
-
-            #####################
-            if "potencial" in brands_group:
-                brand_pot = ["Potencial a Castigar"]
-                brands_group = brands + brand_pot
-                brands = brands_group
-            else:
-                pass
-
-            brands_group = [brand_w.lower() for brand_w in brands]
-            brands = brands_group
-
-            if "prepotencial" in brands_group:
-                brand_pre = ["Prepotencial Especial"]
-                brands_group = brands + brand_pre
-                brands = brands_group
-            else:
-                pass
-
-            if "otros" in brands_group:
-                brand_unique = ["Apple Manual"]
-                brands_group = brands + brand_unique
-                brands = brands_group
-            else:
-                pass
-            #####################
-
-            brands = brands_group
-            for brand in brands_group:
-                if brand not in brands:
-                    brands.append(brand)
-
-            origins = list_data[4]
+        campaign_selected = self.process_data.comboBox_Selected_Process_3.currentText()
+        
+        if campaign_selected == "Claro":
             
-            if "Todo" in origins:
-                origins =["ASCARD", "BSCS", "RR", "SGA"]
+            lenght_list = len(self.data_to_process)
+            widget_filter = "Create_File"
 
-            else:
+            if lenght_list >= 8:        
+
+                list_data = self.data_to_process
+                today_IVR = self.today
+
+                Process = list_data[8]
+
+                file = list_data[0]
+                root = list_data[1]
+                partitions = int(list_data[2])
+                brands = list_data[3]
+
+                brands_all = []
+                brands_all_less_castigo = []
+                brands_group_0_30 = []
+                brands_group_60_210 = []
+                brands_specials = []
+
+                if "Todo" in brands:
+                    brands_all = ["0", "30", "60", "90", "120", "150", "180", "210", "prechurn", "potencial", "castigo", "churn", "preprovision", "prepotencial", "provision", "otros"]
+
+                if "Todo - Castigo" in brands:
+                    brands_all_less_castigo = ["0", "30", "60", "90", "120", "150", "180", "210", "prechurn", "potencial", "churn", "preprovision", "prepotencial", "provision", "otros"]
+
+                if "0 - 30" in brands:
+                    brands_group_0_30 = ["0", "30"]
+
+                if "60 - 210" in brands:
+                    brands_group_60_210 = ["60", "90", "120", "150", "180", "210"]
+
+                if "Especiales" in brands:
+                    brands_specials = ["prechurn", "potencial", "churn", "preprovision", "provision", "prepotencial"]
+
+                brands = brands + brands_all + brands_all_less_castigo + brands_group_0_30 + brands_group_60_210 + brands_specials
+
+                brands_group = [brand_w.lower() for brand_w in brands]
+
+                #####################
+                if "potencial" in brands_group:
+                    brand_pot = ["Potencial a Castigar"]
+                    brands_group = brands + brand_pot
+                    brands = brands_group
+                else:
+                    pass
+
+                brands_group = [brand_w.lower() for brand_w in brands]
+                brands = brands_group
+
+                if "prepotencial" in brands_group:
+                    brand_pre = ["Prepotencial Especial"]
+                    brands_group = brands + brand_pre
+                    brands = brands_group
+                else:
+                    pass
+
+                if "otros" in brands_group:
+                    brand_unique = ["Apple Manual"]
+                    brands_group = brands + brand_unique
+                    brands = brands_group
+                else:
+                    pass
+                #####################
+
+                brands = brands_group
+                for brand in brands_group:
+                    if brand not in brands:
+                        brands.append(brand)
+
                 origins = list_data[4]
                 
-            date = list_data[5]
-            benefits = list_data[6]
-            contact = list_data[7]
-            value_min = int(list_data[9])
-            value_max = int(list_data[10])
+                if "Todo" in origins:
+                    origins =["ASCARD", "BSCS", "RR", "SGA"]
 
-            if Process == "BOT":
+                else:
+                    origins = list_data[4]
+                    
+                date = list_data[5]
+                benefits = list_data[6]
+                contact = list_data[7]
+                value_min = int(list_data[9])
+                value_max = int(list_data[10])
 
-                Mbox_In_Process = QMessageBox()
-                Mbox_In_Process.setWindowTitle("Procesando")
-                Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-                Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
-                Mbox_In_Process.exec()
+                if Process == "BOT":
 
-                modules.bot_process.Function_Complete(file, root, partitions, brands, origins, date, benefits, contact, \
-                                                      value_min, value_max, widget_filter)
-                Mbox_In_Process = QMessageBox()
-                Mbox_In_Process.setWindowTitle("")
-                Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-                Mbox_In_Process.setText("Proceso de BOTS ejecutado exitosamente.")
-                Mbox_In_Process.exec()
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("Procesando")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+                    Mbox_In_Process.exec()
 
-            elif Process == "EMAIL":
-
-                Mbox_In_Process = QMessageBox()
-                Mbox_In_Process.setWindowTitle("Procesando")
-                Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-                Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
-                Mbox_In_Process.exec()
-
-                modules.email_process.Function_Complete(file, root, partitions, brands, origins, date, benefits, \
+                    modules.bot_process.Function_Complete(file, root, partitions, brands, origins, date, benefits, contact, \
                                                         value_min, value_max, widget_filter)
-                
-                Mbox_In_Process = QMessageBox()
-                Mbox_In_Process.setWindowTitle("")
-                Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-                Mbox_In_Process.setText("Proceso de EMAIL ejecutado exitosamente.")
-                Mbox_In_Process.exec()
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Proceso de BOTS ejecutado exitosamente.")
+                    Mbox_In_Process.exec()
 
-            elif Process == "IVR":
+                elif Process == "EMAIL":
 
-                Mbox_In_Process = QMessageBox()
-                Mbox_In_Process.setWindowTitle("Procesando")
-                Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-                Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
-                Mbox_In_Process.exec()
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("Procesando")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+                    Mbox_In_Process.exec()
 
-                modules.ivr_process.Function_Complete(file, root, partitions, brands, origins, date, today_IVR, benefits, contact, \
-                                                      value_min, value_max, widget_filter)
-                
-                Mbox_In_Process = QMessageBox()
-                Mbox_In_Process.setWindowTitle("")
-                Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-                Mbox_In_Process.setText("Proceso de IVR ejecutado exitosamente.")
-                Mbox_In_Process.exec()
+                    modules.email_process.Function_Complete(file, root, partitions, brands, origins, date, benefits, \
+                                                            value_min, value_max, widget_filter)
+                    
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Proceso de EMAIL ejecutado exitosamente.")
+                    Mbox_In_Process.exec()
 
-            elif Process == "SMS":
+                elif Process == "IVR":
 
-                Mbox_In_Process = QMessageBox()
-                Mbox_In_Process.setWindowTitle("Procesando")
-                Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-                Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
-                Mbox_In_Process.exec()
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("Procesando")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+                    Mbox_In_Process.exec()
 
-                modules.sms_process.Function_Complete(file, root, partitions, brands, origins, date, benefits, contact, \
-                                                      value_min, value_max, widget_filter)
-                
-                Mbox_In_Process = QMessageBox()
-                Mbox_In_Process.setWindowTitle("")
-                Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-                Mbox_In_Process.setText("Proceso de SMS ejecutado exitosamente.")
-                Mbox_In_Process.exec()
+                    modules.ivr_process.Function_Complete(file, root, partitions, brands, origins, date, today_IVR, benefits, contact, \
+                                                        value_min, value_max, widget_filter)
+                    
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Proceso de IVR ejecutado exitosamente.")
+                    Mbox_In_Process.exec()
+
+                elif Process == "SMS":
+
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("Procesando")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+                    Mbox_In_Process.exec()
+
+                    modules.sms_process.Function_Complete(file, root, partitions, brands, origins, date, benefits, contact, \
+                                                        value_min, value_max, widget_filter)
+                    
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Proceso de SMS ejecutado exitosamente.")
+                    Mbox_In_Process.exec()
+
+                else:
+                    pass
 
             else:
                 pass
-
-        else:
+    
+        elif campaign_selected == "--- Seleccione opción":
+            print("Without campaign selected")
             pass
+        
+        else:
+            
+            list_data = self.data_to_process
+            print(list_data)
+            
+            lenght_list = len(self.data_to_process)
+            
+            if lenght_list >= 3:
+                
+                file = list_data[0]
+                root = list_data[1]
+                partitions = int(list_data[2])
+                process_resource = list_data[3]
+                campaign_selected = list_data[4]
+                
+                root = f"{root}---- Bases para TELEMATICA ----"
+                
+                if campaign_selected == "Puntored":
+
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("Procesando")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+                    Mbox_In_Process.exec()
+
+                    modules.telematics_puntored.function_complete_telematics(file, root, partitions, process_resource)
+                    
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Proceso de telematica ejecutado exitosamente.")
+                    Mbox_In_Process.exec()
+                
+                elif campaign_selected == "Crediveci":
+
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("Procesando")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+                    Mbox_In_Process.exec()
+
+                    modules.telematics_crediveci.function_complete_telematics(file, root, partitions, process_resource)
+                    
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Proceso de telematica ejecutado exitosamente.")
+                    Mbox_In_Process.exec()
+                
+                elif campaign_selected == "GM Financial":
+
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("Procesando")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+                    Mbox_In_Process.exec()
+
+                    modules.telematics_gmfinancial.function_complete_telematics(file, root, partitions, process_resource)
+                    
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Proceso de telematica ejecutado exitosamente.")
+                    Mbox_In_Process.exec()
+                    
+                elif campaign_selected == "Ya Dinero":
+
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("Procesando")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+                    Mbox_In_Process.exec()
+
+                    modules.telematics_yadinero.function_complete_telematics(file, root, partitions, process_resource)
+                    
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Proceso de telematica ejecutado exitosamente.")
+                    Mbox_In_Process.exec()
+                    
+                else:
+                    print("Without campaign validation")
+                
+            else:
+                print("Without data to process")
