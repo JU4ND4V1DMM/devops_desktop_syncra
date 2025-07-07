@@ -206,7 +206,7 @@ class Init_APP():
 
         self.process_data.commandLinkButton_8.clicked.connect(self.power_shell)
         self.process_data.pushButton_2.clicked.connect(self.copy_code)
-        self.process_data.pushButton_3.clicked.connect(self.copy_code)
+        self.process_data.pushButton_3.clicked.connect(self.copy_schema_claro)
         self.process_data.pushButton_Select_File_9.clicked.connect(self.copy_template_ivr)
         self.process_data.pushButton_5.clicked.connect(self.copy_template_reports_saem)
         self.process_data.pushButton_4.clicked.connect(self.copy_folder_scripts)
@@ -825,6 +825,24 @@ class Init_APP():
         Mbox_In_Process.setWindowTitle("")
         Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
         Mbox_In_Process.setText("Codigos exportados en el directorio de Descargas.")
+        Mbox_In_Process.exec()
+        
+    def copy_schema_claro(self):
+
+        output_directory = self.folder_path
+
+        Root_API = self.root_API 
+
+        schema = f"{Root_API}/vba/Estructura BD - Recupera SAS.xlsx"
+        schema2 = f"{Root_API}/vba/Plantilla de Formato de Reportes.xlsx"
+
+        shutil.copy(schema, output_directory)
+        shutil.copy(schema2, output_directory)
+
+        Mbox_In_Process = QMessageBox()
+        Mbox_In_Process.setWindowTitle("")
+        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+        Mbox_In_Process.setText("Esquemas exportados en el directorio de Descargas.")
         Mbox_In_Process.exec()
         
     def copy_bd_asignment(self):

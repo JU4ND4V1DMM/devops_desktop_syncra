@@ -240,8 +240,7 @@ class Charge_DB(QtWidgets.QMainWindow):
                            "13_", "14_", "15_", "16_", "17_", "18_", "51_", "Telefono 1", "Telefono 2", "Telefono 3", \
                            "Telefono 4", "Valor Scoring", "19_", "20_", "21_", "22_", "23_", "24_", "25_", \
                            "26_", "27_", "28_", "29_", "30_", "31_", "32_", "33_", "34_", "35_", "36_", "37_", \
-                           "38_", "39_", "40_", "41_", "42_", "43_", "44_", "[AccountAccountCode2?]"]
-                            #"59_"]
+                           "38_", "39_", "40_", "41_", "42_", "43_", "44_", "[AccountAccountCode2?]", "59_"]
         
         Data_Root = Data_Root.select(columns_to_list)
         Data_Root = Data_Root.dropDuplicates(["2_"])
