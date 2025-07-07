@@ -58,7 +58,7 @@ def function_complete_IVR(input_folder, output_folder, partitions, Widget_Proces
     consolidated_df = None
     for file in files:
         if file.endswith('.csv'):
-            df_csv = spark.read.csv(file, header=True, sep=",", inferSchema=True)
+            df_csv = spark.read.csv(file, header=True, sep=";", inferSchema=True)
             df = clean_and_rename_columns(df_csv)
         elif file.endswith('.txt'):
             df = spark.read.option("delimiter", "\t").csv(file, header=True, inferSchema=True)

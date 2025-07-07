@@ -9,7 +9,9 @@ def convert_xlsx_to_csv(folder_path):
         return
     
     for filename in os.listdir(folder_path):
-
+        
+        print(f"Processing file: {filename}")
+        
         if filename.endswith(".xlsx"):
 
             file_path = os.path.join(folder_path, filename)
