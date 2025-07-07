@@ -1528,7 +1528,7 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-33</y>
+            <y>0</y>
             <width>212</width>
             <height>282</height>
            </rect>
@@ -3365,7 +3365,7 @@ QPushButton:pressed
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="2" column="0">
             <widget class="QPushButton" name="pushButton_11">
              <property name="font">
               <font>
@@ -3390,6 +3390,34 @@ QPushButton:pressed
              </property>
              <property name="text">
               <string>Consolidar Resultados Blaster</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QPushButton" name="pushButton_21">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    border-radius: 8px;
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Convertir SMS Inventario a CSV</string>
              </property>
             </widget>
            </item>
