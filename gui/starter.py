@@ -848,7 +848,7 @@ class Init_APP():
         Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
         Mbox_In_Process.setText("Esquemas exportados en el directorio de Descargas.")
         Mbox_In_Process.exec()
-        
+
     def copy_bd_asignment(self):
 
         output_directory = self.folder_path
