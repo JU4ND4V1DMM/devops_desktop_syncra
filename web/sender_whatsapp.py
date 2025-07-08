@@ -120,19 +120,6 @@ def read_file(selected_file, template):
         return None, False
 
 def send_messages(selected_file, output_file, template, process_data):
-    """
-    Sends messages to WhatsApp contacts based on data from a selected file and a template.
-    It uses Selenium to automate WhatsApp Web.
-
-    Args:
-        selected_file (str): The path to the input CSV file.
-        output_file (str): The folder path where the report Excel file will be saved.
-        template (str): The message template string.
-        process_data (bool): A placeholder argument (not used in the original logic).
-
-    Returns:
-        str: A message indicating the outcome of the process.
-    """
     
     df, response = read_file(selected_file, template)
     
@@ -160,7 +147,11 @@ def send_messages(selected_file, output_file, template, process_data):
         print("✅ Logged in successfully.")
 
         # Extract numbers and messages from the Pandas DataFrame
-        numbers = df["CELULAR"].tolist()
+        if "DATO_CONTACTO" in df.columns:
+            numbers = df["DATO_CONTACTO"].tolist()
+        else:
+            numbers = df["CELULAR"].tolist()
+        
         messages = df["MESSAGE"].tolist()
         
         current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # Kept as is, though not used directly in this loop
@@ -179,7 +170,9 @@ def send_messages(selected_file, output_file, template, process_data):
         url = f"https://web.whatsapp.com/send?phone={number}&text={encoded_message}"
         print(f"📨 Sending to {number} -> {message}")
         driver.get(url)
-
+        
+        status = None
+        
         try:
             # This block attempts to click a button that might appear before logging in.
             # It's based on the original code's logic.
@@ -197,25 +190,25 @@ def send_messages(selected_file, output_file, template, process_data):
                 time.sleep(1)
                 print("In message box.")
                 try:
+                    
                     send_button = WebDriverWait(driver, 10).until(
                         EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Enviar"]'))
                     )
                     send_button.click()
                     print("Enviar")
+                    status = "Enviado"
                 except WebDriverException as e:
                     send_button = WebDriverWait(driver, 10).until(
                         EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Send"]'))
                     )
                     send_button.click()
                     print("Send")
+                    status = "Enviado"
                 time.sleep(2) # Short delay after sending
                 
             except WebDriverException as e:
-                print(f"⚠ Error al intentar hacer clic en el botón: {str(e)}")
+                print(f"⚠ Error al intentar hacer clic en el botón")
                 status = "Error"
-
-            status = "Enviado"
-
 
         except Exception as e:
             status = "No enviado"

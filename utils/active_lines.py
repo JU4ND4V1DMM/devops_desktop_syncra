@@ -83,9 +83,11 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, partitions, Type):
     Directory_to_Save = os.path.join(Directory_to_Save, Type_File)
 
     Name_File = f"Demograficos {Type}"
-    
     delimiter = ";"
+    save_to_csv(Data_Frame, Directory_to_Save, Name_File, partitions, delimiter)
     
+    Data_Frame = Data_Frame.filter(col("Marca") != "Castigo")
+    Name_File = f"Demograficos SIN CASTIGO {Type}"
     save_to_csv(Data_Frame, Directory_to_Save, Name_File, partitions, delimiter)
 
     return Data_Frame
