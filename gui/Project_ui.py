@@ -339,19 +339,19 @@ class Ui_Process_Data(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 212, 252))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -79, 212, 282))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout.setObjectName("gridLayout")
-        self.pushButton_6 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        self.pushButton_8 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(7)
-        self.pushButton_6.setFont(font)
-        self.pushButton_6.setStyleSheet("/* Al pasar el mouse */\n"
+        self.pushButton_8.setFont(font)
+        self.pushButton_8.setStyleSheet("/* Al pasar el mouse */\n"
 "QPushButton:hover {\n"
 "    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
 "    border-radius: 8px;\n"
@@ -361,68 +361,8 @@ class Ui_Process_Data(object):
 "    color: rgb(255, 255, 255);\n"
 "    background-color: rgb(217, 16, 76);\n"
 "}")
-        self.pushButton_6.setObjectName("pushButton_6")
-        self.gridLayout.addWidget(self.pushButton_6, 5, 0, 1, 1)
-        self.pushButton_5 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_5.setFont(font)
-        self.pushButton_5.setStyleSheet("/* Al pasar el mouse */\n"
-"QPushButton:hover {\n"
-"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
-"    border-radius: 8px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}")
-        self.pushButton_5.setObjectName("pushButton_5")
-        self.gridLayout.addWidget(self.pushButton_5, 4, 0, 1, 1)
-        self.pushButton_2 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_2.setFont(font)
-        self.pushButton_2.setStyleSheet("/* Al pasar el mouse */\n"
-"QPushButton:hover {\n"
-"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
-"    border-radius: 8px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}")
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.gridLayout.addWidget(self.pushButton_2, 1, 0, 1, 1)
-        self.pushButton_7 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(7)
-        self.pushButton_7.setFont(font)
-        self.pushButton_7.setStyleSheet("/* Al pasar el mouse */\n"
-"QPushButton:hover {\n"
-"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
-"    border-radius: 8px;\n"
-"}\n"
-"QPushButton:pressed\n"
-"{\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(217, 16, 76);\n"
-"}")
-        self.pushButton_7.setObjectName("pushButton_7")
-        self.gridLayout.addWidget(self.pushButton_7, 6, 0, 1, 1)
+        self.pushButton_8.setObjectName("pushButton_8")
+        self.gridLayout.addWidget(self.pushButton_8, 0, 0, 1, 1)
         self.pushButton_3 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
@@ -482,16 +422,16 @@ class Ui_Process_Data(object):
 "    background-color: rgb(217, 16, 76);\n"
 "}")
         self.pushButton_14.setObjectName("pushButton_14")
-        self.gridLayout.addWidget(self.pushButton_14, 7, 0, 1, 1)
-        self.pushButton_8 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        self.gridLayout.addWidget(self.pushButton_14, 8, 0, 1, 1)
+        self.pushButton_5 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(7)
-        self.pushButton_8.setFont(font)
-        self.pushButton_8.setStyleSheet("/* Al pasar el mouse */\n"
+        self.pushButton_5.setFont(font)
+        self.pushButton_5.setStyleSheet("/* Al pasar el mouse */\n"
 "QPushButton:hover {\n"
 "    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
 "    border-radius: 8px;\n"
@@ -501,8 +441,88 @@ class Ui_Process_Data(object):
 "    color: rgb(255, 255, 255);\n"
 "    background-color: rgb(217, 16, 76);\n"
 "}")
-        self.pushButton_8.setObjectName("pushButton_8")
-        self.gridLayout.addWidget(self.pushButton_8, 0, 0, 1, 1)
+        self.pushButton_5.setObjectName("pushButton_5")
+        self.gridLayout.addWidget(self.pushButton_5, 4, 0, 1, 1)
+        self.pushButton_2 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_2.setFont(font)
+        self.pushButton_2.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.gridLayout.addWidget(self.pushButton_2, 1, 0, 1, 1)
+        self.pushButton_6 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_6.setFont(font)
+        self.pushButton_6.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_6.setObjectName("pushButton_6")
+        self.gridLayout.addWidget(self.pushButton_6, 5, 0, 1, 1)
+        self.pushButton_7 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_7.setFont(font)
+        self.pushButton_7.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_7.setObjectName("pushButton_7")
+        self.gridLayout.addWidget(self.pushButton_7, 7, 0, 1, 1)
+        self.pushButton_23 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_23.setFont(font)
+        self.pushButton_23.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_23.setObjectName("pushButton_23")
+        self.gridLayout.addWidget(self.pushButton_23, 6, 0, 1, 1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.label_Total_Registers_8 = QtWidgets.QLabel(parent=self.tab_3)
         self.label_Total_Registers_8.setGeometry(QtCore.QRect(650, 610, 161, 21))
@@ -1758,7 +1778,7 @@ class Ui_Process_Data(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 222, 119))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 222, 132))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -1822,6 +1842,26 @@ class Ui_Process_Data(object):
 "}")
         self.pushButton_21.setObjectName("pushButton_21")
         self.gridLayout_2.addWidget(self.pushButton_21, 3, 0, 1, 1)
+        self.pushButton_22 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_2)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_22.setFont(font)
+        self.pushButton_22.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_22.setObjectName("pushButton_22")
+        self.gridLayout_2.addWidget(self.pushButton_22, 4, 0, 1, 1)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.graphicsView_2 = QtWidgets.QGraphicsView(parent=self.tab)
         self.graphicsView_2.setGeometry(QtCore.QRect(320, 410, 361, 121))
@@ -2896,14 +2936,15 @@ class Ui_Process_Data(object):
         self.pushButton_Select_File_10.setText(_translate("Process_Data", "Seleccionar Carpeta"))
         self.pushButton_Select_File_13.setText(_translate("Process_Data", "Seleccionar Archivo"))
         self.Group_Selection_Starter_19.setTitle(_translate("Process_Data", "Plantillas"))
-        self.pushButton_6.setText(_translate("Process_Data", "Carpetas Lectura por Toques"))
-        self.pushButton_5.setText(_translate("Process_Data", "Descarga Masiva SAEM"))
-        self.pushButton_2.setText(_translate("Process_Data", "Códigos Visual Basic"))
-        self.pushButton_7.setText(_translate("Process_Data", "Estructuras de Masivos"))
+        self.pushButton_8.setText(_translate("Process_Data", "Manuales y Documentación"))
         self.pushButton_3.setText(_translate("Process_Data", "Esquema Asignación Claro"))
         self.pushButton_4.setText(_translate("Process_Data", "Estructuras de Cargue"))
         self.pushButton_14.setText(_translate("Process_Data", "Reparto de Campañas"))
-        self.pushButton_8.setText(_translate("Process_Data", "Manuales y Documentación"))
+        self.pushButton_5.setText(_translate("Process_Data", "Descarga Masiva SAEM"))
+        self.pushButton_2.setText(_translate("Process_Data", "Códigos Visual Basic"))
+        self.pushButton_6.setText(_translate("Process_Data", "Carpetas Lectura por Toques"))
+        self.pushButton_7.setText(_translate("Process_Data", "Estructuras de Masivos"))
+        self.pushButton_23.setText(_translate("Process_Data", "Carpetas Batch cruce Claro"))
         self.label_Total_Registers_8.setText(_translate("Process_Data", "TOTAL DE REGISTROS:"))
         self.label_Total_Registers_7.setText(_translate("Process_Data", "trial"))
         self.Group_Selection_Starter_36.setTitle(_translate("Process_Data", "Recursos del Computador"))
@@ -2977,6 +3018,7 @@ class Ui_Process_Data(object):
         self.pushButton_12.setText(_translate("Process_Data", "Consolidar Resultados IPCom"))
         self.pushButton_11.setText(_translate("Process_Data", "Consolidar Resultados Blaster"))
         self.pushButton_21.setText(_translate("Process_Data", "Convertir SMS Inventario a CSV"))
+        self.pushButton_22.setText(_translate("Process_Data", "Cruce de Claro con Batch"))
         self.commandLinkButton_23.setText(_translate("Process_Data", " Consolidar toques por cuenta"))
         self.comboBox_Selected_Process_2.setItemText(0, _translate("Process_Data", "--- Seleccione opción toques"))
         self.comboBox_Selected_Process_2.setItemText(1, _translate("Process_Data", "TODOS"))

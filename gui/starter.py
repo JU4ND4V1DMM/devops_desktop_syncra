@@ -2,6 +2,7 @@ import cpuinfo
 import bigdata.demos_ai
 import bigdata.touch_ai
 import bigdata.union_datalakes_claro
+import gui.batch_cruice
 from gui.dynamic_thread import DynamicThread
 import random
 import webbrowser
@@ -222,6 +223,7 @@ class Init_APP():
         self.process_data.commandLinkButton_16.clicked.connect(self.folder_files_process_psa)
         self.process_data.commandLinkButton_18.clicked.connect(self.folder_files_process_pg)
         self.process_data.pushButton_21.clicked.connect(self.folder_files_cslsc_to_csv)
+        self.process_data.pushButton_22.clicked.connect(self.folder_files_cruice_batch_claro)
         
         self.process_data.commandLinkButton_20.clicked.connect(self.folder_union_excel)
         self.process_data.commandLinkButton_22.clicked.connect(self.folder_union_insignias)
@@ -239,6 +241,7 @@ class Init_APP():
         self.process_data.action_Files_Soported.triggered.connect(self.show_files_soported)
         self.process_data.pushButton_6.clicked.connect(self.copy_folders_root)
         self.process_data.pushButton_8.clicked.connect(self.copy_code_documentation)
+        self.process_data.pushButton_23.clicked.connect(self.copy_batch_folder_campaign_claro)
         self.process_data.pushButton_14.clicked.connect(self.copy_schema_campaings)
         self.process_data.pushButton_7.clicked.connect(self.copy_schema_masiv)
 
@@ -325,7 +328,7 @@ class Init_APP():
                 Mbox_File_Error.exec()
             
             else:
-                self.row_count_RPA = count_csv_rows(self.row_count_RPA)
+                self.row_count_RPA = count_csv_rows(self.file_path_RPA)
                 if self.row_count_RPA is not None:
                     self.row_count_RPA = "{:,}".format(self.row_count_RPA)
                     self.process_data.label_Total_Registers_7.setText(f"{self.row_count_RPA}")
@@ -869,6 +872,18 @@ class Init_APP():
         Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
         Mbox_In_Process.setText("Documentacion exportada en el directorio de Descargas.")
         Mbox_In_Process.exec()
+    
+    def copy_batch_folder_campaign_claro(self):
+
+        output_directory = self.folder_path
+
+        self.function_copy_folders(output_directory, "---- BATCH CLARO PARA CRUZAR ----")
+
+        Mbox_In_Process = QMessageBox()
+        Mbox_In_Process.setWindowTitle("")
+        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+        Mbox_In_Process.setText("Carpetas para cruce exportadas en el directorio de Descargas.")
+        Mbox_In_Process.exec()
         
     def copy_schema_campaings(self):
 
@@ -1240,6 +1255,36 @@ class Init_APP():
             Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a procesar.")
             Mbox_File_Error.exec()
     
+    def folder_files_cruice_batch_claro(self):
+
+        type_process = "folder"
+        
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+
+        if self.folder_path_IVR != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se cruza la informacion.")
+            Mbox_In_Process.exec()
+            
+            self.Base = gui.batch_cruice.cruice_batch_campaign_claro(self.folder_path_IVR, self.folder_path, self.partitions_FOLDER)
+            
+            Mbox_In_Process = QMessageBox() 
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Cruce de batch y demograficos ejecutado exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a procesar.")
+            Mbox_File_Error.exec()
+            
     def folder_files_process_pg(self):
 
         type_process = "folder"
@@ -1515,10 +1560,11 @@ class Init_APP():
         Value = "Run"
         self.Base = utils.IVR_Downloads_List.Function_Download(Value)
 
-    def clean_hive_tmp_dirs():
+    def clean_hive_tmp_dirs(self):
         paths = [r"C:\tmp\hive", r"D:\tmp\hive"]
         for path in paths:
             if os.path.exists(path) and os.path.isdir(path):
+                
                 for filename in os.listdir(path):
                     file_path = os.path.join(path, filename)
                     try:
@@ -1526,8 +1572,13 @@ class Init_APP():
                             os.unlink(file_path)
                         elif os.path.isdir(file_path):
                             shutil.rmtree(file_path)
+                            
+                        print("Limpiando directorio:", file_path)
+                        
                     except Exception as e:
+                        
                         print(f"Error eliminando {file_path}: {e}")
+                        
     def run_bat_temp(self):
 
         Root_API = self.root_API 

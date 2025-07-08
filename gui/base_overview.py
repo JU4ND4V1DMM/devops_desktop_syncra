@@ -162,6 +162,10 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumn("Fecha Final ", date_format(to_date(split(col("Fecha Final "), " ")[0], "d/M/yyyy"), "yyyy-MM-dd"))
         Data_Root = Data_Root.withColumn("Fecha de Asignacion", date_format(to_date(split(col("Fecha de Asignacion"), " ")[0], "d/M/yyyy"), "yyyy-MM-dd"))
         
+        for column in Data_Root.columns:
+            
+            Data_Root = Data_Root.withColumn(column, regexp_replace(col(column), r"\|", ""))
+        
         return Data_Root
     
     def change_name_column (self, Data_, Column):
