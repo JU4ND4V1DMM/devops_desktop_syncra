@@ -11,6 +11,17 @@ def process_data(directory, output_directory, selected_columns, return_matches, 
     spark = get_spark_session()
     
     original_data = spark.read.csv(directory, header=True, sep=";")
+
+    for column in original_data.columns:
+        column_name = column.lower()
+        original_data = original_data.withColumnRenamed(column, column_name)
+
+    if "identificacion" in original_data.columns:
+        original_data = original_data.withColumnRenamed("identificacion", "ID")
+        print("Column 'identificacion' found in original data. Renaming to 'ID'.")
+    else:
+        print("Column 'identificacion' not found in original data. Using first column as join key.")
+        
     join_column_original = original_data.columns[0]
     
     src_folder = r"\\172.128.10.200\4. Gestion de Operaciones\2. Claro\Data compartida\NO BORRAR CONEXIÓN API\Demos Unificados"
