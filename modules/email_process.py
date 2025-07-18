@@ -105,6 +105,8 @@ def Renamed_Column(Data_Frame):
         when((length(col("Nombre_Completo")) < 4) | (col("Canal") == "DELIMITAR") | (col("FILTRO_REFERENCIA") == "SIN REFERENCIA"), lit("Ajustar antes de envio"))
         .otherwise(lit("Limpio para envio")))
     
+    Data_Frame = Order_Columns(Data_Frame)
+    
     return Data_Frame
 
 def Order_Columns(Data_Frame):
@@ -122,9 +124,9 @@ def Order_Columns(Data_Frame):
                     "Edad_Mora", "CRM", "Form_Moneda", "Nombre_Completo", \
                     "Referencia", "Cuenta", "marca2", "plan", "identificacion", "FILTRO_REFERENCIA", "Rango", "RANKING STATUS", "CANTIDAD SERVICIOS","FILTRO GENERAL", "Tipo Base"]
 
-    Data_Frame = Data_Frame.select(Columns_Email)
+    Data_Frame_final = Data_Frame.select(Columns_Email)
 
-    return Data_Frame
+    return Data_Frame_final
 
 ### Proceso de guardado del RDD
 def Save_Data_Frame (Data_Frame, Directory_to_Save, filename, partitions):

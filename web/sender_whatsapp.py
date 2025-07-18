@@ -74,6 +74,17 @@ def generate_message_column(df, template):
 
     return df
 
+def read_csv_dynamic_encoding(selected_file, sep=';'):
+    encodings = ["utf-8", "latin1", "cp1252"]
+    for enc in encodings:
+        try:
+            df = pd.read_csv(selected_file, sep=sep, encoding=enc)
+            print(f"Archivo leído correctamente con encoding: {enc}")
+            return df
+        except UnicodeDecodeError:
+            print(f"Fallo con encoding: {enc}, probando otro...")
+    raise Exception("No se pudo leer el archivo con los encodings probados.")
+
 def read_file(selected_file, template):
     """
     Reads a CSV file into a Pandas DataFrame, converts column names to uppercase,
@@ -88,10 +99,8 @@ def read_file(selected_file, template):
         tuple: A tuple containing the DataFrame and a boolean response.
     """
     try:
-        # Load CSV as DataFrame using Pandas
-        df = pd.read_csv(selected_file, sep=';')
-
         # Convert column names to uppercase
+        df = read_csv_dynamic_encoding(selected_file, sep=';')
         df.columns = [col_name.upper() for col_name in df.columns]
         
         # Generate the message column
@@ -141,7 +150,7 @@ def send_messages(selected_file, output_file, template, process_data):
         driver.get("https://web.whatsapp.com")
         print("🔒 Waiting for you to log in to WhatsApp Web...")
         # Wait until the side pane (indicating successful login) is present
-        WebDriverWait(driver, 80).until(
+        WebDriverWait(driver, 100).until(
             EC.presence_of_element_located((By.ID, "pane-side"))
         )
         print("✅ Logged in successfully.")
@@ -177,7 +186,7 @@ def send_messages(selected_file, output_file, template, process_data):
             # This block attempts to click a button that might appear before logging in.
             # It's based on the original code's logic.
             try:
-                random_wait = random.uniform(2, 5)
+                random_wait = random.uniform(2, 4)
                 # XPath for a common "Continue" or "OK" button that might pop up
                 button = WebDriverWait(driver, random_wait).until(EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div/span[2]/div/div/div/div/div/div/div[2]/div/button')))
                 button.click()
@@ -189,20 +198,23 @@ def send_messages(selected_file, output_file, template, process_data):
             try:
                 time.sleep(1)
                 print("In message box.")
+                
+                random_wait = random.uniform(3, 18)
+                
                 try:
                     
-                    send_button = WebDriverWait(driver, 10).until(
+                    send_button = WebDriverWait(driver, random_wait).until(
                         EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Enviar"]'))
                     )
                     send_button.click()
-                    print("Enviar")
+                    print(f"Enviar {random_wait} segundos")
                     status = "Enviado"
                 except WebDriverException as e:
-                    send_button = WebDriverWait(driver, 10).until(
+                    send_button = WebDriverWait(driver, random_wait).until(
                         EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Send"]'))
                     )
                     send_button.click()
-                    print("Send")
+                    print(f"Send {random_wait} seconds")
                     status = "Enviado"
                 time.sleep(2) # Short delay after sending
                 
