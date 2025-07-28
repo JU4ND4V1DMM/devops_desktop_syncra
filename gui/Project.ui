@@ -3892,7 +3892,7 @@ QPushButton:pressed {
 }</string>
         </property>
         <property name="text">
-         <string>Base Consolidada de Datalake</string>
+         <string>Base consolidada de Datalake</string>
         </property>
         <property name="icon">
          <iconset>
