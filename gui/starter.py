@@ -112,7 +112,6 @@ class Init_APP():
         self.partitions_DIRECTION = None
         self.partitions_PASH = None
         self.partitions_FOLDER = None
-        self.partitions_FOLDER = None
         
         self.bigdatamonth = None
         self.bigdatayear = None
@@ -222,7 +221,7 @@ class Init_APP():
         self.process_data.commandLinkButton_17.clicked.connect(self.folder_files_process_ng)
         self.process_data.commandLinkButton_16.clicked.connect(self.folder_files_process_psa)
         self.process_data.commandLinkButton_18.clicked.connect(self.folder_files_process_pg)
-        self.process_data.pushButton_21.clicked.connect(self.folder_files_cslsc_to_csv)
+        self.process_data.pushButton_21.clicked.connect(self.folder_files_xlsx_to_csv)
         self.process_data.pushButton_22.clicked.connect(self.folder_files_cruice_batch_claro)
         
         self.process_data.commandLinkButton_20.clicked.connect(self.folder_union_excel)
@@ -1012,7 +1011,7 @@ class Init_APP():
 
     def digit_timemap_bigdata(self):
 
-        self.bigdatamonth = str(self.process_data.spinBox_Partitions_10.value())
+        self.bigdatamonth = str(self.process_data.spinBox_Partitions_10.value()).zfill(2)
         self.bigdatayear = str(self.process_data.spinBox_Partitions_5.value())
         
     def task_web_folder(self):
@@ -1315,7 +1314,7 @@ class Init_APP():
             Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a procesar.")
             Mbox_File_Error.exec()
 
-    def folder_files_cslsc_to_csv(self):
+    def folder_files_xlsx_to_csv(self):
 
         type_process = "folder"
         
@@ -1657,13 +1656,13 @@ class Init_APP():
             Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa las asignaciones.")
             Mbox_In_Process.exec()
             
-            self.partitions_FOLDER = f"{self.partitions_FOLDER}----- Bases para BIG DATA ----"
-            bigdata.data_ai.claro_structure_df(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER)
+            folder_path_bg = f"{self.folder_path}----- Bases para BIG DATA ----"
+            bigdata.data_ai.claro_structure_df(self.folder_path_IVR, folder_path_bg, self.partitions_FOLDER)
 
             Mbox_In_Process = QMessageBox() 
             Mbox_In_Process.setWindowTitle("")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("DataSet generado exitosamente.")
+            Mbox_In_Process.setText("Dataset generado exitosamente.")
             Mbox_In_Process.exec()
         
         else:
@@ -1689,13 +1688,13 @@ class Init_APP():
             Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesan los demograficos.")
             Mbox_In_Process.exec()
             
-            self.partitions_FOLDER = f"{self.partitions_FOLDER}----- Bases para BIG DATA ----"
-            bigdata.demos_ai.function_complete_demographic(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
+            folder_path_bg = f"{self.folder_path}----- Bases para BIG DATA ----"
+            bigdata.demos_ai.function_complete_demographic(self.folder_path_IVR, folder_path_bg, self.partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
 
             Mbox_In_Process = QMessageBox() 
             Mbox_In_Process.setWindowTitle("")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("DataSet generado exitosamente.")
+            Mbox_In_Process.setText("Dataset generado exitosamente.")
             Mbox_In_Process.exec()
         
         else:
@@ -1721,13 +1720,13 @@ class Init_APP():
             Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesan los toques por telematica.")
             Mbox_In_Process.exec()
             
-            self.partitions_FOLDER = f"{self.partitions_FOLDER}----- Bases para BIG DATA ----"
-            bigdata.touch_ai.touch_dataframes_bd(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
+            folder_path_bg = f"{self.folder_path}----- Bases para BIG DATA ----"
+            bigdata.touch_ai.touch_dataframes_bd(self.folder_path_IVR, folder_path_bg, self.partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
 
             Mbox_In_Process = QMessageBox() 
             Mbox_In_Process.setWindowTitle("")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("DataSet generado exitosamente.")
+            Mbox_In_Process.setText("Dataset generado exitosamente.")
             Mbox_In_Process.exec()
         
         else:
@@ -1750,16 +1749,16 @@ class Init_APP():
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("Procesando")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesan los datasets de bigdata.")
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesan los Datasets de bigdata.")
             Mbox_In_Process.exec()
             
-            self.partitions_FOLDER = f"{self.partitions_FOLDER}----- Bases para BIG DATA ----"
-            bigdata.union_datalakes_claro.read_compilation_datasets(self.folder_path_IVR, self.partitions_FOLDER, self.digit_partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
+            folder_path_bg = f"{self.folder_path}----- Bases para BIG DATA ----"
+            bigdata.union_datalakes_claro.read_compilation_datasets(self.folder_path_IVR, folder_path_bg, self.partitions_FOLDER, self.bigdatamonth, self.bigdatayear)
 
             Mbox_In_Process = QMessageBox() 
             Mbox_In_Process.setWindowTitle("")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-            Mbox_In_Process.setText("DataSet generado exitosamente.")
+            Mbox_In_Process.setText("Dataset generado exitosamente.")
             Mbox_In_Process.exec()
         
         else:
