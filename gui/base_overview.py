@@ -363,14 +363,17 @@ class Charge_DB(QtWidgets.QMainWindow):
         origin = "Multiorigen"
         brand = "Multimarca"
         RDD_Data_MULTIBRAND = RDD_Data.filter(col("CRM_Origen").isin(list_origins))
+        RDD_Data_Corp = RDD_Data_MULTIBRAND.filter(col("Nombre Campana") == "Clientes Corporativos")
         RDD_Data_MULTIBRAND = RDD_Data_MULTIBRAND.filter(col("Marca_Asignada") != "Castigo")
-
+        RDD_Data_MULTIBRAND = RDD_Data_MULTIBRAND.union(RDD_Data_Corp)
+        
         self.Save_File(RDD_Data_MULTIBRAND, root, partitions, brand, origin, Time_File)
 
         origin = "Multiorigen"
         brand = "castigo"
         RDD_Data_CAST = RDD_Data.filter(col("CRM_Origen").isin(list_origins))
         RDD_Data_CAST = RDD_Data_CAST.filter(col("Marca_Asignada") == "Castigo")
+        RDD_Data_CAST = RDD_Data_CAST.filter(col("Nombre Campana") != "Clientes Corporativos")
 
         self.Save_File(RDD_Data_CAST, root, partitions, brand, origin, Time_File)
 
