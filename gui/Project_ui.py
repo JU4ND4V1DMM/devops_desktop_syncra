@@ -339,7 +339,7 @@ class Ui_Process_Data(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -79, 212, 282))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 212, 282))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout.setObjectName("gridLayout")
@@ -1778,7 +1778,7 @@ class Ui_Process_Data(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 222, 132))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 222, 162))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -1801,7 +1801,7 @@ class Ui_Process_Data(object):
 "    background-color: rgb(217, 16, 76);\n"
 "}")
         self.pushButton_12.setObjectName("pushButton_12")
-        self.gridLayout_2.addWidget(self.pushButton_12, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_12, 1, 0, 1, 1)
         self.pushButton_11 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_2)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
@@ -1821,7 +1821,7 @@ class Ui_Process_Data(object):
 "    background-color: rgb(217, 16, 76);\n"
 "}")
         self.pushButton_11.setObjectName("pushButton_11")
-        self.gridLayout_2.addWidget(self.pushButton_11, 2, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_11, 3, 0, 1, 1)
         self.pushButton_21 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_2)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
@@ -1841,7 +1841,7 @@ class Ui_Process_Data(object):
 "    background-color: rgb(217, 16, 76);\n"
 "}")
         self.pushButton_21.setObjectName("pushButton_21")
-        self.gridLayout_2.addWidget(self.pushButton_21, 3, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_21, 4, 0, 1, 1)
         self.pushButton_22 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_2)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
@@ -1861,7 +1861,27 @@ class Ui_Process_Data(object):
 "    background-color: rgb(217, 16, 76);\n"
 "}")
         self.pushButton_22.setObjectName("pushButton_22")
-        self.gridLayout_2.addWidget(self.pushButton_22, 4, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_22, 5, 0, 1, 1)
+        self.pushButton_24 = QtWidgets.QPushButton(parent=self.scrollAreaWidgetContents_2)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(7)
+        self.pushButton_24.setFont(font)
+        self.pushButton_24.setStyleSheet("/* Al pasar el mouse */\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */\n"
+"    border-radius: 8px;\n"
+"}\n"
+"QPushButton:pressed\n"
+"{\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(217, 16, 76);\n"
+"}")
+        self.pushButton_24.setObjectName("pushButton_24")
+        self.gridLayout_2.addWidget(self.pushButton_24, 0, 0, 1, 1)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.graphicsView_2 = QtWidgets.QGraphicsView(parent=self.tab)
         self.graphicsView_2.setGeometry(QtCore.QRect(320, 410, 361, 121))
@@ -3019,6 +3039,7 @@ class Ui_Process_Data(object):
         self.pushButton_11.setText(_translate("Process_Data", "Consolidar Resultados Blaster"))
         self.pushButton_21.setText(_translate("Process_Data", "Convertir SMS Inventario a CSV"))
         self.pushButton_22.setText(_translate("Process_Data", "Cruce de Claro con Batch"))
+        self.pushButton_24.setText(_translate("Process_Data", "Exportar Data de Telemática"))
         self.commandLinkButton_23.setText(_translate("Process_Data", " Consolidar toques por cuenta"))
         self.comboBox_Selected_Process_2.setItemText(0, _translate("Process_Data", "--- Seleccione opción toques"))
         self.comboBox_Selected_Process_2.setItemText(1, _translate("Process_Data", "TODOS"))
