@@ -222,6 +222,7 @@ class Init_APP():
         self.process_data.commandLinkButton_17.clicked.connect(self.folder_files_process_ng)
         self.process_data.commandLinkButton_16.clicked.connect(self.folder_files_process_psa)
         self.process_data.commandLinkButton_18.clicked.connect(self.folder_files_process_pg)
+        self.process_data.pushButton_24.clicked.connect(self.folder_files_process_telematic)
         self.process_data.pushButton_21.clicked.connect(self.folder_files_xlsx_to_csv)
         self.process_data.pushButton_22.clicked.connect(self.folder_files_cruice_batch_claro)
         
