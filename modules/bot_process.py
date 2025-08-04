@@ -295,7 +295,7 @@ def IPCom(RDD, Type_Proccess):
     
     RDD = RDD.select("phone", "nombrecompleto", "company", f"{Price_Col}", "company2", "debtdays", "fecharray", \
                       "botname", "currency", "identificacion", "cuenta", "Edad de Mora", "origen", "cuenta2", "mejorperfil_mes", \
-                          "fecha_vencimiento", "Tipo Base")
+                          "fecha_vencimiento", "Tipo Base", "tipo_pago")
     
     RDD = RDD.sort(col("identificacion"), col("cuenta"))
 

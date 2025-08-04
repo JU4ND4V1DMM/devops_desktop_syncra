@@ -18,6 +18,7 @@ import gui.payments_not_applied
 import gui.no_managment
 import gui.read_task_web
 import gui.union_bot
+import gui.price_campaigns
 import gui.structure_files
 import gui.union_demo
 import gui.conversion_csv
@@ -1305,6 +1306,36 @@ class Init_APP():
             Mbox_In_Process.setWindowTitle("")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
             Mbox_In_Process.setText("Procesamiento de pagos ejecutado exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a procesar.")
+            Mbox_File_Error.exec()
+            
+    def folder_files_process_telematic(self):
+
+        type_process = "folder"
+        
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+
+        if self.folder_path_IVR != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa la carpeta.")
+            Mbox_In_Process.exec()
+            
+            self.Base = gui.price_campaigns.process_excel_files_in_folder(self.folder_path_IVR, self.folder_path)
+            
+            Mbox_In_Process = QMessageBox() 
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Procesamiento de telematica pagos ejecutado exitosamente.")
             Mbox_In_Process.exec()
         
         else:
