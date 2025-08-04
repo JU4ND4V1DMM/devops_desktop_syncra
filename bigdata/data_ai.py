@@ -24,8 +24,10 @@ spark = get_spark_session()
 sqlContext = SQLContext(spark)
 
 def claro_structure_df(Path_Original, outpath, partitions):
-    Path = f"{Path_Original}Bases/"
-    Path_Dto = f"{Path_Original}Descuentos/"
+    
+    print("Starting processing data AI...")
+    Path = f"{Path_Original}/Bases/"
+    Path_Dto = f"{Path_Original}/Descuentos/"
         
     list_origins = ["ASCARD", "RR", "BSCS", "SGA"]
     now = datetime.now()

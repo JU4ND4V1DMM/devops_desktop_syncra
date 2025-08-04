@@ -3031,7 +3031,7 @@ class Ui_Process_Data(object):
         self.commandLinkButton_27.setText(_translate("Process_Data", "Dataframe de data estructurada"))
         self.commandLinkButton_28.setText(_translate("Process_Data", "Dataframe de demográficos"))
         self.commandLinkButton_29.setText(_translate("Process_Data", "Dataframe de toques telemática"))
-        self.commandLinkButton_30.setText(_translate("Process_Data", "Base Consolidada de Datalake"))
+        self.commandLinkButton_30.setText(_translate("Process_Data", "Base consolidada de Datalake"))
         self.label_Partitions_5.setText(_translate("Process_Data", "Año"))
         self.label_Partitions_10.setText(_translate("Process_Data", "Mes"))
         self.commandLinkButton_31.setText(_translate("Process_Data", "Sharepoint Big Data"))
