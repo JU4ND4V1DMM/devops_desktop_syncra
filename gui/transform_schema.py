@@ -28,7 +28,7 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
         "NOMBRE_CORREGIDO": "Nombre_Completo",
         "RANGO_DEUDA": "Rango",
         "REFERENCIA": "Referencia",
-        "MIN TELEFONOS": "Dato_Contacto",
+        "TELEFONOS": "Dato_Contacto",
         "MORA": "marca2",
         "DESCUENTO": "DCTO",
         "VALOR_DE_PAGAR": "DEUDA_REAL",
@@ -120,6 +120,8 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
                         new_df['Saldo_Asignado'] = df['MOD_INIT_CTA']
                     elif target_col == 'Edad_Mora' and 'MORA' in df.columns:
                         new_df['Edad_Mora'] = df['MORA']
+                    elif target_col == 'Dato_Contacto' and 'TELEFONOS' in df.columns:
+                        new_df['Dato_Contacto'] = df['TELEFONOS']
                     else:
                         source_col = reverse_mapping.get(target_col)
                         if source_col and source_col in df.columns:
@@ -143,7 +145,7 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
                 output_filename = filename.replace(".csv", ".xlsx")
                 output_filepath = os.path.join(output_folder, output_filename)
                 
-                new_df.to_excel(output_filepath, sheet_name='Hoja 1', index=False, engine='openpyxl')
+                new_df.to_excel(output_filepath, sheet_name='Hoja1', index=False, engine='openpyxl')
                 
                 print(f"Successfully processed {filename} and saved as {output_filename}")
 
