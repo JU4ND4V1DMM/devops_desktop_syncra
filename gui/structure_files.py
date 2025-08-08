@@ -16,12 +16,19 @@ def details_files(folder_path, output_folder):
         # Iterate through the files in the folder
         for filename in os.listdir(folder_path):
             if filename.endswith('.xlsx'):
+                print(f"Processing file: {filename}")
                 file_path = os.path.join(folder_path, filename)
                 workbook = load_workbook(file_path, read_only=True)
                 sheet_names = workbook.sheetnames
                 
                 # Write titles from each sheet
                 for sheet_name in sheet_names:
+                    print(f"Processing sheet: {sheet_name}")
                     sheet = workbook[sheet_name]
-                    titles = [cell.value for cell in sheet[1]]
+                    # Verifica si la hoja tiene al menos una fila
+                    first_row = next(sheet.iter_rows(min_row=1, max_row=1), None)
+                    if first_row:
+                        titles = [cell.value for cell in first_row]
+                    else:
+                        titles = ["No titles found"]
                     writer.writerow([filename, sheet_name, ', '.join(map(str, titles))])
