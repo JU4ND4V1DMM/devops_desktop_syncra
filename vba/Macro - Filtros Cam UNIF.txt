@@ -45,8 +45,81 @@ Sub Process_Complete()
     Call DeleteColumnsAYtoBC
     Call FinalHeaders
     
+    Call CorrectionMonitor
+    
     Range("A2").Select
     
+    MsgBox "Macro ejecutada exitosamente."
+    
+End Sub
+Sub CorrectionMonitor()
+
+    ' --- 1. CONFIGURACIÓN INICIAL ---
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim rngProcesar As Range
+    Dim i As Long
+    
+    ' Definimos la hoja de trabajo. Cambia "NombreDeTuHoja" si es necesario.
+    ' O usa ActiveSheet si la macro siempre se ejecuta en la hoja activa.
+    Set ws = ThisWorkbook.ActiveSheet
+    
+    ' Desactivar actualizaciones de pantalla para mayor velocidad
+    Application.ScreenUpdating = False
+    
+    ' Encontrar la última fila con datos en la columna BD (columna 56)
+    lastRow = ws.Cells(ws.Rows.Count, "BD").End(xlUp).Row
+    
+    ' Si no hay datos (o solo encabezado), no hacer nada
+    If lastRow <= 1 Then
+        MsgBox "No hay datos para procesar en la columna BD.", vbInformation
+        Exit Sub
+    End If
+    
+    ' Definir el rango a procesar (asumiendo que la fila 1 es encabezado)
+    Set rngProcesar = ws.Range("BD2:BD" & lastRow)
+    
+    
+    ' --- 2. CONVERTIR FORMATOS ("DELIMITAR") ---
+    ' Esta es la forma más rápida de convertir texto a su formato correcto.
+    ' Simula "Datos" > "Texto en columnas" > "Delimitado" > "Finalizar".
+    rngProcesar.TextToColumns Destination:=ws.Range("BD2"), _
+                               DataType:=xlDelimited, _
+                               FieldInfo:=Array(1, 1) ' 1 = Formato General (xlGeneralFormat)
+
+    
+    ' --- 3. ORDENAR LA COLUMNA PARA OPTIMIZAR ---
+    ' Ordenamos todo el rango de datos de la hoja basándonos en la columna BD.
+    ' Esto agrupa las fechas juntas para que el bucle sea más rápido.
+    ws.Range("A1:BI" & lastRow).Sort Key1:=ws.Range("BD1"), _
+                                     Order1:=xlAscending, _
+                                     Header:=xlYes
+                                     
+    ' Volvemos a calcular la última fila por si el orden cambió el rango
+    lastRow = ws.Cells(ws.Rows.Count, "BD").End(xlUp).Row
+    
+    
+    ' --- 4. RECORRER, VALIDAR Y MOVER FECHAS ---
+    For i = 2 To lastRow ' Bucle desde la fila 2 hasta la última con datos
+        
+        ' Usamos la función IsDate() que es la más fiable para identificar una fecha real
+        If IsDate(ws.Cells(i, "BD").Value) Then
+            ' Si es una fecha, la movemos a la columna BI (columna 61)
+            ws.Cells(i, "BI").Value = ws.Cells(i, "BD").Value
+            
+            ' Opcional: Limpiar la celda original en BD
+            ws.Cells(i, "BD").ClearContents
+        Else
+            ' Si NO es una fecha, gracias al ordenamiento, sabemos que no habrá más.
+            ' Rompemos el bucle para no seguir revisando innecesariamente.
+            Exit For
+        End If
+        
+    Next i
+    
+    ' Reactivar actualizaciones de pantalla
+    Application.ScreenUpdating = True
+
 End Sub
 Sub DeleteColumnsAYtoBC()
     
