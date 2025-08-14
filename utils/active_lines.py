@@ -50,7 +50,7 @@ def First_Changes_DataFrame(Root_Path):
     prechurn = (col("6_") == "Y") & (col("3_") == "RR")
     preprovision = (col("6_") == "Y") & (col("3_") == "ASCARD")
     castigo = col("7_") == "Y"
-    potencial_a_castigar = (col("5_") == "N") & (col("6_") == "N") & (col("7_") == "N") & (col("43_") == "Y")
+    potencial_a_castigar = (col("5_") == "N") & (col("6_") == "N") & (col("7_") == "N") & (col("42_") == "Y")
     marcas = col("13_")
 
     DF = DF.withColumn("Marca", when(potencial, "Potencial")\
@@ -109,8 +109,8 @@ def Phone_Data(Data_):
           ##  Replace for exclusion of mins
 
     columns_to_stack_min = ["28_"] #MIN
-    columns_to_stack_mobile = ["47_", "48_", "49_", "50_", "51_"] #Telefono X
-    columns_to_stack_activelines = ["52_", "53_", "54_", "55_", "56_", "57_", "58_"] #ActiveLines
+    columns_to_stack_mobile = ["46_", "47_", "48_", "49_", "50_"] #Telefono X and EMAIL
+    columns_to_stack_activelines = ["51_", "52_", "53_", "54_", "55_"] #ActiveLines
 
     all_columns_to_stack = columns_to_stack_mobile + columns_to_stack_activelines + columns_to_stack_min
 
@@ -128,7 +128,7 @@ def Phone_Data(Data_):
 
 def Email_Data(Data_):
 
-    columns_to_stack = ["47_", "48_", "49_", "50_", "51_"] #EMAIL and Phone X (1-4)
+    columns_to_stack = ["46_", "47_", "48_", "49_", "50_"] #EMAIL and Phone X (1-4)
 
     all_columns_to_stack = columns_to_stack
 

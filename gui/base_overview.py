@@ -233,18 +233,18 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumn("Telefono 4", lit(""))
         Data_Root = Data_Root.withColumn("Valor Scoring", col("57_"))
         Data_Root = Data_Root.withColumn("[AccountAccountCode2?]", col("2_"))
-        Data_Root = Data_Root.withColumn("44_", lit(""))
+        Data_Root = Data_Root.withColumn("43_", lit(""))
         
         correction_nnny = ((col("5_") == "Y") | (col("6_") == "Y") | (col("7_") == "Y")) & (col("42_") == "Y")
 
         Data_Root = Data_Root.withColumn("42_", when(correction_nnny, lit(""))\
-                                            .otherwise(col("43_")))
+                                            .otherwise(col("42_")))
 
         columns_to_list = ["1_", "2_", "3_", "4_", "5_", "6_", "7_", "8_", "9_", "10_", "11_", "12_", \
-                           "13_", "14_", "15_", "16_", "17_", "18_", "51_", "Telefono 1", "Telefono 2", "Telefono 3", \
+                           "13_", "14_", "15_", "16_", "17_", "18_", "50_", "Telefono 1", "Telefono 2", "Telefono 3", \
                            "Telefono 4", "Valor Scoring", "19_", "20_", "21_", "22_", "23_", "24_", "25_", \
                            "26_", "27_", "28_", "29_", "30_", "31_", "32_", "33_", "34_", "35_",  "59_", "36_", "37_", \
-                           "38_", "39_", "40_", "41_", "42_", "43_", "44_", "[AccountAccountCode2?]", "56_"]
+                           "38_", "39_", "40_", "41_", "42_", "43_", "[AccountAccountCode2?]", "56_"]
         
         Data_Root = Data_Root.select(columns_to_list)
         Data_Root = Data_Root.dropDuplicates(["2_"])
@@ -493,8 +493,8 @@ class Charge_DB(QtWidgets.QMainWindow):
                 .when((col("12_") == "Clientes Corporativos"), lit("CLIENTES CORPORATIVOS")) \
                 .otherwise(lit("CLIENTES INVENTARIO")))
         
-        Data_ = Data_.withColumn("Tipo_Documento", regexp_replace("1_", r'[^a-zA-Z]', ''))
-        Data_ = Data_.withColumn("Tipo_Documento", when((col("Tipo_Documento") == "CC"), lit("Cedula de Ciudadania"))
+        Data_Root = Data_Root.withColumn("Tipo_Documento", regexp_replace("1_", r'[^a-zA-Z]', ''))
+        Data_Root = Data_Root.withColumn("Tipo_Documento", when((col("Tipo_Documento") == "CC"), lit("Cedula de Ciudadania"))
                                     .when((col("Tipo_Documento") == "PS"), lit("Pasaporte"))
                                     .when((col("Tipo_Documento") == "PP"), lit("Pasaporte"))
                                     .when((col("Tipo_Documento") == "PP"), lit("Permiso Temporal"))
@@ -502,7 +502,7 @@ class Charge_DB(QtWidgets.QMainWindow):
                                     .when((col("Tipo_Documento") == "NT"), lit("Nit"))
                                     .when((col("Tipo_Documento") == "CD"), lit("Carnet Diplomatico"))
                                     .when((col("Tipo_Documento") == "CE"), lit("Cedula de Extranjeria"))
-                                    .when((col("Tipo_Documento").isNull()), lit("Sin tipologia"))
+                                    .when(((col("Tipo_Documento").isNull()) | (col("Tipo_Documento") == "")), lit("Sin tipologia"))
                                     .otherwise(lit("Errado")))
         
         Data_Root = Data_Root.orderBy(col("3_"))
@@ -611,9 +611,10 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumnRenamed("49_", "Telefono_4")
         Data_Root = Data_Root.withColumnRenamed("50_", "Email")
         Data_Root = Data_Root.withColumnRenamed("51_", "Active_Lines")
-        Data_Root = Data_Root.withColumnRenamed("52_", "Marca_Asignada")
-        Data_Root = Data_Root.withColumnRenamed("53_", "Cuenta_Next")
+        Data_Root = Data_Root.withColumnRenamed("53_", "Marca_Asignada")
+        Data_Root = Data_Root.withColumnRenamed("54_", "Cuenta_Next")
         Data_Root = Data_Root.withColumnRenamed("55_", "Valor_Deuda")
+        Data_Root = Data_Root.withColumnRenamed("56_", "Segmento_CamUnif")
         Data_Root = Data_Root.withColumnRenamed("57_", "Rango_Deuda")
         Data_Root = Data_Root.withColumnRenamed("Multiproducto", "Multiproducto")
         Data_Root = Data_Root.withColumnRenamed("58_", "Tipo_Base")
@@ -645,8 +646,9 @@ class Charge_DB(QtWidgets.QMainWindow):
             "Codigo_de_proceso", "Customer_Type_Id", "Refinancied_Mark", "Discount", "Permanencia",
             "Deuda_sin_Permanencia", "Telefono_1", "Telefono_2", "Telefono_3", "Telefono_4", "Email",
             "Active_Lines", "Monitor", "Valor Scoring", "Cuotas Pactadas", "Cuotas Pendientes", "Fecha Digitacion/Activacion",
-            "Marca_Asignada", "Cuenta_Next", "Valor_Deuda", "56_", "Rango_Deuda", "Multiproducto", "Tipo_Base", 
-            "Tipo_Documento", "Fecha_Ingreso", "Fecha_Salida", "Valor_Pago", "Valor_Pago_Real", "Fecha_Ult_Pago", "Descuento", "Excl_Descuento", "Liquidacion"
+            "Marca_Asignada", "Cuenta_Next", "Valor_Deuda", "Segmento_CamUnif", "Rango_Deuda", "Multiproducto", "Tipo_Base", 
+            "Tipo_Documento", "Fecha_Ingreso", "Fecha_Salida", "Valor_Pago", "Valor_Pago_Real", "Fecha_Ult_Pago", "Descuento", 
+            "Excl_Descuento", "Liquidacion"
         ]
         
         Data_Root = Data_Root.select(columns_to_list)
