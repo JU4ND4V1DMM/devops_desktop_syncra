@@ -231,20 +231,20 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumn("Telefono 2", lit(""))
         Data_Root = Data_Root.withColumn("Telefono 3", lit(""))
         Data_Root = Data_Root.withColumn("Telefono 4", lit(""))
-        Data_Root = Data_Root.withColumn("Valor Scoring", col("60_"))
+        Data_Root = Data_Root.withColumn("Valor Scoring", col("57_"))
         Data_Root = Data_Root.withColumn("[AccountAccountCode2?]", col("2_"))
         Data_Root = Data_Root.withColumn("44_", lit(""))
         
-        correction_nnny = ((col("5_") == "Y") | (col("6_") == "Y") | (col("7_") == "Y")) & (col("43_") == "Y")
+        correction_nnny = ((col("5_") == "Y") | (col("6_") == "Y") | (col("7_") == "Y")) & (col("42_") == "Y")
 
-        Data_Root = Data_Root.withColumn("43_", when(correction_nnny, lit(""))\
+        Data_Root = Data_Root.withColumn("42_", when(correction_nnny, lit(""))\
                                             .otherwise(col("43_")))
 
         columns_to_list = ["1_", "2_", "3_", "4_", "5_", "6_", "7_", "8_", "9_", "10_", "11_", "12_", \
                            "13_", "14_", "15_", "16_", "17_", "18_", "51_", "Telefono 1", "Telefono 2", "Telefono 3", \
                            "Telefono 4", "Valor Scoring", "19_", "20_", "21_", "22_", "23_", "24_", "25_", \
-                           "26_", "27_", "28_", "29_", "30_", "31_", "32_", "33_", "34_", "35_", "36_", "37_", \
-                           "38_", "39_", "40_", "41_", "42_", "43_", "44_", "[AccountAccountCode2?]", "59_"]
+                           "26_", "27_", "28_", "29_", "30_", "31_", "32_", "33_", "34_", "35_",  "59_", "36_", "37_", \
+                           "38_", "39_", "40_", "41_", "42_", "43_", "44_", "[AccountAccountCode2?]", "56_"]
         
         Data_Root = Data_Root.select(columns_to_list)
         Data_Root = Data_Root.dropDuplicates(["2_"])
@@ -274,7 +274,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumnRenamed("16_", "Deuda Gestionable")
         Data_Root = Data_Root.withColumnRenamed("17_", "Direccion Completa")
         Data_Root = Data_Root.withColumnRenamed("18_", "Fecha Final ")
-        Data_Root = Data_Root.withColumnRenamed("51_", "Email")
+        Data_Root = Data_Root.withColumnRenamed("50_", "Email")
         Data_Root = Data_Root.withColumnRenamed("19_", "Segmento")
         Data_Root = Data_Root.withColumnRenamed("20_", "[Documento?]")
         Data_Root = Data_Root.withColumnRenamed("21_", "[AccStsName?]")
@@ -292,18 +292,21 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumnRenamed("33_", "Intereses Contingentes")
         Data_Root = Data_Root.withColumnRenamed("34_", "Intereses Corrientes Facturados")
         Data_Root = Data_Root.withColumnRenamed("35_", "Intereses por mora facturados")
-        Data_Root = Data_Root.withColumnRenamed("36_", "Cuotas Facturadas")
-        Data_Root = Data_Root.withColumnRenamed("37_", "Iva Intereses Contigentes Facturado")
-        Data_Root = Data_Root.withColumnRenamed("38_", "Iva Intereses Corrientes Facturados")
-        Data_Root = Data_Root.withColumnRenamed("39_", "Iva Intereses por Mora Facturado")
-        Data_Root = Data_Root.withColumnRenamed("40_", "Precio Subscripcion")
-        Data_Root = Data_Root.withColumnRenamed("41_", "Codigo de proceso")
-        Data_Root = Data_Root.withColumnRenamed("42_", "[CustomerTypeId?]")
-        Data_Root = Data_Root.withColumnRenamed("43_", "[RefinanciedMark?]")
-        Data_Root = Data_Root.withColumnRenamed("44_", "[Discount?]")
         
-        if "59_" in Data_Root.columns:
-            Data_Root = Data_Root.withColumnRenamed("59_", "Monitor")
+        Data_Root = Data_Root.withColumnRenamed("59_", "Cuotas Facturadas")
+        
+        Data_Root = Data_Root.withColumnRenamed("36_", "Iva Intereses Contigentes Facturado")
+        Data_Root = Data_Root.withColumnRenamed("37_", "Iva Intereses Corrientes Facturados")
+        Data_Root = Data_Root.withColumnRenamed("38_", "Iva Intereses por Mora Facturado")
+        Data_Root = Data_Root.withColumnRenamed("39_", "Precio Subscripcion")
+        Data_Root = Data_Root.withColumnRenamed("40_", "Codigo de proceso")
+        Data_Root = Data_Root.withColumnRenamed("41_", "[CustomerTypeId?]")
+        Data_Root = Data_Root.withColumnRenamed("42_", "[RefinanciedMark?]")
+        Data_Root = Data_Root.withColumnRenamed("43_", "[Discount?]")
+        
+        
+        if "56_" in Data_Root.columns:
+            Data_Root = Data_Root.withColumnRenamed("56_", "Monitor")
 
         Data_Root = save_temp_log(Data_Root, spark)
         Data_Error = Data_Root
@@ -402,29 +405,25 @@ class Charge_DB(QtWidgets.QMainWindow):
 
         #ActiveLines
         Data_Root = Data_Root.withColumn(
-            "52_",
+            "51_",
             concat(
+                coalesce(col("51_"), lit("")),
+                lit(","),
                 coalesce(col("52_"), lit("")),
                 lit(","),
                 coalesce(col("53_"), lit("")),
                 lit(","),
                 coalesce(col("54_"), lit("")),
                 lit(","),
-                coalesce(col("55_"), lit("")),
-                lit(","),
-                coalesce(col("56_"), lit("")),
-                lit(","),
-                coalesce(col("57_"), lit("")),
-                lit(","),
-                coalesce(col("58_"), lit(""))
+                coalesce(col("55_"), lit(""))
             )
         )
         
-        Data_Root = Data_Root.withColumn("52_", regexp_replace(col("52_"), ",,", ","))
-        Data_Root = Data_Root.withColumn("52_", regexp_replace(col("52_"), ",,", ","))
-        Data_Root = Data_Root.withColumn("52_", regexp_replace(col("52_"), ",,", ","))
+        Data_Root = Data_Root.withColumn("51_", regexp_replace(col("51_"), ",,", ","))
+        Data_Root = Data_Root.withColumn("51_", regexp_replace(col("51_"), ",,", ","))
+        Data_Root = Data_Root.withColumn("51_", regexp_replace(col("51_"), ",,", ","))
         
-        columns_to_list = [f"{i}_" for i in range(1, 61)]
+        columns_to_list = [f"{i}_" for i in range(1, 63)]
         Data_Root = Data_Root.select(columns_to_list)
         
         potencial = (col("5_") == "Y") & (col("3_") == "BSCS")
@@ -434,7 +433,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         prechurn = (col("6_") == "Y") & ((col("3_") == "RR") | (col("3_") == "SGA"))
         preprovision = (col("6_") == "Y") & (col("3_") == "ASCARD")
         castigo = col("7_") == "Y"
-        potencial_a_castigar = (col("5_") == "N") & (col("6_") == "N") & (col("7_") == "N") & (col("43_") == "Y")
+        potencial_a_castigar = (col("5_") == "N") & (col("6_") == "N") & (col("7_") == "N") & (col("42_") == "Y")
         marcas = col("13_")
 
         Data_Root = Data_Root.dropDuplicates(["2_"])
@@ -462,6 +461,13 @@ class Charge_DB(QtWidgets.QMainWindow):
 
         Data_Root = Data_Root.withColumn("55_", regexp_replace("55_", "\\.", ","))
         
+        Data_Root = Data_Root.withColumnRenamed("56_", "63_")   #Monitor
+        Data_Root = Data_Root.withColumnRenamed("57_", "64_")   #Scoring
+        Data_Root = Data_Root.withColumnRenamed("58_", "65_")   #Cuotas Pactadas
+        Data_Root = Data_Root.withColumnRenamed("59_", "66_")   #Cuotas Facturadas
+        Data_Root = Data_Root.withColumnRenamed("60_", "67_")   #Cuotas Pendientes
+        Data_Root = Data_Root.withColumnRenamed("61_", "68_")   #Fecha Digitación/Activación
+
         Segment = ((col("42_") == "81") | (col("42_") == "84") | (col("42_") == "87"))
         Data_Root = Data_Root.withColumn("56_",
                           when(Segment, "Personas")
@@ -486,6 +492,18 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumn("58_", when(flp_filter_databse, concat(lit("CLIENTES "), col("12_"))) \
                 .when((col("12_") == "Clientes Corporativos"), lit("CLIENTES CORPORATIVOS")) \
                 .otherwise(lit("CLIENTES INVENTARIO")))
+        
+        Data_ = Data_.withColumn("Tipo_Documento", regexp_replace("1_", r'[^a-zA-Z]', ''))
+        Data_ = Data_.withColumn("Tipo_Documento", when((col("Tipo_Documento") == "CC"), lit("Cedula de Ciudadania"))
+                                    .when((col("Tipo_Documento") == "PS"), lit("Pasaporte"))
+                                    .when((col("Tipo_Documento") == "PP"), lit("Pasaporte"))
+                                    .when((col("Tipo_Documento") == "PP"), lit("Permiso Temporal"))
+                                    .when((col("Tipo_Documento") == "XPP"), lit("Permiso de Permanencia"))
+                                    .when((col("Tipo_Documento") == "NT"), lit("Nit"))
+                                    .when((col("Tipo_Documento") == "CD"), lit("Carnet Diplomatico"))
+                                    .when((col("Tipo_Documento") == "CE"), lit("Cedula de Extranjeria"))
+                                    .when((col("Tipo_Documento").isNull()), lit("Sin tipologia"))
+                                    .otherwise(lit("Errado")))
         
         Data_Root = Data_Root.orderBy(col("3_"))
         
@@ -576,31 +594,31 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumnRenamed("33_", "Intereses_Contingentes")
         Data_Root = Data_Root.withColumnRenamed("34_", "Intereses_Corrientes_Facturados")
         Data_Root = Data_Root.withColumnRenamed("35_", "Intereses_por_mora_facturados")
-        Data_Root = Data_Root.withColumnRenamed("36_", "Cuotas_Facturadas")
-        Data_Root = Data_Root.withColumnRenamed("37_", "Iva_Intereses_Contigentes_Facturado")
-        Data_Root = Data_Root.withColumnRenamed("38_", "Iva Intereses Corrientes_Facturados")
-        Data_Root = Data_Root.withColumnRenamed("39_", "Iva_Intereses_por_Mora_Facturado")
-        Data_Root = Data_Root.withColumnRenamed("40_", "Precio_Subscripcion")
-        Data_Root = Data_Root.withColumnRenamed("41_", "Codigo_de_proceso")
-        Data_Root = Data_Root.withColumnRenamed("42_", "Customer_Type_Id")
-        Data_Root = Data_Root.withColumnRenamed("43_", "Refinancied_Mark")
-        Data_Root = Data_Root.withColumnRenamed("44_", "Discount")
-        Data_Root = Data_Root.withColumnRenamed("45_", "Permanencia")
-        Data_Root = Data_Root.withColumnRenamed("46_", "Deuda_sin_Permanencia")
-        Data_Root = Data_Root.withColumnRenamed("47_", "Telefono_1")
-        Data_Root = Data_Root.withColumnRenamed("48_", "Telefono_2")
-        Data_Root = Data_Root.withColumnRenamed("49_", "Telefono_3")
-        Data_Root = Data_Root.withColumnRenamed("50_", "Telefono_4")
-        Data_Root = Data_Root.withColumnRenamed("51_", "Email")
-        Data_Root = Data_Root.withColumnRenamed("52_", "Active_Lines")
-        Data_Root = Data_Root.withColumnRenamed("53_", "Marca_Asignada")
-        Data_Root = Data_Root.withColumnRenamed("54_", "Cuenta_Next")
+        Data_Root = Data_Root.withColumnRenamed("66_", "Cuotas_Facturadas")
+        Data_Root = Data_Root.withColumnRenamed("36_", "Iva_Intereses_Contigentes_Facturado")
+        Data_Root = Data_Root.withColumnRenamed("37_", "Iva Intereses Corrientes_Facturados")
+        Data_Root = Data_Root.withColumnRenamed("38_", "Iva_Intereses_por_Mora_Facturado")
+        Data_Root = Data_Root.withColumnRenamed("39_", "Precio_Subscripcion")
+        Data_Root = Data_Root.withColumnRenamed("40_", "Codigo_de_proceso")
+        Data_Root = Data_Root.withColumnRenamed("41_", "Customer_Type_Id")
+        Data_Root = Data_Root.withColumnRenamed("42_", "Refinancied_Mark")
+        Data_Root = Data_Root.withColumnRenamed("43_", "Discount")
+        Data_Root = Data_Root.withColumnRenamed("44_", "Permanencia")
+        Data_Root = Data_Root.withColumnRenamed("45_", "Deuda_sin_Permanencia")
+        Data_Root = Data_Root.withColumnRenamed("46_", "Telefono_1")
+        Data_Root = Data_Root.withColumnRenamed("47_", "Telefono_2")
+        Data_Root = Data_Root.withColumnRenamed("48_", "Telefono_3")
+        Data_Root = Data_Root.withColumnRenamed("49_", "Telefono_4")
+        Data_Root = Data_Root.withColumnRenamed("50_", "Email")
+        Data_Root = Data_Root.withColumnRenamed("51_", "Active_Lines")
+        Data_Root = Data_Root.withColumnRenamed("52_", "Marca_Asignada")
+        Data_Root = Data_Root.withColumnRenamed("53_", "Cuenta_Next")
         Data_Root = Data_Root.withColumnRenamed("55_", "Valor_Deuda")
         Data_Root = Data_Root.withColumnRenamed("57_", "Rango_Deuda")
         Data_Root = Data_Root.withColumnRenamed("Multiproducto", "Multiproducto")
         Data_Root = Data_Root.withColumnRenamed("58_", "Tipo_Base")
-        Data_Root = Data_Root.withColumnRenamed("59_", "Monitor")
-        Data_Root = Data_Root.withColumnRenamed("60_", "Valor Scoring")
+        Data_Root = Data_Root.withColumnRenamed("63_", "Monitor")
+        Data_Root = Data_Root.withColumnRenamed("64_", "Valor Scoring")
         Data_Root = Data_Root.withColumn("Fecha_Ingreso", date_format(current_date(), "dd/MM/yyyy"))
         Data_Root = Data_Root.withColumn("Fecha_Salida", lit(""))
         Data_Root = Data_Root.withColumn("Valor_Pago", lit(""))
@@ -609,6 +627,10 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumn("Descuento", lit(""))
         Data_Root = Data_Root.withColumn("Excl_Descuento", lit(""))
         Data_Root = Data_Root.withColumn("Liquidacion", lit("SI"))
+        
+        Data_Root = Data_Root.withColumnRenamed("65_", "Cuotas Pactadas")
+        Data_Root = Data_Root.withColumnRenamed("67_", "Cuotas Pendientes")
+        Data_Root = Data_Root.withColumnRenamed("68_", "Fecha Digitacion/Activacion")
 
         columns_to_list = [
             "Documento", "Cuenta", "CRM_Origen", "Edad de Deuda", "Potencial_Mark", "PrePotencial_Mark",
@@ -622,9 +644,9 @@ class Charge_DB(QtWidgets.QMainWindow):
             "Iva Intereses Corrientes_Facturados", "Iva_Intereses_por_Mora_Facturado", "Precio_Subscripcion",
             "Codigo_de_proceso", "Customer_Type_Id", "Refinancied_Mark", "Discount", "Permanencia",
             "Deuda_sin_Permanencia", "Telefono_1", "Telefono_2", "Telefono_3", "Telefono_4", "Email",
-            "Active_Lines", "Monitor", "Valor Scoring", "Marca_Asignada", "Cuenta_Next", "Valor_Deuda",
-            "56_", "Rango_Deuda", "Multiproducto", "Tipo_Base", "Fecha_Ingreso", "Fecha_Salida",
-            "Valor_Pago", "Valor_Pago_Real", "Fecha_Ult_Pago", "Descuento", "Excl_Descuento", "Liquidacion"
+            "Active_Lines", "Monitor", "Valor Scoring", "Cuotas Pactadas", "Cuotas Pendientes", "Fecha Digitacion/Activacion",
+            "Marca_Asignada", "Cuenta_Next", "Valor_Deuda", "56_", "Rango_Deuda", "Multiproducto", "Tipo_Base", 
+            "Tipo_Documento", "Fecha_Ingreso", "Fecha_Salida", "Valor_Pago", "Valor_Pago_Real", "Fecha_Ult_Pago", "Descuento", "Excl_Descuento", "Liquidacion"
         ]
         
         Data_Root = Data_Root.select(columns_to_list)
@@ -687,7 +709,7 @@ class Charge_DB(QtWidgets.QMainWindow):
                     end = (i + 1) * rows_per_partition if i < partitions - 1 else len(data_rows)
 
                     # Partition file name with leading zero for numbers less than 10
-                    partition_name = os.path.join(partition_folder, f"Partition_{i+1:02}.csv")
+                    partition_name = os.path.join(partition_folder, f"Particion_{i+1:02}.csv")
 
                     # Write header and data rows to the partition file
                     with open(partition_name, 'w', encoding='utf-8') as file_output:
@@ -696,7 +718,7 @@ class Charge_DB(QtWidgets.QMainWindow):
 
                 # If there are additional rows, create an extra partition
                 if end < len(data_rows):
-                    partition_name = os.path.join(partition_folder, f"Partition_{partitions+1:02}.csv")
+                    partition_name = os.path.join(partition_folder, f"Particion_{partitions+1:02}.csv")
                     with open(partition_name, 'w', encoding='utf-8') as file_output:
                         file_output.write(header)  # Write the header
                         file_output.writelines(data_rows[end:])  # Write the remaining rows

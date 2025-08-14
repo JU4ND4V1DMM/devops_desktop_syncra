@@ -23,8 +23,8 @@ Sub Process_Complete()
 
     Do
         On Error Resume Next
-        Call Update_Line_AP      'Llamado a una ordenaciï¿½n de la columna con valores ACTIVADA y DESACTIVADA
-        Call Filter_AP           'Delimitador de las celdas con valores separados por ; en la columna de direcciï¿½n completa
+        Call Update_Line_AO      'Llamado a una ordenaciï¿½n de la columna con valores ACTIVADA y DESACTIVADA
+        Call Filter_AO           'Delimitador de las celdas con valores separados por ; en la columna de direcciï¿½n completa
         
         If Err.Number <> 0 Then
             Err.Clear  ' Limpiar el error
@@ -36,8 +36,120 @@ Sub Process_Complete()
     Call Update
     Call Headers
     Call Dates
+    
+    Call ActiveLines
+    Call AdjustMonitor
+    Call AdjustValorScoring
+    
+    Call Cutter
+    Call DeleteColumnsAYtoBC
+    Call FinalHeaders
+    
     Range("A2").Select
     
+End Sub
+Sub DeleteColumnsAYtoBC()
+    
+    ' Elimina las columnas desde AY hasta BC.
+    Columns("AY:BC").Delete
+    Columns("BJ").Delete
+    
+End Sub
+Sub Cutter()
+
+    Columns("BD:BJ").Select
+    Range("BJ1").Activate
+    Selection.Cut
+    Range("BJ1").Select
+    Selection.End(xlToRight).Select
+    Selection.Insert Shift:=xlToRight
+    Range("BI1").Select
+    
+
+End Sub
+Sub AdjustValorScoring()
+
+    Dim lastRow As Long
+
+    ' Selecciona la columna AY para ordenarla
+    Range("AZ1").Select
+
+    ' Ordena los datos de la hoja por la columna AY (Monitor) de forma ascendente
+    ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").AutoFilter.Sort. _
+        SortFields.Clear
+    ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").AutoFilter.Sort. _
+        SortFields.Add2 Key:=Columns("AZ:AZ"), SortOn:=xlSortOnValues, Order:= _
+        xlAscending, DataOption:=xlSortNormal
+    With ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").AutoFilter. _
+        Sort
+        .Header = xlYes
+        .MatchCase = False
+        .Orientation = xlTopToBottom
+        .SortMethod = xlPinYin
+        .Apply
+    End With
+
+    ' Encuentra la última fila con datos en la columna AY
+    lastRow = ActiveSheet.Cells(Rows.Count, "AZ").End(xlUp).Row
+
+    ' Selecciona y corta el rango dinámico desde AY2 hasta la última fila encontrada,
+    ' y hasta la columna BD
+    Range("AZ2:BD" & lastRow).Select
+    Selection.Cut
+
+    ' Desplaza la vista de la ventana y pega los datos en BD2
+    ActiveWindow.SmallScroll Down:=-72
+    Range("BE2").Select
+    ActiveSheet.Paste
+
+End Sub
+Sub AdjustMonitor()
+
+    Dim lastRow As Long
+
+    ' Selecciona la columna AY para ordenarla
+    Range("AY1").Select
+
+    ' Ordena los datos de la hoja por la columna AY (Monitor) de forma ascendente
+    ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").AutoFilter.Sort. _
+        SortFields.Clear
+    ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").AutoFilter.Sort. _
+        SortFields.Add2 Key:=Columns("AY:AY"), SortOn:=xlSortOnValues, Order:= _
+        xlAscending, DataOption:=xlSortNormal
+    With ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").AutoFilter. _
+        Sort
+        .Header = xlYes
+        .MatchCase = False
+        .Orientation = xlTopToBottom
+        .SortMethod = xlPinYin
+        .Apply
+    End With
+
+    ' Encuentra la última fila con datos en la columna AY
+    lastRow = ActiveSheet.Cells(Rows.Count, "AY").End(xlUp).Row
+
+    ' Selecciona y corta el rango dinámico desde AY2 hasta la última fila encontrada,
+    ' y hasta la columna BD
+    Range("AY2:BD" & lastRow).Select
+    Selection.Cut
+
+    ' Desplaza la vista de la ventana y pega los datos en BD2
+    ActiveWindow.SmallScroll Down:=-72
+    Range("BD2").Select
+    ActiveSheet.Paste
+
+End Sub
+Sub ActiveLines()
+
+    Range("BK2").Select
+    Range(Selection, ActiveCell.SpecialCells(xlLastCell)).Select
+    Range("BK2:BK1048576").Select
+    Selection.TextToColumns Destination:=Range("BK2"), DataType:=xlDelimited, _
+        TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=False, _
+        Semicolon:=False, Comma:=True, Space:=False, Other:=False, FieldInfo _
+        :=Array(1, 1), TrailingMinusNumbers:=True
+    Range("BK1").Select
+
 End Sub
 
 Sub Titles()
@@ -95,34 +207,37 @@ Sub Titles()
         Range("AG1").Value = "Intereses ContingenteS"
         Range("AH1").Value = "Intereses Corrientes Facturados"
         Range("AI1").Value = "Intereses por mora facturados"
-        Range("AJ1").Value = "Cuotas Facturadas"
-        Range("AK1").Value = "Iva Intereses Contigentes Facturado"
-        Range("AL1").Value = "Iva Intereses Corrientes Facturados"
-        Range("AM1").Value = "Iva Intereses por Mora Facturado"
-        Range("AN1").Value = "Precio Subscripcion"
-        Range("AO1").Value = "Código de proceso"
-        Range("AP1").Value = "[CustomerTypeId?]"
-        Range("AQ1").Value = "[RefinanciedMark?]"
-        Range("AR1").Value = "[Discount?]"
-        Range("AS1").Value = "[Permanencia?]"
-        Range("AT1").Value = "[DeudaSinPermanencia?]"
-        Range("AU1").Value = "Telefono 1"
-        Range("AV1").Value = "Telefono 2"
-        Range("AW1").Value = "Telefono 3"
-        Range("AX1").Value = "Telefono 4"
-        Range("AY1").Value = "Email"
+        Range("AJ1").Value = "Iva Intereses Contigentes Facturado" ' Anteriormente AK1
+        Range("AK1").Value = "Iva Intereses Corrientes Facturados" ' Anteriormente AL1
+        Range("AL1").Value = "Iva Intereses por Mora Facturado" ' Anteriormente AM1
+        Range("AM1").Value = "Precio Subscripcion" ' Anteriormente AN1
+        Range("AN1").Value = "Código de proceso" ' Anteriormente AO1
+        Range("AO1").Value = "[CustomerTypeId?]" ' Anteriormente AP1
+        Range("AP1").Value = "[RefinanciedMark?]" ' Anteriormente AQ1
+        Range("AQ1").Value = "[Discount?]" ' Anteriormente AR1
+        Range("AR1").Value = "[Permanencia?]" ' Anteriormente AS1
+        Range("AS1").Value = "[DeudaSinPermanencia?]" ' Anteriormente AT1
+        Range("AT1").Value = "Telefono 1" ' Anteriormente AU1
+        Range("AU1").Value = "Telefono 2" ' Anteriormente AV1
+        Range("AV1").Value = "Telefono 3" ' Anteriormente AW1
+        Range("AW1").Value = "Telefono 4" ' Anteriormente AX1
+        Range("AX1").Value = "Email" ' Anteriormente AY1
         
-        Range("AZ1").Value = "[ActivesLines]"
-        Columns("BA:BF").Insert Shift:=xlToRight
-        Range("BA1").Value = "[ActivesLines2]"
-        Range("BB1").Value = "[ActivesLines3]"
-        Range("BC1").Value = "[ActivesLines4]"
-        Range("BD1").Value = "[ActivesLines5]"
-        Range("BE1").Value = "[ActivesLines6]"
-        Range("BF1").Value = "[ActivesLines7]"
+        Range("AY1").Value = "[ActivesLines]" ' Anteriormente AZ1
+        Columns("AZ:BD").Insert Shift:=xlToRight ' Se ajustó el rango de columnas a insertar
+        Range("AZ1").Value = "[ActivesLines2]" ' Anteriormente BA1
+        Range("BA1").Value = "[ActivesLines3]" ' Anteriormente BB1
+        Range("BB1").Value = "[ActivesLines4]" ' Anteriormente BC1
+        Range("BC1").Value = "[ActivesLines5]" ' Anteriormente BD1
+        Range("BD1").Value = "[ActivesLines6]" ' Anteriormente BE1
+        Range("BE1").Value = "[ActivesLines7]" ' Anteriormente BF1
         
-        Range("BG1").Value = "Monitor"
-        Range("BH1").Value = "Valor Scorint"
+        Range("BF1").Value = "Monitor" ' Anteriormente BG1
+        Range("BG1").Value = "Valor Scorint" ' Anteriormente BH1
+        Range("BH1").Value = "Cuotas Pactadas"
+        Range("BI1").Value = "Cuotas Pendientes"
+        Range("BJ1").Value = "Fecha Digitacion Activacion"
+        
         
     End If
 End Sub
@@ -139,7 +254,7 @@ Sub Update_Line_Q()
         Add2 Key:=Range("U:U"), SortOn:=xlSortOnValues, Order:=xlAscending _
         , DataOption:=xlSortNormal
     With ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").Sort
-        .SetRange Range("A:AZ")
+        .SetRange Range("A:BK")
         .Header = xlNo
         .MatchCase = False
         .Orientation = xlTopToBottom
@@ -151,20 +266,20 @@ Sub Update_Line_Q()
     
 End Sub
 
-Sub Update_Line_AP()
+Sub Update_Line_AO()
 '
 ' Ordenaciï¿½n de la columna seleccionada
 '
 '
-    Range("AP1").Select                      'Selecciï¿½n del inicio de pila de la columna de referencia
+    Range("AO1").Select                      'Selecciï¿½n del inicio de pila de la columna de referencia
     Selection.AutoFilter
     ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").Sort.SortFields. _
         Clear
     ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").Sort.SortFields. _
-        Add2 Key:=Range("AP:AP"), SortOn:=xlSortOnValues, Order:=xlAscending _
+        Add2 Key:=Range("AO:AO"), SortOn:=xlSortOnValues, Order:=xlAscending _
         , DataOption:=xlSortNormal
     With ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").Sort
-        .SetRange Range("A:AZ")
+        .SetRange Range("A:BK")
         .Header = xlYes
         .MatchCase = False
         .Orientation = xlTopToBottom
@@ -206,13 +321,13 @@ Sub Filter_Q()
     
 End Sub
 
-Sub Filter_AP()
+Sub Filter_AO()
 
 '
 ' Delimtador de columna por signo de ;
 '
 '
-    Range("AP1").Select                      'Selecciï¿½n del inicio de pila de la columna de referencia
+    Range("AO1").Select                      'Selecciï¿½n del inicio de pila de la columna de referencia
     Selection.End(xlDown).Select            'Redirecciï¿½n de posiciï¿½n hasta la cola de la pila
     ActiveCell.Offset(1, 0).Select
     ActiveCell.Offset(0, -1).Select
@@ -241,24 +356,34 @@ Sub Update()
 '
 
 '
+    Range("AZ1").Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    Columns("AZ:BJ").Select
+    Selection.Cut
+    Range("AY1").Select
+    Selection.Insert Shift:=xlToRight
+    Range("BJ1").Select
+
+' Cutting cells
+
     Rows("1:1").Select
     Selection.Insert Shift:=xlDown
     Rows("2:2").Select
     Selection.Delete Shift:=xlUp
     Range("A1").Select
     Selection.End(xlToRight).Select
-    Range("BD2").Select
+    Range("BK2").Select
     Selection.End(xlDown).Select
     Selection.End(xlUp).Select
-    Range("AZ2").Select
+    Range("BJ2").Select
     Range(Selection, ActiveCell.SpecialCells(xlLastCell)).Select
-    Range("AZ2:AZ949463").Select
+    Range("BJ2:BJ1048570").Select
     Range(Selection, Selection.End(xlDown)).Select
-    Selection.TextToColumns Destination:=Range("AZ2"), DataType:=xlDelimited, _
+    Selection.TextToColumns Destination:=Range("BK2"), DataType:=xlDelimited, _
         TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=False, _
         Semicolon:=False, Comma:=True, Space:=False, Other:=False, FieldInfo _
         :=Array(1, 2), TrailingMinusNumbers:=True
-    Range("AZ1").Select
+    Range("BJ1").Select
     
 End Sub
 Sub Headers()
@@ -269,10 +394,24 @@ Sub Headers()
 '
     Dim i As Integer
     Range("A1").Select
-    For i = 1 To 61
+    For i = 1 To 68
         Cells(1, i).FormulaR1C1 = i & "_"
     Next i
-    Range("BF1").Select
+    Range("BP1").Select
+
+End Sub
+
+Sub FinalHeaders()
+'
+' Headers Macro
+'
+
+'
+    Dim i As Integer
+    Range("A1").Select
+    For i = 1 To 62
+        Cells(1, i).FormulaR1C1 = i & "_"
+    Next i
 
 End Sub
 
@@ -288,10 +427,10 @@ End Sub
 Sub Dates()
     Range("A1").Select
     Selection.End(xlToRight).Select
-    Range("BI2").Select
+    Range("BP2").Select
     ActiveCell.Value = Date
     ActiveCell.NumberFormat = "dd/mm/yyyy"
-    Range("BI2").Select
+    Range("BP2").Select
     Range(Selection, ActiveCell.SpecialCells(xlLastCell)).Select
     Selection.FillDown
     Call Segment_Type
@@ -301,7 +440,7 @@ End Sub
 Sub Segment_Type()
     ' Primer bucle Do: Procesar filas en las que el valor de AD es numérico entre 80 y 89
     Do
-        Range("AP2").Select
+        Range("AO2").Select
         Selection.End(xlDown).Select
         ActiveCell.Offset(1, 0).Select
         
@@ -352,7 +491,7 @@ Sub Segment_Type()
     
     ' Segundo bucle Do: Procesar filas donde la celda en la columna A NO esté vacía
     Do
-        Range("AP2").Select
+        Range("AO2").Select
         Selection.End(xlDown).Select
         ActiveCell.Offset(1, 0).Select
         
@@ -383,11 +522,11 @@ End Sub
 
 Sub DatesDelete()
     Do
-        Range("BI2").Select
+        Range("BP2").Select
         Selection.End(xlDown).Select
         
         If IsEmpty(Cells(ActiveCell.Row, "A").Value) Then
-            Cells(ActiveCell.Row, "BI").ClearContents
+            Cells(ActiveCell.Row, "BP").ClearContents
         End If
         
         If Not IsEmpty(Cells(ActiveCell.Row, "A").Value) Then
