@@ -42,6 +42,7 @@ COLUMNS_SMS_MASIVIAN = [
 COLUMNS_WISEBOT_BASE = ["campaña", "fecha_llamada", "rut", "telefono", "estado_llamada", "tiempo_llamada"]
 COLUMNS_WISEBOT_BENEFITS = COLUMNS_WISEBOT_BASE + ["nombre", "apellido", "desea_beneficios"]
 COLUMNS_WISEBOT_AGREEMENT = COLUMNS_WISEBOT_BASE + ["id base", "fecha_acuerdo", "fecha_plazo"]
+COLUMNS_WISEBOT_TITULAR = COLUMNS_WISEBOT_BASE + ["marca"]
 
 # --- Step 2: Column Name Normalization Function (UNCHANGED) ---
 def normalize_columns(columns):
@@ -72,6 +73,8 @@ def classify_excel_file(file_path):
             return "wisebot_benefits", present_headers
         elif all(col in present_headers for col in COLUMNS_WISEBOT_AGREEMENT):
             return "wisebot_agreement", present_headers
+        elif all(col in present_headers for col in COLUMNS_WISEBOT_TITULAR):
+            return "wisebot_titular", present_headers
         elif all(col in present_headers for col in COLUMNS_WISEBOT_BASE):
             return "wisebot_base", present_headers
         elif all(col in present_headers for col in COLUMNS_SMS_SAEM):
@@ -207,7 +210,7 @@ def process_ivr_saem(file_path, present_headers):
     campaign_mapping = {
         'pash': ['pash'],
         'gmac': ['gm', 'insoluto', 'chevrolet'],
-        'claro': ['210', '0_30', 'rr', 'ascard', 'bscs', 'prechurn', 'churn', 'potencial', 'prepotencial', 'descuento'],
+        'claro': ['210', '0_30', 'rr', 'ascard', 'bscs', 'prechurn', 'churn', 'potencial', 'prepotencial', 'descuento', 'esp', '30_', 'prees', 'preord'],
         'puntored': ['puntored'],
         'crediveci': ['crediveci'],
         'yadinero': ['dinero'],
@@ -406,7 +409,7 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
 
     # 1. Filter out rows where 'estado_llamada' is 'contestadora'
     df_filtered = df.copy() # Start with a copy to avoid modifying original df
-    if 'estado_llamada' in df_filtered.columns:
+    if 'estado_llamada' in df_filtered.columns and 'marca' not in df_filtered.columns:
         initial_rows = len(df_filtered)
         # Ensure comparison is case-insensitive for 'contestadora'
         df_filtered = df_filtered[df_filtered['estado_llamada'].astype(str).str.lower() != 'contestadora']
@@ -433,7 +436,7 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
         return None # Return None if key column for grouping is missing
 
     # Ensure 'campaña' column exists for grouping
-    if 'campaña' not in df_filtered.columns:
+    if 'campaña' not in df_filtered.columns and 'marca' in df_filtered.columns:
         print("  Error: 'campaña' column not found for grouping. Cannot perform aggregation.")
         print(f"*** WISEBOT processing finished with errors. ***\n" + "-" * 50)
         return None # Return None if key column for grouping is missing
@@ -441,8 +444,14 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
     # 4. Group by 'fecha_dia' and 'campaña' and sum 'tiempo_llamada'
     # Filter out rows where fecha_dia is NaT (Not a Time) due to parsing errors
     df_filtered = df_filtered.dropna(subset=['fecha_dia'])
-    if not df_filtered.empty:
+    if not df_filtered.empty and 'marca' not in df_filtered.columns:
         wisebot_grouped_df = df_filtered.groupby(['fecha_dia', 'campaña'])['tiempo_llamada'].sum().reset_index()
+        # Add a source_file_type to the aggregated Wisebot data too
+        wisebot_grouped_df['source_file_type'] = f'WISEBOT_{wisebot_subtype.upper()}_AGGREGATED'
+        print("\n  Aggregated Wisebot Data:")
+        print(wisebot_grouped_df.to_string()) # Use .to_string() for full display
+    elif not df_filtered.empty and 'marca' in df_filtered.columns:
+        wisebot_grouped_df = df_filtered.groupby(['fecha_dia', 'marca'])['tiempo_llamada'].sum().reset_index()
         # Add a source_file_type to the aggregated Wisebot data too
         wisebot_grouped_df['source_file_type'] = f'WISEBOT_{wisebot_subtype.upper()}_AGGREGATED'
         print("\n  Aggregated Wisebot Data:")
@@ -456,6 +465,8 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
         print("  Wisebot Subtype: With benefits (nombre, apellido, desea_beneficios).")
     elif wisebot_subtype == "wisebot_agreement":
         print("  Wisebot Subtype: With agreement and deadline (id base, fecha_acuerdo, fecha_plazo).")
+    elif wisebot_subtype == "wisebot_titular":
+        print("  Wisebot Subtype: With titular information (marca).")
     elif wisebot_subtype == "wisebot_base":
         print("  Wisebot Subtype: Base (only basic columns).")
     else:
@@ -489,6 +500,7 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
         'WISEBOT_WISEBOT_AGREEMENT_AGGREGATED',
         'WISEBOT_WISEBOT_BENEFITS_AGGREGATED',
         'WISEBOT_WISEBOT_BASE_AGGREGATED',
+        'WISEBOT_WISEBOT_TITULAR_AGGREGATED',
         'IVR_SAEM_AGGREGATED',
         'SMS_SAEM_AGGREGATED'
     ]
@@ -513,6 +525,7 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
     grouping_columns_map = {
         'remitente': 'agrupador_campana_usuario',
         'campaign_group': 'agrupador_campana_usuario',
+        'marca': 'agrupador_campana_usuario', # This might be present in WISEBOT, for instance
         'campaña': 'agrupador_campana_usuario', # This might be present in WISEBOT, for instance
         'username': 'agrupador_campana_usuario' # Specific to SMS_SAEM
     }
@@ -539,9 +552,20 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
                             df_to_add.rename(columns={old_name: new_name}, inplace=True)
 
                     # Apply renaming for grouping columns
+                    marca_renamed = False
                     for old_name, new_name in grouping_columns_map.items():
-                        if old_name in df_to_add.columns:
+                        if old_name == "marca" and old_name in df_to_add.columns:
+                            print("marca renamed")
                             df_to_add.rename(columns={old_name: new_name}, inplace=True)
+                            marca_renamed = True
+                        elif old_name == "campaña" and old_name in df_to_add.columns and marca_renamed:
+                            print("campaña not renamed")
+                            continue
+                        elif old_name in df_to_add.columns:
+                            print(f"Renaming {old_name} to {new_name}")
+                            df_to_add.rename(columns={old_name: new_name}, inplace=True)
+                        else:
+                            print("nothing")
                     
                     processed_and_renamed_dfs.append(df_to_add)
 
