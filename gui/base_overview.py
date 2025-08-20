@@ -369,7 +369,9 @@ class Charge_DB(QtWidgets.QMainWindow):
         RDD_Data_Corp = RDD_Data_MULTIBRAND.filter(col("Nombre Campana") == "Clientes Corporativos")
         RDD_Data_MULTIBRAND = RDD_Data_MULTIBRAND.filter(col("Marca_Asignada") != "Castigo")
         RDD_Data_MULTIBRAND = RDD_Data_MULTIBRAND.union(RDD_Data_Corp)
-        
+
+        RDD_Data_MULTIBRAND = RDD_Data_MULTIBRAND.dropDuplicates(["Cuenta"])
+
         self.Save_File(RDD_Data_MULTIBRAND, root, partitions, brand, origin, Time_File)
 
         origin = "Multiorigen"
