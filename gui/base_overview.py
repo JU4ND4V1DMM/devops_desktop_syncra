@@ -596,7 +596,6 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumnRenamed("33_", "Intereses_Contingentes")
         Data_Root = Data_Root.withColumnRenamed("34_", "Intereses_Corrientes_Facturados")
         Data_Root = Data_Root.withColumnRenamed("35_", "Intereses_por_mora_facturados")
-        Data_Root = Data_Root.withColumnRenamed("66_", "Cuotas_Facturadas")
         Data_Root = Data_Root.withColumnRenamed("36_", "Iva_Intereses_Contigentes_Facturado")
         Data_Root = Data_Root.withColumnRenamed("37_", "Iva Intereses Corrientes_Facturados")
         Data_Root = Data_Root.withColumnRenamed("38_", "Iva_Intereses_por_Mora_Facturado")
@@ -632,6 +631,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumn("Liquidacion", lit("SI"))
         
         Data_Root = Data_Root.withColumnRenamed("65_", "Cuotas Pactadas")
+        Data_Root = Data_Root.withColumnRenamed("66_", "Cuotas_Facturadas")
         Data_Root = Data_Root.withColumnRenamed("67_", "Cuotas Pendientes")
         Data_Root = Data_Root.withColumnRenamed("68_", "Fecha Digitacion/Activacion")
 
@@ -643,11 +643,11 @@ class Charge_DB(QtWidgets.QMainWindow):
             "Acc_Sts_Name", "Ciudad", "Inbox_Name", "Nombre_del_Cliente", "Id_de_Ejecucion",
             "Fecha_de_Vencimiento", "Numero_Referencia_de_Pago", "MIN", "Plan", "Cuotas_Aceleradas",
             "Fecha_de_Aceleracion", "Valor_Acelerado", "Intereses_Contingentes", "Intereses_Corrientes_Facturados",
-            "Intereses_por_mora_facturados", "Cuotas_Facturadas", "Iva_Intereses_Contigentes_Facturado",
+            "Intereses_por_mora_facturados", "Iva_Intereses_Contigentes_Facturado",
             "Iva Intereses Corrientes_Facturados", "Iva_Intereses_por_Mora_Facturado", "Precio_Subscripcion",
             "Codigo_de_proceso", "Customer_Type_Id", "Refinancied_Mark", "Discount", "Permanencia",
             "Deuda_sin_Permanencia", "Telefono_1", "Telefono_2", "Telefono_3", "Telefono_4", "Email",
-            "Active_Lines", "Monitor", "Valor Scoring", "Cuotas Pactadas", "Cuotas Pendientes", "Fecha Digitacion/Activacion",
+            "Active_Lines", "Monitor", "Valor Scoring", "Cuotas Pactadas", "Cuotas_Facturadas", "Cuotas Pendientes", "Fecha Digitacion/Activacion",
             "Marca_Asignada", "Cuenta_Next", "Valor_Deuda", "Segmento_CamUnif", "Rango_Deuda", "Multiproducto", "Tipo_Base", 
             "Tipo_Documento", "Fecha_Ingreso", "Fecha_Salida", "Valor_Pago", "Valor_Pago_Real", "Fecha_Ult_Pago", "Descuento", 
             "Excl_Descuento", "Liquidacion"
