@@ -626,6 +626,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         Data_Root = Data_Root.withColumn("Valor_Pago", lit(""))
         Data_Root = Data_Root.withColumn("Valor_Pago_Real", lit(""))
         Data_Root = Data_Root.withColumn("Fecha_Ult_Pago", lit(""))
+        Data_Root = Data_Root.withColumn("Tipo_Pago", lit(""))
         Data_Root = Data_Root.withColumn("Descuento", lit(""))
         Data_Root = Data_Root.withColumn("Excl_Descuento", lit(""))
         Data_Root = Data_Root.withColumn("Liquidacion", lit("SI"))
@@ -649,7 +650,7 @@ class Charge_DB(QtWidgets.QMainWindow):
             "Deuda_sin_Permanencia", "Telefono_1", "Telefono_2", "Telefono_3", "Telefono_4", "Email",
             "Active_Lines", "Monitor", "Valor Scoring", "Cuotas Pactadas", "Cuotas_Facturadas", "Cuotas Pendientes", "Fecha Digitacion/Activacion",
             "Marca_Asignada", "Cuenta_Next", "Valor_Deuda", "Segmento_CamUnif", "Rango_Deuda", "Multiproducto", "Tipo_Base", 
-            "Tipo_Documento", "Fecha_Ingreso", "Fecha_Salida", "Valor_Pago", "Valor_Pago_Real", "Fecha_Ult_Pago", "Descuento", 
+            "Tipo_Documento", "Fecha_Ingreso", "Fecha_Salida", "Valor_Pago", "Valor_Pago_Real", "Fecha_Ult_Pago", "Tipo_Pago", "Descuento", 
             "Excl_Descuento", "Liquidacion"
         ]
         
