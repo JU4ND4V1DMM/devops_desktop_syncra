@@ -215,7 +215,8 @@ def process_ivr_saem(file_path, present_headers):
         'crediveci': ['crediveci'],
         'yadinero': ['dinero'],
         'qnt': ['qnt'],
-        'habi': ['habi']
+        'habi': ['habi'],
+        'payjoy': ['payjoy', 'pay joy']
     }
 
     df['campaign_group'] = df['nombre campaña'] # Default to original name
@@ -357,7 +358,8 @@ def process_sms_masivian(file_path, present_headers):
         'crediveci': ['crediveci'],
         'yadinero': ['dinero'],
         'qnt': ['qnt'],
-        'habi': ['habi']
+        'habi': ['habi'],
+        'payjoy': ['payjoy', 'pay joy']
     }
 
     df['campaign_group'] = df['campaña'] # Default to original name
@@ -623,6 +625,9 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
         # 9. crediveci
         combined_df.loc[combined_df['agrupador_lower'].str.contains('crediveci', na=False), 'agrupador_campana_usuario'] = 'CREDIVECI' # Note: mapping 'crediveci' to 'crediveci'
         
+        # 10. payjoy
+        combined_df.loc[combined_df['agrupador_lower'].str.contains('payjoy', na=False), 'agrupador_campana_usuario'] = 'PAYJOY' # Note: mapping 'payjoy' to 'payjoy'
+
         # Drop the temporary lowercase column
         combined_df.drop(columns=['agrupador_lower'], inplace=True)
         print("Final concept unification applied.")
