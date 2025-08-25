@@ -7,6 +7,8 @@ import modules.telematics_crediveci
 import modules.telematics_gmfinancial
 import modules.telematics_puntored
 import modules.telematics_yadinero
+import modules.telematics_habi
+import modules.telematics_payjoy
 import web.download_saem_reports
 import modules.bot_process
 import modules.email_process
@@ -1065,6 +1067,38 @@ class Process_Data(QtWidgets.QMainWindow):
 
                     modules.telematics_yadinero.function_complete_telematics(file, root, partitions, process_resource)
                     
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Proceso de telematica ejecutado exitosamente.")
+                    Mbox_In_Process.exec()
+                
+                elif campaign_selected == "Habi":
+
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("Procesando")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+                    Mbox_In_Process.exec()
+
+                    modules.telematics_habi.function_complete_telematics(file, root, partitions, process_resource)
+
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Proceso de telematica ejecutado exitosamente.")
+                    Mbox_In_Process.exec()
+                    
+                elif campaign_selected == "Payjoy":
+
+                    Mbox_In_Process = QMessageBox()
+                    Mbox_In_Process.setWindowTitle("Procesando")
+                    Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+                    Mbox_In_Process.setText("Por favor espere la ventana de confirmacion, mientras se procesa el archivo.")
+                    Mbox_In_Process.exec()
+
+                    modules.telematics_payjoy.function_complete_telematics(file, root, partitions, process_resource)
+
                     Mbox_In_Process = QMessageBox()
                     Mbox_In_Process.setWindowTitle("")
                     Mbox_In_Process.setIcon(QMessageBox.Icon.Information)

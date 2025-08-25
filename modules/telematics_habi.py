@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
-from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, length, split, to_date
+from pyspark.sql.functions import col, concat, lit, upper, regexp_replace, length, split, to_date, explode, array_join
 from pyspark.sql.functions import trim, format_number, expr, when, coalesce, datediff, current_date
 from web.pyspark_session import get_spark_session
 from web.save_files import save_to_csv
@@ -14,7 +14,7 @@ sqlContext = SQLContext(spark)
 ### Proceso con todas las funciones desarrolladas
 def function_complete_telematics(path, output_directory, partitions, process_resource):
     
-    print(f"Processing Telematics Puntored with resource: {process_resource}")
+    print(f"Processing Telematics Habi with resource: {process_resource}")
     
     Data_Frame = First_Changes_DataFrame(path)
     if process_resource == "EMAIL":
@@ -56,16 +56,15 @@ def change_character_account (Data_, Column):
 ### Renombramiento de columnas
 def Renamed_Column(Data_Frame):
 
-    Data_Frame = Data_Frame.withColumnRenamed("id_puntored", "ID_Puntored")
-    Data_Frame = Data_Frame.withColumnRenamed("identificacion", "Identificacion")
-    Data_Frame = Data_Frame.withColumnRenamed("canal_venta", "Canal")
+    Data_Frame = Data_Frame.withColumnRenamed("account", "ID_Habi")
+    Data_Frame = Data_Frame.withColumnRenamed("identifitation", "Identificacion")
 
     return Data_Frame
 
 ### Proceso de guardado del RDD
 def Save_Data_Frame (Data_Frame, Directory_to_Save, partitions, resource):
 
-    Type_File = f"BD Puntored {resource}"
+    Type_File = f"BD Habi {resource}"
     delimiter = ";"
     
     save_to_csv(Data_Frame, Directory_to_Save, Type_File, partitions, delimiter)
@@ -75,22 +74,26 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, partitions, resource):
 ### Dinamización de columnas de celulares
 def Phone_Data(Data_):
 
-    columns_to_stack_celular = [f"celular{i}" for i in range(1, 11)]
-    columns_to_stack_fijo = [f"fijo{i}" for i in range(1, 5)]
-    columns_to_stack_min = ["numeromarcado"]
-    all_columns_to_stack = columns_to_stack_celular + columns_to_stack_fijo + columns_to_stack_min
-    columns_to_drop_contact = all_columns_to_stack
-    Stacked_Data_Frame = Data_.select("*", *all_columns_to_stack)
-    
-    Stacked_Data_Frame = Stacked_Data_Frame.select(
-        "*", \
-        expr(f"stack({len(all_columns_to_stack)}, {', '.join(all_columns_to_stack)}) as Dato_Contacto")
-        )
-    
-    Data_ = Stacked_Data_Frame.drop(*columns_to_drop_contact)
-    Stacked_Data_Frame = Data_.select("*")
+    cleaned_df = Data_.withColumn(
+        "telefonos_limpios",
+        regexp_replace("telefonos", "\\[|\\]|\\{|\\}|\\s+|\\\"", "")
+    )
 
-    return Stacked_Data_Frame
+    array_df = cleaned_df.withColumn(
+        "telefonos_array",
+        split("telefonos_limpios", ",")
+    )
+
+    exploded_df = array_df.withColumn("Dato_Contacto", explode("telefonos_array"))
+
+    final_df = exploded_df.withColumn(
+        "telefonos_array_string",
+        array_join("telefonos_array", ", ")
+    )
+
+    final_df = final_df.drop("telefonos", "telefonos_limpios", "telefonos_array", "telefonos_array_string")
+
+    return final_df
 
 def Email_Data(Data_):
 
@@ -117,24 +120,24 @@ def conversion_process (Data_Frame, output_directory, partitions, Contacts_Min):
     
     Data_ = Data_Frame
 
-    Data_ = Data_.withColumn("Cruce_Cuentas", concat(col("id_puntored"), lit("-"), col("Dato_Contacto")))
+    Data_ = Data_.withColumn("Cruce_Cuentas", concat(col("account"), lit("-"), col("Dato_Contacto")))
 
-    Price_Col = "saldo_inicial"     
+    Price_Col = "valor_promesa"     
 
     Data_ = Data_.withColumn(f"DEUDA_REAL", col(f"{Price_Col}").cast("double").cast("int"))
     
     Data_ = Function_Filter(Data_, Contacts_Min)
 
     Data_ = Data_.withColumn("Rango", \
-            when((col("saldo_inicial") <= 20000), lit("1 Menos a 20 mil")) \
-                .when((col("saldo_inicial") <= 50000), lit("2 Entre 20 a 50 mil")) \
-                .when((col("saldo_inicial") <= 100000), lit("3 Entre 50 a 100 mil")) \
-                .when((col("saldo_inicial") <= 150000), lit("4 Entre 100 a 150 mil")) \
-                .when((col("saldo_inicial") <= 200000), lit("5 Entre 150 mil a 200 mil")) \
-                .when((col("saldo_inicial") <= 300000), lit("6 Entre 200 mil a 300 mil")) \
-                .when((col("saldo_inicial") <= 500000), lit("7 Entre 300 mil a 500 mil")) \
-                .when((col("saldo_inicial") <= 1000000), lit("8 Entre 500 mil a 1 Millon")) \
-                .when((col("saldo_inicial") <= 2000000), lit("9 Entre 1 a 2 millones")) \
+            when((col("valor_promesa") <= 20000), lit("1 Menos a 20 mil")) \
+                .when((col("valor_promesa") <= 50000), lit("2 Entre 20 a 50 mil")) \
+                .when((col("valor_promesa") <= 100000), lit("3 Entre 50 a 100 mil")) \
+                .when((col("valor_promesa") <= 150000), lit("4 Entre 100 a 150 mil")) \
+                .when((col("valor_promesa") <= 200000), lit("5 Entre 150 mil a 200 mil")) \
+                .when((col("valor_promesa") <= 300000), lit("6 Entre 200 mil a 300 mil")) \
+                .when((col("valor_promesa") <= 500000), lit("7 Entre 300 mil a 500 mil")) \
+                .when((col("valor_promesa") <= 1000000), lit("8 Entre 500 mil a 1 Millon")) \
+                .when((col("valor_promesa") <= 2000000), lit("9 Entre 1 a 2 millones")) \
                 .otherwise(lit("9.1 Mayor a 2 millones")))
 
 
@@ -157,15 +160,15 @@ def conversion_process (Data_Frame, output_directory, partitions, Contacts_Min):
 
 
     # Data_ = Data_.select("identificacion", "cuenta", "cuenta2", "fecha_asignacion", "marca", \
-    #                      "origen", f"{Price_Col}", "customer_type_id", "Form_Moneda", "nombrecompleto", \
+    #                      "origen", f"{Price_Col}", "customer_type_id", "Form_Moneda", "nombre_cliente", \
     #                     "Rango", "referencia", "Dato_Contacto", "Hora_Envio", "Hora_Real", \
     #                     "Fecha_Hoy", "marca2", "descuento", "DEUDA_REAL", "fecha_vencimiento", "PRODUCTO", \
     #                     "fechapromesa", "tipo_pago", "mejorperfil_mes")
     
     Data_ = Data_.withColumn("now", current_date())
-    Data_ = Data_.withColumn("dias_transcurridos", datediff(col("now"), col("fecha_ingreso")))
+    Data_ = Data_.withColumn("dias_transcurridos", datediff(col("now"), col("last_date_managed")))
 
-    Data_ = Data_.withColumn("NOMBRE CORTO", upper(col("nombrecompleto")))
+    Data_ = Data_.withColumn("NOMBRE CORTO", upper(col("nombre_cliente")))
 
     Data_ = Data_.withColumn("NOMBRE CORTO", split(col("NOMBRE CORTO"), " "))
     
