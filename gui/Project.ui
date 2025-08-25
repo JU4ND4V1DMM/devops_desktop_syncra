@@ -3360,7 +3360,7 @@ QPushButton:pressed {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>222</width>
+            <width>209</width>
             <height>222</height>
            </rect>
           </property>
@@ -5158,17 +5158,27 @@ font: 63 10pt &quot;Bahnschrift SemiBold&quot;;</string>
          </item>
          <item>
           <property name="text">
-           <string>Puntored</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>Crediveci</string>
           </property>
          </item>
          <item>
           <property name="text">
            <string>GM Financial</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Habi</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Payjoy</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Puntored</string>
           </property>
          </item>
          <item>

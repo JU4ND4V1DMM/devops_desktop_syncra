@@ -74,7 +74,7 @@ def change_character_account (Data_, Column):
 ### Renombramiento de columnas
 def Renamed_Column(Data_Frame):
 
-    Data_Frame = Data_Frame.withColumnRenamed("id_usuario", "ID_YaDinero")
+    Data_Frame = Data_Frame.withColumnRenamed("cuenta", "ID_YaDinero")
     Data_Frame = Data_Frame.withColumnRenamed("identificacion", "Identificacion")
 
     return Data_Frame
@@ -92,6 +92,8 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, partitions, resource):
 ### Dinamización de columnas de celulares
 def Phone_Data(Data_):
 
+    print("Primer contador:", Data_.count())
+
     columns_to_stack_celular = [f"celular{i}" for i in range(1, 11)]
     columns_to_stack_fijo = [f"fijo{i}" for i in range(1, 5)]
     columns_to_stack_min = ["numeromarcado", "celular", "segundo_celular", "celular_1"]
@@ -107,6 +109,8 @@ def Phone_Data(Data_):
     Data_ = Stacked_Data_Frame.drop(*columns_to_drop_contact)
     Stacked_Data_Frame = Data_.select("*")
 
+    print("Segundo contador:", Data_.count())
+    
     return Stacked_Data_Frame
 
 def Email_Data(Data_):
@@ -134,7 +138,7 @@ def conversion_process (Data_Frame, output_directory, partitions, Contacts_Min):
     
     Data_ = Data_Frame
 
-    Data_ = Data_.withColumn("Cruce_Cuentas", concat(col("id_usuario"), lit("-"), col("Dato_Contacto")))
+    Data_ = Data_.withColumn("Cruce_Cuentas", concat(col("cuenta"), lit("-"), col("Dato_Contacto")))
 
     Price_Col = "valor_a_pagar"     
 
@@ -170,8 +174,11 @@ def conversion_process (Data_Frame, output_directory, partitions, Contacts_Min):
     Data_ = Data_.withColumn("Hora_Real", lit(now.strftime("%H:%M")))
     Data_ = Data_.withColumn("Fecha_Hoy", lit(now.strftime("%d/%m/%Y")))
 
+    print("Tercer contador:", Data_.count())
+    
     Data_ = Data_.dropDuplicates(["Cruce_Cuentas"])
 
+    print("Cuarto contador:", Data_.count())
 
     # Data_ = Data_.select("identificacion", "cuenta", "cuenta2", "fecha_asignacion", "marca", \
     #                      "origen", f"{Price_Col}", "customer_type_id", "Form_Moneda", "nombrecompleto", \
@@ -181,8 +188,8 @@ def conversion_process (Data_Frame, output_directory, partitions, Contacts_Min):
     
     Data_ = Data_.withColumn("now", current_date())
     Data_ = Data_.withColumn("dias_transcurridos", datediff(col("now"), col("fecha_ingreso")))
-    
-    Data_ = Data_.withColumn("NOMBRE CORTO", col("titular"))
+
+    Data_ = Data_.withColumn("NOMBRE CORTO", upper(col("nombrecompleto")))
 
     Data_ = Data_.withColumn("NOMBRE CORTO", split(col("NOMBRE CORTO"), " "))
     
@@ -221,5 +228,7 @@ def Function_Filter(RDD, Contacts_Min):
         Data_F = RDD.filter(col("Dato_Contacto") >= 6010000009)
         Data_F = Data_F.filter(col("Dato_Contacto") <= 6089999999)
         RDD = Data_C.union(Data_F)
+    
+    print("Quinto contador:", RDD.count())
     
     return RDD

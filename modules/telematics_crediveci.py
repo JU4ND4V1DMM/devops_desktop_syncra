@@ -163,8 +163,8 @@ def conversion_process (Data_Frame, output_directory, partitions, Contacts_Min):
     
     Data_ = Data_.withColumn("now", current_date())
     Data_ = Data_.withColumn("dias_transcurridos", datediff(col("now"), col("fecha_ingreso")))
-    
-    Data_ = Data_.withColumn("NOMBRE CORTO", col("titular"))
+
+    Data_ = Data_.withColumn("NOMBRE CORTO", upper(col("titular")))
 
     Data_ = Data_.withColumn("NOMBRE CORTO", split(col("NOMBRE CORTO"), " "))
     
