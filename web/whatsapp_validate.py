@@ -60,9 +60,17 @@ def validate_whatsapp(driver, phone_number, counter):
         else:
             print(f"{counter} Number {phone_number} does not have WhatsApp. ❌")
             return False
-    except (selexceptions.TimeoutException, selexceptions.ElementClickInterceptedException):
+            
+    # Add NoSuchElementException to the except clause!
+    except (selexceptions.TimeoutException, selexceptions.ElementClickInterceptedException, NoSuchElementException):
         # Ensure search box is cleared if an error occurs
-        search_box.send_keys(Keys.ESCAPE)
+        try:
+            search_box = WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div/div[3]/div/div[2]/div[1]/span/div/span/div/div[1]/div[2]/div/div/div[1]/p')))
+            search_box.send_keys(Keys.ESCAPE)
+        except:
+            # If search box is not found, just
+            pass
+            
         print(f"{counter} Number {phone_number} does not have WhatsApp. ❌")
         return False
 
