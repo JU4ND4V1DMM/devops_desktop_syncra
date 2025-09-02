@@ -47,7 +47,6 @@ def process_ranking_files(input_folder, output_file):
                 if filter_column:
                     df = df[df[filter_column].str.contains("RECUPERA", case=False, na=False)]
                 else:
-                    print(f"No filter column found in sheet: {sheet_name}")
                     continue
 
                 # Handle "cuenta" columns dynamically
@@ -63,15 +62,7 @@ def process_ranking_files(input_folder, output_file):
                         df["servicios"] = df.groupby("cuenta")["cuenta"].transform("count")
                         df["tipo"] = "movil"
                 else:
-                    print(f"No 'cuenta' column found in sheet: {sheet_name}")
                     continue
-
-                # Add "estado" column dynamically
-                estado_column = next((col for col in estado_columns if col in df.columns), None)
-                if estado_column:
-                    df["estado"] = df[estado_column]
-                else:
-                    df["estado"] = "desconocido"  # Default value if no estado column is found
 
                 # Add "pago" column dynamically
                 payment_column = next((col for col in pago_column if col in df.columns), None)
@@ -94,6 +85,13 @@ def process_ranking_files(input_folder, output_file):
                 else:
                     df["concepto"] = None  # Default value if no concepto column is found
 
+                # Add "estado" column dynamically
+                estado_column = next((col for col in estado_columns if col in df.columns), None)
+                if estado_column:
+                    df["estado"] = df[estado_column]
+                else:
+                    df["estado"] = df["concepto"]
+
                 # Create a new column "llave" based on "estado" and "tipo"
                 df["llave"] = (df["estado"].astype(str) + df["tipo"].astype(str)).str.upper()
 
@@ -102,6 +100,14 @@ def process_ranking_files(input_folder, output_file):
                     lambda x: "NO RECUPERADA" if x == "NOFIJA" else
                               "RECUPERADA" if x == "SIFIJA" else
                               "NO GESTIONAR" if x == "NOMOVIL" else
+                              
+                              "GESTIONAR" if x == "AJUSTEMOVIL" else
+                              "GESTIONAR" if x == "PENDIENTEMOVIL" else
+                              "NO GESTIONAR" if x == "PAGO TOTAL NO RXMOVIL" else
+                              "NO GESTIONAR" if x == "PAGO TOTAL NO_RXMOVIL" else
+                              "NO GESTIONAR" if x == "PAGO TOTAL SI RXMOVIL" else
+                              "NO GESTIONAR" if x == "PAGO TOTAL SI_RXMOVIL" else
+                              
                               "GESTIONAR" if x == "SIMOVIL" else
                               "GESTION RECAUDO" if "GESTION RECAUDO" in x else
                               x
@@ -140,9 +146,7 @@ def process_ranking_files(input_folder, output_file):
         output_file_ranking = os.path.join(output_directory, f"Cargue Rankings {datetime.now().strftime('%Y-%m-%d')}.csv")
 
         final_df = pd.concat(all_data, ignore_index=True)
-        final_df.to_csv(output_file_ranking, sep=";", index=False, encoding="utf-8")
-        print(f"Processing complete. Results saved to: {output_file_ranking}")
-        
+        final_df.to_csv(output_file_ranking, sep=";", index=False, encoding="utf-8")        
         folder = f"---- Bases para CRUCE ----"
         output_directory = os.path.join(output_file, folder)
         os.makedirs(output_directory, exist_ok=True)  # Ensure the directory exists
