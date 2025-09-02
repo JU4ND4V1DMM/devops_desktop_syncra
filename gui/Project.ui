@@ -3359,8 +3359,8 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>209</width>
+            <y>-103</y>
+            <width>222</width>
             <height>222</height>
            </rect>
           </property>
@@ -3389,7 +3389,7 @@ QPushButton:pressed
 }</string>
              </property>
              <property name="text">
-              <string>Convertir SMS Inventario a CSV</string>
+              <string>Convertir XLSX a CSV</string>
              </property>
             </widget>
            </item>
