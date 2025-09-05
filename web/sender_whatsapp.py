@@ -175,6 +175,7 @@ def send_messages(selected_file, output_file, template, process_data):
         return Message
         
     for number, message in zip(numbers, messages):
+        number = int(f"57{number}")
         encoded_message = quote_plus(message)
         url = f"https://web.whatsapp.com/send?phone={number}&text={encoded_message}"
         print(f"📨 Sending to {number} -> {message}")
