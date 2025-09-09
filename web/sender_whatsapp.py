@@ -205,23 +205,32 @@ def send_messages(selected_file, output_file, template, process_data):
                 print("In message box.")
                 
                 random_wait = random.uniform(3, 18)
-                
                 try:
-                    
                     send_button = WebDriverWait(driver, random_wait).until(
-                        EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Enviar"]'))
+                        EC.element_to_be_clickable((By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div/div[4]/div/span/div/div/div[1]/div[1]/span'))
                     )
                     send_button.click()
                     print(f"✅ Enviar {random_wait} segundos")
                     status = "Enviado"
+                    
                 except WebDriverException as e:
-                    send_button = WebDriverWait(driver, random_wait).until(
-                        EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Send"]'))
-                    )
-                    send_button.click()
-                    print(f"✅ Send {random_wait} seconds")
-                    status = "Enviado"
-                time.sleep(2) # Short delay after sending
+                    try:
+                        
+                        send_button = WebDriverWait(driver, random_wait).until(
+                            EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Enviar"]'))
+                        )
+                        send_button.click()
+                        print(f"✅ Enviar {random_wait} segundos")
+                        status = "Enviado"
+                    except WebDriverException as e:
+                        send_button = WebDriverWait(driver, random_wait).until(
+                            EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Send"]'))
+                        )
+                        send_button.click()
+                        print(f"✅ Send {random_wait} seconds")
+                        status = "Enviado"
+                
+                time.sleep(random_wait) # Short delay after sending
                 
             except WebDriverException as e:
                 print(f"❌ Error al intentar hacer clic en el botón")
