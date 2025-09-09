@@ -173,8 +173,12 @@ def send_messages(selected_file, output_file, template, process_data):
         if driver:
             driver.quit()
         return Message
-        
+    
+    counter_register = 0 # Counter for processed records
     for number, message in zip(numbers, messages):
+        counter_register += 1
+        left_messages = len(messages) - counter_register
+        print(f"😁 Processing record {counter_register} of {left_messages} left.")
         number = int(f"57{number}")
         encoded_message = quote_plus(message)
         url = f"https://web.whatsapp.com/send?phone={number}&text={encoded_message}"
@@ -191,9 +195,9 @@ def send_messages(selected_file, output_file, template, process_data):
                 # XPath for a common "Continue" or "OK" button that might pop up
                 button = WebDriverWait(driver, random_wait).until(EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div/span[2]/div/div/div/div/div/div/div[2]/div/button')))
                 button.click()
-                print("Clicked a preliminary button (if present).")
+                print("⚠️ Clicked a preliminary button (if present).")
             except TimeoutException:
-                print("No preliminary button found; proceeding.")
+                pass # If the button isn't found, we just continue
             
             print("Entering message.")
             try:
@@ -208,24 +212,24 @@ def send_messages(selected_file, output_file, template, process_data):
                         EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Enviar"]'))
                     )
                     send_button.click()
-                    print(f"Enviar {random_wait} segundos")
+                    print(f"✅ Enviar {random_wait} segundos")
                     status = "Enviado"
                 except WebDriverException as e:
                     send_button = WebDriverWait(driver, random_wait).until(
                         EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Send"]'))
                     )
                     send_button.click()
-                    print(f"Send {random_wait} seconds")
+                    print(f"✅ Send {random_wait} seconds")
                     status = "Enviado"
                 time.sleep(2) # Short delay after sending
                 
             except WebDriverException as e:
-                print(f"⚠ Error al intentar hacer clic en el botón")
+                print(f"❌ Error al intentar hacer clic en el botón")
                 status = "Error"
 
         except Exception as e:
             status = "No enviado"
-            print(f"⚠ Error with number {number} error: {e}")
+            print(f"❌ Error with number {number} error: {e}")
 
         # Save the status of each message to an Excel report
         save_to_excel(output_file, number, message, status)
