@@ -40,6 +40,7 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
         "NOMBRE_CORTO": "NOMBRE CORTO",
         "TIPO_DE_BASE": "TIPO BASE",
         "OUTPUT_DATA": "SMS",
+        "REQUEST_ID": "REQUEST ID"
     }
 
     # Define the final column order
@@ -48,7 +49,7 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
         "Segmento", "Form_Moneda", "Nombre_Completo", "Rango", "Referencia", "Dato_Contacto",
         "Hora_Envio", "Hora_Real", "Fecha_Envio", "marca2", "DCTO", "DEUDA_REAL", "FLP",
         "PRODUCTO", "fechapromesa", "TIPO_PAGO", "MEJOR PERFIL", "DIAS DE MORA",
-        "RANKING STATUS", "CANTIDAD SERVICIOS", "NOMBRE CORTO", "TIPO BASE", "SMS"
+        "RANKING STATUS", "CANTIDAD SERVICIOS", "NOMBRE CORTO", "TIPO BASE", "SMS", "REQUEST ID"
     ]
 
     # Define the CRM translation mapping
