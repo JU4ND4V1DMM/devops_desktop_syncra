@@ -173,14 +173,14 @@ def process_ivr_saem(file_path, present_headers):
     df['source_file_type'] = 'IVR_SAEM' # Mark the original data
 
     # --- IVR SAEM SPECIFIC AGGREGATION ---
-    required_cols = ['fecha programada', 'segundos', 'nombre campaña']
+    required_cols = ['fecha programada', 'segundos', 'nombre campaña', 'unnamed: 23']
     # Identify the 'Estandar'/'Personalizado' column (assuming it's a string column
     # that might be unnamed or have a generic name like 'unnamed: x')
     standard_personalizado_col = None
     for col in df.columns:
         # Check if the column contains 'estandar' or 'personalizado' (case-insensitive)
         # and if it's a string type
-        if df[col].astype(str).str.contains(r'estandar|personalizado', case=False, na=False).any():
+        if df[col].astype(str).str.contains(r'estandar|personalizado', case=False, na=False).any() and col != 'nombre campaña':
             standard_personalizado_col = col
             print(f"  Identified 'Estandar/Personalizado' column as: '{standard_personalizado_col}'")
             required_cols.append(standard_personalizado_col)
