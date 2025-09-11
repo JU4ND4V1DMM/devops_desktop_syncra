@@ -110,6 +110,9 @@ def process_ranking_files(input_folder, output_file):
                               
                               "GESTIONAR" if x == "SIMOVIL" else
                               "GESTION RECAUDO" if "GESTION RECAUDO" in x else
+                              "GESTION RECAUDO" if "GESTION_RECAUDO" in x else
+                              "GESTION RECAUDO" if "GESTIÓN_RECAUDO" in x else
+                              "GESTION RECAUDO" if "GESTIÓN RECAUDO" in x else
                               x
                 )
                 
