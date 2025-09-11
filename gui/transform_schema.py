@@ -113,8 +113,8 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
                         new_df[target_col] = literal_columns[target_col]
                     elif target_col == 'Cuenta_Next' and 'CUENTA' in df.columns:
                         new_df['Cuenta_Next'] = df['CUENTA']
-                    elif target_col == 'Cuenta' and 'CUENTA' in df.columns:
-                        new_df['Cuenta'] = df['CUENTA']
+                    elif target_col == 'Cuenta' and 'CUENTA_REAL' in df.columns:
+                        new_df['Cuenta'] = df['CUENTA_REAL']
                     elif target_col == 'CRM' and 'PRODUCTO' in df.columns:
                         new_df['CRM'] = df['PRODUCTO']
                     elif target_col == 'Saldo_Asignado' and 'MOD_INIT_CTA' in df.columns:
