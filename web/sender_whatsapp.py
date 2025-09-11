@@ -187,7 +187,7 @@ def send_messages(selected_file, output_file, template, process_data):
         driver.get(url)
         
         status = None
-        dynamic_send_messages(driver, number)
+        status = dynamic_send_messages(driver, number)
 
         # Save the status of each message to an Excel report
         save_to_excel(output_file, number, message, status)
@@ -261,6 +261,8 @@ def dynamic_send_messages(driver, number):
     except Exception as e:
         status = "No enviado"
         print(f"❌ Error with number {number} error: {e}")
+        
+    return status
             
 def save_to_excel(output_folder, number, message, status):
     """
