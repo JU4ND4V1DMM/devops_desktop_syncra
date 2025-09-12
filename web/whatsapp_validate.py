@@ -39,12 +39,12 @@ def login_whatsapp(driver):
 def validate_whatsapp(driver, phone_number, counter):
     """Check if the phone number has WhatsApp."""
     try:
-        new_chat_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="app"]/div/div[3]/div/div[3]/header/header/div/span/div/div[1]/button')))
+        new_chat_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="app"]/div[1]/div[3]/div/div[3]/header/header/div/span/div/div[1]/span/div/div/div[1]/div[1]/span')))
         driver.execute_script("arguments[0].scrollIntoView(true);", new_chat_btn)
         new_chat_btn.click()
 
         # Search box element
-        search_box = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div/div[3]/div/div[2]/div[1]/span/div/span/div/div[1]/div[2]/div/div/div[1]/p')))
+        search_box = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div[1]/div[3]/div/div[2]/div[1]/span/div/span/div/div[1]/div[2]/div/div/div/p')))
         
         # Clear the search box before entering the new phone number
         search_box.clear()
@@ -65,13 +65,13 @@ def validate_whatsapp(driver, phone_number, counter):
     except (selexceptions.TimeoutException, selexceptions.ElementClickInterceptedException, NoSuchElementException):
         # Ensure search box is cleared if an error occurs
         try:
-            search_box = WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div/div[3]/div/div[2]/div[1]/span/div/span/div/div[1]/div[2]/div/div/div[1]/p')))
+            search_box = WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div[1]/div[3]/div/div[2]/div[1]/span/div/span/div/div[1]/div[2]/div/div/div/p')))
             search_box.send_keys(Keys.ESCAPE)
-        except:
-            # If search box is not found, just
+        except Exception as e:
+            print(f"Could not clear the search box. Error")
             pass
             
-        print(f"{counter} Number {phone_number} does not have WhatsApp. ❌")
+        print(f"{counter} Number {phone_number} does not have WhatsApp (Exception). ❌")
         return False
 
 def process_numbers(input_path, output_path, process):
