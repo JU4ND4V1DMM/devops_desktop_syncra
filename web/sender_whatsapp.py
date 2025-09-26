@@ -12,6 +12,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 import urllib.parse # Already imported as urllib.parse, but kept as is.
 import time
 from selenium.webdriver.chrome.webdriver import WebDriver # This import is not used in the provided code, but kept as is.
@@ -231,6 +232,9 @@ def dynamic_send_messages(driver, number):
                 send_button = WebDriverWait(driver, random_wait).until(
                     EC.element_to_be_clickable((By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div/div[4]/div/span/div/div/div[1]/div[1]/span'))
                 )
+                
+                # send_image(driver, number)
+                
                 send_button.click()
                 print(f"✅ Enviar {random_wait} segundos")
                 status = "Enviado"
@@ -241,6 +245,9 @@ def dynamic_send_messages(driver, number):
                     send_button = WebDriverWait(driver, random_wait).until(
                         EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Enviar"]'))
                     )
+                    
+                    # send_image(driver, number)
+                    
                     send_button.click()
                     print(f"✅ Enviar {random_wait} segundos")
                     status = "Enviado"
@@ -248,6 +255,9 @@ def dynamic_send_messages(driver, number):
                     send_button = WebDriverWait(driver, random_wait).until(
                         EC.element_to_be_clickable((By.XPATH, '//button[@aria-label="Send"]'))
                     )
+                    
+                    # send_image(driver, number)
+                    
                     send_button.click()
                     print(f"✅ Send {random_wait} seconds")
                     status = "Enviado"
@@ -263,7 +273,56 @@ def dynamic_send_messages(driver, number):
         print(f"❌ Error with number {number} error: {e}")
         
     return status
+
+def send_image(driver, number):
+    
+    if number != 573180945484:
+        
+        status = "No enviado"
+
+        try:
+            print("Iniciando el proceso para pegar y enviar la imagen desde el portapapeles...")
+
+            # Esperar a que el campo de texto del chat esté presente y hacer clic para enfocarlo.
+            # Esto es crucial para que la acción de pegar funcione.
+            chat_box = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '//div[@contenteditable="true"][@data-tab="10"]'))
+            )
+            chat_box.click()
+            print("✅ Se hizo clic en el cuadro de texto del chat para enfocarlo.")
+
+            # Usar ActionChains para simular la combinación de teclas Ctrl+V (pegar).
+            actions = ActionChains(driver)
+            # La combinación de teclas es diferente para cada sistema operativo.
+            # Keys.CONTROL funciona en la mayoría de los casos para Windows y Linux.
+            # Para macOS, se usaría Keys.COMMAND.
+            actions.key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL).perform()
+            print("✅ Se simuló la acción de pegar (Ctrl+V).")
             
+            # Esperar a que aparezca el botón de enviar después de pegar la imagen.
+            send_media_button = WebDriverWait(driver, 15).until(
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="app"]/div[1]/div[3]/div/div[2]/div[2]/span/div/div/div/div[2]/div/div[2]/div[2]/div/div/span'))
+            )
+            send_media_button.click()
+            print("✅ Imagen pegada y enviada correctamente.")
+            status = "Enviado"
+
+        except TimeoutException:
+            print("❌ Error de tiempo de espera: No se pudo encontrar un elemento.")
+            status = "Error de tiempo de espera"
+        except WebDriverException as e:
+            print(f"❌ Error de WebDriver: {e}")
+            status = "Error de WebDriver"
+        except Exception as e:
+            print(f"❌ Ocurrió un error inesperado: {e}")
+            status = "Error inesperado"
+    
+    else:
+        status = None
+        pass
+    
+    return status
+
 def save_to_excel(output_folder, number, message, status):
     """
     Saves the message sending status to an Excel file.

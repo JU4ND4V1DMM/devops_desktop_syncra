@@ -40,7 +40,9 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
         "NOMBRE_CORTO": "NOMBRE CORTO",
         "TIPO_DE_BASE": "TIPO BASE",
         "OUTPUT_DATA": "SMS",
-        "REQUEST_ID": "REQUEST ID"
+        "REQUEST_ID": "REQUEST ID",
+        "FECHA_EJECUCION": "Fecha_Envio",
+        "HORA_EJECUCION": "Hora_Real",
     }
 
     # Define the final column order
@@ -62,12 +64,12 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
 
     date_file = datetime.now().strftime("%Y-%m")
 
-    # Define the columns to be filled with literal values
+    # Define the columns to be filled with literal values (TODOS se fuerzan a STRING)
     literal_columns = {
-        "Fecha_Asignacion": date_file,
+        "Fecha_Asignacion": str(date_file),
         "fechapromesa": "Desconocida",
         "RANKING STATUS": "Dinámico",
-        "CANTIDAD SERVICIOS": 0,
+        "CANTIDAD SERVICIOS": "0", # <-- Cambiado a String
     }
     # --- End of configurations ---
 
@@ -83,24 +85,7 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
 
             try:
                 # Read the CSV file with the semicolon delimiter
-                df = pd.read_csv(file_path, sep=";", encoding='latin1', low_memory=False)
-                
-                # Normalize column names to uppercase and remove leading/trailing spaces
-                df.columns = [col.upper().strip() for col in df.columns]
-
-                # --- Step 1: Extract date and time from the filename ---
-                date_match = re.search(r'(\d{4}-\d{2}-\d{2})', filename)
-                time_real_match = re.search(r'(\d{2}-\d{2})\.csv', filename)
-                time_envio_match = re.search(r'_(\d{4})\s', filename)
-
-                fecha_envio = pd.to_datetime(date_match.group(1), format='%Y-%m-%d').date() if date_match else None
-                hora_real_str = time_real_match.group(1).replace('-', ':') if time_real_match else None
-                hora_envio_str = time_envio_match.group(1) if time_envio_match else None
-                
-                if hora_envio_str:
-                    hora_envio_str = f"{hora_envio_str[:2]}:{hora_envio_str[2:]}:00"
-                
-                # --- Step 2: Create the new DataFrame with mapped columns ---
+                df = pd.read_csv(file_path, sep=";", encoding='Latin-1', low_memory=False)
                 new_df = pd.DataFrame()
                 
                 reverse_mapping = {v: k for k, v in source_to_target_mapping.items()}
@@ -108,9 +93,11 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
                 for target_col in final_column_order:
                     # Handle special cases and literals
                     if target_col in ['Fecha_Envio', 'Hora_Real', 'Hora_Envio']:
-                        new_df[target_col] = pd.Series([None] * len(df))
+                        new_df['Fecha_Envio'] = df['FECHA_EJECUCION']
+                        new_df['Hora_Real'] = df['HORA_EJECUCION']
+                        new_df['Hora_Envio'] = new_df['Hora_Real'].str[:2]
                     elif target_col in literal_columns:
-                        new_df[target_col] = literal_columns[target_col]
+                        new_df[target_col] = literal_columns[target_col] 
                     elif target_col == 'Cuenta_Next' and 'CUENTA' in df.columns:
                         new_df['Cuenta_Next'] = df['CUENTA']
                     elif target_col == 'Cuenta' and 'CUENTA_REAL' in df.columns:
@@ -130,13 +117,9 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
                         else:
                             new_df[target_col] = None
 
-                # --- Step 3: Apply post-processing and transformations ---
-                new_df['Fecha_Envio'] = fecha_envio
-                new_df['Hora_Real'] = hora_real_str
-                new_df['Hora_Envio'] = hora_envio_str
-
-                new_df['CRM'] = new_df['CRM'].map(crm_translation_map).fillna(new_df['CRM'])
+                new_df['CRM'] = new_df['CRM'].map(crm_translation_map).fillna(new_df['CRM']).astype(str) # <-- Asegura que CRM es string
                 
+                # Conversión de Cuentas a string se mantiene para el reemplazo de guiones
                 if 'Cuenta_Next' in new_df.columns:
                     new_df['Cuenta_Next'] = new_df['Cuenta_Next'].astype(str).str.replace('-', '', regex=False)
                 if 'Cuenta' in new_df.columns:
@@ -145,6 +128,11 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
                 # --- Step 4: Save the transformed DataFrame to a new Excel file ---
                 output_filename = filename.replace(".csv", ".xlsx")
                 output_filepath = os.path.join(output_folder, output_filename)
+                
+                # Antes de guardar, se realiza un .astype(str) final para TODAS las columnas 
+                # para forzar la escritura en Excel como texto plano, previniendo la conversión automática.
+                for col in new_df.columns:
+                    new_df[col] = new_df[col].astype(str).replace('nan', '', regex=False)
                 
                 new_df.to_excel(output_filepath, sheet_name='Hoja1', index=False, engine='openpyxl')
                 
