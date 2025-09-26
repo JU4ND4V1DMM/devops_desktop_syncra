@@ -35,11 +35,23 @@ def Function_Complete(Path, Outpath, Partitions):
         else:
             df = df.withColumn(column_df, lit(""))
 
-    df = df.withColumnRenamed('BKAM', 'BREAK')
-    df = df.withColumnRenamed('BKPM', 'BREAKP')
-    df = df.withColumnRenamed('PAUACT', 'PACTIV')
-    df = df.withColumnRenamed('REUNIO', 'REU')
-    df = df.withColumnRenamed('identificación', 'identificacion')
+    dflistcolumns = df.columns
+    
+    if "BREAK" not in dflistcolumns:
+        df = df.withColumnRenamed('BKAM', 'BREAK')
+    
+    if "BREAKP" not in dflistcolumns:        
+        df = df.withColumnRenamed('BKPM', 'BREAKP')
+    
+    if "PACTIV" not in dflistcolumns:
+        df = df.withColumnRenamed('PAUACT', 'PACTIV')
+    
+    if "REU" not in dflistcolumns:
+        df = df.withColumnRenamed('REUNIO', 'REU')
+    
+    if "identificacion" not in dflistcolumns:
+        df = df.withColumnRenamed('identificación', 'identificacion')
+    
     df = df.withColumnRenamed('tiempo de inicio de sesión', 'tiempo de inicio de sesion')
 
     now = datetime.now()
