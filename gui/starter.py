@@ -18,6 +18,7 @@ import gui.transform_schema
 import web.download_saem_reports
 import gui.payments_not_applied
 import gui.no_managment
+import gui.read_files_sms
 import gui.read_task_web
 import gui.union_bot
 import gui.price_campaigns
@@ -219,6 +220,7 @@ class Init_APP():
         self.process_data.pushButton_Partitions_BD_42.clicked.connect(self.folder_webscrapping)
         self.process_data.commandLinkButton_15.clicked.connect(self.folder_demographic)
         self.process_data.pushButton_12.clicked.connect(self.folder_bot_ipcom)
+        self.process_data.pushButton_11.clicked.connect(self.folder_sms_claro_read)
         self.process_data.commandLinkButton_21.clicked.connect(self.folder_validation)
         
         self.process_data.commandLinkButton_17.clicked.connect(self.folder_files_process_ng)
@@ -1161,6 +1163,36 @@ class Init_APP():
             Mbox_In_Process.setWindowTitle("")
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
             Mbox_In_Process.setText("Resultado de BOT consolidado exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a consolidar.")
+            Mbox_File_Error.exec()
+            
+    def folder_sms_claro_read(self):
+
+        type_process = "folder"
+        
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+
+        if self.folder_path_IVR != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa la carpeta.")
+            Mbox_In_Process.exec()
+            
+            self.Base = gui.read_files_sms.process_mora_by_folder(self.folder_path_IVR, self.folder_path, self.partitions_FOLDER)
+
+            Mbox_In_Process = QMessageBox() 
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Resultado de lectura generado exitosamente.")
             Mbox_In_Process.exec()
         
         else:

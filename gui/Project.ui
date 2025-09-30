@@ -3359,7 +3359,7 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-103</y>
+            <y>-54</y>
             <width>222</width>
             <height>222</height>
            </rect>
@@ -3501,7 +3501,7 @@ QPushButton:pressed
 }</string>
              </property>
              <property name="text">
-              <string>Consolidar Resultados Blaster</string>
+              <string>Lectura de SMS - Claro</string>
              </property>
             </widget>
            </item>
