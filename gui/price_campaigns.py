@@ -39,6 +39,12 @@ COLUMNS_SMS_MASIVIAN = [
     "total restricciones", "total procesados", "destinatario restringido"
 ]
 
+COLUMNS_IVR_IPCOM = [
+    'dst party id', 'account name', 'costo', 'país del código', 'src party id', 'subscriber name',
+    'tarifa', 'tiempo facturado', 'nombre del código', 'leg id', 'connect time'
+]
+
+
 COLUMNS_WISEBOT_BASE = ["campaña", "fecha_llamada", "rut", "telefono", "estado_llamada", "tiempo_llamada"]
 COLUMNS_WISEBOT_BENEFITS = COLUMNS_WISEBOT_BASE + ["nombre", "apellido", "desea_beneficios"]
 COLUMNS_WISEBOT_AGREEMENT = COLUMNS_WISEBOT_BASE + ["id base", "fecha_acuerdo", "fecha_plazo"]
@@ -52,21 +58,37 @@ def normalize_columns(columns):
 # --- Step 3: File Classification Function (UNCHANGED) ---
 def classify_excel_file(file_path):
     """
-    Classifies an Excel file based on its column names.
-    Reads all sheets to consolidate headers.
+    Classifies an Excel or CSV file based on its column names.
+    Reads all sheets (for Excel) or the single file (for CSV) to consolidate headers.
     """
+    # 1. Determine File Type
+    file_extension = os.path.splitext(file_path)[1].lower()
+    all_headers = set()
+
     try:
-        xls = pd.ExcelFile(file_path)
-        all_headers = set()
+        if file_extension in ('.xls', '.xlsx'):
+            # --- Excel File Handling ---
+            xls = pd.ExcelFile(file_path)
 
-        for sheet_name in xls.sheet_names:
-            df_temp = xls.parse(sheet_name, nrows=0)
-            normalized_sheet_headers = normalize_columns(df_temp.columns.tolist())
-            all_headers.update(normalized_sheet_headers)
+            for sheet_name in xls.sheet_names:
+                # Read only the header row (nrows=0)
+                df_temp = xls.parse(sheet_name, nrows=0) 
+                normalized_sheet_headers = normalize_columns(df_temp.columns.tolist())
+                all_headers.update(normalized_sheet_headers)
+        
+        elif file_extension == '.csv':
+            # --- CSV File Handling ---
+            # Read only the header row (nrows=0) and specify the delimiter
+            df_temp = pd.read_csv(file_path, nrows=0, sep=',')
+            normalized_file_headers = normalize_columns(df_temp.columns.tolist())
+            all_headers.update(normalized_file_headers)
 
+        else:
+            print(f"Error: Unsupported file type: {file_extension}. Must be .xls, .xlsx, or .csv.")
+            return "unsupported_type", []
+
+        # 2. Classification Logic (Remains the same)
         present_headers = list(all_headers)
-        # print(f"DEBUG: Normalized headers found in '{file_path}': {present_headers}") # Uncomment for verbose debugging
-
         print(f"Columns found in '{file_path}': {present_headers}")
         
         if all(col in present_headers for col in COLUMNS_WISEBOT_BENEFITS):
@@ -85,6 +107,8 @@ def classify_excel_file(file_path):
             return "email_masivian", present_headers
         elif all(col in present_headers for col in COLUMNS_SMS_MASIVIAN):
             return "sms_masivian", present_headers
+        elif all(col in present_headers for col in COLUMNS_IVR_IPCOM):
+            return "ivr_ipcom", present_headers
 
         return "unknown", present_headers
 
@@ -94,7 +118,6 @@ def classify_excel_file(file_path):
     except Exception as e:
         print(f"Error classifying file '{file_path}': {e}")
         return "classification_error", []
-
 
 # --- Step 4: Processing Functions for Each Type ---
 def _read_and_normalize_excel_data(file_path):
@@ -106,6 +129,19 @@ def _read_and_normalize_excel_data(file_path):
         df_sheet.columns = normalize_columns(df_sheet.columns)
         consolidated_df = pd.concat([consolidated_df, df_sheet], ignore_index=True)
     return consolidated_df
+
+def _read_and_normalize_csv_data(file_path):
+    """
+    Función auxiliar para leer un archivo CSV delimitado por ',' (coma),
+    normalizar los nombres de sus columnas y devolver el DataFrame completo.
+    """
+    # Usamos pd.read_csv y especificamos el delimitador (sep=',')
+    df = pd.read_csv(file_path, sep=',') 
+    
+    # Normalizamos los nombres de las columnas
+    df.columns = normalize_columns(df.columns)
+    
+    return df
 
 # All processing functions now return the processed DataFrame or None
 def process_sms_saem(file_path, present_headers):
@@ -254,6 +290,100 @@ def process_ivr_saem(file_path, present_headers):
     else:
         print("  No valid data remaining after filtering for aggregation.")
         print(f"*** IVR SAEM processing finished. Returning original data only. ***\n" + "-" * 50)
+        return df # Return original DataFrame if aggregation failed
+    
+    
+def process_ivr_ipcom(file_path, present_headers):
+    """
+    Logic to process IVR IPCOM files.
+    Includes aggregation of 'segundos' by 'fecha programada' (day) and a new
+    categorical column derived from 'nombre campaña' and the 'Estandar/Personalizado' column.
+    """
+    print(f"*** Starting IVR IPCOM processing for: '{file_path}' ***")
+    df = _read_and_normalize_csv_data(file_path)
+    print(f"  Consolidated rows: {len(df)}")
+    print("  Normalized columns:", df.columns.tolist())
+
+    df['source_file_type'] = 'IVR_IPCOM' # Mark the original data
+
+    # --- IVR IPCOM SPECIFIC AGGREGATION ---
+    required_cols = ['connect time', 'tiempo facturado', 'account name', 'costo']
+    
+    if not all(col in df.columns for col in required_cols):
+        missing_cols = [col for col in required_cols if col not in df.columns]
+        print(f"  Skipping aggregation: Missing one or more required columns: {missing_cols}.")
+        print(f"*** IVR IPCOM processing finished. Returning original data only. ***\n" + "-" * 50)
+        return df
+
+    print("  Performing aggregation for 'segundos' by 'fecha programada', 'campaign_group', and 'standard_personalizado_type'...")
+
+    # 1. Convert 'segundos' to numeric, filling NaNs with 0
+    df['segundos'] = pd.to_numeric(df['tiempo facturado'], errors='coerce').fillna(0)
+    print("    'segundos' column converted to numeric and NaNs filled with 0.")
+    
+    df['costo'] = pd.to_numeric(df['costo'], errors='coerce').fillna(0)
+    print("    'costo' column converted to numeric and NaNs filled with 0.")
+
+    # 2. Convert 'fecha programada' to datetime and extract the date part
+    df['fecha programada'] = pd.to_datetime(df['connect time'], errors='coerce')
+    df['fecha_programada_dia'] = df['fecha programada'].dt.floor('D') # Get just the date (YYYY-MM-DD)
+    print("    'fecha programada' converted to datetime and date part extracted.")
+
+    # 3. Create the 'campaign_group' column based on 'nombre campaña'
+    df['nombre campaña_lower'] = df['account name'].astype(str).str.lower()
+    
+    # Define the mapping
+    campaign_mapping = {
+        'pash': ['pash'],
+        'gmac': ['gm', 'insoluto', 'chevrolet'],
+        'claro': ['210', '0_30', 'rr', 'ascard', 'bscs', 'prechurn', 'churn', 'potencial', 'prepotencial', 'descuento', 'esp', '30_', 'prees', 'preord'],
+        'puntored': ['puntored'],
+        'crediveci': ['crediveci'],
+        'yadinero': ['dinero'],
+        'qnt': ['qnt'],
+        'habi': ['habi'],
+        'payjoy': ['payjoy', 'pay joy']
+    }
+
+    df['campaign_group'] = df['account name'] # Default to original name
+    for group, keywords in campaign_mapping.items():
+        for keyword in keywords:
+            # Use contains for partial matches
+            df.loc[df['nombre campaña_lower'].str.contains(keyword, na=False), 'campaign_group'] = group
+    
+    print("    'campaign_group' column created based on 'nombre campaña'.")
+    df.drop(columns=['nombre campaña_lower'], inplace=True) # Clean up helper column
+
+    # 4. Filter out rows where 'fecha_programada_dia' is NaT (invalid date) before grouping
+    df_filtered_for_agg = df.dropna(subset=['fecha_programada_dia'])
+
+    if not df_filtered_for_agg.empty:
+        # Group by the date, the campaign group, and the standard/personalizado column
+        ivr_ipcom_aggregated_df = df_filtered_for_agg.groupby(
+            ['fecha_programada_dia', 'campaign_group'] 
+        ).agg(
+            
+            suma_segundos_diarios=('segundos', 'sum'),
+            suma_costo_diario=('costo', 'sum') 
+        ).reset_index()
+
+        ivr_ipcom_aggregated_df.rename(
+            columns={
+                'segundos': 'suma_segundos_diarios',
+                'suma_costo_diario': 'tipo_estandar_personalizado' # Rename the unnamed column
+            },
+            inplace=True
+        )
+        ivr_ipcom_aggregated_df['source_file_type'] = 'IVR_IPCOM_AGGREGATED'
+
+        print("\n  Aggregated IVR IPCOM Data:")
+        print(ivr_ipcom_aggregated_df.to_string())
+
+        print(f"*** IVR IPCOM processing finished. Returning original and aggregated data. ***\n" + "-" * 50)
+        return [df, ivr_ipcom_aggregated_df] # Return a list of DataFrames
+    else:
+        print("  No valid data remaining after filtering for aggregation.")
+        print(f"*** IVR IPCOM processing finished. Returning original data only. ***\n" + "-" * 50)
         return df # Return original DataFrame if aggregation failed
 
 def process_email_masivian(file_path, present_headers):
@@ -504,7 +634,8 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
         'WISEBOT_WISEBOT_BASE_AGGREGATED',
         'WISEBOT_WISEBOT_TITULAR_AGGREGATED',
         'IVR_SAEM_AGGREGATED',
-        'SMS_SAEM_AGGREGATED'
+        'SMS_SAEM_AGGREGATED',
+        'IVR_IPCOM_AGGREGATED'
     ]
 
     # Define column unification mappings
@@ -664,7 +795,7 @@ def process_excel_files_in_folder(input_folder, output_folder):
     list_of_all_processed_dataframes = [] # List to store all processed DataFrames
 
     for filename in os.listdir(input_folder):
-        if filename.endswith((".xlsx", ".xls")): # Check for Excel files
+        if filename.endswith((".xlsx", ".xls", ".csv")): # Check for Excel files
             file_path = os.path.join(input_folder, filename)
             print(f"\n--- Attempting to process: {filename} ---")
 
@@ -675,6 +806,8 @@ def process_excel_files_in_folder(input_folder, output_folder):
                 processed_data = process_sms_saem(file_path, present_headers)
             elif file_type == "ivr_saem":
                 processed_data = process_ivr_saem(file_path, present_headers)
+            elif file_type == "ivr_ipcom":
+                processed_data = process_ivr_ipcom(file_path, present_headers)
             elif file_type == "email_masivian":
                 processed_data = process_email_masivian(file_path, present_headers)
             elif file_type == "sms_masivian":
