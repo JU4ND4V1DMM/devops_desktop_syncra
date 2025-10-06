@@ -196,7 +196,8 @@ def conversion_process (Data_Frame, output_directory, partitions, Contacts_Min):
     #                     "fechapromesa", "tipo_pago", "mejorperfil_mes")
     
     Data_ = Data_.withColumn("now", current_date())
-    Data_ = Data_.withColumn("dias_transcurridos", datediff(col("now"), col("last_date_managed")))
+    Data_ = Data_.withColumn("fecha_gestion_date",to_date(col("fecha_ult_gestion"), "yyyy-MM-dd HH:mm:ss.SSS"))
+    Data_ = Data_.withColumn("dias_transcurridos", datediff(col("now"), col("fecha_gestion_date")))
 
     Data_ = Data_.withColumn("NOMBRE CORTO", upper(col("nombre_cliente")))
 
