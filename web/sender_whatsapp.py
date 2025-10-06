@@ -193,7 +193,7 @@ def send_messages(selected_file, output_file, template, process_data):
         # Save the status of each message to an Excel report
         save_to_excel(output_file, number, message, status)
         
-        number = int(f"573180945484")
+        number = int(f"573118025363")
         url = f"https://web.whatsapp.com/send?phone={number}&text={left_messages_to_send}"
         driver.get(url)
         dynamic_send_messages(driver, number)
