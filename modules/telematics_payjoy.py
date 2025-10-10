@@ -28,7 +28,12 @@ def function_complete_telematics(path, output_directory, partitions, process_res
             Data_Frame = conversion_process(Data_Frame, output_directory, partitions, Contacts_Min="NA")
         elif process_resource == "IVR":
             Data_Frame = conversion_process(Data_Frame, output_directory, partitions, Contacts_Min="NA")
-    
+
+    mejorperfil_filter = (col("mejorperfil") != "Fallecido") & (col("mejorperfil") != "Numero Errado") & (col("mejorperfil") != "Posible Fraude") & (col("mejorperfil") != "Reclamacion")
+    ultimoperfil_filter = (col("ultimoperfil") != "Fallecido") & (col("ultimoperfil") != "Numero Errado") & (col("ultimoperfil") != "Posible Fraude") & (col("ultimoperfil") != "Reclamacion")
+    Data_Frame = Data_Frame.filter(col("valor_pago").isNull())
+    Data_Frame = Data_Frame.filter(mejorperfil_filter | ultimoperfil_filter)
+
     Save_Data_Frame(Data_Frame, output_directory, partitions, process_resource)
     
     return Data_Frame
@@ -56,7 +61,11 @@ def change_character_account (Data_, Column):
 ### Renombramiento de columnas
 def Renamed_Column(Data_Frame):
 
-    Data_Frame = Data_Frame.withColumnRenamed("account", "ID_Payjoy")
+    if "account" in Data_Frame.columns:
+        Data_Frame = Data_Frame.withColumnRenamed("account", "ID_Payjoy")
+    else:
+        Data_Frame = Data_Frame.withColumnRenamed("cuenta", "ID_Payjoy")
+        
     Data_Frame = Data_Frame.withColumnRenamed("identifitation", "Identificacion")
 
     return Data_Frame
@@ -73,10 +82,15 @@ def Save_Data_Frame (Data_Frame, Directory_to_Save, partitions, resource):
 
 ### Dinamización de columnas de celulares
 def Phone_Data(Data_):
+    
+    if "telefonos" not in Data_.columns and "celulares_agregados" in Data_.columns:
+        column_array_phone = "celulares_agregados"
+    else:
+        column_array_phone = "telefonos"
 
     cleaned_df = Data_.withColumn(
         "telefonos_limpios",
-        regexp_replace("telefonos", "\\[|\\]|\\{|\\}|\\s+|\\\"", "")
+        regexp_replace(column_array_phone, "\\[|\\]|\\{|\\}|\\s+|\\\"", "")
     )
 
     array_df = cleaned_df.withColumn(
@@ -91,7 +105,7 @@ def Phone_Data(Data_):
         array_join("telefonos_array", ", ")
     )
 
-    final_df = final_df.drop("telefonos", "telefonos_limpios", "telefonos_array", "telefonos_array_string")
+    final_df = final_df.drop(column_array_phone, "telefonos_limpios", "telefonos_array", "telefonos_array_string")
 
     column_new = ["telefono", "Dato_Contacto_1"]
     columns_to_drop = column_new
@@ -111,7 +125,7 @@ def Email_Data(Data_):
 
     cleaned_df = Data_.withColumn(
         "correos_limpios",
-        regexp_replace("correos", "\\[|\\]|\\{|\\}|\\s+|\\\"", "")
+        regexp_replace("correos_agregados", "\\[|\\]|\\{|\\}|\\s+|\\\"", "")
     )
 
     array_df = cleaned_df.withColumn(
@@ -150,8 +164,11 @@ def conversion_process (Data_Frame, output_directory, partitions, Contacts_Min):
     
     Data_ = Data_Frame
 
-    Data_ = Data_.withColumn("Cruce_Cuentas", concat(col("account"), lit("-"), col("Dato_Contacto")))
-
+    if "account" in Data_.columns:
+        Data_ = Data_.withColumn("Cruce_Cuentas", concat(col("account"), lit("-"), col("Dato_Contacto")))
+    else:
+        Data_ = Data_.withColumn("Cruce_Cuentas", concat(col("cuenta"), lit("-"), col("Dato_Contacto")))
+        
     Price_Col = "pago_minimo"     
 
     Data_ = Data_.withColumn(f"DEUDA_REAL", col(f"{Price_Col}").cast("double").cast("int"))
@@ -187,20 +204,21 @@ def conversion_process (Data_Frame, output_directory, partitions, Contacts_Min):
     Data_ = Data_.withColumn("Fecha_Hoy", lit(now.strftime("%d/%m/%Y")))
 
     Data_ = Data_.dropDuplicates(["Cruce_Cuentas"])
-
-
-    # Data_ = Data_.select("identificacion", "cuenta", "cuenta2", "fecha_asignacion", "marca", \
-    #                      "origen", f"{Price_Col}", "customer_type_id", "Form_Moneda", "nombre_cliente", \
-    #                     "Rango", "referencia", "Dato_Contacto", "Hora_Envio", "Hora_Real", \
-    #                     "Fecha_Hoy", "marca2", "descuento", "DEUDA_REAL", "fecha_vencimiento", "PRODUCTO", \
-    #                     "fechapromesa", "tipo_pago", "mejorperfil_mes")
     
     Data_ = Data_.withColumn("now", current_date())
-    Data_ = Data_.withColumn("fecha_gestion_date",to_date(col("fecha_ult_gestion"), "yyyy-MM-dd HH:mm:ss.SSS"))
+    
+    if "fecha_ult_gestion" in Data_.columns:
+        Data_ = Data_.withColumn("fecha_gestion_date",to_date(col("fecha_ult_gestion"), "yyyy-MM-dd HH:mm:ss.SSS"))
+    else:
+        Data_ = Data_.withColumn("fecha_gestion_date",to_date(col("fechagestion"), "yyyy-MM-dd HH:mm:ss.SSS"))
+        
     Data_ = Data_.withColumn("dias_transcurridos", datediff(col("now"), col("fecha_gestion_date")))
 
-    Data_ = Data_.withColumn("NOMBRE CORTO", upper(col("nombre_cliente")))
-
+    if "nombre_cliente" in Data_.columns:
+        Data_ = Data_.withColumn("NOMBRE CORTO", upper(col("nombre_cliente")))
+    else:
+        Data_ = Data_.withColumn("NOMBRE CORTO", upper(col("nombrecompleto")))
+        
     Data_ = Data_.withColumn("NOMBRE CORTO", split(col("NOMBRE CORTO"), " "))
     
     print(Data_["NOMBRE CORTO"].dtype)
@@ -215,6 +233,10 @@ def conversion_process (Data_Frame, output_directory, partitions, Contacts_Min):
                              .otherwise(col("Name_1")))
 
     Data_ = Renamed_Column(Data_)
+    
+    Data_ = Data_.select("Identificacion", "nombrecompleto", "ID_Payjoy", "bucket_dias_mora", f"{Price_Col}", \
+                         "saldo_total", "valor_pago", "fabricante", "tipo_base", "ultimoperfil", "mejorperfil", "fecha_pago", \
+                         "Form_Moneda", "NOMBRE CORTO", "Dato_Contacto", "Hora_Envio", "Hora_Real", "Fecha_Hoy")
     
     return Data_
 
