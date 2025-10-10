@@ -122,7 +122,7 @@ def Order_Columns(Data_Frame):
 
     Columns_Email = ["Canal", "Dato_Contacto", "descuento", \
                     "Edad_Mora", "CRM", "Form_Moneda", "Nombre_Completo", \
-                    "Referencia", "Cuenta", "marca2", "plan", "identificacion", "FILTRO_REFERENCIA", "Rango", "RANKING STATUS", "CANTIDAD SERVICIOS","FILTRO GENERAL", "Tipo Base"]
+                    "Referencia", "Cuenta", "marca2", "plan", "identificacion", "tipo_pago", "FILTRO_REFERENCIA", "Rango", "RANKING STATUS", "CANTIDAD SERVICIOS","FILTRO GENERAL", "Tipo Base"]
 
     Data_Frame_final = Data_Frame.select(Columns_Email)
 
@@ -229,7 +229,7 @@ def EMAIL_Proccess (Data_, Wallet_Brand, Directory_to_Save, partitions, Origins_
     Data_ = Data_.select("identificacion", "cuenta", "cuenta2", "fecha_asignacion", "marca", \
                          "origen", f"{Price_Col}", "customer_type_id", "Form_Moneda", "nombrecompleto", \
                         "Rango", "referencia", "min", "Dato_Contacto", "Canal", "Hora_Envio", "Hora_Real", \
-                        "Fecha_Hoy", "marca2", "descuento", "DEUDA_REAL", "fecha_vencimiento", "plan", "cant_servicios", "estado_ranking", "Tipo Base")
+                        "Fecha_Hoy", "marca2", "descuento", "DEUDA_REAL", "tipo_pago", "fecha_vencimiento", "plan", "cant_servicios", "estado_ranking", "Tipo Base")
 
     Data_ = change_email(Data_)
     Data_ = Data_.filter(col("Dato_Contacto") != "0")
