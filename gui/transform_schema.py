@@ -118,6 +118,9 @@ def transform_csv_to_excel_dashboard(input_folder, output_folder):
                             new_df[target_col] = None
 
                 new_df['CRM'] = new_df['CRM'].map(crm_translation_map).fillna(new_df['CRM']).astype(str) # <-- Asegura que CRM es string
+                new_df['Saldo_Asignado'] = new_df['Saldo_Asignado'].map(crm_translation_map).fillna(new_df['Saldo_Asignado']).astype(str).str.replace('.', ',', regex=False)
+                new_df['DEUDA_REAL'] = new_df['DEUDA_REAL'].map(crm_translation_map).fillna(new_df['DEUDA_REAL']).astype(str).str.replace('.', ',', regex=False)
+                new_df['Segmento'] = new_df['Segmento'].str.upper().astype(str).str.replace('NO APLICA', 'PERSONAS', regex=False).str.replace('PERSONA', 'PERSONAS', regex=False)
                 
                 # Conversión de Cuentas a string se mantiene para el reemplazo de guiones
                 if 'Cuenta_Next' in new_df.columns:
