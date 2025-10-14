@@ -32,7 +32,7 @@ def function_complete_telematics(path, output_directory, partitions, process_res
     mejorperfil_filter = (col("mejorperfil") != "Fallecido") & (col("mejorperfil") != "Numero Errado") & (col("mejorperfil") != "Posible Fraude") & (col("mejorperfil") != "Reclamacion")
     ultimoperfil_filter = (col("ultimoperfil") != "Fallecido") & (col("ultimoperfil") != "Numero Errado") & (col("ultimoperfil") != "Posible Fraude") & (col("ultimoperfil") != "Reclamacion")
     Data_Frame = Data_Frame.filter(col("valor_pago").isNull())
-    Data_Frame = Data_Frame.filter(mejorperfil_filter | ultimoperfil_filter)
+    Data_Frame = Data_Frame.filter(mejorperfil_filter & ultimoperfil_filter)
 
     Save_Data_Frame(Data_Frame, output_directory, partitions, process_resource)
     
