@@ -95,7 +95,7 @@ def Phone_Data(Data_):
 
     array_df = cleaned_df.withColumn(
         "telefonos_array",
-        split("telefonos_limpios", ",")
+        split("telefonos_limpios", "\\|")
     )
 
     exploded_df = array_df.withColumn("Dato_Contacto_1", explode("telefonos_array"))
@@ -109,13 +109,15 @@ def Phone_Data(Data_):
 
     column_new = ["telefono", "Dato_Contacto_1"]
     columns_to_drop = column_new
+
     Stacked_Data_Frame = final_df.select("*", *columns_to_drop)
-    
+
     Stacked_Data_Frame = Stacked_Data_Frame.select(
-        "*", \
+        "*",
         expr(f"stack({len(columns_to_drop)}, {', '.join(columns_to_drop)}) as Dato_Contacto")
-        )
-    
+    )
+
+    # Eliminar columnas dummy usadas para stack
     final_df = Stacked_Data_Frame.drop(*columns_to_drop)
     Stacked_Data_Frame = final_df.select("*")
     
@@ -130,7 +132,7 @@ def Email_Data(Data_):
 
     array_df = cleaned_df.withColumn(
         "correos_array",
-        split("correos_limpios", ",")
+        split("correos_limpios","\\|")
     )
 
     exploded_df = array_df.withColumn("Dato_Contacto_1", explode("correos_array"))
@@ -236,7 +238,7 @@ def conversion_process (Data_Frame, output_directory, partitions, Contacts_Min):
     
     Data_ = Data_.select("Identificacion", "nombrecompleto", "ID_Payjoy", "bucket_dias_mora", f"{Price_Col}", \
                          "saldo_total", "valor_pago", "fabricante", "tipo_base", "ultimoperfil", "mejorperfil", "fecha_pago", \
-                         "Form_Moneda", "NOMBRE CORTO", "Dato_Contacto", "Hora_Envio", "Hora_Real", "Fecha_Hoy")
+                         "fechapromesa", "Form_Moneda", "NOMBRE CORTO", "Dato_Contacto", "Hora_Envio", "Hora_Real", "Fecha_Hoy")
     
     return Data_
 
