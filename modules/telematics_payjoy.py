@@ -144,7 +144,7 @@ def Email_Data(Data_):
 
     final_df = final_df.drop("correos", "correos_limpios", "correos_array", "correos_array_string")
     
-    column_new = ["correo", "Dato_Contacto_1"]
+    column_new = ["correos_agregados", "Dato_Contacto_1"]
     columns_to_drop = column_new
     Stacked_Data_Frame = final_df.select("*", *columns_to_drop)
     
