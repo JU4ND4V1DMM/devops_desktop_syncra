@@ -52,7 +52,12 @@ def process_ranking_files(input_folder, output_file):
                 # Handle "cuenta" columns dynamically
                 cuenta_column = next((col for col in cuenta_columns if col in df.columns), None)
                 if cuenta_column:
-                    df["cuenta"] = df[cuenta_column].astype(str).str.replace(".", "", regex=False)
+                    df["cuenta"] = (df[cuenta_column]
+                                                .astype(str)
+                                                .str.strip()
+                                                .str.replace(r"\.0$", "", regex=True)
+                                                .str.replace(".", "", regex=False) 
+                                            )
 
                     # Count occurrences of each "cuenta" and add a "servicios" column
                     if servicios_column in df.columns:
