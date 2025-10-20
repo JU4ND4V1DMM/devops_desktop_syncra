@@ -147,8 +147,8 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.setText("Proceso de valdiación de líneas ejecutado exitosamente.")
         Mbox_In_Process.exec()
     
-    def Update_BD_ControlNext(self, Data_Root: "DataFrame") -> "DataFrame":
-        
+    def Update_BD_ControlNext(self, Data_Root: pl.DataFrame) -> pl.DataFrame:
+    
         # --- [AccountAccountCode?] updates ---
         Data_Root = Data_Root.with_columns(
             # Remove hyphens (equivalent to regexp_replace(col, "-", ""))
@@ -174,12 +174,12 @@ class Charge_DB(QtWidgets.QMainWindow):
             .fill_null(lit("0"))
             .alias("Numero de Cliente")
         ).with_columns(
-            # 3. Cast to integer (equivalent to col.cast("int"))
-            col("Numero de Cliente").cast(pl.Int32).alias("Numero de Cliente")
+            # 3. Cast to integer (CRITICAL FIX: Changed pl.Int32 to pl.Int64 to handle large IDs)
+            col("Numero de Cliente").cast(pl.Int64).alias("Numero de Cliente")
         ).with_columns(
             # 4. Conditional update (when length < 2, use [AccountAccountCode?] instead)
             # Note: Polars checks the length of the string representation of the integer.
-            pl.when(col("Numero de Cliente").cast(pl.Utf8).str.lengths() < 2) 
+            pl.when(col("Numero de Cliente").cast(pl.Utf8).str.len_chars() < 2) 
             .then(col("[AccountAccountCode?]"))
             .otherwise(col("Numero de Cliente").cast(pl.Utf8)) # Ensure output type consistency
             .alias("Numero de Cliente")
@@ -233,15 +233,10 @@ class Charge_DB(QtWidgets.QMainWindow):
         )
         
         # --- Remove "|" from all columns ---
-        # The original code iterates over all columns and applies regexp_replace(..., r"\|", "").
-        # In Polars, we use pl.all() and map the string replacement only to Utf8 columns.
+        # FIX: Replaced pl.all().map(...) with the efficient Polars selector pl.col(pl.Utf8)
         Data_Root = Data_Root.with_columns(
-            pl.all()
-            .map(
-                lambda s: s.str.replace_all(r"\|", "", literal=True)
-                if s.dtype in [pl.Utf8] # Only apply replacement to string columns
-                else s # Keep other types as is
-            )
+            # Selects all Utf8 columns and applies the string replacement
+            pl.col(pl.Utf8).str.replace_all(r"\|", "", literal=True)
         )
 
         return Data_Root
@@ -330,12 +325,50 @@ class Charge_DB(QtWidgets.QMainWindow):
         now = datetime.now()
         Time_File = now.strftime("%Y%m%d_%H%M")
 
-        # --- Data Ingestion and initial selection (Polars) ---
-        # Equivalent to spark.read.csv(file, header=True, sep=";")
-        Data_Root: pl.DataFrame = pl.read_csv(file, has_header=True, separator=";", infer_schema_length=10000, encoding='latin1')
+        # 1. Schema Override Configuration for INGESTION
+        # Columns that contain '.' as thousand separators must be read as strings (Utf8)
+        # to prevent parsing errors (ComputeError) during the initial file load.
+        schema_override_map = {
+            '27_': pl.Utf8,
+            '36_': pl.Utf8,    
+            '39_': pl.Utf8,    
+            '51_': pl.Utf8,    
+            '52_': pl.Utf8,    
+            '57_': pl.Utf8,
+        }
         
-        # Equivalent to Data_Root.select([col(c).cast(StringType()).alias(c) for c in Data_Root.columns])
-        # Ensure all columns are Utf8 (string) for initial consistency with PySpark's StringType() cast
+        # --- Data Ingestion (Read as Utf8 for Cleaning) ---
+        # Equivalent to spark.read.csv(path, header= True, sep=";")
+        Data_Root: pl.DataFrame = pl.read_csv(
+            self.file_path, 
+            has_header=True, 
+            separator=";", 
+            infer_schema_length=10000, 
+            encoding='latin1', # Fixes UTF-8 errors
+            schema_overrides=schema_override_map # Forces problematic columns to string
+        )
+
+        # 2. Cleanup Thousands Separators and Cast to Numeric Types
+        # We use Polars expressions to clean the string data and convert it.
+        expressions = [
+            # Column 36_: Intended to be a decimal number (Float64)
+            pl.col('36_')
+              .str.replace_all(r'\.', '')  # Remove all periods (thousand separators)
+              .cast(pl.Float64)             # Cast to the correct decimal type
+              .alias('36_'),
+            
+            # Column 39_: Intended to be a large integer (Int64)
+            pl.col('39_')
+              .str.replace_all(r'\.', '')  # Remove all periods (thousand separators)
+              .cast(pl.Int64)              # Cast to the correct integer type
+              .alias('39_'),
+            
+            # Add other conversions here if needed
+        ]
+
+        # Apply the transformations to the DataFrame
+        Data_Root = Data_Root.with_columns(expressions)
+        
         Data_Root = Data_Root.with_columns(pl.all().cast(pl.Utf8))
         
         # Initial selection of columns 1_ to 61_ (Equivalent to Data_Root.select(columns_to_list))
@@ -402,9 +435,9 @@ class Charge_DB(QtWidgets.QMainWindow):
         
         # Conditional update after cleaning (Equivalent to when(length(col("24_2")) < 7, col("24_")).otherwise(col("24_2")))
         Data_Root = Data_Root.with_columns(
-            pl.when(col("24_2").str.lengths() < 7)
-            .then(col("24_"))
-            .otherwise(col("24_2"))
+            pl.when(pl.col("24_2").str.len_chars() < 7)
+            .then(pl.col("24_"))
+            .otherwise(pl.col("24_2"))
             .alias("24_")
         )
         
