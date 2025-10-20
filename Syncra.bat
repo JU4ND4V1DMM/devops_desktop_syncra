@@ -1,32 +1,20 @@
 @echo off
 :: ============================================
-:: Actualiza el proyecto y ejecuta el script
+:: Update the project and run the Python script
 :: ============================================
 
-:: 📂 Ruta base del proyecto
-cd /d "D:\API\cpd"
+:: 🧭 Move to the directory where this script is located
+cd /d "%~dp0"
 
-:: ⚙️ Actualizar código desde Git
-echo 🔄 Actualizando repositorio...
+echo 🔄 Fetching latest changes from Git...
 git fetch --all
 git reset --hard origin/master
-echo ✅ Repositorio actualizado correctamente.
+echo ✅ Repository successfully updated.
 
 :: ============================================
-:: Ejecutar el script con una ruta pasada como argumento
+:: Run the Python script and close the terminal
 :: ============================================
 
-:: 🧠 Ejemplo: pasar la ruta como parámetro al .bat
-:: Uso: run_project.bat "D:\Datos\entrada\"
-set ARG_PATH=%~1
-
-if "%ARG_PATH%"=="" (
-    echo ⚠️ No se proporcionó una ruta. Usa:
-    echo     run_project.bat "D:\Datos\entrada\"
-    pause
-    exit /b
-)
-
-echo 🚀 Ejecutando main.py con ruta: %ARG_PATH%
-start "" /B python main.py "%ARG_PATH%"
+echo 🚀 Running main.py...
+start "" /B python main.py
 exit
