@@ -3,149 +3,155 @@ import shutil
 from datetime import datetime
 from openpyxl import load_workbook
 from openpyxl.styles import Font, Alignment
+import polars as pl
+import pandas as pd
+from typing import Union
 
-def save_to_csv(data_frame, output_path, filename, partitions, delimiter=","):
-    partitions = int(partitions)
+# Define the Polars DataFrame type for clarity
+PolarsDataFrame = pl.DataFrame
+
+
+def format_excel_file(filepath: str):
+    """
+    Formats the header of a single Excel file (XLSX) using openpyxl by applying bold, 
+    center alignment, and freezing the first row. This function is file I/O based.
+
+    Args:
+        filepath: The path to the Excel file to format.
+    """
+    try:
+        # Load the workbook and get the active sheet
+        wb = load_workbook(filepath)
+        ws = wb.active
+
+        # Freeze the first row (starting from A2)
+        ws.freeze_panes = ws['A2']
+
+        # Apply bold and center alignment to all cells in the first row
+        for cell in ws[1]:
+            cell.font = Font(bold=True)
+            cell.alignment = Alignment(horizontal='center', vertical='center')
+
+        # Save the changes back to the file
+        wb.save(filepath)
+        print(f"✨ Formatted header in file: {filepath}")
+    except Exception as e:
+        print(f"ERROR: Could not format Excel file at {filepath}. Reason: {e}")
+
+
+def save_to_csv(data_frame: PolarsDataFrame, output_path: str, filename: str, partitions: Union[int, str], delimiter: str = ","):
+    """
+    Saves a Polars DataFrame directly to a single CSV file. 
+    The complex PySpark cleanup and renaming logic is removed for maximum speed.
+
+    Args:
+        data_frame: The Polars DataFrame to be saved.
+        output_path: The base directory where the final file will reside.
+        filename: The base name for the output file.
+        partitions: Retained for compatibility but ignored, as Polars writes a single file.
+        delimiter: The delimiter to use in the CSV file (default is comma).
+    """
+    
+    # 1. Prepare directory and filename
     if output_path and not os.path.exists(output_path):
         os.makedirs(output_path)
         print(f"✔️ Created output directory: {output_path}")
     
     now = datetime.now()
-    time_file = now.strftime("%Y%m%d_%H%M")
     file_date = now.strftime("%Y%m%d")
     
-    # Create a temporary folder to store initial files
-    temp_folder_name = f"{filename}_{time_file}"
-    temp_output_path = os.path.join(output_path, temp_folder_name)
+    # Polars writes to a single file, simplifying the naming convention
+    final_file_path = os.path.join(output_path, f"{filename} {file_date}.csv")
 
-    # Save the DataFrame into the temporary folder
-    (data_frame
-        .repartition(partitions) 
-        .write
-        .mode("overwrite")
-        .option("header", "true")
-        .option("delimiter", delimiter)
-        .csv(temp_output_path)
-    )
+    print(f"Saving Polars DataFrame to CSV: {final_file_path}")
 
-    # Remove unnecessary files
-    for root, dirs, files in os.walk(temp_output_path):
-        for file in files:
-            if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                os.remove(os.path.join(root, file))
+    try:
+        # 2. Polars writing logic
+        data_frame.write_csv(
+            file=final_file_path,
+            separator=delimiter,
+            include_header=True
+        )
+        print(f"✔️ CSV file successfully saved to: {final_file_path}")
+    except Exception as e:
+        print(f"ERROR: Failed to save Polars DataFrame to CSV. Reason: {e}")
 
-    # Move the CSV files from the temporary folder to the main output path
-    for i, file in enumerate(os.listdir(temp_output_path), start=1):
-        if file.endswith(".csv"):
-            old_file_path = os.path.join(temp_output_path, file)
-            new_file_path = os.path.join(output_path, f"{filename} {file_date} {i}.csv")
-            os.rename(old_file_path, new_file_path)
 
-    # Delete the temporary folder
-    if os.path.exists(temp_output_path):
-        shutil.rmtree(temp_output_path)
-        print(f"🗑️ Temporary folder deleted: {temp_output_path}")
+def save_to_0csv(data_frame: PolarsDataFrame, output_path: str, filename: str, partitions: Union[int, str], delimiter: str = ","):
+    """
+    Saves a Polars DataFrame to a file with the '.0csv' extension. 
+    Optimized for speed by writing directly to a single file.
 
-    print(f"✔️ CSV files successfully moved to: {output_path}")
-
-def save_to_0csv(data_frame, output_path, filename, partitions, delimiter=","):
-    partitions = int(partitions)
+    Args:
+        data_frame: The Polars DataFrame to be saved.
+        output_path: The base directory where the final file will reside.
+        filename: The base name for the output file.
+        partitions: Retained for compatibility but ignored.
+        delimiter: The delimiter to use in the CSV file (default is comma).
+    """
+    
+    # 1. Prepare directory and filename
     if output_path and not os.path.exists(output_path):
         os.makedirs(output_path)
         print(f"✔️ Created output directory: {output_path}")
         
     now = datetime.now()
-    time_file = now.strftime("%Y%m%d_%H%M")
     file_date = now.strftime("%Y%m%d")
     
-    # Create a temporary folder to store initial files
-    temp_folder_name = f"{filename}_{time_file}"
-    temp_output_path = os.path.join(output_path, temp_folder_name)
+    # Polars writes to a single file, using the .0csv extension
+    final_file_path = os.path.join(output_path, f"{filename} {file_date}.0csv")
 
-    # Save the DataFrame into the temporary folder
-    (data_frame
-        .repartition(partitions)
-        .write
-        .mode("overwrite")
-        .option("header", "true")
-        .option("delimiter", delimiter)
-        .csv(temp_output_path)
-    )
+    print(f"Saving Polars DataFrame to 0CSV: {final_file_path}")
 
-    # Remove unnecessary files
-    for root, dirs, files in os.walk(temp_output_path):
-        for file in files:
-            if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                os.remove(os.path.join(root, file))
+    try:
+        # 2. Polars writing logic
+        data_frame.write_csv(
+            file=final_file_path,
+            separator=delimiter,
+            include_header=True
+        )
+        print(f"✔️ .0csv file successfully saved to: {final_file_path}")
+    except Exception as e:
+        print(f"ERROR: Failed to save Polars DataFrame to .0csv. Reason: {e}")
 
-    # Move the CSV files from the temporary folder to the main output path
-    for i, file in enumerate(os.listdir(temp_output_path), start=1):
-        if file.endswith(".csv"):
-            old_file_path = os.path.join(temp_output_path, file)
-            new_file_path = os.path.join(output_path, f"{filename} {file_date} {i}.0csv")
-            os.rename(old_file_path, new_file_path)
 
-    # Delete the temporary folder
-    if os.path.exists(temp_output_path):
-        shutil.rmtree(temp_output_path)
-        print(f"🗑️ Temporary folder deleted: {temp_output_path}")
+def save_to_xlsx(data_frame: PolarsDataFrame, output_path: str, filename: str, partitions: Union[int, str]):
+    """
+    Saves a Polars DataFrame to a single Excel (XLSX) file via Pandas, 
+    then applies custom openpyxl formatting. The partitions argument is ignored.
 
-    print(f"✔️ CSV files successfully moved to: {output_path}")
+    Args:
+        data_frame: The Polars DataFrame to be saved.
+        output_path: The base directory for the output file.
+        filename: The base name for the output file.
+        partitions: Retained for compatibility but ignored.
+    """
     
-def format_excel_file(filepath):
-    wb = load_workbook(filepath)
-    ws = wb.active
+    # 1. Prepare directory and filename
+    if output_path and not os.path.exists(output_path):
+        os.makedirs(output_path)
+        print(f"✔️ Created output directory: {output_path}")
 
-    # Freeze the first row
-    ws.freeze_panes = ws['A2']
-
-    # Apply bold and center alignment to the first row
-    for cell in ws[1]:
-        cell.font = Font(bold=True)
-        cell.alignment = Alignment(horizontal='center', vertical='center')
-
-    wb.save(filepath)
-    print(f"✨ Formatted header in file: {filepath}")
-
-def save_to_xlsx(data_frame, output_path, filename, partitions):
-    
-    ## 
     now = datetime.now()
     file_date = now.strftime("%Y%m%d")
-    folder_name = f"{filename} {file_date}"
-
-    full_output_path = os.path.join(output_path, folder_name, filename)
-
-    print(f"Saving DataFrame as Excel to {full_output_path}...")
-
-    # Save using spark-excel package
-    (data_frame
-        .coalesce(partitions)
-        .write
-        .format("com.crealytics.spark.excel")
-        .option("header", "true")
-        .option("dataAddress", "'Details'!A1")
-        .mode("overwrite")
-        .save(full_output_path)
-    )
-
-    full_output_path = os.path.join(output_path, folder_name)
     
-    #Remove temporary or unnecessary files
-    for root, dirs, files in os.walk(full_output_path):
-        for file in files:
-            if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
-                os.remove(os.path.join(root, file))
+    final_file_name = f"{filename} {file_date}.xlsx"
+    final_file_path = os.path.join(output_path, final_file_name)
 
-    # Find the generated part file and rename it to .xlsx
-    for file in os.listdir(full_output_path):
-        if not file.endswith(".xlsx"):
-            old_path = os.path.join(full_output_path, file)
-            new_path = os.path.join(output_path, f"{folder_name}.xlsx")
-            os.rename(old_path, new_path)
-            format_excel_file(new_path)
-            print(f"✔ Final file saved as: {new_path}")
+    print(f"Saving DataFrame as Excel to {final_file_path}...")
+    
+    try:
+        # 2. Convert Polars to Pandas and save to Excel
+        # Use 'Details' sheet name to match the original PySpark-Excel option
+        data_frame.to_pandas().to_excel(
+            excel_writer=final_file_path,
+            sheet_name='Details', 
+            index=False # Do not save the Pandas index
+        )
+        
+        # 3. Apply custom formatting
+        format_excel_file(final_file_path)
+        print(f"✔ Final file saved as: {final_file_path}")
 
-    if os.path.exists(full_output_path):
-        shutil.rmtree(full_output_path)
-        print(f"🗑️ Deleted temporary folder: {full_output_path}")
+    except Exception as e:
+        print(f"ERROR: Failed to save Polars DataFrame to XLSX. Reason: {e}")
