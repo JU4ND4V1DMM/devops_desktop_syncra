@@ -1,40 +1,68 @@
+from web.save_files import save_to_csv
 import os
 from datetime import datetime
-from pyspark.sql import SparkSession
-from pyspark.sql import SQLContext
-from pyspark.sql.types import StringType
-from pyspark.sql.functions import col, regexp_replace, lit
-from web.pyspark_session import get_spark_session
-from web.save_files import save_to_csv
+import polars as pl
+from polars import col, lit
+from typing import TYPE_CHECKING
  
-def Function_Exclusions(Path, Outpath, Partitions):
-    spark = get_spark_session()
-    sqlContext = SQLContext(spark)
-
-    df = spark.read.option("header", "false").csv(Path)
-    df = spark.read.csv(Path, header= True, sep=";")
-    df = df.select([col(c).cast(StringType()).alias(c) for c in df.columns])
-
-    Management_Columns = ["cuenta", "perfil_historico", "ultimo_perfil", "mejorperfil"]
-    df = df.select(Management_Columns)
-
-    character_list = ["-"]
-    for character in character_list:
-        df = df.withColumn("cuenta", regexp_replace(col("cuenta"), character, ""))
-
-    df = df.select("cuenta", "ultimo_perfil", "mejorperfil", "perfil_historico")
-    df = df.dropDuplicates()
+def Function_Exclusions(Path: str, Outpath: str, Partitions: int) -> pl.DataFrame:
+    """
+    Polars equivalent of the original PySpark function.
+    Reads an exclusion file, filters for 'Reclamacion' profiles, 
+    cleans the account number, and prepares the final output DataFrame.
+    """
     
-    df = df.filter(col('ultimo_perfil') == "Reclamacion")
-    df = df.filter(col('mejorperfil') == "Reclamacion")
-    df = df.filter(col('perfil_historico') == "Reclamacion")
+    # Calculate the fixed date string once (eagerly)
+    current_date = datetime.now().strftime("%Y-%m-%d")
+
+    # Required columns for the operation
+    management_cols = ["cuenta", "perfil_historico", "ultimo_perfil", "mejorperfil"]
     
-    df = df.withColumn("FECHA", lit(datetime.now().strftime("%Y-%m-%d")))
-    df = df.withColumnRenamed("cuenta", "CUENTA")
+    # 1. Start the LazyFrame scan (equivalent to spark.read.csv)
+    # Scan_csv is used for performance, executing the plan lazily.
+    ldf = (
+        pl.scan_csv(
+            Path, 
+            has_header=True, 
+            separator=";",
+            # Assuming the file is read as UTF8 strings for the cleaning and filtering steps.
+        )
+        
+        # 2. Select the required columns
+        .select(management_cols)
+        
+        # 3. Clean 'cuenta' Column: Remove hyphens (equivalent to regexp_replace(col("cuenta"), "-", ""))
+        .with_columns(
+            pl.col("cuenta")
+            .str.replace_all("-", "", literal=True) # literal=True for simple string replacement
+            .alias("cuenta")
+        )
+        
+        # 4. Select/Reorder and Deduplicate
+        .select("cuenta", "ultimo_perfil", "mejorperfil", "perfil_historico")
+        .unique() # dropDuplicates() equivalent
+        
+        # 5. Filter Logic: Filter where all three profile columns equal "Reclamacion"
+        .filter(
+            (pl.col("ultimo_perfil") == "Reclamacion") &
+            (pl.col("mejorperfil") == "Reclamacion") &
+            (pl.col("perfil_historico") == "Reclamacion")
+        )
+        
+        # 6. Add Date Column and Rename
+        .with_columns(
+            pl.lit(current_date).alias("FECHA") # Add fixed date string column (equivalent to lit(datetime.now()...))
+        )
+        .rename({"cuenta": "CUENTA"}) # withColumnRenamed() equivalent
+        
+        # 7. Final Selection
+        .select("CUENTA", "FECHA")
+    )
+    
+    # 8. Collect (execute the lazy plan and return an eager DataFrame)
+    df = ldf.collect()
 
-    df = df.select("CUENTA", "FECHA")
-
-
+    # 9. Save and Return (Assumes Save_File_Form is adapted for Polars DF)
     Save_File_Form(df, Outpath, Partitions)
     
     return df
