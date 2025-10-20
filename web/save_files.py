@@ -62,9 +62,7 @@ def save_to_csv(data_frame: PolarsDataFrame, output_path: str, filename: str, pa
     
     # Polars writes to a single file, simplifying the naming convention
     final_file_path = os.path.join(output_path, f"{filename} {file_date}.csv")
-
-    print(f"Saving Polars DataFrame to CSV: {final_file_path}")
-
+    
     try:
         # 2. Polars writing logic
         data_frame.write_csv(
@@ -74,7 +72,7 @@ def save_to_csv(data_frame: PolarsDataFrame, output_path: str, filename: str, pa
         )
         print(f"✔️ CSV file successfully saved to: {final_file_path}")
     except Exception as e:
-        print(f"ERROR: Failed to save Polars DataFrame to CSV. Reason: {e}")
+        print(f"ERROR: Failed to save DataFrame to CSV. Reason: {e}")
 
 
 def save_to_0csv(data_frame: PolarsDataFrame, output_path: str, filename: str, partitions: Union[int, str], delimiter: str = ","):
