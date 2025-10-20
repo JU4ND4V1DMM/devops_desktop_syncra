@@ -1,74 +1,123 @@
-from pyspark.sql.functions import col, concat, lit, when, split, length, regexp_replace
+import polars as pl
 
-def lines_inactives_df(data_frame):
-       
-       data_frame = data_frame.withColumnRenamed("22_", "LUGAR")
+def lines_inactives_df(data_frame: pl.DataFrame) -> pl.DataFrame:
+    """
+    Polars equivalent of PySpark function to process and standardize inactive 
+    phone lines (MINS) based on location and length.
 
-       Data_1 = data_frame.filter(col("dato") <= 3000000000)
-       Data_2 = data_frame.filter(col("dato") >= 3599999999)
-       Data_2 = Data_2.filter(col("dato") <= 6010000000)
+    This function isolates data outside the initial valid MINS range, attempts 
+    to determine the area code (INDICATIVO) from the 'LUGAR' column, 
+    and reconstructs the full phone number (dato).
+    """
+    
+    # 0. Convert 'dato' to numeric for range checks (casting to Int64 is necessary 
+    # since all columns were cast to Utf8 earlier in First_Changes_DataFrame).
+    dato_int = data_frame.get_column("dato").cast(pl.Int64, strict=False)
 
-       data_frame = Data_1.union(Data_2)
+    data_frame = data_frame.rename({"22_": "LUGAR"})
 
-       data_frame = data_frame.withColumn("LUGAR", when((col("LUGAR") == "") | (col("LUGAR").isNull()), "BOGOTA")
-                                   .otherwise(col("LUGAR")))
+    # Filter 1: dato <= 3000000000
+    Data_1 = data_frame.filter(dato_int <= pl.lit(3000000000))
+    
+    # Filter 2: dato >= 3599999999 AND dato <= 6010000000
+    Data_2 = data_frame.filter(
+        (dato_int >= pl.lit(3599999999)) & (dato_int <= pl.lit(6010000000))
+    )
 
-       data_frame = data_frame.withColumn("LUGAR", split(col("LUGAR"), "/").getItem(0))
-       data_frame = data_frame.withColumn("dato", regexp_replace(col("dato"), " ", ""))
-       data_frame = data_frame.withColumn("dato", regexp_replace(col("dato"), "  ", ""))
-       data_frame = data_frame.withColumn("LARGO", length(col("dato")))
-       data_frame = data_frame.withColumn("TELEFONO", col("dato"))
-       data_frame = data_frame.withColumn("dato", lit(""))
+    # Union/Vertical stacking of filtered dataframes (equivalent to PySpark union)
+    data_frame = pl.concat([Data_1, Data_2])
 
-       # 601
-       list1 = ["BOGOTA", "CUNDINAMARCA", "SOACHA", "BOGOTÁ", "BOGOT"]
-       # 602
-       list2 = ["CAUCA", "NARIÑO", "VALLE", "CALI", "JAMUNDI", "JAMUNDÍ"]
-       # 604
-       list3 = ["ANTIOQUIA", "BARRANQUILLA", "CORDOBA", "CHOCO", "MEDELLÍN", "MEDELLIN", "MEDELL"]
-       # 605
-       list4 = ["ATLANTICO", "BOLIVAR", "CESAR", "LA GUAJIRA", "MAGDALENA", "SUCRE"]
-       # 606
-       list5 = ["CALDAS", "QUINDIO", "RISARALDA"]
-       # 607
-       list6 = ["ARAUCA", "NORTE DE SANTANDER", "SANTANDER"]
-       # 608
-       list7 = ["AMAZONAS", "BOYACA", "CASANARE", "CAQUETA", "GUAVIARE", "GUAINIA", "HUILA", "META", "TOLIMA", "PUTUMAYO", \
-              "SAN ANDRES", "VAUPES", "VICHADA"]
-       
-       data_frame = data_frame.withColumn("LUGAR", regexp_replace("LUGAR", "[^A-Z ]", ""))
-       data_frame = data_frame.withColumn("LUGAR", split(col("LUGAR"), " "))
-       data_frame = data_frame.withColumn("LUGAR", (data_frame["LUGAR"][0]))
+    # Standardize 'LUGAR' column: replace empty/null with "BOGOTA"
+    data_frame = data_frame.with_columns(
+        pl.when((pl.col("LUGAR") == pl.lit("")) | (pl.col("LUGAR").is_null()))
+        .then(pl.lit("BOGOTA"))
+        .otherwise(pl.col("LUGAR"))
+        .alias("LUGAR")
+    )
 
-       data_frame = data_frame.withColumn("INDICATIVO",
-       when(col("LUGAR").isin(list1), lit("1"))
-       .when(col("LUGAR").isin(list2), lit("2"))
-       .when(col("LUGAR").isin(list3), lit("4"))
-       .when(col("LUGAR").isin(list4), lit("5"))
-       .when(col("LUGAR").isin(list5), lit("6"))
-       .when(col("LUGAR").isin(list6), lit("7"))
-       .when(col("LUGAR").isin(list7), lit("8"))
-       .otherwise("000"))
+    # Get the first element after splitting 'LUGAR' by "/"
+    data_frame = data_frame.with_columns(
+        pl.col("LUGAR").str.split("/").list.get(0).alias("LUGAR")
+    )
+    
+    # Consolidate 'replace_all' calls for spaces
+    # Remove all whitespace characters from 'dato'
+    data_frame = data_frame.with_columns(
+        pl.col("dato").str.replace_all(r"\s+", pl.lit(""), literal=False).alias("dato"),
+    )
+    
+    # Calculate length of 'dato' and store original value in 'TELEFONO'
+    data_frame = data_frame.with_columns([
+        # CORRECTED: Use pl.col("dato").str.len_chars() for string length in Polars
+        pl.col("dato").str.len_chars().alias("LARGO"),
+        pl.col("dato").alias("TELEFONO"),
+        pl.lit("").alias("dato"), # Reset 'dato' column to empty string
+    ])
 
-       data_frame = data_frame.filter(col("INDICATIVO") != "000")
+    # Define lists for regional indicative matching
+    list1 = ["BOGOTA", "CUNDINAMARCA", "SOACHA", "BOGOTÁ", "BOGOT"]
+    list2 = ["CAUCA", "NARIÑO", "VALLE", "CALI", "JAMUNDI", "JAMUNDÍ"]
+    list3 = ["ANTIOQUIA", "BARRANQUILLA", "CORDOBA", "CHOCO", "MEDELLÍN", "MEDELLIN", "MEDELL"]
+    list4 = ["ATLANTICO", "BOLIVAR", "CESAR", "LA GUAJIRA", "MAGDALENA", "SUCRE"]
+    list5 = ["CALDAS", "QUINDIO", "RISARALDA"]
+    list6 = ["ARAUCA", "NORTE DE SANTANDER", "SANTANDER"]
+    list7 = ["AMAZONAS", "BOYACA", "CASANARE", "CAQUETA", "GUAVIARE", "GUAINIA", "HUILA", "META", "TOLIMA", "PUTUMAYO", "SAN ANDRES", "VAUPES", "VICHADA"]
 
-       ### Arreglo de MINS
-       data_frame = data_frame.withColumn("dato",
-       when(col("LARGO") == 7, concat(lit("60"), col("INDICATIVO"), col("TELEFONO")))
-       .when(col("LARGO") == 8, concat(lit("60"), col("TELEFONO")))
-       .when(col("LARGO") == 9, concat(lit("6"), col("TELEFONO")))
-       .otherwise(""))
+    # Final cleanup of 'LUGAR' (remove characters that are not uppercase letters or spaces)
+    data_frame = data_frame.with_columns(
+        pl.col("LUGAR").str.replace_all(r"[^A-Z ]", pl.lit(""), literal=False).alias("LUGAR")
+    )
+    
+    # Get the first word of 'LUGAR' after cleaning and splitting by space
+    data_frame = data_frame.with_columns(
+        pl.col("LUGAR").str.split(" ").list.get(0).alias("LUGAR")
+    )
 
-       data_frame = data_frame.filter(col("LARGO") >= 7)
-       data_frame = data_frame.filter(col("LARGO") <= 8)
+    # Determine INDICATIVO (area code) based on location lists
+    data_frame = data_frame.with_columns(
+        pl.when(pl.col("LUGAR").str.to_uppercase().is_in(list1)).then(pl.lit("1"))
+        .when(pl.col("LUGAR").str.to_uppercase().is_in(list2)).then(pl.lit("2"))
+        .when(pl.col("LUGAR").str.to_uppercase().is_in(list3)).then(pl.lit("4"))
+        .when(pl.col("LUGAR").str.to_uppercase().is_in(list4)).then(pl.lit("5"))
+        .when(pl.col("LUGAR").str.to_uppercase().is_in(list5)).then(pl.lit("6"))
+        .when(pl.col("LUGAR").str.to_uppercase().is_in(list6)).then(pl.lit("7"))
+        .when(pl.col("LUGAR").str.to_uppercase().is_in(list7)).then(pl.lit("8"))
+        .otherwise(pl.lit("000"))
+        .alias("INDICATIVO")
+    )
 
-       data_frame = data_frame.select("1_", "2_", "ciudad", "depto", "dato", "tipodato", "Marca")
+    # Filter out rows where INDICATIVO could not be determined
+    data_frame = data_frame.filter(pl.col("INDICATIVO") != pl.lit("000"))
 
-       Data_C = data_frame.filter(col("dato") >= 3000000001)
-       Data_C = Data_C.filter(col("dato") <= 3599999998)
-       Data_F = data_frame.filter(col("dato") >= 6010000000)
-       Data_F = Data_F.filter(col("dato") <= 6089999998)
+    # Reconstruct 'dato' (the phone number) based on length
+    data_frame = data_frame.with_columns(
+        pl.when(pl.col("LARGO") == pl.lit(7)).then(pl.concat_str([pl.lit("60"), pl.col("INDICATIVO"), pl.col("TELEFONO")]))
+        .when(pl.col("LARGO") == pl.lit(8)).then(pl.concat_str([pl.lit("60"), pl.col("TELEFONO")]))
+        .when(pl.col("LARGO") == pl.lit(9)).then(pl.concat_str([pl.lit("6"), pl.col("TELEFONO")]))
+        .otherwise(pl.lit(""))
+        .alias("dato")
+    )
 
-       data_frame = Data_C.union(Data_F)
+    # Final filter by the length of the original 'dato' (before reconstruction)
+    data_frame = data_frame.filter(
+        (pl.col("LARGO") >= pl.lit(7)) & (pl.col("LARGO") <= pl.lit(8))
+    )
+    
+    # Re-cast 'dato' to numeric for the final range checks
+    dato_int_final = data_frame.get_column("dato").cast(pl.Int64, strict=False)
+    
+    # Final filter by valid phone number ranges (post-reconstruction)
+    Data_C = data_frame.filter(
+        (dato_int_final >= pl.lit(3000000001)) & (dato_int_final <= pl.lit(3599999998))
+    )
+    Data_F = data_frame.filter(
+        (dato_int_final >= pl.lit(6010000000)) & (dato_int_final <= pl.lit(6089999998))
+    )
+    
+    # Final union of valid phone ranges
+    data_frame = pl.concat([Data_C, Data_F])
 
-       return data_frame
+    # Final selection of required columns
+    data_frame = data_frame.select(pl.col(["1_", "2_", "ciudad", "depto", "dato", "tipodato", "Marca"]))
+
+    return data_frame
