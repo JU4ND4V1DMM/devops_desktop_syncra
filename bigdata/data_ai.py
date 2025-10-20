@@ -25,7 +25,7 @@ sqlContext = SQLContext(spark)
 
 def claro_structure_df(Path_Original, outpath, partitions):
     
-    print("Starting processing data AI...")
+    print("✅ Starting processing data AI...")
     Path = f"{Path_Original}/Bases/"
     Path_Dto = f"{Path_Original}/Descuentos/"
         
@@ -35,19 +35,13 @@ def claro_structure_df(Path_Original, outpath, partitions):
     
     # Read and process Data_Root and Data_DTO in one go
     # files = [os.path.join(Path, file) for file in os.listdir(Path) if file.endswith(".csv")]
-    # Data_Root = spark.read.option("header", "true").option("sep", ";").csv(files)
-    # Data_Root = Data_Root.select([col(c).cast(StringType()).alias(c) for c in Data_Root.columns])
-    # Data_Root = Data_Root.withColumn("61_", col("61_") if "61_" in Data_Root.columns else col("57_"))
     files = [os.path.join(Path, file) for file in os.listdir(Path) if file.endswith(".csv")]
 
     dfs = []
     for f in files:
+        print(f"📁 Processing file: {f}")
         df = spark.read.option("header", "true").option("sep", ";").csv(f)
         df = df.select([col(c).cast(StringType()).alias(c) for c in df.columns])
-        # if "61_" not in df.columns and "57_" in df.columns:
-        #     df = df.withColumn("61_", col("57_"))
-        # elif "61_" not in df.columns:
-        #     df = df.withColumn("61_", lit(None).cast(StringType()))
         dfs.append(df)
 
     Data_Root = dfs[0]
@@ -67,7 +61,7 @@ def claro_structure_df(Path_Original, outpath, partitions):
         (col("6_") == "Y") & ((col("3_") == "RR") | (col("3_") == "SGA")),  # prechurn
         (col("6_") == "Y") & (col("3_") == "ASCARD"),  # preprovision
         (col("7_") == "Y"),  # castigo
-        (col("5_") == "N") & (col("6_") == "N") & (col("7_") == "N") & (col("43_") == "Y")  # potencial_a_castigar
+        (col("5_") == "N") & (col("6_") == "N") & (col("7_") == "N") & (col("42_") == "Y")  # potencial_a_castigar
     ]
     
     marca_values = ["Potencial", "Churn", "Provision", "Prepotencial", "Prechurn", "Preprovision", "Castigo", "Potencial a Castigar"]
@@ -88,11 +82,11 @@ def claro_structure_df(Path_Original, outpath, partitions):
                                         .when(prepotencial_especial, "Prepotencial Especial")
                                         .otherwise(col("MARCA")))
     
-    Segment = (col("42_") == "81") | (col("42_") == "84") | (col("42_") == "87")
+    Segment = (col("41_") == "81") | (col("41_") == "84") | (col("41_") == "87")
     Data_Root = Data_Root.withColumn("SEGMENTO", when(Segment, "Personas")
                         .otherwise("Negocios"))
     
-    Data_Root = Data_Root.withColumn("CUSTOMER TYPE", col("42_"))
+    Data_Root = Data_Root.withColumn("CUSTOMER TYPE", col("41_"))
     Data_Root = Data_Root.withColumn("CUENTA_NEXT", regexp_replace(col("2_"), "[.-]", ""))
     Data_Root = Data_Root.withColumn("CUENTA_NEXT", concat(col("CUENTA_NEXT"), lit("-")))
     Data_Root = Data_Root.withColumn("CUENTA", concat(col("2_"), lit("-")))
@@ -125,9 +119,7 @@ def claro_structure_df(Path_Original, outpath, partitions):
     Data_Root = Data_Dates(Data_Root)
     
     Data_Root, max_value, max_date = Data_Dates_Div(Data_Root)
-    print("First Step: Dates divide\n")
     Data_Root = columns_stack(Data_Root, max_value, max_date)
-    print("Second Step: Columns Stack\n")
     
     Data_Root = change_name_column(Data_Root, "NOMBRE")
     Data_Root = Data_Root.withColumn("REFERENCIA",  when(col("CRM") == "RR", col("2_")).otherwise(col("REFERENCIA")))           
@@ -141,12 +133,10 @@ def claro_structure_df(Path_Original, outpath, partitions):
     
     columns_to_list += columns_data
     Data_Root = Data_Root.select(columns_to_list)
-    print("Third Step: Select Dataframe\n")
     
     Data_Payments = "Hola"
     Data_Root = Cruice_Data(Data_Root, Data_DTO, Data_Payments)
     Data_Root = save_temp_log(Data_Root, spark)
-    print("Fourth Step: Data to Save\n")
     
     filter_bd = "Multimarca"
     Data_Root_M = Data_Root.filter(col("CRM") != "CRM Origen")  # Filter Brand Different Tittles
@@ -178,11 +168,13 @@ def claro_structure_df(Path_Original, outpath, partitions):
 
     Save_File(Data_Root_M, outpath, partitions, filter_bd, Time_File)
 
+    print("✅ Data AI processing completed.")
+    
     return Data_Root
 
 ### Additional Functions (unchanged)
 def Data_Dates(Data_):
-    all_columns_to_stack = ["61_"]
+    all_columns_to_stack = ["62_"]
     columns_to_drop_contact = all_columns_to_stack
     Stacked_Data_Frame = Data_.select("*", *all_columns_to_stack)
     Stacked_Data_Frame = Stacked_Data_Frame.select(
