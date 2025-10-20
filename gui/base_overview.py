@@ -11,8 +11,14 @@ from pyspark.sql import SparkSession, SQLContext, Row
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
 from pyspark.sql.functions import col, concat, lit, regexp_replace, when, date_format, current_date, to_date, date_format, split, length, upper, coalesce
 from web.save_files import save_to_0csv, save_to_csv
-from web.temp_parquet import save_temp_log
- 
+from datetime import date
+import io
+import polars as pl
+from polars import col, lit
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from polars import DataFrame
+     
 class Charge_DB(QtWidgets.QMainWindow):
 
     def __init__(self, row_count, file_path, folder_path, process_data, thread_class=DynamicThread):
@@ -141,78 +147,180 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.setText("Proceso de valdiación de líneas ejecutado exitosamente.")
         Mbox_In_Process.exec()
     
-    def Update_BD_ControlNext(self, Data_Root):
+    def Update_BD_ControlNext(self, Data_Root: "DataFrame") -> "DataFrame":
         
-        Data_Root = Data_Root.withColumn("[AccountAccountCode?]", regexp_replace(col("[AccountAccountCode?]"), "-", ""))
-        Data_Root = Data_Root.withColumn("[AccountAccountCode?]", regexp_replace(col("[AccountAccountCode?]"), r"\.", ""))
-        Data_Root = Data_Root.withColumn("[AccountAccountCode2?]", col("[AccountAccountCode?]"))
+        # --- [AccountAccountCode?] updates ---
+        Data_Root = Data_Root.with_columns(
+            # Remove hyphens (equivalent to regexp_replace(col, "-", ""))
+            col("[AccountAccountCode?]")
+            .str.replace_all("-", "") 
+            # Remove dots (equivalent to regexp_replace(col, r"\.", ""))
+            .str.replace_all(r"\.", "", literal=True) 
+            .alias("[AccountAccountCode?]")
+        ).with_columns(
+            # Copy the cleaned code to [AccountAccountCode2?]
+            col("[AccountAccountCode?]").alias("[AccountAccountCode2?]")
+        )
         
-        Data_Root = Data_Root.withColumn("Numero de Cliente", regexp_replace("Numero de Cliente", "[^0-9]", ""))
-        Data_Root = Data_Root.withColumn("Numero de Cliente", when(col("Numero de Cliente").isNull(), lit("0")).otherwise(col("Numero de Cliente")))
-        Data_Root = Data_Root.withColumn("Numero de Cliente", col("Numero de Cliente").cast("int"))
-        Data_Root = Data_Root.withColumn("Numero de Cliente", when(length(col("Numero de Cliente")) < 2, col("[AccountAccountCode?]")).otherwise(col("Numero de Cliente")))
+        # --- "Numero de Cliente" updates ---
+        Data_Root = Data_Root.with_columns(
+            # 1. Remove non-numeric characters (equivalent to regexp_replace("Numero de Cliente", "[^0-9]", ""))
+            col("Numero de Cliente")
+            .str.replace_all(r"[^0-9]", "", literal=False) # literal=False for regex
+            .alias("Numero de Cliente")
+        ).with_columns(
+            # 2. If null, set to "0" (equivalent to when(col.isNull(), lit("0")).otherwise(col))
+            col("Numero de Cliente")
+            .fill_null(lit("0"))
+            .alias("Numero de Cliente")
+        ).with_columns(
+            # 3. Cast to integer (equivalent to col.cast("int"))
+            col("Numero de Cliente").cast(pl.Int32).alias("Numero de Cliente")
+        ).with_columns(
+            # 4. Conditional update (when length < 2, use [AccountAccountCode?] instead)
+            # Note: Polars checks the length of the string representation of the integer.
+            pl.when(col("Numero de Cliente").cast(pl.Utf8).str.lengths() < 2) 
+            .then(col("[AccountAccountCode?]"))
+            .otherwise(col("Numero de Cliente").cast(pl.Utf8)) # Ensure output type consistency
+            .alias("Numero de Cliente")
+        )
         
-        Data_Root = Data_Root.withColumn("[Documento?]", col("Numero de Cliente"))
+        # --- [Documento?] update ---
+        Data_Root = Data_Root.with_columns(
+            # Copy "Numero de Cliente"
+            col("Numero de Cliente").alias("[Documento?]")
+        )
         
-        Data_Root = Data_Root.withColumn("Precio Subscripcion", lit(""))
+        # --- Precio Subscripcion update ---
+        Data_Root = Data_Root.with_columns(
+            # Set to an empty string (equivalent to lit(""))
+            lit("").alias("Precio Subscripcion")
+        )
         
-        Data_Root = Data_Root.withColumn("Fecha de Aceleracion", date_format(to_date(col("Fecha de Aceleracion"), "d/MM/yyyy"), "yyyy-MM-dd"))
-        Data_Root = Data_Root.withColumn("Fecha de Vencimiento", date_format(to_date(col("Fecha de Vencimiento"), "d/MM/yyyy"), "yyyy-MM-dd"))
+        # --- Date columns updates (d/MM/yyyy to yyyy-MM-dd) ---
+        Data_Root = Data_Root.with_columns(
+            # to_date(..., "d/MM/yyyy") -> date_format(..., "yyyy-MM-dd")
+            col("Fecha de Aceleracion").str.strptime(pl.Date, "%d/%m/%Y", strict=False).dt.strftime("%Y-%m-%d").alias("Fecha de Aceleracion"),
+            col("Fecha de Vencimiento").str.strptime(pl.Date, "%d/%m/%Y", strict=False).dt.strftime("%Y-%m-%d").alias("Fecha de Vencimiento")
+        )
 
-        Data_Root = Data_Root.withColumn("Fecha Final ", date_format(to_date(split(col("Fecha Final "), " ")[0], "d/M/yyyy"), "yyyy-MM-dd"))
-        Data_Root = Data_Root.withColumn("Fecha de Asignacion", date_format(to_date(split(col("Fecha de Asignacion"), " ")[0], "d/M/yyyy"), "yyyy-MM-dd"))
+        # --- Date columns updates (d/M/yyyy after split to yyyy-MM-dd) ---
+        Data_Root = Data_Root.with_columns(
+            # split(col, " ")[0] -> to_date(..., "d/M/yyyy") -> date_format(..., "yyyy-MM-dd")
+            col("Fecha Final ")
+                .str.split(" ")
+                .list.get(0)
+                .str.strptime(pl.Date, "%d/%m/%Y", strict=False) # %d/%m/%Y handles d/M/yyyy in Polars
+                .dt.strftime("%Y-%m-%d")
+                .alias("Fecha Final "),
+            col("Fecha de Asignacion")
+                .str.split(" ")
+                .list.get(0)
+                .str.strptime(pl.Date, "%d/%m/%Y", strict=False)
+                .dt.strftime("%Y-%m-%d")
+                .alias("Fecha de Asignacion")
+        )
         
-        Data_Root = Data_Root.withColumn("Fecha Digitacion y Activacion", date_format(to_date(split(col("Fecha Digitacion y Activacion"), " ")[0], "d/M/yyyy"), "yyyy-MM-dd"))
+        # --- Single Date column update (d/M/yyyy after split to yyyy-MM-dd) ---
+        Data_Root = Data_Root.with_columns(
+            # split(col, " ")[0] -> to_date(..., "d/M/yyyy") -> date_format(..., "yyyy-MM-dd")
+            col("Fecha Digitacion y Activacion")
+                .str.split(" ")
+                .list.get(0)
+                .str.strptime(pl.Date, "%d/%m/%Y", strict=False)
+                .dt.strftime("%Y-%m-%d")
+                .alias("Fecha Digitacion y Activacion")
+        )
         
-        for column in Data_Root.columns:
-            
-            Data_Root = Data_Root.withColumn(column, regexp_replace(col(column), r"\|", ""))
-        
+        # --- Remove "|" from all columns ---
+        # The original code iterates over all columns and applies regexp_replace(..., r"\|", "").
+        # In Polars, we use pl.all() and map the string replacement only to Utf8 columns.
+        Data_Root = Data_Root.with_columns(
+            pl.all()
+            .map(
+                lambda s: s.str.replace_all(r"\|", "", literal=True)
+                if s.dtype in [pl.Utf8] # Only apply replacement to string columns
+                else s # Keep other types as is
+            )
+        )
+
         return Data_Root
     
-    def change_name_column (self, Data_, Column):
+    def change_name_column(self, Data_: "DataFrame", Column: str) -> "DataFrame":
 
-        Data_ = Data_.withColumn(Column, upper(col(Column)))
-
+        # 1. Convert the column to uppercase (equivalent to upper(col(Column)))
+        Data_ = Data_.with_columns(
+            col(Column).str.to_uppercase().alias(Column)
+        )
+        
+        # 2. Handle 'Ñ' and related characters (first batch of replacements)
+        # The strategy is: replace all variations of Ñ with a unique temporary string ("NNNNN"), 
+        # then replace that temporary string with a single "N".
         character_list_N = ["\\ÃƒÂ‘", "\\Ã‚Â¦", "\\Ã‘", "Ñ", "ÃƒÂ‘", "Ã‚Â¦", "Ã‘"]
         
+        # Replace all 'Ñ' variations with "NNNNN" in a loop (using fold/reduce for efficiency in Polars)
+        ñ_replacements = col(Column)
         for character in character_list_N:
-            Data_ = Data_.withColumn(Column, regexp_replace(col(Column), character, "NNNNN"))
+            # Use literal=True for characters that might be interpreted as regex (like \)
+            # The list contains some escaped sequences that need literal=True
+            ñ_replacements = ñ_replacements.str.replace_all(character, "NNNNN", literal=True) 
         
-        Data_ = Data_.withColumn(Column, regexp_replace(col(Column), "NNNNN", "N"))
-        Data_ = Data_.withColumn(Column, regexp_replace(col(Column), "Ã‡", "A"))
-        Data_ = Data_.withColumn(Column, regexp_replace(col(Column), "ÃƒÂ", "I"))
+        # Apply the intermediate replacements and then the final replacements for 'N' and other special characters
+        Data_ = Data_.with_columns(
+            ñ_replacements
+                .str.replace_all("NNNNN", "N", literal=True) # Replace the temporary string with "N"
+                .str.replace_all("Ã‡", "A", literal=True)    # Replace 'Ã‡' with 'A'
+                .str.replace_all("ÃƒÂ", "I", literal=True)    # Replace 'ÃƒÂ' with 'I'
+                .alias(Column)
+        )
 
+        # 3. Remove titles, special characters, numbers, and excess spaces (second batch of replacements)
+        character_list = [
+            "SR/SRA", "SR./SRA.", "SR/SRA.","SR.", "SRA.", "SR(A).","SR ", "SRA ", "SR(A)",
+            "\\.",'#', '$', '/','<', '>', "\\*", "SEÑORES ","SEÑOR(A) ","SEÑOR ","SEÑORA ", "SENORES ",
+            "SENOR(A) ","SENOR ","SENORA ", "¡", "!", "\\?" "¿", "_", "-", "}", "\\{", "\\+", 
+            "0 ", "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ","8 ", "9 ", "0", "1", "2", "3", 
+            "4", "5", "6", "7", "8", "9", "  "
+        ]
 
-        character_list = ["SR/SRA", "SR./SRA.", "SR/SRA.","SR.", "SRA.", "SR(A).","SR ", "SRA ", "SR(A)",\
-                        "\\.",'#', '$', '/','<', '>', "\\*", "SEÑORES ","SEÑOR(A) ","SEÑOR ","SEÑORA ", "SENORES ",\
-                        "SENOR(A) ","SENOR ","SENORA ", "¡", "!", "\\?" "¿", "_", "-", "}", "\\{", "\\+", "0 ", "1 ", "2 ", "3 ",\
-                        "4 ", "5 ", "6 ", "7 ","8 ", "9 ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "  "]
-
+        # Replace all characters in character_list with "" in a loop
+        second_replacements = col(Column)
         for character in character_list:
-            Data_ = Data_.withColumn(Column, regexp_replace(col(Column), character, ""))
+            # Use literal=True for characters that might be interpreted as regex
+            second_replacements = second_replacements.str.replace_all(character, "", literal=True) 
         
-        Data_ = Data_.withColumn(Column, regexp_replace(Column, "[^A-Z& ]", ""))
+        # 4. Filter characters: keep only A-Z, & and space (equivalent to regexp_replace(Column, "[^A-Z& ]", ""))
+        Data_ = Data_.with_columns(
+            second_replacements
+                .str.replace_all(r"[^A-Z& ]", "", literal=False) # literal=False for regex
+                .alias(Column)
+        )
 
-        character_list = ["SEORES ","SEORA ","SEOR ","SEORA "]
+        # 5. Remove remaining title variations (third batch of replacements)
+        character_list_final = ["SEORES ","SEORA ","SEOR ","SEORA "]
 
-        for character in character_list:
-            Data_ = Data_.withColumn(Column, regexp_replace(col(Column), character, ""))
-
-        Data_ = Data_.withColumn(Column,regexp_replace(col(Column), r'^(A\s+| )+', ''))
-            
+        # Replace remaining title variations with ""
+        final_replacements = col(Column)
+        for character in character_list_final:
+            final_replacements = final_replacements.str.replace_all(character, "", literal=True) 
+        
+        # 6. Remove leading "A " or spaces (equivalent to regexp_replace(col(Column), r'^(A\s+| )+', ''))
+        Data_ = Data_.with_columns(
+            final_replacements
+                .str.replace_all(r'^(A\s+| )+', '', literal=False) # literal=False for regex
+                .alias(Column)
+        )
+                
         return Data_
 
-    def BD_Control_Next(self):
-
-        spark = get_spark_session()
-
-        sqlContext = SQLContext(spark)
-        
+    def BD_Control_Next(self) -> "DataFrame":
+    
+        # --- Calling external methods (kept as in original code) ---
         self.digit_partitions()
         
+        # --- Data parameters ---
+        # Assuming self.file_path, self.folder_path, self.partitions exist
         list_data = [self.file_path, self.folder_path, self.partitions]
-
         file = list_data[0]
         root = list_data[1]
         partitions = int(list_data[2])
@@ -222,135 +330,203 @@ class Charge_DB(QtWidgets.QMainWindow):
         now = datetime.now()
         Time_File = now.strftime("%Y%m%d_%H%M")
 
-        Data_Root = spark.read.csv(file, header= True, sep=";")
-        Data_Root = Data_Root.select([col(c).cast(StringType()).alias(c) for c in Data_Root.columns])
-
-        columns_to_list = [f"{i}_" for i in range(1, 62)]
-        Data_Root = Data_Root.select(columns_to_list)
-        Data_Root = Data_Root.filter(col("3_").isin(list_origins))
-
-        Data_Root = Data_Root.withColumn("Telefono 1", lit(""))
-        Data_Root = Data_Root.withColumn("Telefono 2", lit(""))
-        Data_Root = Data_Root.withColumn("Telefono 3", lit(""))
-        Data_Root = Data_Root.withColumn("Telefono 4", lit(""))
-        Data_Root = Data_Root.withColumn("Valor Scoring", col("57_"))
-        Data_Root = Data_Root.withColumn("[AccountAccountCode2?]", col("2_"))
-        Data_Root = Data_Root.withColumn("43_", lit(""))
+        # --- Data Ingestion and initial selection (Polars) ---
+        # Equivalent to spark.read.csv(file, header=True, sep=";")
+        Data_Root: pl.DataFrame = pl.read_csv(file, has_header=True, separator=";", infer_schema_length=10000, encoding='latin1')
         
-        correction_nnny = ((col("5_") == "Y") | (col("6_") == "Y") | (col("7_") == "Y")) & (col("42_") == "Y")
+        # Equivalent to Data_Root.select([col(c).cast(StringType()).alias(c) for c in Data_Root.columns])
+        # Ensure all columns are Utf8 (string) for initial consistency with PySpark's StringType() cast
+        Data_Root = Data_Root.with_columns(pl.all().cast(pl.Utf8))
+        
+        # Initial selection of columns 1_ to 61_ (Equivalent to Data_Root.select(columns_to_list))
+        columns_to_select = [f"{i}_" for i in range(1, 62)]
+        Data_Root = Data_Root.select(columns_to_select)
+        
+        # Filter by origins (Equivalent to Data_Root.filter(col("3_").isin(list_origins)))
+        Data_Root = Data_Root.filter(col("3_").is_in(list_origins))
 
-        Data_Root = Data_Root.withColumn("42_", when(correction_nnny, lit(""))\
-                                            .otherwise(col("42_")))
+        # --- Feature Engineering and Conditional Logic ---
+        Data_Root = Data_Root.with_columns(
+            # Equivalent to Data_Root.withColumn("Telefono X", lit(""))
+            lit("").alias("Telefono 1"),
+            lit("").alias("Telefono 2"),
+            lit("").alias("Telefono 3"),
+            lit("").alias("Telefono 4"),
+            
+            # Equivalent to Data_Root.withColumn("Valor Scoring", col("57_"))
+            col("57_").alias("Valor Scoring"),
+            
+            # Equivalent to Data_Root.withColumn("[AccountAccountCode2?]", col("2_"))
+            col("2_").alias("[AccountAccountCode2?]"),
+            
+            # Equivalent to Data_Root.withColumn("43_", lit(""))
+            lit("").alias("43_")
+        )
 
-        columns_to_list = ["1_", "2_", "3_", "4_", "5_", "6_", "7_", "8_", "9_", "10_", "11_", "12_", \
-                           "13_", "14_", "15_", "16_", "17_", "18_", "50_", "Telefono 1", "Telefono 2", "Telefono 3", \
-                           "Telefono 4", "Valor Scoring", "19_", "20_", "21_", "22_", "23_", "24_", "25_", \
-                           "26_", "27_", "28_", "29_", "30_", "31_", "32_", "33_", "34_", "35_",  "36_", "37_", \
-                           "38_", "39_", "40_", "41_", "42_", "43_", "[AccountAccountCode2?]", "56_", "58_", "59_", "60_", "61_"]
+        # Conditional correction logic (Equivalent to correction_nnny & Data_Root.withColumn("42_", when(...)))
+        correction_nnny = (col("5_") == lit("Y")) | (col("6_") == lit("Y")) | (col("7_") == lit("Y"))
+        correction_nnny = correction_nnny & (col("42_") == lit("Y"))
+        
+        Data_Root = Data_Root.with_columns(
+            pl.when(correction_nnny)
+            .then(lit("")) # Equivalent to lit("")
+            .otherwise(col("42_"))
+            .alias("42_")
+        )
+
+        # --- Final Column Selection and Ordering ---
+        columns_to_list = ["1_", "2_", "3_", "4_", "5_", "6_", "7_", "8_", "9_", "10_", "11_", "12_", 
+                        "13_", "14_", "15_", "16_", "17_", "18_", "50_", "Telefono 1", "Telefono 2", "Telefono 3", 
+                        "Telefono 4", "Valor Scoring", "19_", "20_", "21_", "22_", "23_", "24_", "25_", 
+                        "26_", "27_", "28_", "29_", "30_", "31_", "32_", "33_", "34_", "35_", "36_", "37_", 
+                        "38_", "39_", "40_", "41_", "42_", "43_", "[AccountAccountCode2?]", "56_", "58_", "59_", "60_", "61_"]
 
         print("Columnas de Data_Root:", Data_Root.columns)
 
         Data_Root = Data_Root.select(columns_to_list)
-                                         
-        Data_Root = Data_Root.dropDuplicates(["2_"])
-        Data_Root = Data_Root.orderBy(col("3_"))
-
-        Data_Root = Data_Root.withColumn("24_2", col("24_"))
-        Data_Root = self.change_name_column(Data_Root, "24_2")
-        Data_Root = Data_Root.withColumn("24_", when(length(col("24_2")) < 7, col("24_")).otherwise(col("24_2")))
+                                            
+        # --- Deduplication and Sorting ---
+        # Equivalent to Data_Root.dropDuplicates(["2_"])
+        Data_Root = Data_Root.unique(subset=["2_"])
         
+        # Equivalent to Data_Root.orderBy(col("3_"))
+        Data_Root = Data_Root.sort(by="3_")
+
+        # --- Name Cleaning Logic ---
+        Data_Root = Data_Root.with_columns(
+            col("24_").alias("24_2")
+        )
+        
+        # Calling external method (kept as in original code)
+        Data_Root = self.change_name_column(Data_Root, "24_2")
+        
+        # Conditional update after cleaning (Equivalent to when(length(col("24_2")) < 7, col("24_")).otherwise(col("24_2")))
+        Data_Root = Data_Root.with_columns(
+            pl.when(col("24_2").str.lengths() < 7)
+            .then(col("24_"))
+            .otherwise(col("24_2"))
+            .alias("24_")
+        )
+        
+        # Final selection of required columns (excluding the temporary "24_2")
         Data_Root = Data_Root.select(columns_to_list)
         
-        Data_Root = Data_Root.withColumn("Tipo_Documento", regexp_replace("1_", r'[^a-zA-Z]', ''))
-        Data_Root = Data_Root.withColumn("Tipo_Documento", when((col("Tipo_Documento") == "CC"), lit("Cedula de Ciudadania"))
-                                    .when((col("Tipo_Documento") == "PS"), lit("Pasaporte"))
-                                    .when((col("Tipo_Documento") == "PP"), lit("Pasaporte"))
-                                    .when((col("Tipo_Documento") == "PP"), lit("Permiso Temporal"))
-                                    .when((col("Tipo_Documento") == "XPP"), lit("Permiso de Permanencia"))
-                                    .when((col("Tipo_Documento") == "NT"), lit("Nit"))
-                                    .when((col("Tipo_Documento") == "CD"), lit("Carnet Diplomatico"))
-                                    .when((col("Tipo_Documento") == "CE"), lit("Cedula de Extranjeria"))
-                                    .when(((col("Tipo_Documento").isNull()) | (col("Tipo_Documento") == "")), lit("Sin tipologia"))
-                                    .otherwise(lit("Errado")))
+        # --- Document Type Logic (Tipo_Documento) ---
+        Data_Root = Data_Root.with_columns(
+            # 1. Clean '1_' (Equivalent to regexp_replace("1_", r'[^a-zA-Z]', ''))
+            col("1_").str.replace_all(r'[^a-zA-Z]', '', literal=False).alias("Tipo_Documento")
+        ).with_columns(
+            # 2. Conditional mapping (using chained when/then/otherwise)
+            pl.when(col("Tipo_Documento") == lit("CC")).then(lit("Cedula de Ciudadania"))
+            .when(col("Tipo_Documento") == lit("PS")).then(lit("Pasaporte"))
+            .when(col("Tipo_Documento") == lit("PP")).then(lit("Pasaporte"))
+            .when(col("Tipo_Documento") == lit("PP")).then(lit("Permiso Temporal")) # Duplicated original logic is preserved
+            .when(col("Tipo_Documento") == lit("XPP")).then(lit("Permiso de Permanencia"))
+            .when(col("Tipo_Documento") == lit("NT")).then(lit("Nit"))
+            .when(col("Tipo_Documento") == lit("CD")).then(lit("Carnet Diplomatico"))
+            .when(col("Tipo_Documento") == lit("CE")).then(lit("Cedula de Extranjeria"))
+            .when(col("Tipo_Documento").is_null() | (col("Tipo_Documento") == lit(""))).then(lit("Sin tipologia"))
+            .otherwise(lit("Errado"))
+            .alias("Tipo_Documento")
+        )
         
-        Data_Root = Data_Root.withColumn("Departamento", lit("Prueba"))
+        # --- Add "Departamento" column ---
+        Data_Root = Data_Root.with_columns(
+            lit("Prueba").alias("Departamento")
+        )
         
-        Data_Root = Data_Root.withColumnRenamed("1_", "Numero de Cliente")
-        Data_Root = Data_Root.withColumnRenamed("2_", "[AccountAccountCode?]")
-        Data_Root = Data_Root.withColumnRenamed("3_", "CRM Origen")
-        Data_Root = Data_Root.withColumnRenamed("4_", "Edad de Deuda")
-        Data_Root = Data_Root.withColumnRenamed("5_", "[PotencialMark?]")
-        Data_Root = Data_Root.withColumnRenamed("6_", "[PrePotencialMark?]")
-        Data_Root = Data_Root.withColumnRenamed("7_", "[WriteOffMark?]")
-        Data_Root = Data_Root.withColumnRenamed("8_", "Monto inicial")
-        Data_Root = Data_Root.withColumnRenamed("9_", "[ModInitCta?]")
-        Data_Root = Data_Root.withColumnRenamed("10_", "[DeudaRealCuenta?]")
-        Data_Root = Data_Root.withColumnRenamed("11_", "[BillCycleName?]")
-        Data_Root = Data_Root.withColumnRenamed("12_", "Nombre Campana")
-        Data_Root = Data_Root.withColumnRenamed("13_", "[DebtAgeInicial?]")
-        Data_Root = Data_Root.withColumnRenamed("14_", "Nombre Casa de Cobro")
-        Data_Root = Data_Root.withColumnRenamed("15_", "Fecha de Asignacion")
-        Data_Root = Data_Root.withColumnRenamed("16_", "Deuda Gestionable")
-        Data_Root = Data_Root.withColumnRenamed("17_", "Direccion Completa")
-        Data_Root = Data_Root.withColumnRenamed("18_", "Fecha Final ")
-        Data_Root = Data_Root.withColumnRenamed("50_", "Email")
-        Data_Root = Data_Root.withColumnRenamed("19_", "Segmento")
-        Data_Root = Data_Root.withColumnRenamed("20_", "[Documento?]")
-        Data_Root = Data_Root.withColumnRenamed("21_", "[AccStsName?]")
-        Data_Root = Data_Root.withColumnRenamed("22_", "Ciudad")
-        Data_Root = Data_Root.withColumnRenamed("23_", "[InboxName?]")
-        Data_Root = Data_Root.withColumnRenamed("24_", "Nombre del Cliente")
-        Data_Root = Data_Root.withColumnRenamed("25_", "Id de Ejecucion")
-        Data_Root = Data_Root.withColumnRenamed("26_", "Fecha de Vencimiento")
-        Data_Root = Data_Root.withColumnRenamed("27_", "Numero Referencia de Pago")
-        Data_Root = Data_Root.withColumnRenamed("28_", "MIN")
-        Data_Root = Data_Root.withColumnRenamed("29_", "Plan")
-        Data_Root = Data_Root.withColumnRenamed("30_", "Cuotas Aceleradas")
-        Data_Root = Data_Root.withColumnRenamed("31_", "Fecha de Aceleracion")
-        Data_Root = Data_Root.withColumnRenamed("32_", "Valor Acelerado")
-        Data_Root = Data_Root.withColumnRenamed("33_", "Intereses Contingentes")
-        Data_Root = Data_Root.withColumnRenamed("34_", "Intereses Corrientes Facturados")
-        Data_Root = Data_Root.withColumnRenamed("35_", "Intereses por mora facturados")
-        Data_Root = Data_Root.withColumnRenamed("36_", "Iva Intereses Contigentes Facturado")
-        Data_Root = Data_Root.withColumnRenamed("37_", "Iva Intereses Corrientes Facturados")
-        Data_Root = Data_Root.withColumnRenamed("38_", "Iva Intereses por Mora Facturado")
-        Data_Root = Data_Root.withColumnRenamed("39_", "Precio Subscripcion")
-        Data_Root = Data_Root.withColumnRenamed("40_", "Codigo de proceso")
-        Data_Root = Data_Root.withColumnRenamed("41_", "[CustomerTypeId?]")
-        Data_Root = Data_Root.withColumnRenamed("42_", "[RefinanciedMark?]")
-        Data_Root = Data_Root.withColumnRenamed("43_", "[Discount?]")
-        
-        Data_Root = Data_Root.withColumnRenamed("58_", "Cuotas Pactadas") 
-        Data_Root = Data_Root.withColumnRenamed("59_", "Cuotas Facturadas") 
-        Data_Root = Data_Root.withColumnRenamed("60_", "Cuotas Pendientes")
-        Data_Root = Data_Root.withColumnRenamed("61_", "Fecha Digitacion y Activacion")
+        # --- Rename Columns (ColumnRenamed) ---
+        Data_Root = Data_Root.rename({
+            "1_": "Numero de Cliente",
+            "2_": "[AccountAccountCode?]",
+            "3_": "CRM Origen",
+            "4_": "Edad de Deuda",
+            "5_": "[PotencialMark?]",
+            "6_": "[PrePotencialMark?]",
+            "7_": "[WriteOffMark?]",
+            "8_": "Monto inicial",
+            "9_": "[ModInitCta?]",
+            "10_": "[DeudaRealCuenta?]",
+            "11_": "[BillCycleName?]",
+            "12_": "Nombre Campana",
+            "13_": "[DebtAgeInicial?]",
+            "14_": "Nombre Casa de Cobro",
+            "15_": "Fecha de Asignacion",
+            "16_": "Deuda Gestionable",
+            "17_": "Direccion Completa",
+            "18_": "Fecha Final ",
+            "50_": "Email",
+            "19_": "Segmento",
+            "20_": "[Documento?]",
+            "21_": "[AccStsName?]",
+            "22_": "Ciudad",
+            "23_": "[InboxName?]",
+            "24_": "Nombre del Cliente",
+            "25_": "Id de Ejecucion",
+            "26_": "Fecha de Vencimiento",
+            "27_": "Numero Referencia de Pago",
+            "28_": "MIN",
+            "29_": "Plan",
+            "30_": "Cuotas Aceleradas",
+            "31_": "Fecha de Aceleracion",
+            "32_": "Valor Acelerado",
+            "33_": "Intereses Contingentes",
+            "34_": "Intereses Corrientes Facturados",
+            "35_": "Intereses por mora facturados",
+            "36_": "Iva Intereses Contigentes Facturado",
+            "37_": "Iva Intereses Corrientes Facturados",
+            "38_": "Iva Intereses por Mora Facturado",
+            "39_": "Precio Subscripcion",
+            "40_": "Codigo de proceso",
+            "41_": "[CustomerTypeId?]",
+            "42_": "[RefinanciedMark?]",
+            "43_": "[Discount?]",
+            "58_": "Cuotas Pactadas", 
+            "59_": "Cuotas Facturadas", 
+            "60_": "Cuotas Pendientes",
+            "61_": "Fecha Digitacion y Activacion"
+        })
 
+        # Conditional rename (Equivalent to if "56_" in Data_Root.columns:...)
         if "56_" in Data_Root.columns:
-            Data_Root = Data_Root.withColumnRenamed("56_", "Monitor")
+            Data_Root = Data_Root.rename({"56_": "Monitor"})
 
-        Data_Root = save_temp_log(Data_Root, spark)
-        Data_Error = Data_Root
+        # --- Logging and Error Handling ---
+        Data_Error = Data_Root.clone() # Use clone() to create a separate copy of the DataFrame
+
+        # --- Filtering and Saving Data_Root (Cargue) ---
+        # Equivalent to Data_Root.filter(col("[CustomerTypeId?]") >= 80)
+        # The original code implicitly casts to a numeric type for comparison. We must explicitly cast to Int32.
+        Data_Root = Data_Root.filter(
+            col("[CustomerTypeId?]").cast(pl.Int32, strict=False).is_between(80, 89)
+        )
         
-        Data_Root = Data_Root.filter(col("[CustomerTypeId?]") >= 80)
-        Data_Root = Data_Root.filter(col("[CustomerTypeId?]") <= 89)
         name = "Cargue" 
         origin = "Multiorigen"
         self.Save_File(Data_Root, root, partitions, name, origin, Time_File)
 
-        Data_Brands = Data_Root.filter(col("[WriteOffMark?]") != "Y")
+        # --- Filtering and Saving Data_Brands (Multimarca_Cargue) ---
+        Data_Brands = Data_Root.filter(col("[WriteOffMark?]") != lit("Y"))
         name = "Multimarca_Cargue"
         origin = "Multiorigen"
         self.Save_File(Data_Brands, root, partitions, name, origin, Time_File)
         
+        # --- Update and Save Data_Brands_Update (Multimarca_Cargue_Actualizacion) ---
+        # Calling external method (kept as in original code)
         Data_Brands_Update = self.Update_BD_ControlNext(Data_Brands)
         name = "Multimarca_Cargue_Actualizacion"
         origin = "Multiorigen"
         self.Save_File(Data_Brands_Update, root, partitions, name, origin, Time_File)
 
+        # --- Filtering and Saving Data_Error (Errores) ---
+        # Equivalent to Data_Error.filter(...)
+        # The logic checks for null, non-numeric, or outside the [80, 89] range.
+        customer_type = col("[CustomerTypeId?]")
+        
         Data_Error = Data_Error.filter(
-            (col("[CustomerTypeId?]").isNull()) |
-            (col("[CustomerTypeId?]").cast("double").isNull()) |
-            (~(col("[CustomerTypeId?]").cast("int").between(80, 89)))
+            customer_type.is_null() |
+            customer_type.cast(pl.Float64, strict=False).is_null() | # Checks for non-numeric (cast to double/Float64)
+            (~customer_type.cast(pl.Int32, strict=False).is_between(80, 89))
         )
         
         name = "Errores"
@@ -360,7 +536,8 @@ class Charge_DB(QtWidgets.QMainWindow):
         return Data_Root
     
     def DB_Create(self):
-        
+    
+        # --- Data parameters ---
         list_data = [self.file_path, self.folder_path, self.partitions]
 
         file = list_data[0]
@@ -373,167 +550,285 @@ class Charge_DB(QtWidgets.QMainWindow):
         Time_File = now.strftime("%Y%m%d_%H%M")
 
         origin_list = list_origins
-        RDD_Data = self.Function_Complete(file)
+        
+        # --- Initial Data Load and Transformation (Assuming external functions return/accept pl.DataFrame) ---
+        # Equivalent to RDD_Data = self.Function_Complete(file)
+        RDD_Data: pl.DataFrame = self.Function_Complete(file)
+        
+        # Equivalent to RDD_Data = self.Renamed_column(RDD_Data)
         RDD_Data = self.Renamed_column(RDD_Data)
 
+        # --- 1. CORPORATIVOS (CORP) ---
         origin = "Multimarca"
         brand = "Corporativos"
-        RDD_Data_CORP = RDD_Data.filter(col("CRM_Origen").isin(list_origins))
-        RDD_Data_CORP = RDD_Data_CORP.filter(col("Nombre Campana") == "Clientes Corporativos")
         
+        RDD_Data_CORP = RDD_Data.filter(col("CRM_Origen").is_in(list_origins))
+        RDD_Data_CORP = RDD_Data_CORP.filter(col("Nombre Campana") == "Clientes Corporativos")
         self.Save_File(RDD_Data_CORP, root, partitions, brand, origin, Time_File)
         
+        # --- 2. MULTIMARCA (MULTIBRAND) ---
         origin = "Multiorigen"
         brand = "Multimarca"
-        RDD_Data_MULTIBRAND = RDD_Data.filter(col("CRM_Origen").isin(list_origins))
+        
+        RDD_Data_MULTIBRAND = RDD_Data.filter(col("CRM_Origen").is_in(list_origins))
+        
+        # RDD_Data_Corp (Local temporary variable, filtered from RDD_Data_MULTIBRAND)
         RDD_Data_Corp = RDD_Data_MULTIBRAND.filter(col("Nombre Campana") == "Clientes Corporativos")
+        # Filter out "Castigo" records
         RDD_Data_MULTIBRAND = RDD_Data_MULTIBRAND.filter(col("Marca_Asignada") != "Castigo")
-        RDD_Data_MULTIBRAND = RDD_Data_MULTIBRAND.union(RDD_Data_Corp)
-
-        RDD_Data_MULTIBRAND = RDD_Data_MULTIBRAND.dropDuplicates(["Cuenta"])
+        
+        RDD_Data_MULTIBRAND = pl.concat([RDD_Data_MULTIBRAND, RDD_Data_Corp])
+        RDD_Data_MULTIBRAND = RDD_Data_MULTIBRAND.unique(subset=["Cuenta"])
 
         self.Save_File(RDD_Data_MULTIBRAND, root, partitions, brand, origin, Time_File)
 
+        # --- 3. CASTIGO (CAST) ---
         origin = "Multiorigen"
         brand = "castigo"
-        RDD_Data_CAST = RDD_Data.filter(col("CRM_Origen").isin(list_origins))
+        
+        RDD_Data_CAST = RDD_Data.filter(col("CRM_Origen").is_in(list_origins))
+        
         RDD_Data_CAST = RDD_Data_CAST.filter(col("Marca_Asignada") == "Castigo")
         RDD_Data_CAST = RDD_Data_CAST.filter(col("Nombre Campana") != "Clientes Corporativos")
 
         self.Save_File(RDD_Data_CAST, root, partitions, brand, origin, Time_File)
 
+        # --- 4. CASTIGO (ASCARD - RR - SGA) ---
         origin = "ASCARD - RR - SGA"
         brand = "castigo"
         list_origins = ["ASCARD", "RR", "SGA"]
-        RDD_Data_CAST_AR = RDD_Data_CAST.filter(col("CRM_Origen").isin(list_origins))
-
+        
+        RDD_Data_CAST_AR = RDD_Data_CAST.filter(col("CRM_Origen").is_in(list_origins))
         self.Save_File(RDD_Data_CAST_AR, root, partitions, brand, origin, Time_File)
 
+        # --- 5. CASTIGO (BSCS) ---
         origin = "BSCS"
         brand = "castigo"
         list_origins = ["BSCS"]
-        RDD_Data_CAST_SB = RDD_Data_CAST.filter(col("CRM_Origen").isin(list_origins))
+        
+        RDD_Data_CAST_SB = RDD_Data_CAST.filter(col("CRM_Origen").is_in(list_origins))
 
         self.Save_File(RDD_Data_CAST_SB, root, partitions, brand, origin, Time_File)
 
-    def Function_Complete(self, path):
+    def Function_Complete(self, path) -> "DataFrame":
 
-        spark = get_spark_session()
+        """
+        Ingests data from a regional CSV file, handles complex data type 
+        parsing (like thousand separators), and cleans the data types.
 
-        sqlContext = SQLContext(spark)
+        Args:
+            path: The file path to the CSV data.
 
-        Data_Root = spark.read.csv(path, header= True, sep=";")
-        Data_Root = Data_Root.select([col(c).cast(StringType()).alias(c) for c in Data_Root.columns])
+        Returns:
+            The processed Polars DataFrame.
+        """
+        
+        # 1. Schema Override Configuration for INGESTION
+        # Columns that contain '.' as thousand separators must be read as strings (Utf8)
+        # to prevent parsing errors (ComputeError) during the initial file load.
+        schema_override_map = {
+            '27_': pl.Utf8,
+            '36_': pl.Utf8,    
+            '39_': pl.Utf8,    
+            '51_': pl.Utf8,    
+            '52_': pl.Utf8,    
+            '57_': pl.Utf8,
+        }
+        
+        # --- Data Ingestion (Read as Utf8 for Cleaning) ---
+        # Equivalent to spark.read.csv(path, header= True, sep=";")
+        Data_Root: pl.DataFrame = pl.read_csv(
+            path, 
+            has_header=True, 
+            separator=";", 
+            infer_schema_length=10000, 
+            encoding='latin1', # Fixes UTF-8 errors
+            schema_overrides=schema_override_map # Forces problematic columns to string
+        )
 
-        #ActiveLines
-        Data_Root = Data_Root.withColumn(
-            "51_",
-            concat(
-                coalesce(col("51_"), lit("")),
-                lit(","),
-                coalesce(col("52_"), lit("")),
-                lit(","),
-                coalesce(col("53_"), lit("")),
-                lit(","),
-                coalesce(col("54_"), lit("")),
-                lit(","),
-                coalesce(col("55_"), lit(""))
-            )
+        # 2. Cleanup Thousands Separators and Cast to Numeric Types
+        # We use Polars expressions to clean the string data and convert it.
+        expressions = [
+            # Column 36_: Intended to be a decimal number (Float64)
+            pl.col('36_')
+              .str.replace_all(r'\.', '')  # Remove all periods (thousand separators)
+              .cast(pl.Float64)             # Cast to the correct decimal type
+              .alias('36_'),
+            
+            # Column 39_: Intended to be a large integer (Int64)
+            pl.col('39_')
+              .str.replace_all(r'\.', '')  # Remove all periods (thousand separators)
+              .cast(pl.Int64)              # Cast to the correct integer type
+              .alias('39_'),
+            
+            # Add other conversions here if needed
+        ]
+
+        # Apply the transformations to the DataFrame
+        Data_Root = Data_Root.with_columns(expressions)
+        
+        # Equivalent to Data_Root.select([col(c).cast(StringType()).alias(c) for c in Data_Root.columns])
+        # Ensure all columns are Utf8 (string) for initial consistency with PySpark's StringType() cast
+        Data_Root = Data_Root.with_columns(pl.all().cast(pl.Utf8))
+
+        # --- ActiveLines (Concatenation and cleaning) ---
+        # Equivalent to concat(coalesce(col("X"), lit("")), lit(","), ...)
+        Data_Root = Data_Root.with_columns(
+            (pl.coalesce(col("51_").fill_null(lit("")), lit("")) + lit(",") +
+            pl.coalesce(col("52_").fill_null(lit("")), lit("")) + lit(",") +
+            pl.coalesce(col("53_").fill_null(lit("")), lit("")) + lit(",") +
+            pl.coalesce(col("54_").fill_null(lit("")), lit("")) + lit(",") +
+            pl.coalesce(col("55_").fill_null(lit("")), lit("")))
+            .alias("51_")
+        ).with_columns(
+            # Equivalent to Data_Root.withColumn("51_", regexp_replace(col("51_"), ",,", ",")) (3 times)
+            col("51_")
+            .str.replace_all(",,", ",", literal=True)
+            .str.replace_all(",,", ",", literal=True)
+            .str.replace_all(",,", ",", literal=True)
+            .alias("51_")
         )
         
-        Data_Root = Data_Root.withColumn("51_", regexp_replace(col("51_"), ",,", ","))
-        Data_Root = Data_Root.withColumn("51_", regexp_replace(col("51_"), ",,", ","))
-        Data_Root = Data_Root.withColumn("51_", regexp_replace(col("51_"), ",,", ","))
-        
+        # --- Final Column Selection ---
         columns_to_list = [f"{i}_" for i in range(1, 63)]
         Data_Root = Data_Root.select(columns_to_list)
         
-        potencial = (col("5_") == "Y") & (col("3_") == "BSCS")
-        churn = (col("5_") == "Y") & ((col("3_") == "RR") | (col("3_") == "SGA"))
-        provision = (col("5_") == "Y") & (col("3_") == "ASCARD")
-        prepotencial = (col("6_") == "Y") & (col("3_") == "BSCS")
-        prechurn = (col("6_") == "Y") & ((col("3_") == "RR") | (col("3_") == "SGA"))
-        preprovision = (col("6_") == "Y") & (col("3_") == "ASCARD")
-        castigo = col("7_") == "Y"
-        potencial_a_castigar = (col("5_") == "N") & (col("6_") == "N") & (col("7_") == "N") & (col("42_") == "Y")
+        # --- Conditional Expressions (Polars) ---
+        potencial = (col("5_") == lit("Y")) & (col("3_") == lit("BSCS"))
+        churn = (col("5_") == lit("Y")) & ((col("3_") == lit("RR")) | (col("3_") == lit("SGA")))
+        provision = (col("5_") == lit("Y")) & (col("3_") == lit("ASCARD"))
+        prepotencial = (col("6_") == lit("Y")) & (col("3_") == lit("BSCS"))
+        prechurn = (col("6_") == lit("Y")) & ((col("3_") == lit("RR")) | (col("3_") == lit("SGA")))
+        preprovision = (col("6_") == lit("Y")) & (col("3_") == lit("ASCARD"))
+        castigo = col("7_") == lit("Y")
+        potencial_a_castigar = (col("5_") == lit("N")) & (col("6_") == lit("N")) & (col("7_") == lit("N")) & (col("42_") == lit("Y"))
         marcas = col("13_")
 
-        Data_Root = Data_Root.dropDuplicates(["2_"])
+        # --- Deduplication ---
+        # Equivalent to Data_Root.dropDuplicates(["2_"])
+        Data_Root = Data_Root.unique(subset=["2_"])
 
-        Data_Root = Data_Root.withColumn("53_", when(potencial, "Potencial")\
-                                            .when(churn, "Churn")\
-                                            .when(provision, "Provision")\
-                                            .when(prepotencial, "Prepotencial")\
-                                            .when(prechurn, "Prechurn")\
-                                            .when(preprovision, "Preprovision")\
-                                            .when(castigo, "Castigo")\
-                                            .when(potencial_a_castigar, "Potencial a Castigar")\
-                                            .otherwise(marcas))
+        # --- Conditional Column "53_" (Marca_Asignada) ---
+        Data_Root = Data_Root.with_columns(
+            pl.when(potencial).then(lit("Potencial"))
+            .when(churn).then(lit("Churn"))
+            .when(provision).then(lit("Provision"))
+            .when(prepotencial).then(lit("Prepotencial"))
+            .when(prechurn).then(lit("Prechurn"))
+            .when(preprovision).then(lit("Preprovision"))
+            .when(castigo).then(lit("Castigo"))
+            .when(potencial_a_castigar).then(lit("Potencial a Castigar"))
+            .otherwise(marcas)
+            .alias("53_")
+        )
         
-        moras_numericas = (col("53_") == "120") | (col("53_") == "150") | (col("53_") == "180")
-        prepotencial_especial = (col("53_") == "Prepotencial") & (col("3_") == "BSCS") & ((col("12_") == "PrePotencial Convergente Masivo_2") | (col("12_") == "PrePotencial Convergente Pyme_2"))
+        # --- Further Conditional Logic on "53_" ---
+        moras_numericas = (col("53_") == lit("120")) | (col("53_") == lit("150")) | (col("53_") == lit("180"))
+        prepotencial_especial = (col("53_") == lit("Prepotencial")) & (col("3_") == lit("BSCS")) & ((col("12_") == lit("PrePotencial Convergente Masivo_2")) | (col("12_") == lit("PrePotencial Convergente Pyme_2")))
 
-        Data_Root = Data_Root.withColumn("53_", when(moras_numericas, "120 - 180")\
-                                            .when(prepotencial_especial, "Prepotencial Especial")\
-                                            .otherwise(col("53_")))
+        Data_Root = Data_Root.with_columns(
+            pl.when(moras_numericas).then(lit("120 - 180"))
+            .when(prepotencial_especial).then(lit("Prepotencial Especial"))
+            .otherwise(col("53_"))
+            .alias("53_")
+        )
 
-        Data_Root = Data_Root.withColumn("54_", regexp_replace(col("2_"), "[.-]", ""))
+        # --- Column "54_" (Cleaned '2_') ---
+        # Equivalent to regexp_replace(col("2_"), "[.-]", "")
+        Data_Root = Data_Root.with_columns(
+            col("2_").str.replace_all(r"[.-]", "", literal=False).alias("54_")
+        )
 
-        Data_Root = Data_Root.withColumn("55_", col("9_").cast("double"))
+        # --- Column "55_" (Cast and Replace) ---
+        Data_Root = Data_Root.with_columns(
+            # Cast to double/Float64 (Equivalent to col("9_").cast("double"))
+            col("9_").cast(pl.Float64, strict=False).alias("55_")
+        ).with_columns(
+            # Replace decimal point with comma (Equivalent to regexp_replace("55_", "\\.", ","))
+            col("55_").cast(pl.Utf8).str.replace_all(r"\.", ",", literal=False).alias("55_")
+        )
+        
+        # --- Column Renaming (56_ to 61_ to 63_ to 68_) ---
+        Data_Root = Data_Root.rename({
+            "56_": "63_", #Monitor
+            "57_": "64_", #Scoring
+            "58_": "65_", #Cuotas Pactadas
+            "59_": "66_", #Cuotas Facturadas
+            "60_": "67_", #Cuotas Pendientes
+            "61_": "68_"  #Fecha Digitación/Activación
+        })
 
-        Data_Root = Data_Root.withColumn("55_", regexp_replace("55_", "\\.", ","))
-        
-        Data_Root = Data_Root.withColumnRenamed("56_", "63_")   #Monitor
-        Data_Root = Data_Root.withColumnRenamed("57_", "64_")   #Scoring
-        Data_Root = Data_Root.withColumnRenamed("58_", "65_")   #Cuotas Pactadas
-        Data_Root = Data_Root.withColumnRenamed("59_", "66_")   #Cuotas Facturadas
-        Data_Root = Data_Root.withColumnRenamed("60_", "67_")   #Cuotas Pendientes
-        Data_Root = Data_Root.withColumnRenamed("61_", "68_")   #Fecha Digitación/Activación
+        # --- Column "56_" (Segment) ---
+        Segment = ((col("42_") == lit("81")) | (col("42_") == lit("84")) | (col("42_") == lit("87")))
+        Data_Root = Data_Root.with_columns(
+            pl.when(Segment).then(lit("Personas"))
+            .otherwise(lit("Negocios"))
+            .alias("56_")
+        )
 
-        Segment = ((col("42_") == "81") | (col("42_") == "84") | (col("42_") == "87"))
-        Data_Root = Data_Root.withColumn("56_",
-                          when(Segment, "Personas")
-                          .otherwise("Negocios"))
-
-        Data_Root = Data_Root.withColumn("57_", \
-            when((col("9_") <= 20000), lit("1 Menos a 20 mil")) \
-                .when((col("9_") <= 50000), lit("2 Entre 20 a 50 mil")) \
-                .when((col("9_") <= 100000), lit("3 Entre 50 a 100 mil")) \
-                .when((col("9_") <= 150000), lit("4 Entre 100 a 150 mil")) \
-                .when((col("9_") <= 200000), lit("5 Entre 150 mil a 200 mil")) \
-                .when((col("9_") <= 300000), lit("6 Entre 200 mil a 300 mil")) \
-                .when((col("9_") <= 500000), lit("7 Entre 300 mil a 500 mil")) \
-                .when((col("9_") <= 1000000), lit("8 Entre 500 mil a 1 Millon")) \
-                .when((col("9_") <= 2000000), lit("9 Entre 1 a 2 millones")) \
-                .otherwise(lit("9.1 Mayor a 2 millones")))
+        # --- Column "57_" (Debt Banding) ---
+        # The original logic compares a string column ('9_') which contains numeric values (likely debts)
+        # with numeric literals. In Polars, we must explicitly cast '9_' to numeric (Float64).
+        debt_col = col("9_").cast(pl.Float64, strict=False)
+        Data_Root = Data_Root.with_columns(
+            pl.when(debt_col.is_null()).then(lit("9.1 Mayor a 2 millones")) # Handle non-numeric/null values
+            .when(debt_col <= 20000).then(lit("1 Menos a 20 mil"))
+            .when(debt_col <= 50000).then(lit("2 Entre 20 a 50 mil"))
+            .when(debt_col <= 100000).then(lit("3 Entre 50 a 100 mil"))
+            .when(debt_col <= 150000).then(lit("4 Entre 100 a 150 mil"))
+            .when(debt_col <= 200000).then(lit("5 Entre 150 mil a 200 mil"))
+            .when(debt_col <= 300000).then(lit("6 Entre 200 mil a 300 mil"))
+            .when(debt_col <= 500000).then(lit("7 Entre 300 mil a 500 mil"))
+            .when(debt_col <= 1000000).then(lit("8 Entre 500 mil a 1 Millon"))
+            .when(debt_col <= 2000000).then(lit("9 Entre 1 a 2 millones"))
+            .otherwise(lit("9.1 Mayor a 2 millones"))
+            .alias("57_")
+        )
         
-        flp_filter_databse = ((col("12_") == "FLP 01") | (col("12_") == "FLP 02") | (col("12_") == "FLP 03"))
+        # --- Column "Multiproducto" and "58_" (Client Type) ---
+        flp_filter_databse = ((col("12_") == lit("FLP 01")) | (col("12_") == lit("FLP 02")) | (col("12_") == lit("FLP 03")))
         
-        Data_Root = Data_Root.withColumn("Multiproducto", lit(""))
+        Data_Root = Data_Root.with_columns(
+            lit("").alias("Multiproducto"), # New column set to empty string
+            
+            # Equivalent to Data_Root.withColumn("58_", when(flp_filter_databse, concat(lit("CLIENTES "), col("12_")))...
+            pl.when(flp_filter_databse).then(lit("CLIENTES ") + col("12_")) # Use '+' for string concat in Polars
+            .when(col("12_") == lit("Clientes Corporativos")).then(lit("CLIENTES CORPORATIVOS"))
+            .otherwise(lit("CLIENTES INVENTARIO"))
+            .alias("58_")
+        )
         
-        Data_Root = Data_Root.withColumn("58_", when(flp_filter_databse, concat(lit("CLIENTES "), col("12_"))) \
-                .when((col("12_") == "Clientes Corporativos"), lit("CLIENTES CORPORATIVOS")) \
-                .otherwise(lit("CLIENTES INVENTARIO")))
+        # --- Tipo_Documento Logic ---
+        Data_Root = Data_Root.with_columns(
+            # 1. Clean '1_' (Equivalent to regexp_replace("1_", r'[^a-zA-Z]', ''))
+            col("1_").str.replace_all(r'[^a-zA-Z]', '', literal=False).alias("Tipo_Documento")
+        ).with_columns(
+            # 2. Conditional mapping (using chained when/then/otherwise)
+            pl.when(col("Tipo_Documento") == lit("CC")).then(lit("Cedula de Ciudadania"))
+            .when(col("Tipo_Documento") == lit("PS")).then(lit("Pasaporte"))
+            .when(col("Tipo_Documento") == lit("PP")).then(lit("Pasaporte"))
+            .when(col("Tipo_Documento") == lit("PP")).then(lit("Permiso Temporal")) # Duplicated original logic is preserved
+            .when(col("Tipo_Documento") == lit("XPP")).then(lit("Permiso de Permanencia"))
+            .when(col("Tipo_Documento") == lit("NT")).then(lit("Nit"))
+            .when(col("Tipo_Documento") == lit("CD")).then(lit("Carnet Diplomatico"))
+            .when(col("Tipo_Documento") == lit("CE")).then(lit("Cedula de Extranjeria"))
+            .when(col("Tipo_Documento").is_null() | (col("Tipo_Documento") == lit(""))).then(lit("Sin tipologia"))
+            .otherwise(lit("Errado"))
+            .alias("Tipo_Documento")
+        )
         
-        Data_Root = Data_Root.withColumn("Tipo_Documento", regexp_replace("1_", r'[^a-zA-Z]', ''))
-        Data_Root = Data_Root.withColumn("Tipo_Documento", when((col("Tipo_Documento") == "CC"), lit("Cedula de Ciudadania"))
-                                    .when((col("Tipo_Documento") == "PS"), lit("Pasaporte"))
-                                    .when((col("Tipo_Documento") == "PP"), lit("Pasaporte"))
-                                    .when((col("Tipo_Documento") == "PP"), lit("Permiso Temporal"))
-                                    .when((col("Tipo_Documento") == "XPP"), lit("Permiso de Permanencia"))
-                                    .when((col("Tipo_Documento") == "NT"), lit("Nit"))
-                                    .when((col("Tipo_Documento") == "CD"), lit("Carnet Diplomatico"))
-                                    .when((col("Tipo_Documento") == "CE"), lit("Cedula de Extranjeria"))
-                                    .when(((col("Tipo_Documento").isNull()) | (col("Tipo_Documento") == "")), lit("Sin tipologia"))
-                                    .otherwise(lit("Errado")))
-        
-        Data_Root = Data_Root.orderBy(col("3_"))
-        
-        Data_Root = save_temp_log(Data_Root, spark)
+        # --- Sort and Log ---
+        # Equivalent to Data_Root.orderBy(col("3_"))
+        Data_Root = Data_Root.sort(by="3_")
         
         return Data_Root
         
-    def Save_File(self, Data_Frame, Directory_to_Save, Partitions, Brand_Filter, Origin_Filter, Time_File):
+    def Save_File(self, Data_Frame: "DataFrame", Directory_to_Save: str, Partitions: int, Brand_Filter: str, Origin_Filter: str, Time_File: str):
+
+        # Initialize variables
+        Type_File = ""
+        extension = ""
+        Name_File = ""
 
         if Brand_Filter == "castigo":
             Type_File = f"---- Bases para CRUCE ----"
@@ -545,7 +840,7 @@ class Charge_DB(QtWidgets.QMainWindow):
             extension = "0csv"
             Name_File = f"Cruce Corporativos {Origin_Filter}"
         
-        elif Brand_Filter == "Cargue" or Brand_Filter == "Errores" or Brand_Filter == "Multimarca_Cargue" or Brand_Filter == "Multimarca_Cargue_Actualizacion":
+        elif Brand_Filter in ["Cargue", "Errores", "Multimarca_Cargue", "Multimarca_Cargue_Actualizacion"]:
             Type_File = f"---- Bases para CARGUE ----"
             extension = "csv"
 
@@ -562,7 +857,7 @@ class Charge_DB(QtWidgets.QMainWindow):
                 Type_File = f"---- Bases para CARGUE ----"
                 Name_File = "Cargue UNIF Actualizacion sin Castigo"
 
-            else:
+            else: # Brand_Filter == "Cargue"
                 Name_File = "Cargue UNIF"
 
         else: 
@@ -574,88 +869,106 @@ class Charge_DB(QtWidgets.QMainWindow):
         output_path = f'{Directory_to_Save}{Type_File}'
         Name_File = f'BD {Name_File}'
         
+        # File saving dispatcher (using the helper functions defined above)
         if extension == "csv":
             save_to_csv(Data_Frame, output_path, Name_File, Partitions, delimiter)
         else:
             save_to_0csv(Data_Frame, output_path, Name_File, Partitions, delimiter)
 
-    def Renamed_column(self, Data_Root):
+    def Renamed_column(self, Data_Root: "DataFrame") -> "DataFrame":
+    
+        # Create a dictionary for bulk column renaming
+        rename_mapping = {
+            "1_": "Documento",
+            "2_": "Cuenta",
+            "3_": "CRM_Origen",
+            "4_": "Edad de Deuda",
+            "5_": "Potencial_Mark",
+            "6_": "PrePotencial_Mark",
+            "7_": "Write_Off_Mark",
+            "8_": "Monto inicial",
+            "9_": "Mod_Init_Cta",
+            "10_": "Deuda_Real_Cuenta",
+            "11_": "Bill_CycleName",
+            "12_": "Nombre Campana",
+            "13_": "Debt_Age_Inicial",
+            "14_": "Nombre_Casa_de_Cobro",
+            "15_": "Fecha_de_Asignacion",
+            "16_": "Deuda_Gestionable",
+            "17_": "Direccion_Completa",
+            "18_": "Fecha_Final",
+            "19_": "Segmento",
+            "20_": "Documento_Limpio",
+            "21_": "Acc_Sts_Name",
+            "22_": "Ciudad",
+            "23_": "Inbox_Name",
+            "24_": "Nombre_del_Cliente",
+            "25_": "Id_de_Ejecucion",
+            "26_": "Fecha_de_Vencimiento",
+            "27_": "Numero_Referencia_de_Pago",
+            "28_": "MIN",
+            "29_": "Plan",
+            "30_": "Cuotas_Aceleradas",
+            "31_": "Fecha_de_Aceleracion",
+            "32_": "Valor_Acelerado",
+            "33_": "Intereses_Contingentes",
+            "34_": "Intereses_Corrientes_Facturados",
+            "35_": "Intereses_por_mora_facturados",
+            "36_": "Iva_Intereses_Contigentes_Facturado",
+            "37_": "Iva Intereses Corrientes_Facturados",
+            "38_": "Iva_Intereses_por_Mora_Facturado",
+            "39_": "Precio_Subscripcion",
+            "40_": "Codigo_de_proceso",
+            "41_": "Customer_Type_Id",
+            "42_": "Refinancied_Mark",
+            "43_": "Discount",
+            "44_": "Permanencia",
+            "45_": "Deuda_sin_Permanencia",
+            "46_": "Telefono_1",
+            "47_": "Telefono_2",
+            "48_": "Telefono_3",
+            "49_": "Telefono_4",
+            "50_": "Email",
+            "51_": "Active_Lines",
+            "53_": "Marca_Asignada",
+            "54_": "Cuenta_Next",
+            "55_": "Valor_Deuda",
+            "56_": "Segmento_CamUnif",
+            "57_": "Rango_Deuda",
+            "58_": "Tipo_Base",
+            "63_": "Monitor",
+            "64_": "Valor Scoring",
+            "65_": "Cuotas Pactadas",
+            "66_": "Cuotas_Facturadas",
+            "67_": "Cuotas Pendientes",
+            "68_": "Fecha Digitacion/Activacion",
+            "Multiproducto": "Multiproducto",
+            
+            # New columns added in Function_Complete that need to be renamed/retained
+            "Tipo_Documento": "Tipo_Documento"
+        }
 
-        Data_Root = Data_Root.withColumnRenamed("1_", "Documento")
-        Data_Root = Data_Root.withColumnRenamed("2_", "Cuenta")
-        Data_Root = Data_Root.withColumnRenamed("3_", "CRM_Origen")
-        Data_Root = Data_Root.withColumnRenamed("4_", "Edad de Deuda")
-        Data_Root = Data_Root.withColumnRenamed("5_", "Potencial_Mark")
-        Data_Root = Data_Root.withColumnRenamed("6_", "PrePotencial_Mark")
-        Data_Root = Data_Root.withColumnRenamed("7_", "Write_Off_Mark")
-        Data_Root = Data_Root.withColumnRenamed("8_", "Monto inicial")
-        Data_Root = Data_Root.withColumnRenamed("9_", "Mod_Init_Cta")
-        Data_Root = Data_Root.withColumnRenamed("10_", "Deuda_Real_Cuenta")
-        Data_Root = Data_Root.withColumnRenamed("11_", "Bill_CycleName")
-        Data_Root = Data_Root.withColumnRenamed("12_", "Nombre Campana")
-        Data_Root = Data_Root.withColumnRenamed("13_", "Debt_Age_Inicial")
-        Data_Root = Data_Root.withColumnRenamed("14_", "Nombre_Casa_de_Cobro")
-        Data_Root = Data_Root.withColumnRenamed("15_", "Fecha_de_Asignacion")
-        Data_Root = Data_Root.withColumnRenamed("16_", "Deuda_Gestionable")
-        Data_Root = Data_Root.withColumnRenamed("17_", "Direccion_Completa")
-        Data_Root = Data_Root.withColumnRenamed("18_", "Fecha_Final")
-        Data_Root = Data_Root.withColumnRenamed("19_", "Segmento")
-        Data_Root = Data_Root.withColumnRenamed("20_", "Documento_Limpio")
-        Data_Root = Data_Root.withColumnRenamed("21_", "Acc_Sts_Name")
-        Data_Root = Data_Root.withColumnRenamed("22_", "Ciudad")
-        Data_Root = Data_Root.withColumnRenamed("23_", "Inbox_Name")
-        Data_Root = Data_Root.withColumnRenamed("24_", "Nombre_del_Cliente")
-        Data_Root = Data_Root.withColumnRenamed("25_", "Id_de_Ejecucion")
-        Data_Root = Data_Root.withColumnRenamed("26_", "Fecha_de_Vencimiento")
-        Data_Root = Data_Root.withColumnRenamed("27_", "Numero_Referencia_de_Pago")
-        Data_Root = Data_Root.withColumnRenamed("28_", "MIN")
-        Data_Root = Data_Root.withColumnRenamed("29_", "Plan")
-        Data_Root = Data_Root.withColumnRenamed("30_", "Cuotas_Aceleradas")
-        Data_Root = Data_Root.withColumnRenamed("31_", "Fecha_de_Aceleracion")
-        Data_Root = Data_Root.withColumnRenamed("32_", "Valor_Acelerado")
-        Data_Root = Data_Root.withColumnRenamed("33_", "Intereses_Contingentes")
-        Data_Root = Data_Root.withColumnRenamed("34_", "Intereses_Corrientes_Facturados")
-        Data_Root = Data_Root.withColumnRenamed("35_", "Intereses_por_mora_facturados")
-        Data_Root = Data_Root.withColumnRenamed("36_", "Iva_Intereses_Contigentes_Facturado")
-        Data_Root = Data_Root.withColumnRenamed("37_", "Iva Intereses Corrientes_Facturados")
-        Data_Root = Data_Root.withColumnRenamed("38_", "Iva_Intereses_por_Mora_Facturado")
-        Data_Root = Data_Root.withColumnRenamed("39_", "Precio_Subscripcion")
-        Data_Root = Data_Root.withColumnRenamed("40_", "Codigo_de_proceso")
-        Data_Root = Data_Root.withColumnRenamed("41_", "Customer_Type_Id")
-        Data_Root = Data_Root.withColumnRenamed("42_", "Refinancied_Mark")
-        Data_Root = Data_Root.withColumnRenamed("43_", "Discount")
-        Data_Root = Data_Root.withColumnRenamed("44_", "Permanencia")
-        Data_Root = Data_Root.withColumnRenamed("45_", "Deuda_sin_Permanencia")
-        Data_Root = Data_Root.withColumnRenamed("46_", "Telefono_1")
-        Data_Root = Data_Root.withColumnRenamed("47_", "Telefono_2")
-        Data_Root = Data_Root.withColumnRenamed("48_", "Telefono_3")
-        Data_Root = Data_Root.withColumnRenamed("49_", "Telefono_4")
-        Data_Root = Data_Root.withColumnRenamed("50_", "Email")
-        Data_Root = Data_Root.withColumnRenamed("51_", "Active_Lines")
-        Data_Root = Data_Root.withColumnRenamed("53_", "Marca_Asignada")
-        Data_Root = Data_Root.withColumnRenamed("54_", "Cuenta_Next")
-        Data_Root = Data_Root.withColumnRenamed("55_", "Valor_Deuda")
-        Data_Root = Data_Root.withColumnRenamed("56_", "Segmento_CamUnif")
-        Data_Root = Data_Root.withColumnRenamed("57_", "Rango_Deuda")
-        Data_Root = Data_Root.withColumnRenamed("Multiproducto", "Multiproducto")
-        Data_Root = Data_Root.withColumnRenamed("58_", "Tipo_Base")
-        Data_Root = Data_Root.withColumnRenamed("63_", "Monitor")
-        Data_Root = Data_Root.withColumnRenamed("64_", "Valor Scoring")
-        Data_Root = Data_Root.withColumn("Fecha_Ingreso", date_format(current_date(), "dd/MM/yyyy"))
-        Data_Root = Data_Root.withColumn("Fecha_Salida", lit(""))
-        Data_Root = Data_Root.withColumn("Valor_Pago", lit(""))
-        Data_Root = Data_Root.withColumn("Valor_Pago_Real", lit(""))
-        Data_Root = Data_Root.withColumn("Fecha_Ult_Pago", lit(""))
-        Data_Root = Data_Root.withColumn("Tipo_Pago", lit(""))
-        Data_Root = Data_Root.withColumn("Descuento", lit(""))
-        Data_Root = Data_Root.withColumn("Excl_Descuento", lit(""))
-        Data_Root = Data_Root.withColumn("Liquidacion", lit("SI"))
-        
-        Data_Root = Data_Root.withColumnRenamed("65_", "Cuotas Pactadas")
-        Data_Root = Data_Root.withColumnRenamed("66_", "Cuotas_Facturadas")
-        Data_Root = Data_Root.withColumnRenamed("67_", "Cuotas Pendientes")
-        Data_Root = Data_Root.withColumnRenamed("68_", "Fecha Digitacion/Activacion")
+        # 1. Rename columns using the dictionary
+        Data_Root = Data_Root.rename(rename_mapping)
 
+        # 2. Add new columns with constant values (Equivalent to withColumn/lit/date_format)
+        Data_Root = Data_Root.with_columns([
+            # Calculate current date and format as "dd/MM/yyyy"
+            # Polars: use current date (date()) and format it as a string
+            pl.lit(date.today()).dt.strftime("%d/%m/%Y").alias("Fecha_Ingreso"),
+            
+            # Add columns with empty string literal
+            lit("").alias("Fecha_Salida"),
+            lit("").alias("Valor_Pago"),
+            lit("").alias("Valor_Pago_Real"),
+            lit("").alias("Fecha_Ult_Pago"),
+            lit("").alias("Tipo_Pago"),
+            lit("").alias("Descuento"),
+            lit("").alias("Excl_Descuento"),
+            lit("SI").alias("Liquidacion"),
+        ])
+
+        # 3. Final Column Selection (Order and select only necessary columns)
         columns_to_list = [
             "Documento", "Cuenta", "CRM_Origen", "Edad de Deuda", "Potencial_Mark", "PrePotencial_Mark",
             "Write_Off_Mark", "Monto inicial", "Mod_Init_Cta", "Deuda_Real_Cuenta", "Bill_CycleName",
@@ -679,74 +992,101 @@ class Charge_DB(QtWidgets.QMainWindow):
         return Data_Root
     
     def partition_DATA(self):
+        """
+        Manually reads a CSV file, detects its delimiter and encoding, and
+        splits its contents into a specified number of partition files.
+        """
         self.digit_partitions()
-        list_data = [self.file_path, self.folder_path, self.partitions]
+        
+        # Get necessary data from class attributes
+        file = self.file_path
+        root = self.folder_path
+        try:
+            partitions = int(self.partitions)
+            if partitions <= 0:
+                partitions = 1
+        except ValueError:
+            print("WARNING: Invalid partition number detected, defaulting to 1.")
+            partitions = 1
 
-        file = list_data[0]
-        root = list_data[1]
-        partitions = int(list_data[2])
 
         # Create the folder for partitions
         partition_folder = os.path.join(root, "--- PARTITIONS ----")
         os.makedirs(partition_folder, exist_ok=True)
 
-        # Detect delimiter and encoding
         delimiter = None
         encoding_detected = None
 
         try:
-            # Try reading the file with different encodings
+            # 1. Detect delimiter and encoding
+            # Try reading the file with common encodings
             for encoding in ['utf-8', 'latin-1', 'ISO-8859-1']:
                 try:
-                    with open(file, 'r', encoding=encoding) as f:
+                    # Use io.open for explicit encoding handling
+                    with io.open(file, 'r', encoding=encoding) as f:
                         first_line = f.readline()
-                        if ',' in first_line:
-                            delimiter = ','
-                        elif ';' in first_line:
+                        
+                        # Delimiter detection logic
+                        if ';' in first_line:
                             delimiter = ';'
+                        elif ',' in first_line:
+                            delimiter = ','
                         elif '\t' in first_line:
                             delimiter = '\t'
                         else:
-                            raise ValueError("Could not detect the delimiter.")
-                        encoding_detected = encoding
-                        break
-                except UnicodeDecodeError:
-                    continue
+                            # If no common delimiter is found, continue to the next encoding check
+                            continue 
 
-            if not encoding_detected:
-                raise ValueError("Could not determine the file encoding.")
+                        encoding_detected = encoding
+                        break # Stop on successful detection
+                except UnicodeDecodeError:
+                    continue # Try next encoding
+
+            if not encoding_detected or not delimiter:
+                raise ValueError("Could not determine the file encoding or delimiter.")
 
             print(f"Detected delimiter: {delimiter}")
             print(f"Detected encoding: {encoding_detected}")
 
-            # Read the entire file with the detected encoding and delimiter
-            with open(file, 'r', encoding=encoding_detected) as origin_file:
+            # 2. Read all data
+            with io.open(file, 'r', encoding=encoding_detected) as origin_file:
                 rows = origin_file.readlines()
 
                 # Separate the header from the rest of the rows
-                header = rows[0]  # First line as the header
-                data_rows = rows[1:]  # Remaining rows
+                header = rows[0]
+                data_rows = rows[1:]
 
-                rows_per_partition = len(data_rows) // partitions
+                # Calculate rows per partition
+                num_data_rows = len(data_rows)
+                rows_per_partition = num_data_rows // partitions
+                end = 0 # Initialize end index
 
+                # 3. Write partitions
                 for i in range(partitions):
                     start = i * rows_per_partition
-                    end = (i + 1) * rows_per_partition if i < partitions - 1 else len(data_rows)
+                    # Ensure the last partition captures all remaining rows calculated by the integer division
+                    end = (i + 1) * rows_per_partition if i < partitions - 1 else num_data_rows
 
-                    # Partition file name with leading zero for numbers less than 10
+                    # Partition file name (with leading zero for i+1)
                     partition_name = os.path.join(partition_folder, f"Particion_{i+1:02}.csv")
 
                     # Write header and data rows to the partition file
-                    with open(partition_name, 'w', encoding='utf-8') as file_output:
-                        file_output.write(header)  # Write the header
-                        file_output.writelines(data_rows[start:end])  # Write the data rows
+                    with io.open(partition_name, 'w', encoding='utf-8') as file_output:
+                        file_output.write(header)
+                        file_output.writelines(data_rows[start:end])
 
-                # If there are additional rows, create an extra partition
-                if end < len(data_rows):
+                # 4. Handle remainder (if any, although covered by the last loop iteration)
+                # This check ensures robustness if the division leaves unassigned rows
+                if end < num_data_rows:
                     partition_name = os.path.join(partition_folder, f"Particion_{partitions+1:02}.csv")
-                    with open(partition_name, 'w', encoding='utf-8') as file_output:
-                        file_output.write(header)  # Write the header
-                        file_output.writelines(data_rows[end:])  # Write the remaining rows
+                    print(f"WARNING: Creating extra partition for {num_data_rows - end} remaining rows.")
+                    with io.open(partition_name, 'w', encoding='utf-8') as file_output:
+                        file_output.write(header)
+                        file_output.writelines(data_rows[end:])
+
+            print(f"Successfully created partitions in: {partition_folder}")
+            return partition_folder
 
         except Exception as e:
             print(f"Error during partitioning: {e}")
+            return None
