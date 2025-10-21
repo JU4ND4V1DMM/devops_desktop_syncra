@@ -7,10 +7,6 @@ import polars as pl
 import pandas as pd
 from typing import Union
 
-# Define the Polars DataFrame type for clarity
-PolarsDataFrame = pl.DataFrame
-
-
 def format_excel_file(filepath: str):
     """
     Formats the header of a single Excel file (XLSX) using openpyxl by applying bold, 
@@ -30,96 +26,154 @@ def format_excel_file(filepath: str):
     except Exception as e:
         print(f"ERROR: Could not format Excel file at {filepath}. Reason: {e}")
 
-
 def save_to_csv(data_frame, output_path: str, filename: str, partitions: Union[int, str], delimiter: str = ","):
     """
     Saves a DataFrame (Polars or PySpark) to a single CSV file.
-    Tries Polars first for performance, falls back to PySpark if conversion fails.
+    Tries PySpark first for performance, falls back to Polars if conversion fails.
     """
+    partitions = int(partitions)
     if output_path and not os.path.exists(output_path):
         os.makedirs(output_path)
-        print(f"✔️ Created output directory: {output_path}")
     
     now = datetime.now()
+    time_file = now.strftime("%Y%m%d_%H%M")
     file_date = now.strftime("%Y%m%d")
-    final_file_path = os.path.join(output_path, f"{filename} {file_date}.csv")
+    
+    # Create a temporary folder to store initial files
+    temp_folder_name = f"{filename}_{time_file}"
+    temp_output_path = os.path.join(output_path, temp_folder_name)
 
+    # Save the DataFrame into the temporary folder using PySpark
     try:
-        # ✅ Intentar con Polars primero
-        print("💾 Intentando guardar con Polars...")
-        if not isinstance(data_frame, pl.DataFrame):
-            # Conversión desde PySpark o Pandas
-            if hasattr(data_frame, "toPandas"):  # PySpark
-                data_frame = pl.from_pandas(data_frame.toPandas())
-            elif isinstance(data_frame, pd.DataFrame):
-                data_frame = pl.from_pandas(data_frame)
+        (data_frame
+            .repartition(partitions) 
+            .write
+            .mode("overwrite")
+            .option("header", "true")
+            .option("delimiter", delimiter)
+            .csv(temp_output_path)
+        )
 
-        data_frame.write_csv(file=final_file_path, separator=delimiter, include_header=True)
-        print(f"✅ CSV file successfully saved to: {final_file_path}")
+        # Remove unnecessary files
+        for root, dirs, files in os.walk(temp_output_path):
+            for file in files:
+                if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
+                    os.remove(os.path.join(root, file))
+
+        # Move the CSV files from the temporary folder to the main output path
+        for i, file in enumerate(os.listdir(temp_output_path), start=1):
+            if file.endswith(".csv"):
+                old_file_path = os.path.join(temp_output_path, file)
+                new_file_path = os.path.join(output_path, f"{filename} {file_date} {i}.csv")
+                os.rename(old_file_path, new_file_path)
+
+        # Delete the temporary folder
+        if os.path.exists(temp_output_path):
+            shutil.rmtree(temp_output_path)
+            print(f"🗑️ Temporary folder deleted: {temp_output_path}")
+
+        print(f"✔️ CSV files successfully moved to: {output_path}")
 
     except Exception as e:
-        print(f"⚠️ Polars CSV save failed ({e}), trying PySpark fallback...")
+        print(f"⚠️ PySpark CSV save failed ({e}), trying Polars fallback...")
         try:
-            # ⚙️ Guardar con PySpark
-            output_dir = os.path.splitext(final_file_path)[0]  # carpeta sin extensión
-            data_frame.write.mode("overwrite").option("header", True).csv(output_dir)
-            print(f"✅ CSV saved with PySpark to: {output_dir}")
-        except Exception as spark_err:
-            print(f"❌ ERROR: Failed to save with both Polars and PySpark. Reason: {spark_err}")
+            # Save using Polars
+            print("💾 Attempting to save with Polars...")
+            if not isinstance(data_frame, pl.DataFrame):
+                # Convert from PySpark or Pandas
+                if hasattr(data_frame, "toPandas"):  # PySpark
+                    data_frame = pl.from_pandas(data_frame.toPandas())
+                elif isinstance(data_frame, pd.DataFrame):
+                    data_frame = pl.from_pandas(data_frame)
 
+            data_frame.write_csv(file=os.path.join(output_path, f"{filename} {file_date}.csv"), separator=delimiter, include_header=True)
+            print(f"✅ CSV file successfully saved to: {output_path}")
+
+        except Exception as spark_err:
+            print(f"❌ ERROR: Failed to save with both PySpark and Polars. Reason: {spark_err}")
 
 def save_to_0csv(data_frame, output_path: str, filename: str, partitions: Union[int, str], delimiter: str = ","):
     """
     Saves a DataFrame (Polars or PySpark) to a '.0csv' file.
-    Tries Polars first, falls back to PySpark if needed.
+    Tries PySpark first, falls back to Polars if needed.
     """
+    partitions = int(partitions)
     if output_path and not os.path.exists(output_path):
         os.makedirs(output_path)
-        print(f"✔️ Created output directory: {output_path}")
     
     now = datetime.now()
+    time_file = now.strftime("%Y%m%d_%H%M")
     file_date = now.strftime("%Y%m%d")
-    final_file_path = os.path.join(output_path, f"{filename} {file_date}.0csv")
+    
+    # Create a temporary folder to store initial files
+    temp_folder_name = f"{filename}_{time_file}"
+    temp_output_path = os.path.join(output_path, temp_folder_name)
 
+    # Save the DataFrame into the temporary folder using PySpark
     try:
-        # ✅ Intentar con Polars primero
-        print("💾 Intentando guardar con Polars (.0csv)...")
-        if not isinstance(data_frame, pl.DataFrame):
-            if hasattr(data_frame, "toPandas"):  # PySpark
-                data_frame = pl.from_pandas(data_frame.toPandas())
-            elif isinstance(data_frame, pd.DataFrame):
-                data_frame = pl.from_pandas(data_frame)
+        (data_frame
+            .repartition(partitions)
+            .write
+            .mode("overwrite")
+            .option("header", "true")
+            .option("delimiter", delimiter)
+            .csv(temp_output_path)
+        )
 
-        data_frame.write_csv(file=final_file_path, separator=delimiter, include_header=True)
-        print(f"✅ .0csv file successfully saved to: {final_file_path}")
+        # Remove unnecessary files
+        for root, dirs, files in os.walk(temp_output_path):
+            for file in files:
+                if file.startswith("._") or file == "_SUCCESS" or file.endswith(".crc"):
+                    os.remove(os.path.join(root, file))
+
+        # Move the CSV files from the temporary folder to the main output path
+        for i, file in enumerate(os.listdir(temp_output_path), start=1):
+            if file.endswith(".csv"):
+                old_file_path = os.path.join(temp_output_path, file)
+                new_file_path = os.path.join(output_path, f"{filename} {file_date} {i}.0csv")
+                os.rename(old_file_path, new_file_path)
+
+        # Delete the temporary folder
+        if os.path.exists(temp_output_path):
+            shutil.rmtree(temp_output_path)
+            print(f"🗑️ Temporary folder deleted: {temp_output_path}")
+
+        print(f"✔️ .0csv files successfully moved to: {output_path}")
 
     except Exception as e:
-        print(f"⚠️ Polars .0csv save failed ({e}), trying PySpark fallback...")
+        print(f"⚠️ PySpark .0csv save failed ({e}), trying Polars fallback...")
         try:
-            output_dir = os.path.splitext(final_file_path)[0]
-            data_frame.write.mode("overwrite").option("header", True).csv(output_dir)
-            print(f"✅ .0csv saved with PySpark to: {output_dir}")
+            # Save using Polars
+            print("💾 Attempting to save with Polars (.0csv)...")
+            if not isinstance(data_frame, pl.DataFrame):
+                if hasattr(data_frame, "toPandas"):  # PySpark
+                    data_frame = pl.from_pandas(data_frame.toPandas())
+                elif isinstance(data_frame, pd.DataFrame):
+                    data_frame = pl.from_pandas(data_frame)
+
+            data_frame.write_csv(file=os.path.join(output_path, f"{filename} {file_date}.0csv"), separator=delimiter, include_header=True)
+            print(f"✅ .0csv file successfully saved to: {output_path}")
+
         except Exception as spark_err:
-            print(f"❌ ERROR: Failed to save with both Polars and PySpark. Reason: {spark_err}")
+            print(f"❌ ERROR: Failed to save with both PySpark and Polars. Reason: {spark_err}")
 
-
-def save_to_xlsx(data_frame: PolarsDataFrame, output_path: str, filename: str, partitions: Union[int, str]):
+def save_to_xlsx(data_frame: pl.DataFrame, output_path: str, filename: str, partitions: Union[int, str]):
     """
     Saves a Polars DataFrame to a single Excel (XLSX) file via Pandas, 
     then applies custom openpyxl formatting.
     """
     if output_path and not os.path.exists(output_path):
         os.makedirs(output_path)
-        print(f"✔️ Created output directory: {output_path}")
 
     now = datetime.now()
     file_date = now.strftime("%Y%m%d")
-    final_file_name = f"{filename} {file_date}.xlsx"
-    final_file_path = os.path.join(output_path, final_file_name)
+    folder_name = f"{filename} {file_date}"
 
-    print(f"💾 Saving DataFrame as Excel to {final_file_path}...")
+    full_output_path = os.path.join(output_path, folder_name, filename)
+
+    print(f"💾 Saving DataFrame as Excel to {full_output_path}...")
     try:
-        # Convertir Polars o PySpark a Pandas
+        # Convert Polars or PySpark to Pandas
         if hasattr(data_frame, "toPandas"):  # PySpark
             df_pandas = data_frame.toPandas()
         elif isinstance(data_frame, pl.DataFrame):
@@ -127,9 +181,9 @@ def save_to_xlsx(data_frame: PolarsDataFrame, output_path: str, filename: str, p
         else:
             df_pandas = data_frame
 
-        df_pandas.to_excel(excel_writer=final_file_path, sheet_name='Details', index=False)
-        format_excel_file(final_file_path)
-        print(f"✅ Final Excel file saved as: {final_file_path}")
+        df_pandas.to_excel(excel_writer=full_output_path, sheet_name='Details', index=False)
+        format_excel_file(full_output_path)
+        print(f"✅ Final Excel file saved as: {full_output_path}")
 
     except Exception as e:
         print(f"❌ ERROR: Failed to save DataFrame to XLSX. Reason: {e}")
