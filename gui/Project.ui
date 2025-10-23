@@ -921,7 +921,7 @@ QPushButton:pressed
        <widget class="QLabel" name="label_Total_Registers_8">
         <property name="geometry">
          <rect>
-          <x>650</x>
+          <x>660</x>
           <y>610</y>
           <width>161</width>
           <height>21</height>
@@ -938,7 +938,7 @@ font: 87 9pt &quot;Arial Black&quot;;</string>
        <widget class="QLabel" name="label_Total_Registers_7">
         <property name="geometry">
          <rect>
-          <x>830</x>
+          <x>840</x>
           <y>610</y>
           <width>111</width>
           <height>21</height>
@@ -1286,7 +1286,7 @@ QPushButton:pressed {
           <x>310</x>
           <y>340</y>
           <width>301</width>
-          <height>141</height>
+          <height>181</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -1329,7 +1329,7 @@ QPushButton:pressed {
 }</string>
          </property>
          <property name="text">
-          <string>Descargue de Reportería SAEM</string>
+          <string> Descargue de Reportería SAEM</string>
          </property>
          <property name="icon">
           <iconset>
@@ -1375,6 +1375,53 @@ QPushButton:pressed {
          <property name="icon">
           <iconset>
            <normaloff>../resources/ico/doc.png</normaloff>../resources/ico/doc.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+        <widget class="QCommandLinkButton" name="commandLinkButton_33">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>130</y>
+           <width>261</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Bahnschrift SemiBold</family>
+           <pointsize>10</pointsize>
+           <weight>7</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(160, 160, 160); /* Borde gris claro */
+    border-radius: 8px;
+}
+
+/* Al presionar */
+QPushButton:pressed {
+    background-color: rgb(230, 230, 230); /* Gris suave al presionar */
+    border: 2px solid rgb(100, 100, 100); /* Borde más oscuro */
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+}</string>
+         </property>
+         <property name="text">
+          <string> Subir demográficos a Firebase</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../resources/ico/firebase.ico</normaloff>../resources/ico/firebase.ico</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1590,8 +1637,8 @@ QPushButton:pressed
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
-            <widget class="QPushButton" name="pushButton_10">
+           <item row="5" column="0">
+            <widget class="QPushButton" name="pushButton_9">
              <property name="font">
               <font>
                <family>Bahnschrift SemiBold</family>
@@ -1614,7 +1661,7 @@ QPushButton:pressed
 }</string>
              </property>
              <property name="text">
-              <string>Blaster Intercom</string>
+              <string>SAEM</string>
              </property>
             </widget>
            </item>
@@ -1646,8 +1693,8 @@ QPushButton:pressed
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
-            <widget class="QPushButton" name="pushButton_9">
+           <item row="4" column="0">
+            <widget class="QPushButton" name="pushButton_10">
              <property name="font">
               <font>
                <family>Bahnschrift SemiBold</family>
@@ -1670,12 +1717,12 @@ QPushButton:pressed
 }</string>
              </property>
              <property name="text">
-              <string>SAEM</string>
+              <string>Blaster Intercom</string>
              </property>
             </widget>
            </item>
-           <item row="9" column="0">
-            <widget class="QPushButton" name="pushButton_13">
+           <item row="10" column="0">
+            <widget class="QPushButton" name="pushButton_17">
              <property name="font">
               <font>
                <family>Bahnschrift SemiBold</family>
@@ -1698,7 +1745,7 @@ QPushButton:pressed
 }</string>
              </property>
              <property name="text">
-              <string>Mesa de Ayuda - Synapsis</string>
+              <string>Predictivo Vicidial</string>
              </property>
             </widget>
            </item>
@@ -1730,8 +1777,8 @@ QPushButton:pressed
              </property>
             </widget>
            </item>
-           <item row="10" column="0">
-            <widget class="QPushButton" name="pushButton_17">
+           <item row="9" column="0">
+            <widget class="QPushButton" name="pushButton_13">
              <property name="font">
               <font>
                <family>Bahnschrift SemiBold</family>
@@ -1754,7 +1801,7 @@ QPushButton:pressed
 }</string>
              </property>
              <property name="text">
-              <string>Predictivo Vicidial</string>
+              <string>Mesa de Ayuda - Synapsis</string>
              </property>
             </widget>
            </item>
@@ -1822,9 +1869,9 @@ QPushButton:pressed
         <property name="geometry">
          <rect>
           <x>310</x>
-          <y>500</y>
+          <y>540</y>
           <width>301</width>
-          <height>141</height>
+          <height>101</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -1836,8 +1883,8 @@ QPushButton:pressed
         <widget class="QSpinBox" name="spinBox_Partitions_13">
          <property name="geometry">
           <rect>
-           <x>20</x>
-           <y>90</y>
+           <x>10</x>
+           <y>70</y>
            <width>41</width>
            <height>22</height>
           </rect>
@@ -1852,8 +1899,8 @@ QPushButton:pressed
         <widget class="QLabel" name="label_Mod_Init_CTA_Min_6">
          <property name="geometry">
           <rect>
-           <x>20</x>
-           <y>50</y>
+           <x>10</x>
+           <y>40</y>
            <width>51</width>
            <height>20</height>
           </rect>
@@ -1877,8 +1924,8 @@ QPushButton:pressed
         <widget class="QSpinBox" name="spinBox_Partitions_14">
          <property name="geometry">
           <rect>
-           <x>110</x>
-           <y>90</y>
+           <x>100</x>
+           <y>70</y>
            <width>41</width>
            <height>22</height>
           </rect>
@@ -1894,7 +1941,7 @@ QPushButton:pressed
          <property name="geometry">
           <rect>
            <x>100</x>
-           <y>50</y>
+           <y>40</y>
            <width>61</width>
            <height>20</height>
           </rect>
@@ -1918,9 +1965,9 @@ QPushButton:pressed
         <widget class="QPushButton" name="pushButton_Process_8">
          <property name="geometry">
           <rect>
-           <x>190</x>
-           <y>40</y>
-           <width>91</width>
+           <x>200</x>
+           <y>30</y>
+           <width>81</width>
            <height>31</height>
           </rect>
          </property>
@@ -3359,7 +3406,7 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-54</y>
+            <y>0</y>
             <width>222</width>
             <height>222</height>
            </rect>

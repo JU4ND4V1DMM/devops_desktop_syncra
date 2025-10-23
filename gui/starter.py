@@ -9,6 +9,7 @@ import random
 import webbrowser
 import pandas as pd
 import shutil
+import cloud.insert_firebase
 import gui.insignias
 import gui.payments
 import gui.ranking_read
@@ -279,6 +280,7 @@ class Init_APP():
         self.process_data.commandLinkButton.clicked.connect(self.validate_whatsapp)
         self.process_data.commandLinkButton_2.clicked.connect(self.sending_sms_whatsapp)
         self.process_data.commandLinkButton_26.clicked.connect(self.search_demographic_claro)
+        self.process_data.commandLinkButton_33.clicked.connect(self.insert_new_demographics)
         
     def exec__process(self):
         
@@ -386,6 +388,31 @@ class Init_APP():
             Mbox_In_Process.setWindowTitle("Estado de Consulta") 
             Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
             Mbox_In_Process.setText("Query ejecutada exitosamente.") 
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar un archivo con la base para ejecutar la validación de WhatsApp.")
+            Mbox_File_Error.exec()
+            
+    def insert_new_demographics(self):
+            
+        if self.file_path_RPA != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere mientras se procesa la insercion masiva")
+            Mbox_In_Process.exec()
+            
+            cloud.insert_firebase.insert_demographics_to_firebase(self.file_path_RPA, self.process_data)
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Estado de Consulta") 
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Insercion ejecutada exitosamente.") 
             Mbox_In_Process.exec()
         
         else:
