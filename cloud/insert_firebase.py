@@ -1,3 +1,5 @@
+import time
+from google.api_core import exceptions as gcp_exceptions
 import firebase_admin
 from firebase_admin import credentials, firestore
 import polars as pl
@@ -107,7 +109,6 @@ def process_and_validate_demographics(csv_path: str, db: firestore.client) -> Li
 
     if not existing_keys:
         print("➡️ No existing keys to check. All records will be considered new.")
-        final_df = df_transformed
         df_transformed = df_transformed.filter(
             pl.col("type") != "errado"
         )
@@ -141,59 +142,28 @@ def process_and_validate_demographics(csv_path: str, db: firestore.client) -> Li
 # --- INITIAL PROCESS ---
 def insert_demographics_to_firebase(csv_file_path, gui_process_data):
     """
-    Main function to insert data from a CSV into Firestore using Batched Writes.
+    Main function to insert data from a CSV into Firestore.
     """
-
     # Initialize Firebase (assuming successful credential loading)
-    db = None
     try:
         cred = credentials.Certificate(CREDENTIALS_FILE)
-        # Handle case where the app might already be initialized
-        try:
-            firebase_admin.initialize_app(cred, {"projectId": PROJECT_ID})
-        except ValueError as e:
-            if "The default Firebase app already exists" not in str(e):
-                 raise
-        
+        firebase_admin.initialize_app(cred, {"projectId": PROJECT_ID})
         db = firestore.client()
         print("✅ Firestore connection established.")
     except Exception as e:
-        print(f"❌ Error initializing Firebase. Please ensure '{CREDENTIALS_FILE}' is correct. Error: {e}")
+        print(f"❌ Error initializing Firebase. Please ensure '{CREDENTIALS_FILE}' is correct.")
+        db = None # Set to None to prevent subsequent errors
     
-    # Run the processor to get new records
+    # Run the processor
     if db:
-        # Note: process_and_validate_demographics must be defined elsewhere (as in your original code)
         new_records = process_and_validate_demographics(csv_file_path, db)
     
         print("\n--- NEW RECORDS TO INSERT ---")
         if new_records:
-            # --- 🔥 BATCH WRITE IMPLEMENTATION 🔥 ---
-            BATCH_SIZE = 500  # Firestore limit is 500 operations per batch
-            total_inserted = 0
-            total_batches = (len(new_records) + BATCH_SIZE - 1) // BATCH_SIZE
-            
-            # Iterate over the new records in chunks of BATCH_SIZE
-            for i in range(0, len(new_records), BATCH_SIZE):
-                batch = db.batch() # Create a new batch
-                chunk = new_records[i:i + BATCH_SIZE]
-                batch_number = (i // BATCH_SIZE) + 1
-                
-                print(f"⏳ Preparing batch {batch_number} of {total_batches} with {len(chunk)} documents...")
-
-                # Add each document in the chunk to the current batch
-                for record in chunk:
-                    # Create a new document reference and add the 'set' operation to the batch
-                    doc_ref = db.collection(COLLECTION_NAME).document() 
-                    batch.set(doc_ref, record)
-                
-                # Commit the batch (sends up to 500 writes in one network call)
-                batch.commit()
-                total_inserted += len(chunk)
-                
-            print(f"\n✔️ Successfully inserted {total_inserted} new documents using Batched Writes.")
-            # --- 🔥 END OF BATCH WRITE IMPLEMENTATION 🔥 ---
-
+            for record in new_records:
+                db.collection(COLLECTION_NAME).add(record)
+            print(f"\n✔️ Successfully inserted {len(new_records)} new documents.")
         else:
-            print("No new records found after validation.")
+            print("⚠️ No new records found after validation.")
     else:
         print("\nProcess aborted due to Firebase connection error.")
