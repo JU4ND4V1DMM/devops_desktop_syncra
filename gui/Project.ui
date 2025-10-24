@@ -3406,9 +3406,9 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-103</y>
             <width>222</width>
-            <height>222</height>
+            <height>252</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
@@ -3468,7 +3468,7 @@ QPushButton:pressed
              </property>
             </widget>
            </item>
-           <item row="7" column="0">
+           <item row="8" column="0">
             <widget class="QPushButton" name="pushButton_22">
              <property name="font">
               <font>
@@ -3493,34 +3493,6 @@ QPushButton:pressed
              </property>
              <property name="text">
               <string>Cruce de Claro con Batch</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QPushButton" name="pushButton_25">
-             <property name="font">
-              <font>
-               <family>Bahnschrift SemiBold</family>
-               <pointsize>10</pointsize>
-               <weight>7</weight>
-               <italic>false</italic>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">/* Al pasar el mouse */
-QPushButton:hover {
-    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
-    border-radius: 8px;
-}
-QPushButton:pressed
-{
-	color: rgb(255, 255, 255);
-	background-color: rgb(217, 16, 76);
-}</string>
-             </property>
-             <property name="text">
-              <string>Transformar CSV a Dahsboard</string>
              </property>
             </widget>
            </item>
@@ -3552,6 +3524,62 @@ QPushButton:pressed
              </property>
             </widget>
            </item>
+           <item row="2" column="0">
+            <widget class="QPushButton" name="pushButton_26">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    border-radius: 8px;
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Consolidar Resultados Wisebot</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton_25">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    border-radius: 8px;
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>Transformar CSV a Dahsboard</string>
+             </property>
+            </widget>
+           </item>
            <item row="3" column="0">
             <widget class="QPushButton" name="pushButton_12">
              <property name="font">
@@ -3580,8 +3608,8 @@ QPushButton:pressed
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QPushButton" name="pushButton_26">
+           <item row="7" column="0">
+            <widget class="QPushButton" name="pushButton_27">
              <property name="font">
               <font>
                <family>Bahnschrift SemiBold</family>
@@ -3604,7 +3632,7 @@ QPushButton:pressed
 }</string>
              </property>
              <property name="text">
-              <string>Consolidar Resultados Wisebot</string>
+              <string>Convertir CSV a JSON</string>
              </property>
             </widget>
            </item>
