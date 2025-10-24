@@ -491,7 +491,7 @@ class Charge_DB(QtWidgets.QMainWindow):
             "22_": "Ciudad",
             "23_": "[InboxName?]",
             "24_": "Nombre del Cliente",
-            "25_": "Id de Ejecucion",
+            "25_": "Id_de_Ejecucion",
             "26_": "Fecha de Vencimiento",
             "27_": "Numero Referencia de Pago",
             "28_": "MIN",
@@ -520,14 +520,20 @@ class Charge_DB(QtWidgets.QMainWindow):
         if "56_" in Data_Root.columns:
             Data_Root = Data_Root.rename({"56_": "Monitor"})
 
-        # --- Logging and Error Handling ---
+        # --- Logging and Error Handling ---Id de Ejecucion
         Data_Error = Data_Root.clone() # Use clone() to create a separate copy of the DataFrame
 
         # --- Filtering and Saving Data_Root (Cargue) ---
         # Equivalent to Data_Root.filter(col("[CustomerTypeId?]") >= 80)
         # The original code implicitly casts to a numeric type for comparison. We must explicitly cast to Int32.
+        customer_type = col("[CustomerTypeId?]")
+        id_execute = col("Id_de_Ejecucion")
+        field_activate = col("[AccStsName?]")
+        
         Data_Root = Data_Root.filter(
-            col("[CustomerTypeId?]").cast(pl.Int32, strict=False).is_between(80, 89)
+            customer_type.cast(pl.Int32, strict=False).is_between(80, 89) &
+            id_execute.is_not_null() &
+            field_activate.is_not_null()
         )
         
         name = "Cargue" 
@@ -550,11 +556,12 @@ class Charge_DB(QtWidgets.QMainWindow):
         # --- Filtering and Saving Data_Error (Errores) ---
         # Equivalent to Data_Error.filter(...)
         # The logic checks for null, non-numeric, or outside the [80, 89] range.
-        customer_type = col("[CustomerTypeId?]")
         
         Data_Error = Data_Error.filter(
             customer_type.is_null() |
-            customer_type.cast(pl.Float64, strict=False).is_null() | # Checks for non-numeric (cast to double/Float64)
+            id_execute.is_null() |
+            field_activate.is_null() |
+            customer_type.cast(pl.Float64, strict=False).is_null() |
             (~customer_type.cast(pl.Int32, strict=False).is_between(80, 89))
         )
         
@@ -928,7 +935,7 @@ class Charge_DB(QtWidgets.QMainWindow):
             "18_": "Fecha_Final",
             "19_": "Segmento",
             "20_": "Documento_Limpio",
-            "21_": "Acc_Sts_Name",
+            "21_": "[AccStsName?]",
             "22_": "Ciudad",
             "23_": "Inbox_Name",
             "24_": "Nombre_del_Cliente",
@@ -1003,7 +1010,7 @@ class Charge_DB(QtWidgets.QMainWindow):
             "Write_Off_Mark", "Monto inicial", "Mod_Init_Cta", "Deuda_Real_Cuenta", "Bill_CycleName",
             "Nombre Campana", "Debt_Age_Inicial", "Nombre_Casa_de_Cobro", "Fecha_de_Asignacion",
             "Deuda_Gestionable", "Direccion_Completa", "Fecha_Final", "Segmento", "Documento_Limpio",
-            "Acc_Sts_Name", "Ciudad", "Inbox_Name", "Nombre_del_Cliente", "Id_de_Ejecucion",
+            "[AccStsName?]", "Ciudad", "Inbox_Name", "Nombre_del_Cliente", "Id_de_Ejecucion",
             "Fecha_de_Vencimiento", "Numero_Referencia_de_Pago", "MIN", "Plan", "Cuotas_Aceleradas",
             "Fecha_de_Aceleracion", "Valor_Acelerado", "Intereses_Contingentes", "Intereses_Corrientes_Facturados",
             "Intereses_por_mora_facturados", "Iva_Intereses_Contigentes_Facturado",
