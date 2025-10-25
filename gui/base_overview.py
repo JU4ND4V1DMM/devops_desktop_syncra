@@ -147,14 +147,11 @@ class Charge_DB(QtWidgets.QMainWindow):
     
         # --- [AccountAccountCode?] updates ---
         Data_Root = Data_Root.with_columns(
-            # Remove hyphens (equivalent to regexp_replace(col, "-", ""))
             col("[AccountAccountCode?]")
             .str.replace_all("-", "") 
-            # Remove dots (equivalent to regexp_replace(col, r"\.", ""))
-            .str.replace_all(r"\.", "", literal=True) 
+            .str.replace_all(r"\.", "")  # literal=False for regex
             .alias("[AccountAccountCode?]")
         ).with_columns(
-            # Copy the cleaned code to [AccountAccountCode2?]
             col("[AccountAccountCode?]").alias("[AccountAccountCode2?]")
         )
         

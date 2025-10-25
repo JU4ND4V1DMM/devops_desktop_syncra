@@ -24,6 +24,7 @@ import gui.read_files_sms
 import gui.read_task_web
 import gui.union_bot
 import gui.price_campaigns
+import gui.registers_telematic
 import gui.structure_files
 import gui.union_demo
 import gui.conversion_csv

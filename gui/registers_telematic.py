@@ -177,6 +177,7 @@ def process_sms_saem(file_path, present_headers):
             # 3. Group by 'fecha_inicio_dia' and 'username' and sum 'ejecutados'
             sms_saem_aggregated_df = df_filtered_for_agg.groupby(['fecha_inicio_dia', 'username'])['ejecutados'].sum().reset_index()
             sms_saem_aggregated_df.rename(columns={'ejecutados': 'suma_ejecutados_diarios'}, inplace=True)
+            sms_saem_aggregated_df['contador_registros'] = sms_saem_aggregated_df['suma_ejecutados_diarios'].copy()
             sms_saem_aggregated_df['source_file_type'] = 'SMS_SAEM_AGGREGATED'
 
             print("\n  Aggregated SMS SAEM Data:")
@@ -280,6 +281,7 @@ def process_ivr_saem(file_path, present_headers):
             },
             inplace=True
         )
+        ivr_saem_aggregated_df['contador_registros'] = ivr_saem_aggregated_df['suma_segundos_diarios'].copy()
         ivr_saem_aggregated_df['source_file_type'] = 'IVR_SAEM_AGGREGATED'
 
         print("\n  Aggregated IVR SAEM Data:")
@@ -374,6 +376,7 @@ def process_ivr_ipcom(file_path, present_headers):
             },
             inplace=True
         )
+        ivr_ipcom_aggregated_df['contador_registros'] = ivr_ipcom_aggregated_df['suma_segundos_diarios'].copy()
         ivr_ipcom_aggregated_df['source_file_type'] = 'IVR_IPCOM_AGGREGATED'
 
         print("\n  Aggregated IVR IPCOM Data:")
@@ -431,6 +434,7 @@ def process_email_masivian(file_path, present_headers):
             columns={'procesados': 'suma_procesados_diarios'},
             inplace=True
         )
+        email_masivian_aggregated_df['contador_registros'] = email_masivian_aggregated_df['suma_procesados_diarios'].copy()
         email_masivian_aggregated_df['source_file_type'] = 'EMAIL_MASIVIAN_AGGREGATED'
 
         print("\n  Aggregated EMAIL MASIVIAN Data:")
@@ -514,6 +518,8 @@ def process_sms_masivian(file_path, present_headers):
             columns={'total procesados': 'suma_total_procesados_diarios'},
             inplace=True
         )
+    
+        sms_masivian_aggregated_df['contador_registros'] = sms_masivian_aggregated_df['suma_total_procesados_diarios'].copy()
         sms_masivian_aggregated_df['source_file_type'] = 'SMS_MASIVIAN_AGGREGATED'
 
         print("\n  Aggregated SMS MASIVIAN Data:")
@@ -578,18 +584,20 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
     df_filtered = df_filtered.dropna(subset=['fecha_dia'])
     if not df_filtered.empty and 'marca' not in df_filtered.columns:
         wisebot_grouped_df = df_filtered.groupby(['fecha_dia', 'campaña'])['tiempo_llamada'].sum().reset_index()
+        wisebot_grouped_df['contador_registros'] = wisebot_grouped_df['tiempo_llamada'].copy()
         # Add a source_file_type to the aggregated Wisebot data too
         wisebot_grouped_df['source_file_type'] = f'WISEBOT_{wisebot_subtype.upper()}_AGGREGATED'
         print("\n  Aggregated Wisebot Data:")
         print(wisebot_grouped_df.to_string()) # Use .to_string() for full display
     elif not df_filtered.empty and 'marca' in df_filtered.columns:
         wisebot_grouped_df = df_filtered.groupby(['fecha_dia', 'marca'])['tiempo_llamada'].sum().reset_index()
+        wisebot_grouped_df['contador_registros'] = wisebot_grouped_df['tiempo_llamada'].copy()
         # Add a source_file_type to the aggregated Wisebot data too
         wisebot_grouped_df['source_file_type'] = f'WISEBOT_{wisebot_subtype.upper()}_AGGREGATED'
         print("\n  Aggregated Wisebot Data:")
         print(wisebot_grouped_df.to_string()) # Use .to_string() for full display
     else:
-        wisebot_grouped_df = pd.DataFrame(columns=['fecha_dia', 'campaña', 'tiempo_llamada', 'source_file_type'])
+        wisebot_grouped_df = pd.DataFrame(columns=['fecha_dia', 'campaña', 'contador_registros', 'tiempo_llamada', 'source_file_type'])
         print("  No valid data remaining after filtering and date parsing for aggregation.")
 
     # --- Sub-classification specific details (for logging/debugging) ---
@@ -614,7 +622,7 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
     and saves it to one sheet in an Excel file.
     Filters DataFrames to include only specified aggregated types, unifies
     date, sum, and grouping columns, and then unifies grouping concepts
-    within the 'agrupador_campana_usuario' column.
+    within the 'marca_agrupada_campana' column.
 
     Args:
         list_of_dataframes (list): A list of pandas DataFrames to combine.
@@ -648,19 +656,19 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
     }
 
     sum_columns_map = {
-        'suma_procesados_diarios': 'valor_movimiento',
-        'suma_total_procesados_diarios': 'valor_movimiento',
-        'tiempo_llamada': 'valor_movimiento',
-        'suma_segundos_diarios': 'valor_movimiento',
-        'suma_ejecutados_diarios': 'valor_movimiento'
+        'suma_procesados_diarios': 'registros_movimiento',
+        'suma_total_procesados_diarios': 'registros_movimiento',
+        'tiempo_llamada': 'registros_movimiento',
+        'suma_segundos_diarios': 'registros_movimiento',
+        'suma_ejecutados_diarios': 'registros_movimiento'
     }
 
     grouping_columns_map = {
-        'remitente': 'agrupador_campana_usuario',
-        'campaign_group': 'agrupador_campana_usuario',
-        'marca': 'agrupador_campana_usuario', # This might be present in WISEBOT, for instance
-        'campaña': 'agrupador_campana_usuario', # This might be present in WISEBOT, for instance
-        'username': 'agrupador_campana_usuario' # Specific to SMS_SAEM
+        'remitente': 'marca_agrupada_campana',
+        'campaign_group': 'marca_agrupada_campana',
+        'marca': 'marca_agrupada_campana', # This might be present in WISEBOT, for instance
+        'campaña': 'marca_agrupada_campana', # This might be present in WISEBOT, for instance
+        'username': 'marca_agrupada_campana' # Specific to SMS_SAEM
     }
 
     # List to hold DataFrames after filtering and renaming
@@ -717,53 +725,53 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
         print(f"Error concatenating filtered DataFrames: {e}")
         return
 
-    # --- New: Unify concepts in 'agrupador_campana_usuario' ---
-    if 'agrupador_campana_usuario' in combined_df.columns:
-        print("\nApplying final concept unification to 'agrupador_campana_usuario'...")
+    # --- New: Unify concepts in 'marca_agrupada_campana' ---
+    if 'marca_agrupada_campana' in combined_df.columns:
+        print("\nApplying final concept unification to 'marca_agrupada_campana'...")
 
         # Create a lowercase version for comparison
-        combined_df['agrupador_lower'] = combined_df['agrupador_campana_usuario'].astype(str).str.lower()
+        combined_df['agrupador_lower'] = combined_df['marca_agrupada_campana'].astype(str).str.lower()
 
         # Apply the unification logic
         # 1. Claro: contains "claro"
-        combined_df.loc[combined_df['agrupador_lower'].str.contains('claro', na=False), 'agrupador_campana_usuario'] = 'CLARO'
+        combined_df.loc[combined_df['agrupador_lower'].str.contains('claro', na=False), 'marca_agrupada_campana'] = 'CLARO'
         
         # 2. Claro: contains "recupera" AND source_file_type is SMS_SAEM_AGGREGATED
         combined_df.loc[
             (combined_df['agrupador_lower'].str.contains('recupera', na=False)) &
             (combined_df['source_file_type'] == 'SMS_SAEM_AGGREGATED'),
-            'agrupador_campana_usuario'
+            'marca_agrupada_campana'
         ] = 'CLARO'
 
         # 3. Gm Financial: contains "chevrolet", "gm", or "insoluto"
-        combined_df.loc[combined_df['agrupador_lower'].str.contains('chevrolet|gm|insoluto', na=False), 'agrupador_campana_usuario'] = 'GMAC'
+        combined_df.loc[combined_df['agrupador_lower'].str.contains('chevrolet|gm|insoluto', na=False), 'marca_agrupada_campana'] = 'GMAC'
 
         # 4. qnt
-        combined_df.loc[combined_df['agrupador_lower'].str.contains('qnt', na=False), 'agrupador_campana_usuario'] = 'QNT'
+        combined_df.loc[combined_df['agrupador_lower'].str.contains('qnt', na=False), 'marca_agrupada_campana'] = 'QNT'
         
         # 5. yadinero
-        combined_df.loc[combined_df['agrupador_lower'].str.contains('dinero', na=False), 'agrupador_campana_usuario'] = 'YA DINERO' # Note: mapping 'dinero' to 'yadinero'
+        combined_df.loc[combined_df['agrupador_lower'].str.contains('dinero', na=False), 'marca_agrupada_campana'] = 'YA DINERO' # Note: mapping 'dinero' to 'yadinero'
 
         # 6. pash
-        combined_df.loc[combined_df['agrupador_lower'].str.contains('pash|credito', na=False), 'agrupador_campana_usuario'] = 'PASH'
+        combined_df.loc[combined_df['agrupador_lower'].str.contains('pash|credito', na=False), 'marca_agrupada_campana'] = 'PASH'
 
         # 7. puntored
-        combined_df.loc[combined_df['agrupador_lower'].str.contains('puntored', na=False), 'agrupador_campana_usuario'] = 'PUNTORED' # Note: mapping 'puntored' to 'puntored'
+        combined_df.loc[combined_df['agrupador_lower'].str.contains('puntored', na=False), 'marca_agrupada_campana'] = 'PUNTORED' # Note: mapping 'puntored' to 'puntored'
         
         # 8. habi
-        combined_df.loc[combined_df['agrupador_lower'].str.contains('habi', na=False), 'agrupador_campana_usuario'] = 'HABI' # Note: mapping 'habi' to 'habi'
+        combined_df.loc[combined_df['agrupador_lower'].str.contains('habi', na=False), 'marca_agrupada_campana'] = 'HABI' # Note: mapping 'habi' to 'habi'
         
         # 9. crediveci
-        combined_df.loc[combined_df['agrupador_lower'].str.contains('crediveci', na=False), 'agrupador_campana_usuario'] = 'CREDIVECI' # Note: mapping 'crediveci' to 'crediveci'
+        combined_df.loc[combined_df['agrupador_lower'].str.contains('crediveci', na=False), 'marca_agrupada_campana'] = 'CREDIVECI' # Note: mapping 'crediveci' to 'crediveci'
         
         # 10. payjoy
-        combined_df.loc[combined_df['agrupador_lower'].str.contains('payjoy', na=False), 'agrupador_campana_usuario'] = 'PAYJOY' # Note: mapping 'payjoy' to 'payjoy'
+        combined_df.loc[combined_df['agrupador_lower'].str.contains('payjoy', na=False), 'marca_agrupada_campana'] = 'PAYJOY' # Note: mapping 'payjoy' to 'payjoy'
 
         # Drop the temporary lowercase column
         combined_df.drop(columns=['agrupador_lower'], inplace=True)
         print("Final concept unification applied.")
     else:
-        print("Warning: 'agrupador_campana_usuario' column not found for final concept unification.")
+        print("Warning: 'marca_agrupada_campana' column not found for final concept unification.")
 
     os.makedirs(output_folder, exist_ok=True) # Ensure output folder exists
     output_filepath = os.path.join(output_folder, output_filename)
