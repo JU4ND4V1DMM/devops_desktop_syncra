@@ -1609,6 +1609,9 @@ class Init_APP():
             "<span style='font-size: 18px;'>Responsable del diseño, implementación y supervisión del desarrollo. "
             "Encargado de la integración de PySpark, transformación de datos, visualización, lógica y conexiones.</span><br><br>"
             
+            "<b><h2>Julián Tique – Desarrollador Full-Stack</h2></b><br>"
+            "<span style='font-size: 18px;'>Apoyó en la refactorización de componentes RPA y en la implementación de API´s para funcionalidades con conceptos de la web.</span><br><br>"
+            
             "<b><h2>Daniel Sierra – Desarrollador Web</h2></b><br>"
             "<span style='font-size: 18px;'>Apoyó en la creación de componentes RPA y en la implementación de funcionalidades de web scraping.</span><br><br>"
             

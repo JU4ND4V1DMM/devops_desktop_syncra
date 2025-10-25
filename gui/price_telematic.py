@@ -247,7 +247,7 @@ def process_ivr_saem(file_path, present_headers):
     campaign_mapping = {
         'pash': ['pash'],
         'gmac': ['gm', 'insoluto', 'chevrolet'],
-        'claro': ['210', '0_30', 'rr', 'ascard', 'bscs', 'prechurn', 'churn', 'potencial', 'prepotencial', 'descuento', 'esp', '30_', 'prees', 'preord'],
+        'claro': ['210', '0_', 'rr', 'ascard', 'bscs', 'prechurn', 'churn', 'potencial', 'prepotencial', 'descuento', 'esp', '30_', 'prees', 'preord'],
         'puntored': ['puntored'],
         'crediveci': ['crediveci'],
         'yadinero': ['dinero'],
@@ -854,11 +854,12 @@ def process_excel_files_in_folder(input_folder, output_folder):
                  print(f"  Processing of '{filename}' failed or returned None. Not added to combined output.")
 
     print(f"--- Finished processing files in '{input_folder}' ---")
-    dataframe_registers = None
     
     dataframe_registers = registers_telematic.process_excel_files_in_folder(input_folder)
     
+    print(dataframe_registers.head())
+    
     # Save all collected DataFrames to a single Excel sheet
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M")
     output_excel_filename = f"data_consolidada_telematica_{timestamp}.xlsx"
     save_combined_data_to_single_excel_sheet(dataframes_prices, dataframe_registers, output_folder, output_excel_filename)

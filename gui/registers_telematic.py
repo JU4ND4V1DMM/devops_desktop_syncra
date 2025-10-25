@@ -1,3 +1,4 @@
+from duckdb import pl
 import pandas as pd
 import numpy as np
 import os
@@ -16,7 +17,7 @@ COLUMNS_IVR_SAEM = [
     "fecha programada", "fecha registro", "archivo telefonos", "audio",
     "fecha finalización", "estado", "carga", "% ejecucion", "ejecutados",
     "satisfactorios", "colgados", "no contestados", "pendientes", "sin contacto",
-    "ultima llamada", "std", "segundos", "repasos"
+    "ultima llamada", "std", "ejecutados", "repasos"
 ]
 
 COLUMNS_EMAIL_MASIVIAN = [
@@ -167,7 +168,7 @@ def process_sms_saem(file_path, present_headers):
 
         # 2. Convert 'fecha inicio' to datetime and extract the date part
         df['fecha inicio'] = pd.to_datetime(df['fecha inicio'], errors='coerce')
-        df['fecha_inicio_dia'] = df['fecha inicio'].dt.floor('D') # Get just the date (YYYY-MM-DD)
+        df['fecha_inicio_dia'] = df['fecha inicio'].dt.floor('H') # Get just the date (YYYY-MM-DD)
         print("    'fecha inicio' converted to datetime and date part extracted.")
 
         # Filter out rows where 'fecha_inicio_dia' is NaT (invalid date) before grouping
@@ -178,7 +179,7 @@ def process_sms_saem(file_path, present_headers):
             sms_saem_aggregated_df = df_filtered_for_agg.groupby(['fecha_inicio_dia', 'username'])['ejecutados'].sum().reset_index()
             sms_saem_aggregated_df.rename(columns={'ejecutados': 'suma_ejecutados_diarios'}, inplace=True)
             sms_saem_aggregated_df['contador_registros'] = sms_saem_aggregated_df['suma_ejecutados_diarios'].copy()
-            sms_saem_aggregated_df['source_file_type'] = 'SMS_SAEM_AGGREGATED'
+            sms_saem_aggregated_df['source_file_type'] = 'SMS SAEM'
 
             print("\n  Aggregated SMS SAEM Data:")
             print(sms_saem_aggregated_df.to_string())
@@ -199,7 +200,7 @@ def process_sms_saem(file_path, present_headers):
 def process_ivr_saem(file_path, present_headers):
     """
     Logic to process IVR SAEM files.
-    Includes aggregation of 'segundos' by 'fecha programada' (day) and a new
+    Includes aggregation of 'ejecutados' by 'fecha programada' (day) and a new
     categorical column derived from 'nombre campaña' and the 'Estandar/Personalizado' column.
     """
     print(f"*** Starting IVR SAEM processing for: '{file_path}' ***")
@@ -210,7 +211,7 @@ def process_ivr_saem(file_path, present_headers):
     df['source_file_type'] = 'IVR_SAEM' # Mark the original data
 
     # --- IVR SAEM SPECIFIC AGGREGATION ---
-    required_cols = ['fecha programada', 'segundos', 'nombre campaña', 'unnamed: 23']
+    required_cols = ['fecha programada', 'ejecutados', 'nombre campaña', 'unnamed: 23']
     # Identify the 'Estandar'/'Personalizado' column (assuming it's a string column
     # that might be unnamed or have a generic name like 'unnamed: x')
     standard_personalizado_col = None
@@ -229,15 +230,15 @@ def process_ivr_saem(file_path, present_headers):
         print(f"*** IVR SAEM processing finished. Returning original data only. ***\n" + "-" * 50)
         return df
 
-    print("  Performing aggregation for 'segundos' by 'fecha programada', 'campaign_group', and 'standard_personalizado_type'...")
+    print("  Performing aggregation for 'ejecutados' by 'fecha programada', 'campaign_group'...")
 
-    # 1. Convert 'segundos' to numeric, filling NaNs with 0
-    df['segundos'] = pd.to_numeric(df['segundos'], errors='coerce').fillna(0)
-    print("    'segundos' column converted to numeric and NaNs filled with 0.")
+    # 1. Convert 'ejecutados' to numeric, filling NaNs with 0
+    df['ejecutados'] = pd.to_numeric(df['ejecutados'], errors='coerce').fillna(0)
+    print("    'ejecutados' column converted to numeric and NaNs filled with 0.")
 
     # 2. Convert 'fecha programada' to datetime and extract the date part
     df['fecha programada'] = pd.to_datetime(df['fecha programada'], errors='coerce')
-    df['fecha_programada_dia'] = df['fecha programada'].dt.floor('D') # Get just the date (YYYY-MM-DD)
+    df['fecha_programada_dia'] = df['fecha programada'].dt.floor('H') # Get just the date (YYYY-MM-DD)
     print("    'fecha programada' converted to datetime and date part extracted.")
 
     # 3. Create the 'campaign_group' column based on 'nombre campaña'
@@ -247,7 +248,7 @@ def process_ivr_saem(file_path, present_headers):
     campaign_mapping = {
         'pash': ['pash'],
         'gmac': ['gm', 'insoluto', 'chevrolet'],
-        'claro': ['210', '0_30', 'rr', 'ascard', 'bscs', 'prechurn', 'churn', 'potencial', 'prepotencial', 'descuento', 'esp', '30_', 'prees', 'preord'],
+        'claro': ['210', '0_', 'rr', 'ascard', 'bscs', 'prechurn', 'churn', 'potencial', 'prepotencial', 'descuento', 'esp', '30_', 'prees', 'preord'],
         'puntored': ['puntored'],
         'crediveci': ['crediveci'],
         'yadinero': ['dinero'],
@@ -271,18 +272,17 @@ def process_ivr_saem(file_path, present_headers):
     if not df_filtered_for_agg.empty:
         # Group by the date, the campaign group, and the standard/personalizado column
         ivr_saem_aggregated_df = df_filtered_for_agg.groupby(
-            ['fecha_programada_dia', 'campaign_group', standard_personalizado_col]
-        )['segundos'].sum().reset_index()
+            ['fecha_programada_dia', 'campaign_group']
+        )['ejecutados'].sum().reset_index()
 
         ivr_saem_aggregated_df.rename(
             columns={
-                'segundos': 'suma_segundos_diarios',
-                standard_personalizado_col: 'tipo_estandar_personalizado' # Rename the unnamed column
+                'ejecutados': 'suma_ejecutados_diarios',
             },
             inplace=True
         )
-        ivr_saem_aggregated_df['contador_registros'] = ivr_saem_aggregated_df['suma_segundos_diarios'].copy()
-        ivr_saem_aggregated_df['source_file_type'] = 'IVR_SAEM_AGGREGATED'
+        ivr_saem_aggregated_df['contador_registros'] = ivr_saem_aggregated_df['suma_ejecutados_diarios'].copy()
+        ivr_saem_aggregated_df['source_file_type'] = 'IVR SAEM'
 
         print("\n  Aggregated IVR SAEM Data:")
         print(ivr_saem_aggregated_df.to_string())
@@ -298,7 +298,7 @@ def process_ivr_saem(file_path, present_headers):
 def process_ivr_ipcom(file_path, present_headers):
     """
     Logic to process IVR IPCOM files.
-    Includes aggregation of 'segundos' by 'fecha programada' (day) and a new
+    Includes aggregation of 'ejecutados' by 'fecha programada' (day) and a new
     categorical column derived from 'nombre campaña' and the 'Estandar/Personalizado' column.
     """
     print(f"*** Starting IVR IPCOM processing for: '{file_path}' ***")
@@ -317,18 +317,18 @@ def process_ivr_ipcom(file_path, present_headers):
         print(f"*** IVR IPCOM processing finished. Returning original data only. ***\n" + "-" * 50)
         return df
 
-    print("  Performing aggregation for 'segundos' by 'fecha programada', 'campaign_group', and 'standard_personalizado_type'...")
+    print("  Performing aggregation for 'ejecutados' by 'fecha programada', 'campaign_group'...")
 
-    # 1. Convert 'segundos' to numeric, filling NaNs with 0
-    df['segundos'] = pd.to_numeric(df['tiempo facturado'], errors='coerce').fillna(0)
-    print("    'segundos' column converted to numeric and NaNs filled with 0.")
-    
+    # 1. Convert 'ejecutados' to numeric, filling NaNs with 0
+    df['ejecutados'] = pd.to_numeric(df['tiempo facturado'], errors='coerce').fillna(0)
+    print("    'ejecutados' column converted to numeric and NaNs filled with 0.")
+
     df['costo'] = pd.to_numeric(df['costo'], errors='coerce').fillna(0)
     print("    'costo' column converted to numeric and NaNs filled with 0.")
 
     # 2. Convert 'fecha programada' to datetime and extract the date part
     df['fecha programada'] = pd.to_datetime(df['connect time'], errors='coerce')
-    df['fecha_programada_dia'] = df['fecha programada'].dt.floor('D') # Get just the date (YYYY-MM-DD)
+    df['fecha_programada_dia'] = df['fecha programada'].dt.floor('H') # Get just the date (YYYY-MM-DD)
     print("    'fecha programada' converted to datetime and date part extracted.")
 
     # 3. Create the 'campaign_group' column based on 'nombre campaña'
@@ -365,19 +365,18 @@ def process_ivr_ipcom(file_path, present_headers):
             ['fecha_programada_dia', 'campaign_group'] 
         ).agg(
             
-            suma_segundos_diarios=('segundos', 'sum'),
+            suma_ejecutados_diarios=('ejecutados', 'sum'),
             suma_costo_diario=('costo', 'sum') 
         ).reset_index()
 
         ivr_ipcom_aggregated_df.rename(
             columns={
-                'segundos': 'suma_segundos_diarios',
-                'suma_costo_diario': 'tipo_estandar_personalizado' # Rename the unnamed column
+                'ejecutados': 'suma_ejecutados_diarios',
             },
             inplace=True
         )
-        ivr_ipcom_aggregated_df['contador_registros'] = ivr_ipcom_aggregated_df['suma_segundos_diarios'].copy()
-        ivr_ipcom_aggregated_df['source_file_type'] = 'IVR_IPCOM_AGGREGATED'
+        ivr_ipcom_aggregated_df['contador_registros'] = ivr_ipcom_aggregated_df['suma_ejecutados_diarios'].copy()
+        ivr_ipcom_aggregated_df['source_file_type'] = 'IVR IPCOM'
 
         print("\n  Aggregated IVR IPCOM Data:")
         print(ivr_ipcom_aggregated_df.to_string())
@@ -418,7 +417,7 @@ def process_email_masivian(file_path, present_headers):
 
     # 2. Convert 'fecha de envío' to datetime and extract the date part
     df['fecha de envío'] = pd.to_datetime(df['fecha de envío'], errors='coerce')
-    df['fecha_envio_dia'] = df['fecha de envío'].dt.floor('D') # Get just the date (YYYY-MM-DD)
+    df['fecha_envio_dia'] = df['fecha de envío'].dt.floor('H') # Get just the date (YYYY-MM-DD HH)
     print("    'fecha de envío' converted to datetime and date part extracted.")
 
     # 3. Filter out rows where 'fecha_envio_dia' is NaT (invalid date) before grouping
@@ -435,7 +434,7 @@ def process_email_masivian(file_path, present_headers):
             inplace=True
         )
         email_masivian_aggregated_df['contador_registros'] = email_masivian_aggregated_df['suma_procesados_diarios'].copy()
-        email_masivian_aggregated_df['source_file_type'] = 'EMAIL_MASIVIAN_AGGREGATED'
+        email_masivian_aggregated_df['source_file_type'] = 'EMAIL MASIVIAN'
 
         print("\n  Aggregated EMAIL MASIVIAN Data:")
         print(email_masivian_aggregated_df.to_string())
@@ -477,7 +476,7 @@ def process_sms_masivian(file_path, present_headers):
 
     # 2. Convert 'fecha programado' to datetime and extract the date part
     df['fecha programado'] = pd.to_datetime(df['fecha programado'], errors='coerce')
-    df['fecha_programado_dia'] = df['fecha programado'].dt.floor('D') # Get just the date (YYYY-MM-DD)
+    df['fecha_programado_dia'] = df['fecha programado'].dt.floor('H') # Get just the date (YYYY-MM-DD HH)
     print("    'fecha programado' converted to datetime and date part extracted.")
 
     # 3. Create the 'campaign_group' column based on 'campaña'
@@ -520,7 +519,7 @@ def process_sms_masivian(file_path, present_headers):
         )
     
         sms_masivian_aggregated_df['contador_registros'] = sms_masivian_aggregated_df['suma_total_procesados_diarios'].copy()
-        sms_masivian_aggregated_df['source_file_type'] = 'SMS_MASIVIAN_AGGREGATED'
+        sms_masivian_aggregated_df['source_file_type'] = 'SMS MASIVIAN'
 
         print("\n  Aggregated SMS MASIVIAN Data:")
         print(sms_masivian_aggregated_df.to_string())
@@ -566,7 +565,7 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
     # 3. Convert 'fecha_llamada' to datetime and extract date part for grouping
     if 'fecha_llamada' in df_filtered.columns:
         df_filtered['fecha_llamada'] = pd.to_datetime(df_filtered['fecha_llamada'], errors='coerce')
-        df_filtered['fecha_dia'] = df_filtered['fecha_llamada'].dt.floor('D') # Extract date part (YYYY-MM-DD)
+        df_filtered['fecha_dia'] = df_filtered['fecha_llamada'].dt.floor('H') # Extract date part (YYYY-MM-DD)
         print("  'fecha_llamada' converted to date for grouping.")
     else:
         print("  Error: 'fecha_llamada' column not found for grouping. Cannot perform aggregation.")
@@ -586,14 +585,14 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
         wisebot_grouped_df = df_filtered.groupby(['fecha_dia', 'campaña'])['tiempo_llamada'].sum().reset_index()
         wisebot_grouped_df['contador_registros'] = wisebot_grouped_df['tiempo_llamada'].copy()
         # Add a source_file_type to the aggregated Wisebot data too
-        wisebot_grouped_df['source_file_type'] = f'WISEBOT_{wisebot_subtype.upper()}_AGGREGATED'
+        wisebot_grouped_df['source_file_type'] = f'WISEBOT_{wisebot_subtype.upper()}'
         print("\n  Aggregated Wisebot Data:")
         print(wisebot_grouped_df.to_string()) # Use .to_string() for full display
     elif not df_filtered.empty and 'marca' in df_filtered.columns:
         wisebot_grouped_df = df_filtered.groupby(['fecha_dia', 'marca'])['tiempo_llamada'].sum().reset_index()
         wisebot_grouped_df['contador_registros'] = wisebot_grouped_df['tiempo_llamada'].copy()
         # Add a source_file_type to the aggregated Wisebot data too
-        wisebot_grouped_df['source_file_type'] = f'WISEBOT_{wisebot_subtype.upper()}_AGGREGATED'
+        wisebot_grouped_df['source_file_type'] = f'WISEBOT_{wisebot_subtype.upper()}'
         print("\n  Aggregated Wisebot Data:")
         print(wisebot_grouped_df.to_string()) # Use .to_string() for full display
     else:
@@ -635,15 +634,15 @@ def data_to_single_dataframe(list_of_dataframes):
 
     # Define the list of desired aggregated source file types
     desired_aggregated_types = [
-        'EMAIL_MASIVIAN_AGGREGATED',
-        'SMS_MASIVIAN_AGGREGATED',
-        'WISEBOT_WISEBOT_AGREEMENT_AGGREGATED',
-        'WISEBOT_WISEBOT_BENEFITS_AGGREGATED',
-        'WISEBOT_WISEBOT_BASE_AGGREGATED',
-        'WISEBOT_WISEBOT_TITULAR_AGGREGATED',
-        'IVR_SAEM_AGGREGATED',
-        'SMS_SAEM_AGGREGATED',
-        'IVR_IPCOM_AGGREGATED'
+        'EMAIL MASIVIAN',
+        'SMS MASIVIAN',
+        'WISEBOT AGREEMENT',
+        'WISEBOT BENEFITS',
+        'WISEBOT BASE',
+        'WISEBOT TITULAR',
+        'IVR SAEM',
+        'SMS SAEM',
+        'IVR IPCOM'
     ]
 
     # Define column unification mappings
@@ -659,7 +658,7 @@ def data_to_single_dataframe(list_of_dataframes):
         'suma_procesados_diarios': 'registros_movimiento',
         'suma_total_procesados_diarios': 'registros_movimiento',
         'tiempo_llamada': 'registros_movimiento',
-        'suma_segundos_diarios': 'registros_movimiento',
+        'suma_ejecutados_diarios': 'registros_movimiento',
         'suma_ejecutados_diarios': 'registros_movimiento'
     }
 
@@ -685,7 +684,7 @@ def data_to_single_dataframe(list_of_dataframes):
                     for old_name, new_name in date_columns_map.items():
                         if old_name in df_to_add.columns:
                             df_to_add.rename(columns={old_name: new_name}, inplace=True)
-                            df_to_add[new_name] = pd.to_datetime(df_to_add[new_name], errors='coerce').dt.date
+                            df_to_add[new_name] = pd.to_datetime(df_to_add[new_name], errors='coerce').dt.strftime('%Y-%m-%d %H:%M')
 
                     # Apply renaming for sum columns
                     for old_name, new_name in sum_columns_map.items():
@@ -736,10 +735,10 @@ def data_to_single_dataframe(list_of_dataframes):
         # 1. Claro: contains "claro"
         combined_df.loc[combined_df['agrupador_lower'].str.contains('claro', na=False), 'marca_agrupada_campana'] = 'CLARO'
         
-        # 2. Claro: contains "recupera" AND source_file_type is SMS_SAEM_AGGREGATED
+        # 2. Claro: contains "recupera" AND source_file_type is SMS SAEM
         combined_df.loc[
             (combined_df['agrupador_lower'].str.contains('recupera', na=False)) &
-            (combined_df['source_file_type'] == 'SMS_SAEM_AGGREGATED'),
+            (combined_df['source_file_type'] == 'SMS SAEM'),
             'marca_agrupada_campana'
         ] = 'CLARO'
 
@@ -773,6 +772,7 @@ def data_to_single_dataframe(list_of_dataframes):
     else:
         print("Warning: 'marca_agrupada_campana' column not found for final concept unification.")
 
+    print("Contador registros summary after final unification:", len(combined_df))
     return combined_df
     
 # --- Step 5: Main Orchestration Function (Corrected) ---
@@ -849,4 +849,22 @@ def process_excel_files_in_folder(input_folder):
     print(f"--- Finished processing files in '{input_folder}' ---")
 
     # Save all collected DataFrames to a single Excel sheet
-    data_to_single_dataframe(list_of_all_processed_dataframes)
+    combined_df = data_to_single_dataframe(list_of_all_processed_dataframes)
+    
+    combined_df = (combined_df
+        .assign(
+            fecha_movimiento=combined_df['fecha_movimiento'].str.split(' ').str[0],
+            hora_movimiento=combined_df['fecha_movimiento'].str.split(' ').str[1].str[:5],
+            marca_campana_backup=combined_df['marca_agrupada_campana']
+        )
+        .reindex(columns=[
+            'fecha_movimiento',
+            'hora_movimiento',
+            'marca_agrupada_campana', 
+            'source_file_type',
+            'registros_movimiento',
+            'marca_campana_backup'
+        ])
+    )
+    
+    return combined_df
