@@ -1,4 +1,5 @@
 import pandas as pd
+import registers_telematic_count
 import numpy as np
 import os
 from datetime import datetime
@@ -608,7 +609,7 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
     return wisebot_grouped_df
 
 # --- Modified Save Function to unify columns, filter aggregated, and unify grouping concepts ---
-def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, output_filename="consolidated_data.xlsx"):
+def save_combined_data_to_single_excel_sheet(dataframes_prices, dataframe_registers, output_folder, output_filename="consolidated_data.xlsx"):
     """
     Combines a list of DataFrames into a single DataFrame using an outer join
     and saves it to one sheet in an Excel file.
@@ -617,11 +618,11 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
     within the 'agrupador_campana_usuario' column.
 
     Args:
-        list_of_dataframes (list): A list of pandas DataFrames to combine.
+        dataframes_prices (list): A list of pandas DataFrames to combine.
         output_folder (str): The directory where the Excel file will be saved.
         output_filename (str): The name of the output Excel file.
     """
-    if not list_of_dataframes:
+    if not dataframes_prices:
         print("No DataFrames to combine. Skipping output file creation.")
         return
 
@@ -666,7 +667,7 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
     # List to hold DataFrames after filtering and renaming
     processed_and_renamed_dfs = []
 
-    for df in list_of_dataframes:
+    for df in dataframes_prices:
         if df is not None and not df.empty:
             if 'source_file_type' in df.columns:
                 current_source_type = df['source_file_type'].iloc[0]
@@ -769,12 +770,17 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
     output_filepath = os.path.join(output_folder, output_filename)
 
     try:
-        # Save the combined DataFrame to a single sheet named 'Data Faturada'
+        # Save both DataFrames to different sheets in the same Excel file
         with pd.ExcelWriter(output_filepath, engine='openpyxl') as writer:
             combined_df.to_excel(writer, sheet_name='Data Faturada', index=False)
-        print(f"\nAll combined filtered, unified, and re-grouped data saved to a single Excel sheet: '{output_filepath}'")
+            dataframe_registers.to_excel(writer, sheet_name='Data Campana', index=False)
+        
+        print(f"\n✔️ All combined filtered, unified, and re-grouped data saved to a single Excel file: '{output_filepath}'")
+        print(f"- 'Data Faturada' sheet: {len(combined_df)} rows")
+        print(f"- 'Data Campana' sheet: {len(dataframe_registers)} rows")
+        
     except Exception as e:
-        print(f"Error saving combined processed data to Excel: {e}")
+        print(f"Error saving processed data to Excel: {e}")
     
 # --- Step 5: Main Orchestration Function (Corrected) ---
 def process_excel_files_in_folder(input_folder, output_folder):
@@ -792,7 +798,7 @@ def process_excel_files_in_folder(input_folder, output_folder):
         print(f"Error: Input folder '{input_folder}' does not exist.")
         return
 
-    list_of_all_processed_dataframes = [] # List to store all processed DataFrames
+    dataframes_prices = [] # List to store all processed DataFrames
 
     for filename in os.listdir(input_folder):
         if filename.endswith((".xlsx", ".xls", ".csv")): # Check for Excel files
@@ -831,7 +837,7 @@ def process_excel_files_in_folder(input_folder, output_folder):
                     # If it's a list of DataFrames, extend the main list
                     for df_item in processed_data:
                         if df_item is not None and not df_item.empty:
-                            list_of_all_processed_dataframes.append(df_item)
+                            dataframes_prices.append(df_item)
                             print(f"  Successfully collected a DataFrame from '{filename}' for combined output.")
                         elif df_item is not None and df_item.empty:
                             print(f"  A DataFrame processed from '{filename}' resulted in an empty DataFrame. Not added to combined output.")
@@ -840,7 +846,7 @@ def process_excel_files_in_folder(input_folder, output_folder):
                     print(f"  All DataFrames from '{filename}' handled.")
                 elif not processed_data.empty:
                     # If it's a single DataFrame, append it
-                    list_of_all_processed_dataframes.append(processed_data)
+                    dataframes_prices.append(processed_data)
                     print(f"  Successfully processed '{filename}'. Data collected for combined output.")
                 else:
                     print(f"  Processed '{filename}' resulted in an empty DataFrame. Not added to combined output.")
@@ -848,8 +854,11 @@ def process_excel_files_in_folder(input_folder, output_folder):
                  print(f"  Processing of '{filename}' failed or returned None. Not added to combined output.")
 
     print(f"--- Finished processing files in '{input_folder}' ---")
-
+    dataframe_registers = None
+    
+    dataframe_registers = registers_telematic_count.process_excel_files_in_folder(input_folder)
+    
     # Save all collected DataFrames to a single Excel sheet
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_excel_filename = f"data_consolidada_telematica_{timestamp}.xlsx"
-    save_combined_data_to_single_excel_sheet(list_of_all_processed_dataframes, output_folder, output_excel_filename)
+    save_combined_data_to_single_excel_sheet(dataframes_prices, dataframe_registers, output_folder, output_excel_filename)

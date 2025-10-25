@@ -10,7 +10,7 @@ import webbrowser
 import pandas as pd
 import shutil
 import cloud.insert_firebase
-import cloud.conversion_csv_to_json
+import cloud.conversion_schema_claro_to_json
 import gui.insignias
 import gui.payments
 import gui.ranking_read
@@ -23,8 +23,7 @@ import gui.no_managment
 import gui.read_files_sms
 import gui.read_task_web
 import gui.union_bot
-import gui.price_campaigns
-import gui.registers_telematic
+import gui.price_telematic
 import gui.structure_files
 import gui.union_demo
 import gui.conversion_csv
@@ -1457,7 +1456,7 @@ class Init_APP():
             Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa la carpeta.")
             Mbox_In_Process.exec()
             
-            self.Base = gui.price_campaigns.process_excel_files_in_folder(self.folder_path_IVR, self.folder_path)
+            self.Base = gui.price_telematic.process_excel_files_in_folder(self.folder_path_IVR, self.folder_path)
             
             Mbox_In_Process = QMessageBox() 
             Mbox_In_Process.setWindowTitle("")
@@ -1517,7 +1516,7 @@ class Init_APP():
             Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa la carpeta.")
             Mbox_In_Process.exec()
             
-            self.Base = cloud.conversion_csv_to_json.convert_csv_folder_to_json(self.folder_path_IVR, self.folder_path)
+            self.Base = cloud.conversion_schema_claro_to_json.convert_csv_folder_to_json(self.folder_path_IVR, self.folder_path)
             
             Mbox_In_Process = QMessageBox() 
             Mbox_In_Process.setWindowTitle("")

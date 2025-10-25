@@ -616,7 +616,7 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
     return wisebot_grouped_df
 
 # --- Modified Save Function to unify columns, filter aggregated, and unify grouping concepts ---
-def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, output_filename="consolidated_data.xlsx"):
+def data_to_single_dataframe(list_of_dataframes):
     """
     Combines a list of DataFrames into a single DataFrame using an outer join
     and saves it to one sheet in an Excel file.
@@ -773,19 +773,10 @@ def save_combined_data_to_single_excel_sheet(list_of_dataframes, output_folder, 
     else:
         print("Warning: 'marca_agrupada_campana' column not found for final concept unification.")
 
-    os.makedirs(output_folder, exist_ok=True) # Ensure output folder exists
-    output_filepath = os.path.join(output_folder, output_filename)
-
-    try:
-        # Save the combined DataFrame to a single sheet named 'Data Faturada'
-        with pd.ExcelWriter(output_filepath, engine='openpyxl') as writer:
-            combined_df.to_excel(writer, sheet_name='Data Faturada', index=False)
-        print(f"\nAll combined filtered, unified, and re-grouped data saved to a single Excel sheet: '{output_filepath}'")
-    except Exception as e:
-        print(f"Error saving combined processed data to Excel: {e}")
+    return combined_df
     
 # --- Step 5: Main Orchestration Function (Corrected) ---
-def process_excel_files_in_folder(input_folder, output_folder):
+def process_excel_files_in_folder(input_folder):
     """
     Iterates through Excel files in an input folder, classifies them,
     applies the corresponding processing function, and collects results
@@ -858,6 +849,4 @@ def process_excel_files_in_folder(input_folder, output_folder):
     print(f"--- Finished processing files in '{input_folder}' ---")
 
     # Save all collected DataFrames to a single Excel sheet
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_excel_filename = f"data_consolidada_telematica_{timestamp}.xlsx"
-    save_combined_data_to_single_excel_sheet(list_of_all_processed_dataframes, output_folder, output_excel_filename)
+    data_to_single_dataframe(list_of_all_processed_dataframes)
