@@ -533,6 +533,13 @@ class Charge_DB(QtWidgets.QMainWindow):
             field_activate.is_not_null()
         )
         
+        Data_Root = Data_Root.with_columns(
+            # 1. Remove non-numeric characters (equivalent to regexp_replace("Valor Scoring", "[^0-9]", ""))
+            col("Valor Scoring")
+            .str.replace_all(r"[^0-9]", "", literal=False) # literal=False for regex
+            .alias("Valor Scoring")
+        )
+        
         name = "Cargue" 
         origin = "Multiorigen"
         self.Save_File(Data_Root, root, partitions, name, origin, Time_File)

@@ -1,5 +1,5 @@
 import pandas as pd
-import registers_telematic_count
+from gui import registers_telematic
 import numpy as np
 import os
 from datetime import datetime
@@ -856,7 +856,7 @@ def process_excel_files_in_folder(input_folder, output_folder):
     print(f"--- Finished processing files in '{input_folder}' ---")
     dataframe_registers = None
     
-    dataframe_registers = registers_telematic_count.process_excel_files_in_folder(input_folder)
+    dataframe_registers = registers_telematic.process_excel_files_in_folder(input_folder)
     
     # Save all collected DataFrames to a single Excel sheet
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
