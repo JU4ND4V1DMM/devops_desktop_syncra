@@ -11,6 +11,7 @@ import pandas as pd
 import shutil
 import cloud.insert_firebase
 import cloud.conversion_csv_to_json
+import cloud.conversion_csv_to_parquet
 import gui.insignias
 import gui.payments
 import gui.ranking_read
@@ -233,6 +234,7 @@ class Init_APP():
         self.process_data.pushButton_24.clicked.connect(self.folder_files_process_telematic)
         self.process_data.pushButton_21.clicked.connect(self.folder_files_xlsx_to_csv)
         self.process_data.pushButton_27.clicked.connect(self.folder_files_csv_to_json)
+        self.process_data.pushButton_54.clicked.connect(self.folder_files_csv_to_parquet)
         self.process_data.pushButton_22.clicked.connect(self.folder_files_cruice_batch_claro)
         
         self.process_data.commandLinkButton_20.clicked.connect(self.folder_union_excel)
@@ -1517,6 +1519,36 @@ class Init_APP():
             Mbox_In_Process.exec()
             
             self.Base = cloud.conversion_csv_to_json.convert_csv_folder_to_json(self.folder_path_IVR, self.folder_path)
+            
+            Mbox_In_Process = QMessageBox() 
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Procesamiento de conversion ejecutado exitosamente.")
+            Mbox_In_Process.exec()
+        
+        else:
+            Mbox_File_Error = QMessageBox()
+            Mbox_File_Error.setWindowTitle("Error de procesamiento")
+            Mbox_File_Error.setIcon(QMessageBox.Icon.Warning)
+            Mbox_File_Error.setText("Debe seleccionar una ruta con los archivos a procesar.")
+            Mbox_File_Error.exec()
+            
+    def folder_files_csv_to_parquet(self):
+
+        type_process = "folder"
+        
+        self.validation_data_folders(type_process)
+        self.digit_partitions_FOLDER()
+
+        if self.folder_path_IVR != None:
+
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Procesando")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa la carpeta.")
+            Mbox_In_Process.exec()
+            
+            self.Base = cloud.conversion_csv_to_parquet.convert_csv_to_parquet(self.folder_path_IVR, self.folder_path)
             
             Mbox_In_Process = QMessageBox() 
             Mbox_In_Process.setWindowTitle("")

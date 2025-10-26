@@ -143,6 +143,39 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.setText("Proceso de valdiación de líneas ejecutado exitosamente.")
         Mbox_In_Process.exec()
     
+    def read_file(self, file_path):
+        
+        schema_override_map = {
+            '4_': pl.Utf8,
+            '20_': pl.Utf8,
+            '27_': pl.Utf8,
+            '36_': pl.Utf8,    
+            '38_': pl.Utf8,    
+            '39_': pl.Utf8,    
+            '51_': pl.Utf8,    
+            '52_': pl.Utf8,    
+            '57_': pl.Utf8,
+        }
+        
+        # --- Data Ingestion (Read as Utf8 for Cleaning) ---
+        # Equivalent to spark.read.csv(path, header= True, sep=";")
+        Data_Root: pl.DataFrame = pl.read_csv(
+            file_path, 
+            has_header=True, 
+            separator=";", 
+            infer_schema_length=10000, 
+            encoding='latin1', # Fixes UTF-8 errors
+            schema_overrides=schema_override_map # Forces problematic columns to string
+        ) 
+        
+        values = ["RR", "ASCARD", "BSCS", "SGA"]
+        
+        Data_Root = Data_Root.filter(
+            col('3_').is_not_null() & col('3_').is_in(values)
+        )
+                
+        return Data_Root
+    
     def Update_BD_ControlNext(self, Data_Root: pl.DataFrame) -> pl.DataFrame:
     
         # --- [AccountAccountCode?] updates ---
@@ -321,25 +354,8 @@ class Charge_DB(QtWidgets.QMainWindow):
         # 1. Schema Override Configuration for INGESTION
         # Columns that contain '.' as thousand separators must be read as strings (Utf8)
         # to prevent parsing errors (ComputeError) during the initial file load.
-        schema_override_map = {
-            '27_': pl.Utf8,
-            '36_': pl.Utf8,    
-            '39_': pl.Utf8,    
-            '51_': pl.Utf8,    
-            '52_': pl.Utf8,    
-            '57_': pl.Utf8,
-        }
         
-        # --- Data Ingestion (Read as Utf8 for Cleaning) ---
-        # Equivalent to spark.read.csv(path, header= True, sep=";")
-        Data_Root: pl.DataFrame = pl.read_csv(
-            self.file_path, 
-            has_header=True, 
-            separator=";", 
-            infer_schema_length=10000, 
-            encoding='latin1', # Fixes UTF-8 errors
-            schema_overrides=schema_override_map # Forces problematic columns to string
-        )
+        Data_Root = self.read_file(file)
 
         # 2. Cleanup Thousands Separators and Cast to Numeric Types
         # We use Polars expressions to clean the string data and convert it.
@@ -666,25 +682,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         # 1. Schema Override Configuration for INGESTION
         # Columns that contain '.' as thousand separators must be read as strings (Utf8)
         # to prevent parsing errors (ComputeError) during the initial file load.
-        schema_override_map = {
-            '27_': pl.Utf8,
-            '36_': pl.Utf8,    
-            '39_': pl.Utf8,    
-            '51_': pl.Utf8,    
-            '52_': pl.Utf8,    
-            '57_': pl.Utf8,
-        }
-        
-        # --- Data Ingestion (Read as Utf8 for Cleaning) ---
-        # Equivalent to spark.read.csv(path, header= True, sep=";")
-        Data_Root: pl.DataFrame = pl.read_csv(
-            path, 
-            has_header=True, 
-            separator=";", 
-            infer_schema_length=10000, 
-            encoding='latin1', # Fixes UTF-8 errors
-            schema_overrides=schema_override_map # Forces problematic columns to string
-        )
+        Data_Root = self.read_file(path)
 
         # 2. Cleanup Thousands Separators and Cast to Numeric Types
         # We use Polars expressions to clean the string data and convert it.
