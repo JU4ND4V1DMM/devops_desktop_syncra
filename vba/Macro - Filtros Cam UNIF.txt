@@ -27,10 +27,16 @@ Sub Process_Complete()
     Call Headers
     Call Dates
     Call ActiveLines
+    
+    Application.Wait (Now + TimeValue("00:00:05"))
     Call AdjustMonitor
+    
+    Application.Wait (Now + TimeValue("00:00:05"))
     Call AdjustValorScoring
     Call Cutter
     Call DeleteColumnsAYtoBC
+    
+    Application.Wait (Now + TimeValue("00:00:05"))
     Call FinalHeaders
     Call CorrectionMonitor
     Range("A2").Select

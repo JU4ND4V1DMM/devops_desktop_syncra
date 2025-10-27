@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import modules.report_exclusions
 from gui.dynamic_thread import DynamicThread
 import utils.active_lines
@@ -84,6 +85,7 @@ class Charge_DB(QtWidgets.QMainWindow):
 
         try:
             self.BD_Control_Next()
+            self.convert_csv_to_parquet()
             
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -109,6 +111,7 @@ class Charge_DB(QtWidgets.QMainWindow):
 
         try:
             self.DB_Create()
+            self.convert_csv_to_parquet()
             
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -1155,3 +1158,58 @@ class Charge_DB(QtWidgets.QMainWindow):
         except Exception as e:
             print(f"Error during partitioning: {e}")
             return None
+
+    def convert_csv_to_parquet(self):
+        """
+        Minimalist CSV to Parquet converter with encoding detection.
+        Converts a single CSV file to Parquet in the same location.
+        """
+        file = self.file_path
+        root = self.folder_path
+        
+        separator = ";"
+        
+        # If no output path is provided, use the same directory as input
+        if root is None:
+            root = Path(file).parent
+
+        root = Path(root)
+
+        # Generate output filename with date
+        output_filename = f"Conversion_{datetime.now().strftime('%Y%m%d')}.parquet"
+        output_file = root / output_filename
+
+        print(f"🔄 Converting: {file} -> {output_file}")
+        
+        try:
+            # Try different encodings
+            encodings = ['utf-8', 'latin1', 'iso-8859-1', 'windows-1252']
+            df = None
+            
+            for encoding in encodings:
+                try:
+                    df = pl.read_csv(
+                        file, 
+                        separator=separator,
+                        truncate_ragged_lines=True,
+                        ignore_errors=True,
+                        infer_schema_length=100000,
+                        encoding=encoding
+                    )
+                    print(f"✅ Successfully read with encoding: {encoding}")
+                    break
+                except Exception as e:
+                    print(f"❌ Failed with encoding {encoding}: {e}")
+                    continue
+            
+            if df is None:
+                print(f"❌ Could not read {file} with any encoding")
+                return
+                
+            # Write parquet file
+            df.write_parquet(output_file)
+            print(f"✅ Conversion completed: {len(df):,} rows, {len(df.columns)} cols")
+            print(f"📁 Output: {output_file}")
+            
+        except Exception as e:
+            print(f"❌ Error processing {file}: {e}")
