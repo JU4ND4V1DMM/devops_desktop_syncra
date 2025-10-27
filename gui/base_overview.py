@@ -82,13 +82,22 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa el archivo.")
         Mbox_In_Process.exec()
 
-        self.BD_Control_Next()
-        
-        Mbox_In_Process = QMessageBox()
-        Mbox_In_Process.setWindowTitle("")
-        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-        Mbox_In_Process.setText("Proceso de creación ejecutado exitosamente.")
-        Mbox_In_Process.exec()
+        try:
+            self.BD_Control_Next()
+            
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Proceso de creación ejecutado exitosamente.")
+            Mbox_In_Process.exec()
+            
+        except Exception as e:
+            
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Error")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Critical)
+            Mbox_In_Process.setText(f"Se ha presentado un error durante el proceso: {e}")
+            Mbox_In_Process.exec()
         
     def generate_DB(self):
 
@@ -98,13 +107,22 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa el archivo.")
         Mbox_In_Process.exec()
 
-        self.DB_Create()
+        try:
+            self.DB_Create()
+            
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Proceso de creación ejecutado exitosamente.")
+            Mbox_In_Process.exec()
         
-        Mbox_In_Process = QMessageBox()
-        Mbox_In_Process.setWindowTitle("")
-        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-        Mbox_In_Process.setText("Proceso de creación ejecutado exitosamente.")
-        Mbox_In_Process.exec()
+        except Exception as e:
+            
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Error")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Critical)
+            Mbox_In_Process.setText(f"Se ha presentado un error durante el proceso: {e}")
+            Mbox_In_Process.exec()
 
     def Partitions_Data_Base(self):
 
@@ -134,14 +152,23 @@ class Charge_DB(QtWidgets.QMainWindow):
         Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
         Mbox_In_Process.setText("Por favor espere la ventana de confirmación, mientras se procesa el archivo.")
         Mbox_In_Process.exec()
-
-        utils.active_lines.Function_Complete(path, output_directory, partitions)
         
-        Mbox_In_Process = QMessageBox()
-        Mbox_In_Process.setWindowTitle("")
-        Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
-        Mbox_In_Process.setText("Proceso de valdiación de líneas ejecutado exitosamente.")
-        Mbox_In_Process.exec()
+        try:
+            
+            utils.active_lines.Function_Complete(path, output_directory, partitions)
+            
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Information)
+            Mbox_In_Process.setText("Proceso de valdiación de líneas ejecutado exitosamente.")
+            Mbox_In_Process.exec()
+        except Exception as e:
+            
+            Mbox_In_Process = QMessageBox()
+            Mbox_In_Process.setWindowTitle("Error")
+            Mbox_In_Process.setIcon(QMessageBox.Icon.Critical)
+            Mbox_In_Process.setText(f"Se ha presentado un error durante el proceso: {e}")
+            Mbox_In_Process.exec()
     
     def read_file(self, file_path):
         
