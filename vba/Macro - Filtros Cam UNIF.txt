@@ -1,135 +1,80 @@
 Sub Process_Complete()
-'
-' Proceso Diario Para Carga en Next
-' PASO A PASO (F8) - COMPLETO (F5)
-
-'
-    
+' Daily Process For Load In Next
+' STEP BY STEP (F8) - COMPLETE (F5)
     Call RenameActiveSheet
     Call Titles
-
     Do
         On Error Resume Next
-        Call Update_Line_Q      'Llamado a una ordenaciï¿½n de la columna con valores ACTIVADA y DESACTIVADA
-        Call Filter_Q           'Delimitador de las celdas con valores separados por ; en la columna de direcciï¿½n completa
-        
+        Call Update_Line_Q      'Call to a sort of the column with values ACTIVATED and DEACTIVATED
+        Call Filter_Q           'Delimiter for cells with values separated by ; in the full address column
         If Err.Number <> 0 Then
-            Err.Clear  ' Limpiar el error
-            Exit Do    ' Salir del bucle si hay un error
+            Err.Clear
+            Exit Do
         End If
-        On Error GoTo 0  ' Restablecer el manejo de errores
+        On Error GoTo 0
     Loop
-
-
     Do
         On Error Resume Next
-        Call Update_Line_AO      'Llamado a una ordenaciï¿½n de la columna con valores ACTIVADA y DESACTIVADA
-        Call Filter_AO           'Delimitador de las celdas con valores separados por ; en la columna de direcciï¿½n completa
-        
+        Call Update_Line_AO      'Call to a sort of the column with values ACTIVATED and DEACTIVATED
+        Call Filter_AO           'Delimiter for cells with values separated by ; in the full address column
         If Err.Number <> 0 Then
-            Err.Clear  ' Limpiar el error
-            Exit Do    ' Salir del bucle si hay un error
+            Err.Clear
+            Exit Do
         End If
-        On Error GoTo 0  ' Restablecer el manejo de errores
+        On Error GoTo 0
     Loop
- 
     Call Update
     Call Headers
     Call Dates
-    
     Call ActiveLines
     Call AdjustMonitor
     Call AdjustValorScoring
-    
     Call Cutter
     Call DeleteColumnsAYtoBC
     Call FinalHeaders
-    
     Call CorrectionMonitor
-    
     Range("A2").Select
-    
-    MsgBox "Macro ejecutada exitosamente."
-    
+    MsgBox "Macro executed successfully."
 End Sub
 Sub CorrectionMonitor()
-
-    ' --- 1. CONFIGURACIÓN INICIAL ---
+    ' --- 1. INITIAL CONFIGURATION ---
     Dim ws As Worksheet
     Dim lastRow As Long
     Dim rngProcesar As Range
     Dim i As Long
-    
-    ' Definimos la hoja de trabajo. Cambia "NombreDeTuHoja" si es necesario.
-    ' O usa ActiveSheet si la macro siempre se ejecuta en la hoja activa.
     Set ws = ThisWorkbook.ActiveSheet
-    
-    ' Desactivar actualizaciones de pantalla para mayor velocidad
     Application.ScreenUpdating = False
-    
-    ' Encontrar la última fila con datos en la columna BD (columna 56)
     lastRow = ws.Cells(ws.Rows.Count, "BD").End(xlUp).Row
-    
-    ' Si no hay datos (o solo encabezado), no hacer nada
     If lastRow <= 1 Then
-        MsgBox "No hay datos para procesar en la columna BD.", vbInformation
+        MsgBox "No data to process in column BD.", vbInformation
         Exit Sub
     End If
-    
-    ' Definir el rango a procesar (asumiendo que la fila 1 es encabezado)
     Set rngProcesar = ws.Range("BD2:BD" & lastRow)
-    
-    
-    ' --- 2. CONVERTIR FORMATOS ("DELIMITAR") ---
-    ' Esta es la forma más rápida de convertir texto a su formato correcto.
-    ' Simula "Datos" > "Texto en columnas" > "Delimitado" > "Finalizar".
+    ' --- 2. CONVERT FORMATS ("DELIMIT") ---
     rngProcesar.TextToColumns Destination:=ws.Range("BD2"), _
                                DataType:=xlDelimited, _
-                               FieldInfo:=Array(1, 1) ' 1 = Formato General (xlGeneralFormat)
-
-    
-    ' --- 3. ORDENAR LA COLUMNA PARA OPTIMIZAR ---
-    ' Ordenamos todo el rango de datos de la hoja basándonos en la columna BD.
-    ' Esto agrupa las fechas juntas para que el bucle sea más rápido.
+                               FieldInfo:=Array(1, 1)
+    ' --- 3. SORT THE COLUMN TO OPTIMIZE ---
     ws.Range("A1:BI" & lastRow).Sort Key1:=ws.Range("BD1"), _
                                      Order1:=xlAscending, _
                                      Header:=xlYes
-                                     
-    ' Volvemos a calcular la última fila por si el orden cambió el rango
     lastRow = ws.Cells(ws.Rows.Count, "BD").End(xlUp).Row
-    
-    
-    ' --- 4. RECORRER, VALIDAR Y MOVER FECHAS ---
-    For i = 2 To lastRow ' Bucle desde la fila 2 hasta la última con datos
-        
-        ' Usamos la función IsDate() que es la más fiable para identificar una fecha real
+    ' --- 4. LOOP, VALIDATE AND MOVE DATES ---
+    For i = 2 To lastRow
         If IsDate(ws.Cells(i, "BD").Value) Then
-            ' Si es una fecha, la movemos a la columna BI (columna 61)
             ws.Cells(i, "BI").Value = ws.Cells(i, "BD").Value
-            
-            ' Opcional: Limpiar la celda original en BD
             ws.Cells(i, "BD").ClearContents
         Else
-            ' Si NO es una fecha, gracias al ordenamiento, sabemos que no habrá más.
-            ' Rompemos el bucle para no seguir revisando innecesariamente.
             Exit For
         End If
-        
     Next i
-    
-    ' Reactivar actualizaciones de pantalla
     Application.ScreenUpdating = True
-
 End Sub
 Sub DeleteColumnsAYtoBC()
-    
-    ' Elimina las columnas desde AY hasta BC.
     Columns("AY:BC").Delete
     Columns("BJ").Delete
-    
 End Sub
 Sub Cutter()
-
     Columns("BD:BJ").Select
     Range("BJ1").Activate
     Selection.Cut
@@ -137,17 +82,10 @@ Sub Cutter()
     Selection.End(xlToRight).Select
     Selection.Insert Shift:=xlToRight
     Range("BI1").Select
-    
-
 End Sub
 Sub AdjustValorScoring()
-
     Dim lastRow As Long
-
-    ' Selecciona la columna AY para ordenarla
     Range("AZ1").Select
-
-    ' Ordena los datos de la hoja por la columna AY (Monitor) de forma ascendente
     ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").AutoFilter.Sort. _
         SortFields.Clear
     ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").AutoFilter.Sort. _
@@ -161,29 +99,16 @@ Sub AdjustValorScoring()
         .SortMethod = xlPinYin
         .Apply
     End With
-
-    ' Encuentra la última fila con datos en la columna AY
     lastRow = ActiveSheet.Cells(Rows.Count, "AZ").End(xlUp).Row
-
-    ' Selecciona y corta el rango dinámico desde AY2 hasta la última fila encontrada,
-    ' y hasta la columna BD
     Range("AZ2:BD" & lastRow).Select
     Selection.Cut
-
-    ' Desplaza la vista de la ventana y pega los datos en BD2
     ActiveWindow.SmallScroll Down:=-72
     Range("BE2").Select
     ActiveSheet.Paste
-
 End Sub
 Sub AdjustMonitor()
-
     Dim lastRow As Long
-
-    ' Selecciona la columna AY para ordenarla
     Range("AY1").Select
-
-    ' Ordena los datos de la hoja por la columna AY (Monitor) de forma ascendente
     ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").AutoFilter.Sort. _
         SortFields.Clear
     ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").AutoFilter.Sort. _
@@ -197,23 +122,14 @@ Sub AdjustMonitor()
         .SortMethod = xlPinYin
         .Apply
     End With
-
-    ' Encuentra la última fila con datos en la columna AY
     lastRow = ActiveSheet.Cells(Rows.Count, "AY").End(xlUp).Row
-
-    ' Selecciona y corta el rango dinámico desde AY2 hasta la última fila encontrada,
-    ' y hasta la columna BD
     Range("AY2:BD" & lastRow).Select
     Selection.Cut
-
-    ' Desplaza la vista de la ventana y pega los datos en BD2
     ActiveWindow.SmallScroll Down:=-72
     Range("BD2").Select
     ActiveSheet.Paste
-
 End Sub
 Sub ActiveLines()
-
     Range("BK2").Select
     Range(Selection, ActiveCell.SpecialCells(xlLastCell)).Select
     Range("BK2:BK1048576").Select
@@ -222,105 +138,86 @@ Sub ActiveLines()
         Semicolon:=False, Comma:=True, Space:=False, Other:=False, FieldInfo _
         :=Array(1, 1), TrailingMinusNumbers:=True
     Range("BK1").Select
-
 End Sub
-
 Sub Titles()
-
     Dim specificValue As String
     Dim specificValue2 As String
     specificValue = "Hola"
     specificValue2 = "CRM Origen"
-    
-    ' Si el valor de A1 es igual a specificValue2, eliminamos la fila 1
     If Range("C1").Value = specificValue2 Then
         Rows("1:1").Delete
     End If
-    
-    ' Si el valor de A1 no es specificValue, insertamos la fila y colocamos los títulos
     If Range("A1").Value <> specificValue Then
-    
         Rows("1:1").Select
         Selection.Insert Shift:=xlDown
         Range("A1").Select
-        
-        Range("A1").Value = "Número de Cliente"
+        Range("A1").Value = "Client Number"
         Range("B1").Value = "[Account.AccountCode?]"
-        Range("C1").Value = "CRM Origen"
-        Range("D1").Value = "Edad de Deuda"
+        Range("C1").Value = "CRM Origin"
+        Range("D1").Value = "Debt Age"
         Range("E1").Value = "[PotencialMark?]"
         Range("F1").Value = "[PrePotencialMark?]"
         Range("G1").Value = "[WriteOffMark?]"
-        Range("H1").Value = "Monto inicial"
+        Range("H1").Value = "Initial Amount"
         Range("I1").Value = "[ModInitCta?]"
         Range("J1").Value = "[DeudaRealCuenta?]"
         Range("K1").Value = "[BillCycleName?]"
-        Range("L1").Value = "Nombre Campaña"
+        Range("L1").Value = "Campaign Name"
         Range("M1").Value = "[DebtAgeInicial?]"
-        Range("N1").Value = "Nombre Casa de Cobro"
-        Range("O1").Value = "Fecha de Asignacion"
-        Range("P1").Value = "Deuda Gestionable"
-        Range("Q1").Value = "Dirección Completa"
-        Range("R1").Value = "Fecha Final "
-        Range("S1").Value = "Segmento"
-        Range("T1").Value = "[Documento?]"
+        Range("N1").Value = "Collection Agency"
+        Range("O1").Value = "Assignment Date"
+        Range("P1").Value = "Manageable Debt"
+        Range("Q1").Value = "Full Address"
+        Range("R1").Value = "End Date "
+        Range("S1").Value = "Segment"
+        Range("T1").Value = "[Document?]"
         Range("U1").Value = "[AccStsName?]"
-        Range("V1").Value = "Ciudad"
+        Range("V1").Value = "City"
         Range("W1").Value = "[InboxName?]"
-        Range("X1").Value = "Nombre del Cliente"
-        Range("Y1").Value = "Id de Ejecucion"
-        Range("Z1").Value = "Fecha de Vencimiento"
-        
-        Range("AA1").Value = "Numero Referencia de Pago"
+        Range("X1").Value = "Client Name"
+        Range("Y1").Value = "Execution ID"
+        Range("Z1").Value = "Due Date"
+        Range("AA1").Value = "Payment Reference Number"
         Range("AB1").Value = "MIN"
         Range("AC1").Value = "Plan"
-        Range("AD1").Value = "Cuotas Aceleradas"
-        Range("AE1").Value = "Fecha de Aceleracion"
-        Range("AF1").Value = "Valor Acelerado"
-        Range("AG1").Value = "Intereses ContingenteS"
-        Range("AH1").Value = "Intereses Corrientes Facturados"
-        Range("AI1").Value = "Intereses por mora facturados"
-        Range("AJ1").Value = "Iva Intereses Contigentes Facturado" ' Anteriormente AK1
-        Range("AK1").Value = "Iva Intereses Corrientes Facturados" ' Anteriormente AL1
-        Range("AL1").Value = "Iva Intereses por Mora Facturado" ' Anteriormente AM1
-        Range("AM1").Value = "Precio Subscripcion" ' Anteriormente AN1
-        Range("AN1").Value = "Código de proceso" ' Anteriormente AO1
-        Range("AO1").Value = "[CustomerTypeId?]" ' Anteriormente AP1
-        Range("AP1").Value = "[RefinanciedMark?]" ' Anteriormente AQ1
-        Range("AQ1").Value = "[Discount?]" ' Anteriormente AR1
-        Range("AR1").Value = "[Permanencia?]" ' Anteriormente AS1
-        Range("AS1").Value = "[DeudaSinPermanencia?]" ' Anteriormente AT1
-        Range("AT1").Value = "Telefono 1" ' Anteriormente AU1
-        Range("AU1").Value = "Telefono 2" ' Anteriormente AV1
-        Range("AV1").Value = "Telefono 3" ' Anteriormente AW1
-        Range("AW1").Value = "Telefono 4" ' Anteriormente AX1
-        Range("AX1").Value = "Email" ' Anteriormente AY1
-        
-        Range("AY1").Value = "[ActivesLines]" ' Anteriormente AZ1
-        Columns("AZ:BD").Insert Shift:=xlToRight ' Se ajustó el rango de columnas a insertar
-        Range("AZ1").Value = "[ActivesLines2]" ' Anteriormente BA1
-        Range("BA1").Value = "[ActivesLines3]" ' Anteriormente BB1
-        Range("BB1").Value = "[ActivesLines4]" ' Anteriormente BC1
-        Range("BC1").Value = "[ActivesLines5]" ' Anteriormente BD1
-        Range("BD1").Value = "[ActivesLines6]" ' Anteriormente BE1
-        Range("BE1").Value = "[ActivesLines7]" ' Anteriormente BF1
-        
-        Range("BF1").Value = "Monitor" ' Anteriormente BG1
-        Range("BG1").Value = "Valor Scorint" ' Anteriormente BH1
-        Range("BH1").Value = "Cuotas Pactadas"
-        Range("BI1").Value = "Cuotas Pendientes"
-        Range("BJ1").Value = "Fecha Digitacion Activacion"
-        
-        
+        Range("AD1").Value = "Accelerated Installments"
+        Range("AE1").Value = "Acceleration Date"
+        Range("AF1").Value = "Accelerated Value"
+        Range("AG1").Value = "Contingent Interests"
+        Range("AH1").Value = "Current Billed Interests"
+        Range("AI1").Value = "Late Payment Interests"
+        Range("AJ1").Value = "VAT Contingent Interests"
+        Range("AK1").Value = "VAT Current Interests"
+        Range("AL1").Value = "VAT Late Interests"
+        Range("AM1").Value = "Subscription Price"
+        Range("AN1").Value = "Process Code"
+        Range("AO1").Value = "[CustomerTypeId?]"
+        Range("AP1").Value = "[RefinanciedMark?]"
+        Range("AQ1").Value = "[Discount?]"
+        Range("AR1").Value = "[Permanencia?]"
+        Range("AS1").Value = "[DeudaSinPermanencia?]"
+        Range("AT1").Value = "Phone 1"
+        Range("AU1").Value = "Phone 2"
+        Range("AV1").Value = "Phone 3"
+        Range("AW1").Value = "Phone 4"
+        Range("AX1").Value = "Email"
+        Range("AY1").Value = "[ActivesLines]"
+        Columns("AZ:BD").Insert Shift:=xlToRight
+        Range("AZ1").Value = "[ActivesLines2]"
+        Range("BA1").Value = "[ActivesLines3]"
+        Range("BB1").Value = "[ActivesLines4]"
+        Range("BC1").Value = "[ActivesLines5]"
+        Range("BD1").Value = "[ActivesLines6]"
+        Range("BE1").Value = "[ActivesLines7]"
+        Range("BF1").Value = "Monitor"
+        Range("BG1").Value = "Scoring Value"
+        Range("BH1").Value = "Agreed Installments"
+        Range("BI1").Value = "Pending Installments"
+        Range("BJ1").Value = "Activation Entry Date"
     End If
 End Sub
-
 Sub Update_Line_Q()
-'
-' Ordenaciï¿½n de la columna seleccionada
-'
-'
-    Columns("U:U").Select   'Selecciï¿½n de columna [AccStsName?]
+    Columns("U:U").Select
     ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").Sort.SortFields. _
         Clear
     ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").Sort.SortFields. _
@@ -334,17 +231,9 @@ Sub Update_Line_Q()
         .SortMethod = xlPinYin
         .Apply
     End With
-    
-    'Ordenaciï¿½n completada
-    
 End Sub
-
 Sub Update_Line_AO()
-'
-' Ordenaciï¿½n de la columna seleccionada
-'
-'
-    Range("AO1").Select                      'Selecciï¿½n del inicio de pila de la columna de referencia
+    Range("AO1").Select
     Selection.AutoFilter
     ActiveWorkbook.Worksheets("CAM - UNIF REPORTE MULTICAMPAÑA").Sort.SortFields. _
         Clear
@@ -359,23 +248,12 @@ Sub Update_Line_AO()
         .SortMethod = xlPinYin
         .Apply
     End With
-    
-    'Ordenaciï¿½n completada
-    
 End Sub
-
 Sub Filter_Q()
-
-'
-' Delimtador de columna por signo de ;
-'
-'
-    Range("R1").Select                      'Selecciï¿½n del inicio de pila de la columna de referencia
-    Selection.End(xlDown).Select            'Redirecciï¿½n de posiciï¿½n hasta la cola de la pila
+    Range("R1").Select
+    Selection.End(xlDown).Select
     ActiveCell.Offset(1, 0).Select
     ActiveCell.Offset(0, -1).Select
-    'Redirecciï¿½n de pocisiï¿½n de acuerdo a los dos pasos que anteceden
-    
     Range(Selection, Selection.End(xlDown)).Select
     Selection.TextToColumns Destination:=ActiveCell, DataType:= _
         xlDelimited, TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, _
@@ -387,25 +265,15 @@ Sub Filter_Q()
         Array(26, 1), Array(27, 1), Array(28, 1), Array(29, 1), Array(30, 1), Array(31, 1), Array( _
         32, 1), Array(33, 1), Array(34, 1), Array(35, 1), Array(36, 1), Array(37, 1)), _
         TrailingMinusNumbers:=True
-    
-    'Cï¿½digo para delimitar celdas faltantes
-    'IMPORTANTE: No se ha configurado para aceptar el mensaje de reemplazar valores
-    'Macro se corre paso a paso, aï¿½n no se puede ejecutar de corrido
-    
+    'Code to delimit missing cells
+    'IMPORTANT: Not configured to accept the replace message
+    'Macro runs step by step, cannot run fully unattended yet
 End Sub
-
 Sub Filter_AO()
-
-'
-' Delimtador de columna por signo de ;
-'
-'
-    Range("AO1").Select                      'Selecciï¿½n del inicio de pila de la columna de referencia
-    Selection.End(xlDown).Select            'Redirecciï¿½n de posiciï¿½n hasta la cola de la pila
+    Range("AO1").Select
+    Selection.End(xlDown).Select
     ActiveCell.Offset(1, 0).Select
     ActiveCell.Offset(0, -1).Select
-    'Redirecciï¿½n de pocisiï¿½n de acuerdo a los dos pasos que anteceden
-    
     Range(Selection, Selection.End(xlDown)).Select
     Selection.TextToColumns Destination:=ActiveCell, DataType:= _
         xlDelimited, TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, _
@@ -417,18 +285,11 @@ Sub Filter_AO()
         Array(26, 1), Array(27, 1), Array(28, 1), Array(29, 1), Array(30, 1), Array(31, 1), Array( _
         32, 1), Array(33, 1), Array(34, 1), Array(35, 1), Array(36, 1), Array(37, 1)), _
         TrailingMinusNumbers:=True
-    
-    'Cï¿½digo para delimitar celdas faltantes
-    'IMPORTANTE: No se ha configurado para aceptar el mensaje de reemplazar valores
-    'Macro se corre paso a paso, aï¿½n no se puede ejecutar de corrido
-    
+    'Code to delimit missing cells
+    'IMPORTANT: Not configured to accept the replace message
+    'Macro runs step by step, cannot run fully unattended yet
 End Sub
 Sub Update()
-'
-' Update Macro
-'
-
-'
     Range("AZ1").Select
     Range(Selection, Selection.End(xlToRight)).Select
     Columns("AZ:BJ").Select
@@ -436,9 +297,6 @@ Sub Update()
     Range("AY1").Select
     Selection.Insert Shift:=xlToRight
     Range("BJ1").Select
-
-' Cutting cells
-
     Rows("1:1").Select
     Selection.Insert Shift:=xlDown
     Rows("2:2").Select
@@ -457,46 +315,27 @@ Sub Update()
         Semicolon:=False, Comma:=True, Space:=False, Other:=False, FieldInfo _
         :=Array(1, 2), TrailingMinusNumbers:=True
     Range("BJ1").Select
-    
 End Sub
 Sub Headers()
-'
-' Headers Macro
-'
-
-'
     Dim i As Integer
     Range("A1").Select
     For i = 1 To 68
         Cells(1, i).FormulaR1C1 = i & "_"
     Next i
     Range("BP1").Select
-
 End Sub
-
 Sub FinalHeaders()
-'
-' Headers Macro
-'
-
-'
     Dim i As Integer
     Range("A1").Select
     For i = 1 To 62
         Cells(1, i).FormulaR1C1 = i & "_"
     Next i
-
 End Sub
-
 Sub RenameActiveSheet()
-    
     Dim newName As String
     newName = "CAM - UNIF REPORTE MULTICAMPAÑA"
-    
     ActiveSheet.Name = newName
-    
 End Sub
-
 Sub Dates()
     Range("A1").Select
     Selection.End(xlToRight).Select
@@ -509,44 +348,31 @@ Sub Dates()
     Call Segment_Type
     Call DatesDelete
 End Sub
-
 Sub Segment_Type()
-    ' Primer bucle Do: Procesar filas en las que el valor de AD es numérico entre 80 y 89
     Do
         Range("AO2").Select
         Selection.End(xlDown).Select
         ActiveCell.Offset(1, 0).Select
-        
         If IsNumeric(Cells(ActiveCell.Row, "AD").Value) And _
            Cells(ActiveCell.Row, "AD").Value >= 80 And _
            Cells(ActiveCell.Row, "AD").Value <= 89 Then
-           
-            ' Cortar desde la columna R hasta AN de la fila actual y pegarlo en AD (hasta AZ)
             Range("R" & ActiveCell.Row & ":AN" & ActiveCell.Row).Cut _
                 Destination:=Range("AD" & ActiveCell.Row)
-            
-            ' En la columna AZ: formatear como texto y agregar una coma al final
             Range("AZ" & ActiveCell.Row).NumberFormat = "@"
             With Cells(ActiveCell.Row, "AZ")
                 .Value = .Value & ","
                 .NumberFormat = "@"
             End With
-            
-            ' Delimitar el contenido de la celda AZ usando TextToColumns (delimitador: punto y coma)
             With Cells(ActiveCell.Row, "AZ")
                 .TextToColumns Destination:=.Cells(1, 1), DataType:=xlDelimited, _
                     TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, _
                     Tab:=False, Semicolon:=True, Comma:=False, Space:=False, Other:=False, _
                     FieldInfo:=Array(1, 1), TrailingMinusNumbers:=True
             End With
-            
-            ' En la columna Q: formatear como texto y agregar un punto y coma al final
             With Cells(ActiveCell.Row, "Q")
                 .Value = .Value & ";"
                 .NumberFormat = "@"
             End With
-            
-            ' Delimitar el contenido de la celda Q usando TextToColumns
             With Cells(ActiveCell.Row, "Q")
                 .TextToColumns Destination:=.Cells(1, 1), DataType:=xlDelimited, _
                     TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, _
@@ -554,29 +380,20 @@ Sub Segment_Type()
                     FieldInfo:=Array(1, 1), TrailingMinusNumbers:=True
             End With
         End If
-        
-        ' Salir del bucle si la celda en AD está vacía (no hay más datos)
         If IsEmpty(Cells(ActiveCell.Row, "AD").Value) Then
             Exit Do
         End If
-        
     Loop
-    
-    ' Segundo bucle Do: Procesar filas donde la celda en la columna A NO esté vacía
     Do
         Range("AO2").Select
         Selection.End(xlDown).Select
         ActiveCell.Offset(1, 0).Select
-        
         If Not IsEmpty(Cells(ActiveCell.Row, "A").Value) Then
-            ' Desplazarse hasta la celda más a la izquierda de la fila actual
             Selection.End(xlToLeft).Select
             With ActiveCell
                 .Value = .Value & ";"
                 .NumberFormat = "@"
             End With
-            
-            ' Delimitar el contenido de la celda activa usando TextToColumns
             With ActiveCell
                 .TextToColumns Destination:=.Cells(1, 1), DataType:=xlDelimited, _
                     TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, _
@@ -584,27 +401,20 @@ Sub Segment_Type()
                     FieldInfo:=Array(1, 1), TrailingMinusNumbers:=True
             End With
         End If
-        
-        ' Salir del bucle si la celda en A está vacía
         If IsEmpty(Cells(ActiveCell.Row, "A").Value) Then
             Exit Do
         End If
-        
     Loop
 End Sub
-
 Sub DatesDelete()
     Do
         Range("BP2").Select
         Selection.End(xlDown).Select
-        
         If IsEmpty(Cells(ActiveCell.Row, "A").Value) Then
             Cells(ActiveCell.Row, "BP").ClearContents
         End If
-        
         If Not IsEmpty(Cells(ActiveCell.Row, "A").Value) Then
             Exit Do
         End If
-        
     Loop
 End Sub
