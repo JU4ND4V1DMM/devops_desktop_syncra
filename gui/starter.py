@@ -1581,7 +1581,7 @@ class Init_APP():
     
             Search_IVR = list_to_process_IVR[0]
             
-            self.Base = gui.search_data.search_values_in_csvs_and_excels(self.folder_path_IVR, self.folder_path, Search_IVR, self.process_data)
+            self.Base = gui.search_data.search_values_in_files(self.folder_path_IVR, self.folder_path, Search_IVR, self.process_data)
 
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
