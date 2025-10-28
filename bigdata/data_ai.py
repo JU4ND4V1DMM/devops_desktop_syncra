@@ -25,7 +25,41 @@ sqlContext = SQLContext(spark)
 
 def claro_structure_df(Path_Original, outpath, partitions):
     
-    print("✅ Starting processing data AI...")
+    def read_any_format_files(path):
+        """Read files in any supported format from a directory"""
+        csv_files = [os.path.join(path, f) for f in os.listdir(path) if f.endswith(".csv")]
+        parquet_files = [os.path.join(path, f) for f in os.listdir(path) if f.endswith(".parquet")]
+        
+        all_files = csv_files + parquet_files
+        
+        if not all_files:
+            print(f"⚠️ No data files found in {path}")
+            return None
+        
+        dfs = []
+        for file in all_files:
+            print(f"📁 Processing file: {file}")
+            try:
+                if file.endswith(".csv"):
+                    df = spark.read.option("header", "true").option("sep", ";").csv(file)
+                else:  # parquet
+                    df = spark.read.parquet(file)
+                
+                df = df.select([col(c).cast(StringType()).alias(c) for c in df.columns])
+                dfs.append(df)
+            except Exception as e:
+                print(f"❌ Error processing {file}: {str(e)}")
+        
+        if not dfs:
+            return None
+        
+        combined_df = dfs[0]
+        for df in dfs[1:]:
+            combined_df = combined_df.unionByName(df, allowMissingColumns=True)
+        
+        return combined_df
+
+    print("✅ Starting AI data processing...")
     Path = f"{Path_Original}/Bases/"
     Path_Dto = f"{Path_Original}/Descuentos/"
         
@@ -33,24 +67,9 @@ def claro_structure_df(Path_Original, outpath, partitions):
     now = datetime.now()
     Time_File = now.strftime("%Y%m%d_%H%M")
     
-    # Read and process Data_Root and Data_DTO in one go
-    # files = [os.path.join(Path, file) for file in os.listdir(Path) if file.endswith(".csv")]
-    files = [os.path.join(Path, file) for file in os.listdir(Path) if file.endswith(".csv")]
-
-    dfs = []
-    for f in files:
-        print(f"📁 Processing file: {f}")
-        df = spark.read.option("header", "true").option("sep", ";").csv(f)
-        df = df.select([col(c).cast(StringType()).alias(c) for c in df.columns])
-        dfs.append(df)
-
-    Data_Root = dfs[0]
-    for df in dfs[1:]:
-        Data_Root = Data_Root.unionByName(df, allowMissingColumns=True)
-    
-    files = [os.path.join(Path_Dto, file) for file in os.listdir(Path_Dto) if file.endswith(".csv")]
-    Data_DTO = spark.read.option("header", "true").option("sep", ";").csv(files)
-    Data_DTO = Data_DTO.select([col(c).cast(StringType()).alias(c) for c in Data_DTO.columns])
+    # Read and process Data_Root and Data_DTO with auto-format detection
+    Data_Root = read_any_format_files(Path)
+    Data_DTO = read_any_format_files(Path_Dto)
 
     # Define conditions for MARCA
     conditions = [

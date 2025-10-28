@@ -159,6 +159,7 @@ class Charge_DB(QtWidgets.QMainWindow):
         try:
             
             utils.active_lines.Function_Complete(path, output_directory, partitions)
+            self.convert_csv_to_parquet()
             
             Mbox_In_Process = QMessageBox()
             Mbox_In_Process.setWindowTitle("")
@@ -1178,6 +1179,10 @@ class Charge_DB(QtWidgets.QMainWindow):
         # Generate output filename with date
         output_filename = f"Conversion_{datetime.now().strftime('%Y%m%d')}.parquet"
         output_file = root / output_filename
+        
+        if output_file.exists():
+            print(f"❌ Output file already exists: {output_file}")
+            return
 
         print(f"🔄 Converting: {file} -> {output_file}")
         
