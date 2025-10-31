@@ -92,6 +92,7 @@ def Transform_Payments_without_Applied(input_folder, output_folder):
             combined_df['FECHA'] = datetime.now().strftime('%Y-%m-%d')
             output_file = f'Pagos sin Aplicar {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
             output_file_payments = f'Pagos Detalle {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
+            output_file_payments_bigdata = f'Pagos Recuento BIG DATA {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
             output_folder_ = f"{output_folder}---- Bases para CARGUE ----/"
             output_folder_detail = f"{output_folder}---- Bases para CRUCE ----/"
             
@@ -102,13 +103,15 @@ def Transform_Payments_without_Applied(input_folder, output_folder):
             
             output_path = os.path.join(output_folder_, output_file)
             output_path_payments = os.path.join(output_folder_detail, output_file_payments)
+            output_path_payments_bigdata = os.path.join(output_folder_detail, output_file_payments_bigdata)
             
-            # Select only the 'CUENTA' and 'RECUENTO' columns
+            combined_df_bigdata = combined_df[['CUENTA', 'RECUENTO']]
             combined_df = combined_df[['CUENTA', 'FECHA']]
             payments_df = payments_df[['CUENTA', 'VALOR']]
             
             combined_df.to_csv(output_path, index=False, header=True, sep=';')
             payments_df.to_csv(output_path_payments, index=False, header=True, sep=';')
+            combined_df_bigdata.to_csv(output_path_payments_bigdata, index=False, header=True, sep=';')
             print(f"\nData PSA saved to {output_path} with {len(combined_df)} records.")
         else:
             print("\nThe combined DataFrame does not have more than 5 records. No action taken.")

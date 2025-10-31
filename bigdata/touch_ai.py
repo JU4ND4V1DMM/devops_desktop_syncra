@@ -17,7 +17,7 @@ def touch_dataframes_bd(input_folder, output_path, num_partitions, month_data, y
 
     try:
         # Read and prepare SMS DataFrame
-        File_SMS = spark.read.csv(Root_SMS, header=True, sep=",").select(
+        File_SMS = spark.read.csv(Root_SMS, header=True, sep=";").select(
             col("Cuenta_Real"),
             col("Cuenta_Sin_Punto"),
             col("Marca"),
@@ -25,7 +25,7 @@ def touch_dataframes_bd(input_folder, output_path, num_partitions, month_data, y
         )
 
         # Read and prepare Email DataFrame
-        File_Email = spark.read.csv(Root_Email, header=True, sep=",").select(
+        File_Email = spark.read.csv(Root_Email, header=True, sep=";").select(
             col("Cuenta_Real"),
             col("Cuenta_Sin_Punto"),
             col("Marca"),
@@ -33,7 +33,7 @@ def touch_dataframes_bd(input_folder, output_path, num_partitions, month_data, y
         )
 
         # Read and prepare BOT DataFrame
-        File_BOT = spark.read.csv(Root_BOT, header=True, sep=",").select(
+        File_BOT = spark.read.csv(Root_BOT, header=True, sep=";").select(
             col("Cuenta_Real"),
             col("Cuenta_Sin_Punto"),
             col("Marca"),
@@ -41,7 +41,7 @@ def touch_dataframes_bd(input_folder, output_path, num_partitions, month_data, y
         )
 
         # Read and prepare IVR DataFrame
-        File_IVR = spark.read.csv(Root_IVR, header=True, sep=",").select(
+        File_IVR = spark.read.csv(Root_IVR, header=True, sep=";").select(
             col("Cuenta_Real"),
             col("Cuenta_Sin_Punto"),
             col("Marca"),

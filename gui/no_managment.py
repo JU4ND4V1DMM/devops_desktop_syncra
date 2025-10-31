@@ -65,17 +65,22 @@ def transform_no_management(input_folder, output_folder):
         if not combined_df.empty:
             combined_df['FECHA'] = datetime.now().strftime('%Y-%m-%d')  # Add current date
             output_file = f'No Gestion {datetime.now().strftime("%Y-%m-%d_%H-%M")}.csv'
+            output_folder_detail = f"{output_folder}---- Bases para CRUCE ----/"
             output_folder = f"{output_folder}---- Bases para CARGUE ----/"
             
             if output_folder and not os.path.exists(output_folder):
                 os.makedirs(output_folder)
+            if output_folder_detail and not os.path.exists(output_folder_detail):
+                os.makedirs(output_folder_detail)
             
             output_path = os.path.join(output_folder, output_file)
+            output_path_bigdata = os.path.join(output_folder_detail, output_file)
             
-            # Select only the 'CUENTA' and 'RECUENTO' columns
+            combined_df_bigdata = combined_df[['CUENTA', 'RECUENTO']]
             combined_df = combined_df[['CUENTA', 'FECHA']]
             
             combined_df.to_csv(output_path, index=False, header=True, sep=';')
+            combined_df_bigdata.to_csv(output_path_bigdata, index=False, header=True, sep=';')
             print(f"\nData saved to {output_path} with {len(combined_df)} records.")
         else:
             print("\nThe combined DataFrame is empty. No action taken.")
