@@ -257,7 +257,8 @@ class Init_APP():
         self.process_data.pushButton_14.clicked.connect(self.copy_schema_campaings)
         self.process_data.pushButton_7.clicked.connect(self.copy_schema_masiv)
 
-        self.process_data.pushButton_19.clicked.connect(lambda: self.open_chrome_with_url('https://recupera.controlnextapp.com/'))
+        self.process_data.pushButton_19.clicked.connect(lambda: self.open_chrome_with_url('https://recupera.controlnextapp.com/Dashboard/'))
+        self.process_data.pushButton_28.clicked.connect(lambda: self.open_chrome_with_url('https://recuperabpo.controlnextapp.com/v1/es/apps/user-profile'))
         self.process_data.pushButton_13.clicked.connect(lambda: self.open_chrome_with_url('http://mesadeayuda.sinapsys-it.com:8088/index.php'))
         self.process_data.pushButton_16.clicked.connect(lambda: self.open_chrome_with_url('https://portalgevenue.claro.com.co/gevenue/#'))
         self.process_data.pushButton_17.clicked.connect(lambda: self.open_chrome_with_url('https://pbxrecuperanext.controlnextapp.com/vicidial/realtime_report.php?report_display_type=HTML'))

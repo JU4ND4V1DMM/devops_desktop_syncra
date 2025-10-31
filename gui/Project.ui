@@ -1605,7 +1605,7 @@ QPushButton:pressed {
             <x>0</x>
             <y>0</y>
             <width>212</width>
-            <height>282</height>
+            <height>312</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_3">
@@ -1633,7 +1633,7 @@ QPushButton:pressed
 }</string>
              </property>
              <property name="text">
-              <string>CRM - Control Next</string>
+              <string>CRM - Control Next V1</string>
              </property>
             </widget>
            </item>
@@ -1858,6 +1858,34 @@ QPushButton:pressed
              </property>
              <property name="text">
               <string>360 NRS</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton_28">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>10</pointsize>
+               <weight>7</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">/* Al pasar el mouse */
+QPushButton:hover {
+    border: 2px solid rgb(217, 16, 76); /* Borde gris claro */
+    border-radius: 8px;
+}
+QPushButton:pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(217, 16, 76);
+}</string>
+             </property>
+             <property name="text">
+              <string>CRM - Control Next V2</string>
              </property>
             </widget>
            </item>
@@ -3406,7 +3434,7 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-133</y>
+            <y>0</y>
             <width>222</width>
             <height>282</height>
            </rect>
