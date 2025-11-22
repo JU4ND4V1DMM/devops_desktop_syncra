@@ -194,7 +194,7 @@ class Charge_DB(QtWidgets.QMainWindow):
             file_path, 
             has_header=True, 
             separator=";", 
-            infer_schema_length=10000, 
+            infer_schema_length=100000, 
             encoding='latin1', # Fixes UTF-8 errors
             schema_overrides=schema_override_map # Forces problematic columns to string
         ) 

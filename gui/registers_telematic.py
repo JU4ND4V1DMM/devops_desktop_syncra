@@ -46,7 +46,7 @@ COLUMNS_IVR_IPCOM = [
 ]
 
 
-COLUMNS_WISEBOT_BASE = ["campaña", "fecha_llamada", "rut", "telefono", "estado_llamada", "tiempo_llamada"]
+COLUMNS_WISEBOT_BASE = ["campaña", "fecha_estado_final", "rut", "telefono", "estado_llamada", "tiempo_llamada"]
 COLUMNS_WISEBOT_BENEFITS = COLUMNS_WISEBOT_BASE + ["nombre", "apellido", "desea_beneficios"]
 COLUMNS_WISEBOT_AGREEMENT = COLUMNS_WISEBOT_BASE + ["id base", "fecha_acuerdo", "fecha_plazo"]
 COLUMNS_WISEBOT_TITULAR = COLUMNS_WISEBOT_BASE + ["marca"]
@@ -563,12 +563,12 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
         df_filtered['tiempo_llamada'] = 0 # Add column with zeros if missing
 
     # 3. Convert 'fecha_llamada' to datetime and extract date part for grouping
-    if 'fecha_llamada' in df_filtered.columns:
-        df_filtered['fecha_llamada'] = pd.to_datetime(df_filtered['fecha_llamada'], errors='coerce')
-        df_filtered['fecha_dia'] = df_filtered['fecha_llamada'].dt.floor('H') # Extract date part (YYYY-MM-DD)
-        print("  'fecha_llamada' converted to date for grouping.")
+    if 'fecha_estado_final' in df_filtered.columns:
+        df_filtered['fecha_estado_final'] = pd.to_datetime(df_filtered['fecha_estado_final'], errors='coerce')
+        df_filtered['fecha_dia'] = df_filtered['fecha_estado_final'].dt.floor('H') # Extract date part (YYYY-MM-DD)
+        print("  'fecha_estado_final' converted to date for grouping.")
     else:
-        print("  Error: 'fecha_llamada' column not found for grouping. Cannot perform aggregation.")
+        print("  Error: 'fecha_estado_final' column not found for grouping. Cannot perform aggregation.")
         print(f"*** WISEBOT processing finished with errors. ***\n" + "-" * 50)
         return None # Return None if key column for grouping is missing
 
@@ -585,14 +585,14 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
         wisebot_grouped_df = df_filtered.groupby(['fecha_dia', 'campaña'])['tiempo_llamada'].sum().reset_index()
         wisebot_grouped_df['contador_registros'] = wisebot_grouped_df['tiempo_llamada'].copy()
         # Add a source_file_type to the aggregated Wisebot data too
-        wisebot_grouped_df['source_file_type'] = f'WISEBOT_{wisebot_subtype.upper()}'
+        wisebot_grouped_df['source_file_type'] = f'{wisebot_subtype.upper()}'
         print("\n  Aggregated Wisebot Data:")
         print(wisebot_grouped_df.to_string()) # Use .to_string() for full display
     elif not df_filtered.empty and 'marca' in df_filtered.columns:
         wisebot_grouped_df = df_filtered.groupby(['fecha_dia', 'marca'])['tiempo_llamada'].sum().reset_index()
         wisebot_grouped_df['contador_registros'] = wisebot_grouped_df['tiempo_llamada'].copy()
         # Add a source_file_type to the aggregated Wisebot data too
-        wisebot_grouped_df['source_file_type'] = f'WISEBOT_{wisebot_subtype.upper()}'
+        wisebot_grouped_df['source_file_type'] = f'{wisebot_subtype.upper()}'
         print("\n  Aggregated Wisebot Data:")
         print(wisebot_grouped_df.to_string()) # Use .to_string() for full display
     else:
@@ -611,6 +611,8 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
     else:
         print("  Wisebot Subtype: Unknown (this should not happen if classification is correct).")
 
+    wisebot_grouped_df['source_file_type'] = wisebot_grouped_df['source_file_type'].str.replace('_', ' ')
+    
     print(f"*** WISEBOT processing finished. ***\n" + "-" * 50)
     return wisebot_grouped_df
 
@@ -638,6 +640,7 @@ def data_to_single_dataframe(list_of_dataframes):
         'SMS MASIVIAN',
         'WISEBOT AGREEMENT',
         'WISEBOT BENEFITS',
+        'WISEBOT_WISEBOT_BENEFITS',
         'WISEBOT BASE',
         'WISEBOT TITULAR',
         'IVR SAEM',
@@ -651,7 +654,8 @@ def data_to_single_dataframe(list_of_dataframes):
         'fecha_programado_dia': 'fecha_movimiento',
         'fecha_dia': 'fecha_movimiento',
         'fecha_programada_dia': 'fecha_movimiento',
-        'fecha_inicio_dia': 'fecha_movimiento'
+        'fecha_inicio_dia': 'fecha_movimiento',
+        'fecha_estado_final': 'fecha_movimiento'
     }
 
     sum_columns_map = {
@@ -800,7 +804,6 @@ def process_excel_files_in_folder(input_folder):
 
             file_type, present_headers = classify_excel_file(file_path)
             processed_data = None # Initialize processed_data for each file
-
             if file_type == "sms_saem":
                 processed_data = process_sms_saem(file_path, present_headers)
             elif file_type == "ivr_saem":
@@ -840,7 +843,7 @@ def process_excel_files_in_folder(input_folder):
                 elif not processed_data.empty:
                     # If it's a single DataFrame, append it
                     list_of_all_processed_dataframes.append(processed_data)
-                    print(f"  Successfully processed '{filename}'. Data collected for combined output.")
+                    print(f"  Successfully processed '{filename}'. Data collected for combined output in registers.")
                 else:
                     print(f"  Processed '{filename}' resulted in an empty DataFrame. Not added to combined output.")
             else:
@@ -850,7 +853,6 @@ def process_excel_files_in_folder(input_folder):
 
     # Save all collected DataFrames to a single Excel sheet
     combined_df = data_to_single_dataframe(list_of_all_processed_dataframes)
-    
     combined_df = (combined_df
         .assign(
             fecha_movimiento=combined_df['fecha_movimiento'].str.split(' ').str[0],

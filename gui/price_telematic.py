@@ -46,7 +46,7 @@ COLUMNS_IVR_IPCOM = [
 ]
 
 
-COLUMNS_WISEBOT_BASE = ["campaña", "fecha_llamada", "rut", "telefono", "estado_llamada", "tiempo_llamada"]
+COLUMNS_WISEBOT_BASE = ["campaña", "fecha_estado_final", "rut", "telefono", "estado_llamada", "tiempo_llamada"]
 COLUMNS_WISEBOT_BENEFITS = COLUMNS_WISEBOT_BASE + ["nombre", "apellido", "desea_beneficios"]
 COLUMNS_WISEBOT_AGREEMENT = COLUMNS_WISEBOT_BASE + ["id base", "fecha_acuerdo", "fecha_plazo"]
 COLUMNS_WISEBOT_TITULAR = COLUMNS_WISEBOT_BASE + ["marca"]
@@ -559,12 +559,12 @@ def process_wisebot(file_path, present_headers, wisebot_subtype):
         df_filtered['tiempo_llamada'] = 0 # Add column with zeros if missing
 
     # 3. Convert 'fecha_llamada' to datetime and extract date part for grouping
-    if 'fecha_llamada' in df_filtered.columns:
-        df_filtered['fecha_llamada'] = pd.to_datetime(df_filtered['fecha_llamada'], errors='coerce')
-        df_filtered['fecha_dia'] = df_filtered['fecha_llamada'].dt.floor('D') # Extract date part (YYYY-MM-DD)
-        print("  'fecha_llamada' converted to date for grouping.")
+    if 'fecha_estado_final' in df_filtered.columns:
+        df_filtered['fecha_estado_final'] = pd.to_datetime(df_filtered['fecha_estado_final'], errors='coerce')
+        df_filtered['fecha_dia'] = df_filtered['fecha_estado_final'].dt.floor('D') # Extract date part (YYYY-MM-DD)
+        print("  'fecha_estado_final' converted to date for grouping.")
     else:
-        print("  Error: 'fecha_llamada' column not found for grouping. Cannot perform aggregation.")
+        print("  Error: 'fecha_estado_final' column not found for grouping. Cannot perform aggregation.")
         print(f"*** WISEBOT processing finished with errors. ***\n" + "-" * 50)
         return None # Return None if key column for grouping is missing
 
